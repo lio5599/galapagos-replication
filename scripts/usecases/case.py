@@ -9,7 +9,9 @@ import time
 import traceback
 
 USERNAME = os.environ.get("USER", os.environ.get("USERNAME")) # default for UNIX, fallback for Windows
-CLONE_PATH = f"/mnt/ssd1/javier/galapagos-clones"
+# Copies of each library build go here (needs a lot of disk).
+CLONE_PATH = os.environ.get("GALAPAGOS_CLONES", os.path.expanduser("~/galapagos-clones"))
+GALAPAGOS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 LIBRARY_INFO = {
     "ffmpeg": {
@@ -286,7 +288,11 @@ class UseCase():
         tmp_folder = os.path.join(shadow_dir, random_name)
         # if the folder exist, prevent the copy
         if os.path.exists(tmp_folder):
-            return tmp_folder
+            if name:
+                return tmp_folder  # the unmodified original build can be reused
+            # a per-variant copy left by an earlier run still contains that
+            # run's variant; start from a fresh copy instead
+            shutil.rmtree(tmp_folder)
 
         shutil.copytree(src, tmp_folder, symlinks=True, ignore=None, copy_function=shutil.copy2, ignore_dangling_symlinks=False)
         os.sync()
@@ -431,7 +437,7 @@ class LibraryCompilableUseCase(LLVMCompilableUseCase):
             replacement_target = ''
             replacement_source = ''
             # BIN main.c.bc main.go.nod.bc --cld --debug-level=1 --output=result.ll --function_name_in_input="Chi" --function_name_in_replacement="main.Chi"
-            linker_bin = f'{os.environ["HOME"]}/Galapagos/linker/build/linker'
+            linker_bin = os.path.join(GALAPAGOS_ROOT, 'linker', 'build', 'linker')
             replacement_target = os.path.join(cwd, self.original_file_location)
             replacement_source = self.variant_text_location
             
@@ -549,7 +555,7 @@ class LibraryCompilableUseCase(LLVMCompilableUseCase):
         return self.test_result
     
     async def compile(self, cwd, configure_project=False):
-        sed_timestamp = f'{os.environ["HOME"]}/Galapagos/scripts/sed-same-timestamp.sh'
+        sed_timestamp = os.path.join(GALAPAGOS_ROOT, 'scripts', 'sed-same-timestamp.sh')
         logging.info(f"Compiling {cwd}")
         start = time.time()
         if not self.compiled:

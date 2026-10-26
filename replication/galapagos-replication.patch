@@ -1,0 +1,312 @@
+diff --git a/scripts/compile_variants.py b/scripts/compile_variants.py
+index c067d5c..e904213 100644
+--- a/scripts/compile_variants.py
++++ b/scripts/compile_variants.py
+@@ -1,6 +1,6 @@
+ import subprocess
+ import json
+-from generate_variants import WORKSPACE
++from generate_variants import WORKSPACE, variants_dir
+ from split_variants import read_params
+ import os
+ import os.path as path
+@@ -11,29 +11,34 @@ def read_variants(function_path):
+         return json.loads(f.read())
+ 
+ def compile_variants(variants, lang, function_path):
++    vdir = variants_dir(path.basename(function_path), lang)
+     #for each variant
+     for i, v in enumerate(variants):
+         for j in range(10):
+-            source = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.{lang}')
+-            output = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.ll')
++            source = path.join(vdir, f'{i}_{v["name"]}_{j}.{lang}')
++            output = path.join(vdir, f'{i}_{v["name"]}_{j}.ll')
+             command = [CC, '-c', '-S', '-emit-llvm', '-o', output, source] 
+             try:
+                 subprocess.check_output(command)
+             except Exception:
+                 print(f'failed to compile {source}')
+-                try:
+-                    os.remove(output)
+-                except OSError:
+-                    pass
++                # also remove a .bc left over from an earlier attempt, otherwise
++                # tests.usecase would test that old bitcode as this variant
++                for stale in (output, output[:-3] + '.bc'):
++                    try:
++                        os.remove(stale)
++                    except OSError:
++                        pass
+ 
+ 
+ def strip_variants(variants, lang, function_path):
++    vdir = variants_dir(path.basename(function_path), lang)
+     for i, v in enumerate(variants):
+         for j in range(10):
+-            input = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.ll')
++            input = path.join(vdir, f'{i}_{v["name"]}_{j}.ll')
+             if not path.exists(input):
+                 continue
+-            bc = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.bc')
++            bc = path.join(vdir, f'{i}_{v["name"]}_{j}.bc')
+             opt_command = [OPT, '-strip-debug', '-o', bc, input] 
+             dis_command = [DIS, '-o', input, bc] 
+             try:
+diff --git a/scripts/generate_variants.py b/scripts/generate_variants.py
+index 52dddac..bfc9c92 100644
+--- a/scripts/generate_variants.py
++++ b/scripts/generate_variants.py
+@@ -1,3 +1,36 @@
++# Variant generation (the GPT-4o API call) has been removed: variants are
++# produced by hand in a chat. The original file is kept as
++# functions/generate_variants.py.original.
++#
++# Other scripts do `from generate_variants import WORKSPACE`, so this file
++# stays. It is also the ONE place that says where variants are read from and
++# where results are written:
++#
++#   GALAPAGOS_VARIANTS  folder laid out as <project>/<lang>/   e.g. .../ffmpeg/c/1_mix_0.c.raw
++#   GALAPAGOS_RESULTS   folder laid out as <project>/<lang>/<function>/   (result JSONs)
++#
++# Both are required, so nothing silently falls back to another folder.
+ import os
++import sys
++
+ WORKSPACE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+-DIRNAME = os.path.abspath(os.path.dirname(__file__))
+\ No newline at end of file
++DIRNAME = os.path.abspath(os.path.dirname(__file__))
++
++
++def _required(var):
++    value = os.environ.get(var)
++    if not value:
++        sys.exit(f"Set {var} before running this script (see scripts/generate_variants.py).")
++    return os.path.abspath(os.path.expanduser(value))
++
++
++def variants_dir(project, lang):
++    d = os.path.join(_required("GALAPAGOS_VARIANTS"), project, lang)
++    os.makedirs(d, exist_ok=True)
++    return d
++
++
++def results_dir(project, lang):
++    d = os.path.join(_required("GALAPAGOS_RESULTS"), project, lang)
++    os.makedirs(d, exist_ok=True)
++    return d
+diff --git a/scripts/split_variants.py b/scripts/split_variants.py
+index bcedc44..b4c2f84 100644
+--- a/scripts/split_variants.py
++++ b/scripts/split_variants.py
+@@ -1,7 +1,7 @@
+ 
+ from os import path
+ import sys
+-from generate_variants import WORKSPACE
++from generate_variants import WORKSPACE, variants_dir
+ import json
+ 
+ 
+@@ -10,8 +10,9 @@ def read_variants(function_path):
+         return json.loads(f.read())
+ 
+ def split(info, function_path, lang):
++    vdir = variants_dir(path.basename(function_path), lang)
+     for i, fn in enumerate(info):
+-        with open(path.join(function_path, 'variants', lang, f'{i}_{fn["name"]}.c.variants')) as fn_file:
++        with open(path.join(vdir, f'{i}_{fn["name"]}.c.variants')) as fn_file:
+             data = fn_file.read()
+             
+             start = 0
+@@ -30,7 +31,7 @@ def split(info, function_path, lang):
+                         count += 1
+                     if data[end] == '}':
+                         count -= 1
+-                with open(path.join(function_path, 'variants', lang, f'{i}_{fn["name"]}_{it}.{lang}.raw'), 'w') as out:
++                with open(path.join(vdir, f'{i}_{fn["name"]}_{it}.{lang}.raw'), 'w') as out:
+                     out.write(data[start:end+1])
+                     out.write('\n')
+                 if lang == 'go':
+@@ -48,7 +49,11 @@ def read_params():
+     project = params[1]
+     return lang, project
+ 
+-lang, project = read_params()
+-function_path = path.join(WORKSPACE, 'functions', project)
+-split(read_variants(function_path), function_path, lang)
++# Guarded so that `from split_variants import read_params` (done by
++# template_variants.py and compile_variants.py) does not re-split and
++# overwrite the .raw files on import.
++if __name__ == "__main__":
++    lang, project = read_params()
++    function_path = path.join(WORKSPACE, 'functions', project)
++    split(read_variants(function_path), function_path, lang)
+         
+diff --git a/scripts/template_variants.py b/scripts/template_variants.py
+index 5e5edb3..4d6adbc 100644
+--- a/scripts/template_variants.py
++++ b/scripts/template_variants.py
+@@ -1,4 +1,4 @@
+-from generate_variants import WORKSPACE
++from generate_variants import WORKSPACE, variants_dir
+ from split_variants import read_params
+ 
+ import json
+@@ -19,12 +19,13 @@ def read_variants(function_path):
+         return json.loads(f.read())
+ 
+ def template_variants(variants, lang, function_path):
++    vdir = variants_dir(path.basename(function_path), lang)
+     with open(path.join(WORKSPACE, 'functions', f'template.{lang}')) as template_file:
+         template = template_file.read()
+         #for each variant
+         for i, v in enumerate(variants):
+             for j in range(10):
+-                with open(path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.{lang}.raw')) as variant_file:
++                with open(path.join(vdir, f'{i}_{v["name"]}_{j}.{lang}.raw')) as variant_file:
+                     text = variant_file.read()
+                     replace_body = template.replace('<FUNCTION>', text)
+                     
+@@ -33,7 +34,7 @@ def template_variants(variants, lang, function_path):
+                     fn_call = f'{fn_call}({params})'
+                     replace_call = replace_body.replace('<FUNCTION CALL>', fn_call)
+ 
+-                    with open(path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.{lang}'), 'w') as templated_file:
++                    with open(path.join(vdir, f'{i}_{v["name"]}_{j}.{lang}'), 'w') as templated_file:
+                         templated_file.write(replace_call)
+ 
+ lang, project = read_params()
+diff --git a/scripts/tests/usecase.py b/scripts/tests/usecase.py
+index f6e6bd8..6020b8c 100755
+--- a/scripts/tests/usecase.py
++++ b/scripts/tests/usecase.py
+@@ -2,6 +2,7 @@
+ import asyncio
+ from usecases.case import is_executable, CLONE_PATH
+ import verifier
++from generate_variants import variants_dir, results_dir
+ import logging
+ import json
+ import os
+@@ -19,7 +20,7 @@ if len(sys.argv) > 3:
+ 
+ if __name__ == "__main__":
+     # Compile library
+-    print(f"Results will be in {os.path.abspath(f'out/{LIBRARY}')}")
++    print(f"Results will be in {results_dir(LIBRARY, LANG)}")
+     logging.basicConfig(level=logging.DEBUG)
+ 
+     verif = verifier.AliveVerifier(debug=True)
+@@ -37,11 +38,14 @@ if __name__ == "__main__":
+             "function_name": variant.function_name,
+             "variant_name": variant.name,
+             # For other libraries, replace this name
+-            "project": LIBRARY
++            "project": LIBRARY,
++            # which variant this is, so results can be matched per variant
++            "version": variant.version,
++            "lang": LANG
+         }
+         # Make partial saving of the results
+         def save(ot):
+-            function_folder = f"out/{LIBRARY}/{LANG}/{variant.function_name}"
++            function_folder = os.path.join(results_dir(LIBRARY, LANG), variant.function_name)
+             os.makedirs(function_folder, exist_ok=True)
+             with open(f"{function_folder}/{variant.function_name}_{n}.result.json", 'w') as f:
+                 json.dump(result, f, indent=4)
+@@ -158,7 +162,7 @@ if __name__ == "__main__":
+                 logging.info(f"Pipeline for variants of {function['name']} {function['path']}")
+ 
+                 # Reading the generated variants
+-                langfiles = [f for f in os.listdir(f"{WORKSPACE}/variants/{LANG}") if f.endswith(f'.{LANG}')]
++                langfiles = [f for f in os.listdir(variants_dir(LIBRARY, LANG)) if f.endswith(f'.{LANG}')]
+                 for variant_of_function in langfiles:
+                     chunks = variant_of_function.replace(f'.{LANG}', '').split("_")
+                     funcname = '_'.join(chunks[:-1]) #hack
+@@ -171,7 +175,7 @@ if __name__ == "__main__":
+                                 funcname,
+                                 original_project_folder=project_folder,
+                                 original_file_location=f"{function['bc_file_path']}",
+-                                variant_text_location=os.path.abspath(f"{WORKSPACE}/variants/{LANG}/{variant_of_function.replace(f'.{LANG}', '.bc')}"),
++                                variant_text_location=os.path.join(variants_dir(LIBRARY, LANG), variant_of_function.replace(f'.{LANG}', '.bc')),
+                                 line_start=function['line'],
+                                 line_end=function['end'],
+                                 name=LIBRARY,
+@@ -193,10 +197,28 @@ if __name__ == "__main__":
+         assert len(test_cases) > 0, "There are no variants to check"
+         # assert len(test_cases) == 2000, "THere should be 2000 verifications"
+ 
++        # Every variant gets a full copy of the built library. The original
++        # code started all of them at once (peak disk = one copy per variant).
++        # Limit how many copies exist at a time and delete each one once its
++        # result.json is saved. This changes disk use only, not the results:
++        # the heavy steps (make, tests, alive-tv) already ran one at a time.
++        # GALAPAGOS_MAX_LIVE_COPIES (default 2), GALAPAGOS_KEEP_COPIES=1 to keep them.
++        live = asyncio.Semaphore(int(os.environ.get("GALAPAGOS_MAX_LIVE_COPIES", "2")))
++        keep = os.environ.get("GALAPAGOS_KEEP_COPIES") == "1"
++
++        async def compare_bounded(original_folder, shadow1, original, variant, n):
++            async with live:
++                try:
++                    return await compare(original_folder, shadow1, original, variant, n)
++                finally:
++                    if not keep:
++                        copy = os.path.join(CLONE_PATH, f'{variant.name}-{variant.function_name}-{variant.version}-{variant.lang}')
++                        shutil.rmtree(copy, ignore_errors=True)
++
+         tasks = []
+         for i, test in enumerate(test_cases):
+             # TODO: hardcoded path
+-            tasks.append(asyncio.create_task(compare(os.path.join(DIRNAME, f"{CLONE_PATH}/{LIBRARY}"),shadow_original, original_uc, test, i)))
++            tasks.append(asyncio.create_task(compare_bounded(os.path.join(DIRNAME, f"{CLONE_PATH}/{LIBRARY}"),shadow_original, original_uc, test, i)))
+             # break
+ 
+         results = await asyncio.gather(*tasks)
+diff --git a/scripts/usecases/case.py b/scripts/usecases/case.py
+index 99e2f20..6d34505 100755
+--- a/scripts/usecases/case.py
++++ b/scripts/usecases/case.py
+@@ -9,7 +9,9 @@ import time
+ import traceback
+ 
+ USERNAME = os.environ.get("USER", os.environ.get("USERNAME")) # default for UNIX, fallback for Windows
+-CLONE_PATH = f"/mnt/ssd1/javier/galapagos-clones"
++# Copies of each library build go here (needs a lot of disk).
++CLONE_PATH = os.environ.get("GALAPAGOS_CLONES", os.path.expanduser("~/galapagos-clones"))
++GALAPAGOS_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+ 
+ LIBRARY_INFO = {
+     "ffmpeg": {
+@@ -286,7 +288,11 @@ class UseCase():
+         tmp_folder = os.path.join(shadow_dir, random_name)
+         # if the folder exist, prevent the copy
+         if os.path.exists(tmp_folder):
+-            return tmp_folder
++            if name:
++                return tmp_folder  # the unmodified original build can be reused
++            # a per-variant copy left by an earlier run still contains that
++            # run's variant; start from a fresh copy instead
++            shutil.rmtree(tmp_folder)
+ 
+         shutil.copytree(src, tmp_folder, symlinks=True, ignore=None, copy_function=shutil.copy2, ignore_dangling_symlinks=False)
+         os.sync()
+@@ -431,7 +437,7 @@ class LibraryCompilableUseCase(LLVMCompilableUseCase):
+             replacement_target = ''
+             replacement_source = ''
+             # BIN main.c.bc main.go.nod.bc --cld --debug-level=1 --output=result.ll --function_name_in_input="Chi" --function_name_in_replacement="main.Chi"
+-            linker_bin = f'{os.environ["HOME"]}/Galapagos/linker/build/linker'
++            linker_bin = os.path.join(GALAPAGOS_ROOT, 'linker', 'build', 'linker')
+             replacement_target = os.path.join(cwd, self.original_file_location)
+             replacement_source = self.variant_text_location
+             
+@@ -549,7 +555,7 @@ class LibraryCompilableUseCase(LLVMCompilableUseCase):
+         return self.test_result
+     
+     async def compile(self, cwd, configure_project=False):
+-        sed_timestamp = f'{os.environ["HOME"]}/Galapagos/scripts/sed-same-timestamp.sh'
++        sed_timestamp = os.path.join(GALAPAGOS_ROOT, 'scripts', 'sed-same-timestamp.sh')
+         logging.info(f"Compiling {cwd}")
+         start = time.time()
+         if not self.compiled:

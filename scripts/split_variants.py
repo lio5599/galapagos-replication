@@ -1,7 +1,7 @@
 
 from os import path
 import sys
-from generate_variants import WORKSPACE
+from generate_variants import WORKSPACE, variants_dir
 import json
 
 
@@ -10,8 +10,9 @@ def read_variants(function_path):
         return json.loads(f.read())
 
 def split(info, function_path, lang):
+    vdir = variants_dir(path.basename(function_path), lang)
     for i, fn in enumerate(info):
-        with open(path.join(function_path, 'variants', lang, f'{i}_{fn["name"]}.c.variants')) as fn_file:
+        with open(path.join(vdir, f'{i}_{fn["name"]}.c.variants')) as fn_file:
             data = fn_file.read()
             
             start = 0
@@ -30,7 +31,7 @@ def split(info, function_path, lang):
                         count += 1
                     if data[end] == '}':
                         count -= 1
-                with open(path.join(function_path, 'variants', lang, f'{i}_{fn["name"]}_{it}.{lang}.raw'), 'w') as out:
+                with open(path.join(vdir, f'{i}_{fn["name"]}_{it}.{lang}.raw'), 'w') as out:
                     out.write(data[start:end+1])
                     out.write('\n')
                 if lang == 'go':
@@ -48,7 +49,11 @@ def read_params():
     project = params[1]
     return lang, project
 
-lang, project = read_params()
-function_path = path.join(WORKSPACE, 'functions', project)
-split(read_variants(function_path), function_path, lang)
+# Guarded so that `from split_variants import read_params` (done by
+# template_variants.py and compile_variants.py) does not re-split and
+# overwrite the .raw files on import.
+if __name__ == "__main__":
+    lang, project = read_params()
+    function_path = path.join(WORKSPACE, 'functions', project)
+    split(read_variants(function_path), function_path, lang)
         
