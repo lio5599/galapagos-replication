@@ -91,6 +91,19 @@ The generator can be stopped (Ctrl+C) and re-run, and it continues where it stop
 plan's usage limit it waits 20 minutes and retries, for up to 8 hours in total. It refuses to start
 while another run's files are still in the Galápagos folders.
 
+## Checking results
+
+- **The authors' counts:** `runs/<run>/logs/validation_table.log`, printed by Galápagos'
+  `validation_table.py` after each `run_galapagos.sh`. It covers only alsa-lib, ffmpeg,
+  libsodium and openssl, as a nested dictionary (`compile_isolation`, `compile_project`,
+  `pass_tests`, `equivalent`).
+- **All six projects as a table:** `python3 count_results.py` (before archiving) or
+  `python3 count_results.py --run <run>` (after). It only reads files and uses the same counting
+  rules as `validation_table.py`. Add `--details <project>` for one line per variant, or
+  `--csv <file>` to save the table.
+- **One variant in full:** `scripts/out/<project>/c/<i>_<name>/*.result.json`. The variant
+  number is at the end of `shadow_folder`, not in the file name.
+
 ## What each run folder keeps
 
 | Path | Contents |
