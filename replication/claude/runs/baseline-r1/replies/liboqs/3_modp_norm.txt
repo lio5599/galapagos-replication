@@ -1,0 +1,87 @@
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t d = x - h;
+    if (d >> 31) {
+        return (int32_t)x;
+    }
+    return (int32_t)(x - p);
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t mask = 0u - (((x - h) >> 31) ^ 1u);
+    return (int32_t)(x - (p & mask));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t t = (x - h) >> 31;
+    return (int32_t)(x - (p & ~(0u - t)));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    return (int32_t)(((x - ((p + 1) >> 1)) & 0x80000000u) ? x : x - p);
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t mask = (((x - h) >> 31) - 1u);
+    return (int32_t)(x + ((0u - p) & mask));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t sel = 1u - ((x - h) >> 31);
+    return (int32_t)(x - p * sel);
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t r = x;
+    if ((x - h) < 0x80000000u) {
+        r = x - p;
+    }
+    return (int32_t)r;
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t mask = ((x - h) >> 31) - 1u;
+    uint32_t y = x - p;
+    return (int32_t)(x ^ ((x ^ y) & mask));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint64_t t = (uint64_t)(uint32_t)(x - h) >> 31;
+    uint32_t mask = (uint32_t)(t - 1u);
+    return (int32_t)(x - (p & mask));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t top = (x - h) & 0x80000000u;
+    uint32_t mask = (top >> 31) - 1u;
+    uint32_t y = x - p;
+    return (int32_t)((y & mask) | (x & ~mask));
+}
+```

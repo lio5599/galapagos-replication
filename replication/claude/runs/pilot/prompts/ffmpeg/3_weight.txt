@@ -1,0 +1,14 @@
+The following code is a reference implementeation of a function in C.
+static int weight(int i, int blen, int offset)
+{
+
+
+
+    if (i < 2*offset)
+        return offset == 1 ? ((i) ? 5 : 3) : (1 + (6*(i) + offset - 1) / (2*offset - 1));
+    else if (i > blen-1 - 2*offset)
+        return offset == 1 ? ((blen-1 - i) ? 5 : 3) : (1 + (6*(blen-1 - i) + offset - 1) / (2*offset - 1));
+    return 8;
+}
+Create 10 substitute implementation(s) of the function, which are different but equivalent . It should be possible to directly replace the function and it should provide the same functionality
+Do not output any other text apart from code. Do not create auxiliary or helper functions. Maintain the original function's signature.

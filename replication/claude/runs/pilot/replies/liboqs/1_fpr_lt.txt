@@ -1,0 +1,111 @@
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = (int64_t)x;
+    int64_t sy = (int64_t)y;
+
+    if (((x ^ y) >> 63) != 0) {
+        return (int)(x >> 63);
+    }
+    if ((x >> 63) != 0) {
+        return sy < sx;
+    }
+    return sx < sy;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t mx = (uint64_t)0 - (x >> 63);
+    uint64_t my = (uint64_t)0 - (y >> 63);
+    uint64_t kx = x ^ (mx | ((uint64_t)1 << 63));
+    uint64_t ky = y ^ (my | ((uint64_t)1 << 63));
+    return kx < ky;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t t;
+    if ((x >> 63) != (y >> 63)) {
+        return (int)(x >> 63);
+    }
+    if ((x >> 63) != 0) {
+        t = x;
+        x = y;
+        y = t;
+    }
+    return x < y;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = (int64_t)x;
+    int64_t sy = (int64_t)y;
+    return ((x & y) >> 63) ? (sy < sx) : (sx < sy);
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = (int64_t)x;
+    int64_t sy = (int64_t)y;
+    int both = (int)((x & y) >> 63);
+    int a = (sx < sy);
+    int b = (sy < sx);
+    return a ^ ((a ^ b) & both);
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t m = (uint64_t)0 - ((x & y) >> 63);
+    return (int64_t)(x ^ m) < (int64_t)(y ^ m);
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t S = (uint64_t)1 << 63;
+    uint64_t m = (uint64_t)0 - ((x & y) >> 63);
+    return ((x ^ m) ^ S) < ((y ^ m) ^ S);
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    switch ((int)(((x >> 63) << 1) | (y >> 63))) {
+    case 0:
+        return x < y;
+    case 1:
+        return 0;
+    case 2:
+        return 1;
+    default:
+        return y < x;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t M = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & M;
+    uint64_t ay = y & M;
+    int sxb = (int)(x >> 63);
+    int syb = (int)(y >> 63);
+    int lt = (ax < ay);
+    int gt = (ay < ax);
+    return (sxb != syb) ? sxb : (sxb ? gt : lt);
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int s = (int)(x >> 63);
+    int t = (int)(y >> 63);
+    int lt = (x < y);
+    int gt = (y < x);
+    return ((s & ~t) | (~(s ^ t) & ((s & gt) | (~s & lt)))) & 1;
+}
+```

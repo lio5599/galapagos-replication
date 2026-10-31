@@ -1,0 +1,120 @@
+
+static int mix(int c0, int c1)
+{
+    int b = (c0 & 0x1F) * 2 + (c1 & 0x1F);
+    int g = ((c0 >> 5) & 0x1F) * 2 + ((c1 >> 5) & 0x1F);
+    int r = (c0 >> 10) * 2 + (c1 >> 10);
+    return (r / 3) * 1024 + (g / 3) * 32 + (b / 3);
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int r = 2 * (c0 >> 10) + (c1 >> 10);
+    int g = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int b = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int result = r / 3 * 1024;
+    result += (g / 3) << 5;
+    result += b / 3;
+    return result;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int b0 = c0 & 0x1F, b1 = c1 & 0x1F;
+    int g0 = (c0 & 0x3E0) >> 5, g1 = (c1 & 0x3E0) >> 5;
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int blue = b0 + b0 + b1;
+    int green = g0 + g0 + g1;
+    int red = r0 + r0 + r1;
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    unsigned int blue = ((unsigned int)(c0 & 0x1F) << 1) + (unsigned int)(c1 & 0x1F);
+    unsigned int green = ((unsigned int)(c0 & 0x3E0) * 2u + (unsigned int)(c1 & 0x3E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    unsigned int bq = (blue * 0xAAABu) >> 17;
+    unsigned int gq = (green * 0xAAABu) >> 17;
+    return red / 3 * 1024 + (int)(gq << 5) + (int)bq;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int bq = 0, gq = 0;
+    while (blue >= 3) { blue -= 3; bq++; }
+    while (green >= 3) { green -= 3; gq++; }
+    return red / 3 * 1024 + gq * 32 + bq;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int comp[3];
+    int i, out = 0;
+    comp[0] = 2 * (c0 >> 10) + (c1 >> 10);
+    comp[1] = 2 * ((c0 >> 5) & 31) + ((c1 >> 5) & 31);
+    comp[2] = 2 * (c0 & 31) + (c1 & 31);
+    for (i = 0; i < 3; i++)
+        out = out * 32 + comp[i] / 3;
+    return out;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int red = (c0 >> 10) + (c0 >> 10) + (c1 >> 10);
+    int gsum = (c0 & 0x03E0) + (c0 & 0x03E0) + (c1 & 0x03E0);
+    int bsum = (c0 & 0x001F) + (c0 & 0x001F) + (c1 & 0x001F);
+    return (red / 3) * 1024 + ((gsum >> 5) / 3) * 32 + bsum / 3;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int green = 2 * ((c0 >> 5) & 0x1F) + ((c1 >> 5) & 0x1F);
+    int blue = 2 * (c0 & 0x1F) + (c1 & 0x1F);
+    int low = ((green / 3) << 5) | (blue / 3);
+    return red / 3 * 1024 + low;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int bq = blue / 3;
+    int gq = green / 3;
+    int rq = red / 3;
+    return bq + 32 * gq + 1024 * rq;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int green = (((c0 & 0x03E0) << 1) + (c1 & 0x03E0)) >> 5;
+    int blue = ((c0 & 0x001F) << 1) + (c1 & 0x001F);
+    int bq = (blue * 11) >> 5;
+    int gq = (green * 683) >> 11;
+    bq = blue / 3;
+    return red / 3 * 1024 + gq * 32 + bq;
+}

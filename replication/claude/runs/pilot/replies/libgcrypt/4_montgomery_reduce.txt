@@ -1,0 +1,127 @@
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  int32_t r;
+
+  t = (int16_t)((uint32_t)a * 62209u);
+  r = (a - (int32_t)t * 3329) >> 16;
+  return (int16_t)r;
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  int32_t r;
+
+  t = (int16_t)((int16_t)a * -3327);
+  r = a - (int32_t)t * 3329;
+  r = r / 65536;
+  return (int16_t)r;
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  int64_t r;
+
+  t = (int16_t)((uint16_t)a * 62209u);
+  r = (int64_t)a - (int64_t)t * 3329;
+  return (int16_t)(r >> 16);
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  int32_t p;
+
+  t = (int16_t)((int16_t)a * -3327);
+  p = (int32_t)t * 3329;
+  return (int16_t)((a >> 16) - (p >> 16));
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  int32_t tt, p;
+
+  t = (int16_t)((uint32_t)a * 62209u);
+  tt = (int32_t)t;
+  p = tt * 2048 + tt * 1024 + tt * 256 + tt;
+  return (int16_t)((a - p) >> 16);
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  uint32_t u;
+
+  t = (int16_t)((int16_t)a * -3327);
+  u = (uint32_t)a - (uint32_t)((int32_t)t * 3329);
+  return (int16_t)(u >> 16);
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  uint16_t lo;
+  int16_t t;
+  int32_t diff;
+
+  lo = (uint16_t)((uint32_t)a & 0xFFFFu);
+  t = (int16_t)(uint16_t)((uint32_t)lo * 62209u);
+  diff = a - (int32_t)t * 3329;
+  return (int16_t)(diff >> 16);
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int32_t t;
+
+  t = (int32_t)(int16_t)((uint32_t)a * 0xF301u);
+  t = t * 3329;
+  t = a - t;
+  t >>= 16;
+  return (int16_t)t;
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  int32_t ah, ph;
+
+  t = (int16_t)((uint32_t)a * 62209u);
+  ah = a >> 16;
+  ph = ((int32_t)t * 3329) >> 16;
+  ah -= ph;
+  return (int16_t)ah;
+}
+```
+
+```c
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+  int64_t r;
+
+  t = (int16_t)((int16_t)a * -3327);
+  r = (int64_t)a - (int64_t)t * 3329;
+  r = r / 65536;
+  return (int16_t)r;
+}
+```

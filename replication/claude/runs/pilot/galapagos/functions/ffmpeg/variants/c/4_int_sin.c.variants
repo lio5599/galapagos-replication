@@ -1,0 +1,223 @@
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res = 0;
+    int i;
+    if (a < 0) a = 3294199 - a;
+    a %= 2 * 3294199;
+
+    if (a >= 3294199 * 3 / 2) a -= 2 * 3294199;
+    else if (a >= 3294199 / 2) a = 3294199 - a;
+
+    a2 = (a * a) >> 20;
+    i = 2;
+    while (i < 11) {
+        res += a;
+        a = -a * a2 / ((1 << 20) * i * (i + 1));
+        i += 2;
+    }
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res;
+    if (a < 0) a = 3294199 - a;
+    a %= 2 * 3294199;
+
+    if (a >= 4941298) a -= 6588398;
+    if (a >= 1647099) a = 3294199 - a;
+
+    a2 = (a * a) / 1048576;
+    res = a;
+    a = -a * a2 / (1048576LL * 6);
+    res += a;
+    a = -a * a2 / (1048576LL * 20);
+    res += a;
+    a = -a * a2 / (1048576LL * 42);
+    res += a;
+    a = -a * a2 / (1048576LL * 72);
+    res += a;
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    static const int64_t den[5] = {
+        1048576LL * 6, 1048576LL * 20, 1048576LL * 42,
+        1048576LL * 72, 1048576LL * 110
+    };
+    int64_t a2, res = 0;
+    int k;
+    if (a < 0) a = 3294199 - a;
+    a %= 2 * 3294199;
+
+    if (a >= 3294199 * 3 / 2) a -= 2 * 3294199;
+    if (a >= 3294199 / 2) a = 3294199 - a;
+
+    a2 = (a * a) / (1 << 20);
+    for (k = 0; k < 5; k++) {
+        res += a;
+        a = -a * a2 / den[k];
+    }
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    const int64_t P = 3294199;
+    int64_t a2, term, res = 0;
+    int i;
+    if (a < 0) a = P - a;
+    a = a % (2 * P);
+
+    if (a >= P * 3 / 2) a = a - 2 * P;
+    if (a >= P / 2) a = P - a;
+
+    a2 = (a * a) / (1 << 20);
+    term = a;
+    for (i = 2; i <= 10; i += 2) {
+        res = res + term;
+        term = -(term * a2 / ((int64_t)(1 << 20) * i * (i + 1)));
+    }
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res = 0;
+    int i = 2;
+    if (a < 0) a = 3294199 - a;
+    a -= (a / (2 * 3294199)) * (2 * 3294199);
+
+    if (a >= 3294199 * 3 / 2) a -= 2 * 3294199;
+    if (a >= 3294199 / 2) a = 3294199 - a;
+
+    a2 = (a * a) / (1 << 20);
+    do {
+        res += a;
+        a = -a * a2 / ((1 << 20) * i * (i + 1));
+        i += 2;
+    } while (i < 11);
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res = 0;
+    int n;
+    if (a < 0) a = 3294199 - a;
+    a %= 6588398;
+
+    if (a >= 4941298) a -= 6588398;
+    if (a >= 1647099) a = 3294199 - a;
+
+    a2 = (a * a) >> 20;
+    for (n = 1; n <= 5; n++) {
+        int64_t d = (int64_t)(2 * n) * (2 * n + 1) << 20;
+        res += a;
+        a = -a * a2 / d;
+    }
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, t1, t2, t3, t4, t5;
+    if (a < 0) a = 3294199 - a;
+    a %= 2 * 3294199;
+
+    if (a >= 3294199 * 3 / 2) a -= 2 * 3294199;
+    if (a >= 3294199 / 2) a = 3294199 - a;
+
+    a2 = (a * a) / (1 << 20);
+    t1 = a;
+    t2 = -t1 * a2 / ((1 << 20) * 2 * 3);
+    t3 = -t2 * a2 / ((1 << 20) * 4 * 5);
+    t4 = -t3 * a2 / ((1 << 20) * 6 * 7);
+    t5 = -t4 * a2 / ((1 << 20) * 8 * 9);
+    return (t1 + t2 + t3 + t4 + t5 + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res = 0;
+    int i;
+    a = (a < 0) ? (3294199 - a) : a;
+    a %= 2 * 3294199;
+
+    a = (a >= 3294199 * 3 / 2) ? (a - 2 * 3294199) : a;
+    a = (a >= 3294199 / 2) ? (3294199 - a) : a;
+
+    a2 = (a * a) / (1 << 20);
+    for (i = 10; i >= 2; i -= 2) {
+        int j = 12 - i;
+        res += a;
+        a = -a * a2 / ((1 << 20) * j * (j + 1));
+    }
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t x, x2, res = 0, term;
+    int i;
+    x = a;
+    if (x < 0) x = 3294199 - x;
+    x %= 2 * 3294199;
+
+    if (x >= 3294199 * 3 / 2) x -= 2 * 3294199;
+    if (x >= 3294199 / 2) x = 3294199 - x;
+
+    x2 = (x * x) / (1 << 20);
+    term = x;
+    for (i = 2; i < 10; i += 2) {
+        res += term;
+        term = (-term) * x2 / ((int64_t)((1 << 20) * i * (i + 1)));
+    }
+    res += term;
+    return (res + 8) >> 4;
+}
+
+
+
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res = 0, d;
+    int i, inc;
+    if (a < 0) a = 3294199 - a;
+    a %= 2 * 3294199;
+
+    if (a >= 3294199 * 3 / 2) {
+        a -= 2 * 3294199;
+    } else if (a >= 3294199 / 2) {
+        a = 3294199 - a;
+    }
+
+    a2 = (a * a) / (1 << 20);
+    d = 6;
+    inc = 14;
+    for (i = 0; i < 5; i++) {
+        res += a;
+        a = -a * a2 / (d << 20);
+        d += inc;
+        inc += 8;
+    }
+    return (res + 8) >> 4;
+}

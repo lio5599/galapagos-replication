@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = u_val ^ 0xff;
+	int t = ((u & 0x0f) << 3) + 0x84;
+	int e = (u >> 4) & 0x07;
+
+	while (e > 0) {
+		t += t;
+		e--;
+	}
+
+	return (u & 0x80) ? (0x84 - t) : (t - 0x84);
+}
+
+
+int main(){
+    ulaw_to_s16('a');
+}

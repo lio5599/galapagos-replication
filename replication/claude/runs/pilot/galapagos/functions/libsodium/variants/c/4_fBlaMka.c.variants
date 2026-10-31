@@ -1,0 +1,94 @@
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t xy = (uint64_t)(uint32_t)x * (uint64_t)(uint32_t)y;
+    return x + y + 2 * xy;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t m  = UINT64_C(0xFFFFFFFF);
+    const uint64_t xy = (x & m) * (y & m);
+    return x + y + (xy << 1);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t m  = UINT64_C(0xFFFFFFFF);
+    const uint64_t xy = (x & m) * (y & m);
+    return x + y + xy + xy;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t xl = (x << 32) >> 32;
+    const uint64_t yl = (y << 32) >> 32;
+    return x + y + 2 * (xl * yl);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint64_t result = x;
+    uint64_t lo_x = x & 0xFFFFFFFFULL;
+    uint64_t lo_y = y & 0xFFFFFFFFULL;
+    uint64_t prod = lo_x * lo_y;
+    result += y;
+    result += prod;
+    result += prod;
+    return result;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t xl = x % UINT64_C(4294967296);
+    const uint64_t yl = y % UINT64_C(4294967296);
+    return (xl * yl) * 2 + y + x;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t m = UINT64_C(0xFFFFFFFF);
+    return x + y + ((x & m) * 2) * (y & m);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint32_t xl = (uint32_t)(x & 0xFFFFFFFFu);
+    const uint32_t yl = (uint32_t)(y & 0xFFFFFFFFu);
+    const uint64_t xy = (uint64_t)xl * yl;
+    return (x + (xy << 1)) + y;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t xl = x - ((x >> 32) << 32);
+    const uint64_t yl = y - ((y >> 32) << 32);
+    const uint64_t xy = xl * yl;
+    return x + y + 2 * xy;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t m  = ~UINT64_C(0) >> 32;
+    const uint64_t xy = (x & m) * (y & m);
+    const uint64_t s  = x + y;
+    return s + (xy + xy);
+}

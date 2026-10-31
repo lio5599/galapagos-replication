@@ -1,0 +1,97 @@
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint64_t xy = (uint64_t)(uint32_t)x * (uint64_t)(uint32_t)y;
+    return x + y + (xy << 1);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t m = 0xFFFFFFFFULL;
+    uint64_t xy = (x & m) * (y & m);
+    return x + y + xy + xy;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint32_t xl = (uint32_t)x;
+    uint32_t yl = (uint32_t)y;
+    uint64_t prod = (uint64_t)xl * yl;
+    uint64_t sum = x + y;
+    return sum + 2 * prod;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint64_t xl = (x << 32) >> 32;
+    uint64_t yl = (y << 32) >> 32;
+    return x + y + 2 * (xl * yl);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t m = UINT64_C(0xFFFFFFFF);
+    uint64_t xy2 = ((x & m) * (y & m)) * UINT64_C(2);
+    uint64_t r = xy2;
+    r += x;
+    r += y;
+    return r;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint64_t xl = x & UINT64_C(0xFFFFFFFF);
+    uint64_t yl = y & UINT64_C(0xFFFFFFFF);
+    return x + y + ((2 * xl) * yl);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint64_t xl = x % (UINT64_C(1) << 32);
+    uint64_t yl = y % (UINT64_C(1) << 32);
+    uint64_t xy = xl * yl;
+    return (x + xy) + (y + xy);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint64_t xl = x - ((x >> 32) << 32);
+    uint64_t yl = y - ((y >> 32) << 32);
+    return y + x + xl * (yl << 1);
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    const uint64_t m = ~UINT64_C(0) >> 32;
+    uint64_t r = x + y;
+    uint64_t xy = (x & m) * (y & m);
+    r += xy;
+    r += xy;
+    return r;
+}
+
+
+
+static inline uint64_t fBlaMka(uint64_t x, uint64_t y)
+{
+    uint64_t xl = x & UINT64_C(0x00000000FFFFFFFF);
+    uint64_t yl = y & UINT64_C(0x00000000FFFFFFFF);
+    uint64_t xy = xl * yl;
+    return (x + (xy << 1)) + y;
+}

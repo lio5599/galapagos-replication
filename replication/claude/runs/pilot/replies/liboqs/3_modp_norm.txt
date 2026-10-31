@@ -1,0 +1,79 @@
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    if ((x - ((p + 1) >> 1)) >> 31) {
+        return (int32_t)x;
+    }
+    return (int32_t)(x - p);
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t m = 0u - (((x - h) >> 31) ^ 1u);
+    return (int32_t)(x - (p & m));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t m = ~(0u - ((x - h) >> 31));
+    return (int32_t)(x - (p & m));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t d = x - ((p + 1) >> 1);
+    return (int32_t)((d & 0x80000000u) ? x : x - p);
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t b = (x - ((p + 1) >> 1)) >> 31;
+    return (int32_t)(x - p * (1u - b));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t b = (x - ((p + 1) >> 1)) >> 31;
+    return (int32_t)(x - p + (p & (0u - b)));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t d = x - ((p + 1) >> 1);
+    return (int32_t)((d < 0x80000000u) ? x - p : x);
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t b = (x - ((p + 1) >> 1)) >> 31;
+    uint32_t r = x - p;
+    return (int32_t)(r ^ ((x ^ r) & (0u - b)));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t m = 0u - (uint32_t)!((x - h) >> 31);
+    return (int32_t)(x - (p & m));
+}
+```
+
+```c
+static int32_t modp_norm(uint32_t x, uint32_t p) {
+    uint32_t h = (p + 1) >> 1;
+    uint32_t b = ((x - h) & 0x80000000u) >> 31;
+    uint32_t m = b - 1u;
+    uint32_t r = x;
+    r -= p & m;
+    return (int32_t)r;
+}
+```

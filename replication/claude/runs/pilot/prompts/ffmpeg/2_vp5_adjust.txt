@@ -1,0 +1,18 @@
+The following code is a reference implementeation of a function in C.
+static int vp5_adjust(int v, int t)
+{
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+Create 10 substitute implementation(s) of the function, which are different but equivalent . It should be possible to directly replace the function and it should provide the same functionality
+Do not output any other text apart from code. Do not create auxiliary or helper functions. Maintain the original function's signature.

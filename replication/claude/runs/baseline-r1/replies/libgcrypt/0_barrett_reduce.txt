@@ -1,0 +1,90 @@
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t t;
+  const int32_t v = ((1 << 26) + 3329 / 2) / 3329;
+
+  t = (v * (int32_t)a + (1 << 25)) >> 26;
+  return (int16_t)((int32_t)a - t * 3329);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t t = ((int32_t)20159 * a + 33554432) >> 26;
+  return (int16_t)(a - t * 3329);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t x = (int32_t)20159 * (int32_t)a;
+  int32_t t = ((x >> 25) + 1) >> 1;
+  int32_t r = (int32_t)a - (t * 3328 + t);
+  return (int16_t)r;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  uint32_t n = (uint32_t)((int32_t)20159 * (int32_t)a + (1 << 25)) + (16u << 26);
+  int32_t t = (int32_t)(n >> 26) - 16;
+  return (int16_t)((int32_t)a - t * 3329);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int64_t t = ((int64_t)20159 * a + ((int64_t)1 << 25)) >> 26;
+  int64_t r = (int64_t)a - t * 3329;
+  return (int16_t)r;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int64_t t = ((int64_t)20159 * 4 * a + ((int64_t)1 << 27)) >> 28;
+  return (int16_t)((int32_t)a - (int32_t)t * 3329);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = (int32_t)20159 * a + (1 << 25);
+  int32_t d = 1 << 26;
+  int32_t t = n / d;
+  if ((n % d != 0) && (n < 0)) {
+    t -= 1;
+  }
+  return (int16_t)((int32_t)a - t * 3329);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t r = a;
+  int32_t t = (int32_t)(((int64_t)r * 20159 + 33554432) >> 26);
+  r -= t * 3329;
+  return (int16_t)r;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  const int32_t q = 3329;
+  const int32_t v = 20159;
+  int32_t prod = v * (int32_t)a;
+  int32_t t = (prod + (1 << 25)) >> 26;
+  int32_t tq = t * 2048 + t * 1024 + t * 256 + t;
+  return (int16_t)((int32_t)a - tq);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  uint32_t n = (uint32_t)((int32_t)a * 20159) + 33554432u + 1073741824u;
+  int32_t t = (int32_t)(n >> 26) - 16;
+  int32_t sub = t * 3329;
+  int32_t res = (int32_t)a - sub;
+  return (int16_t)res;
+}
+```

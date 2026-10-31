@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int s1 = (v < 0) ? ~0 : 0;
+    int a = s1 ? -v : v;
+    int lo, hi, d;
+    a = (a < 2 * t) ? a : 0;
+    lo = (a < t) ? a : t;
+    hi = (a < t) ? t : a;
+    d = hi - lo;
+    a = t - d;
+    return s1 ? -a : a;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

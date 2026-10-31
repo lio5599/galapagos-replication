@@ -1,0 +1,15 @@
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res = 0;
+    if (a < 0) a = 3294199 - a;
+    a %= 6588398;
+    if (a >= 4941298) a -= 6588398;
+    if (a >= 1647099) a = 3294199 - a;
+    a2 = (a * a) / 1048576;
+    res += a; a = -a * a2 / (1048576LL * 6);
+    res += a; a = -a * a2 / (1048576LL * 20);
+    res += a; a = -a * a2 / (1048576LL * 42);
+    res += a; a = -a * a2 / (1048576LL * 72);
+    res += a;
+    return (res + 8) >> 4;
+}

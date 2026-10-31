@@ -2,7 +2,6 @@
 import asyncio
 from usecases.case import is_executable, CLONE_PATH
 import verifier
-from generate_variants import variants_dir, results_dir
 import logging
 import json
 import os
@@ -20,7 +19,7 @@ if len(sys.argv) > 3:
 
 if __name__ == "__main__":
     # Compile library
-    print(f"Results will be in {results_dir(LIBRARY, LANG)}")
+    print(f"Results will be in {os.path.abspath(f'out/{LIBRARY}')}")
     logging.basicConfig(level=logging.DEBUG)
 
     verif = verifier.AliveVerifier(debug=True)
@@ -38,14 +37,11 @@ if __name__ == "__main__":
             "function_name": variant.function_name,
             "variant_name": variant.name,
             # For other libraries, replace this name
-            "project": LIBRARY,
-            # which variant this is, so results can be matched per variant
-            "version": variant.version,
-            "lang": LANG
+            "project": LIBRARY
         }
         # Make partial saving of the results
         def save(ot):
-            function_folder = os.path.join(results_dir(LIBRARY, LANG), variant.function_name)
+            function_folder = f"out/{LIBRARY}/{LANG}/{variant.function_name}"
             os.makedirs(function_folder, exist_ok=True)
             with open(f"{function_folder}/{variant.function_name}_{n}.result.json", 'w') as f:
                 json.dump(result, f, indent=4)
@@ -162,7 +158,7 @@ if __name__ == "__main__":
                 logging.info(f"Pipeline for variants of {function['name']} {function['path']}")
 
                 # Reading the generated variants
-                langfiles = [f for f in os.listdir(variants_dir(LIBRARY, LANG)) if f.endswith(f'.{LANG}')]
+                langfiles = [f for f in os.listdir(f"{WORKSPACE}/variants/{LANG}") if f.endswith(f'.{LANG}')]
                 for variant_of_function in langfiles:
                     chunks = variant_of_function.replace(f'.{LANG}', '').split("_")
                     funcname = '_'.join(chunks[:-1]) #hack
@@ -175,7 +171,7 @@ if __name__ == "__main__":
                                 funcname,
                                 original_project_folder=project_folder,
                                 original_file_location=f"{function['bc_file_path']}",
-                                variant_text_location=os.path.join(variants_dir(LIBRARY, LANG), variant_of_function.replace(f'.{LANG}', '.bc')),
+                                variant_text_location=os.path.abspath(f"{WORKSPACE}/variants/{LANG}/{variant_of_function.replace(f'.{LANG}', '.bc')}"),
                                 line_start=function['line'],
                                 line_end=function['end'],
                                 name=LIBRARY,
@@ -197,28 +193,10 @@ if __name__ == "__main__":
         assert len(test_cases) > 0, "There are no variants to check"
         # assert len(test_cases) == 2000, "THere should be 2000 verifications"
 
-        # Every variant gets a full copy of the built library. The original
-        # code started all of them at once (peak disk = one copy per variant).
-        # Limit how many copies exist at a time and delete each one once its
-        # result.json is saved. This changes disk use only, not the results:
-        # the heavy steps (make, tests, alive-tv) already ran one at a time.
-        # GALAPAGOS_MAX_LIVE_COPIES (default 2), GALAPAGOS_KEEP_COPIES=1 to keep them.
-        live = asyncio.Semaphore(int(os.environ.get("GALAPAGOS_MAX_LIVE_COPIES", "2")))
-        keep = os.environ.get("GALAPAGOS_KEEP_COPIES") == "1"
-
-        async def compare_bounded(original_folder, shadow1, original, variant, n):
-            async with live:
-                try:
-                    return await compare(original_folder, shadow1, original, variant, n)
-                finally:
-                    if not keep:
-                        copy = os.path.join(CLONE_PATH, f'{variant.name}-{variant.function_name}-{variant.version}-{variant.lang}')
-                        shutil.rmtree(copy, ignore_errors=True)
-
         tasks = []
         for i, test in enumerate(test_cases):
             # TODO: hardcoded path
-            tasks.append(asyncio.create_task(compare_bounded(os.path.join(DIRNAME, f"{CLONE_PATH}/{LIBRARY}"),shadow_original, original_uc, test, i)))
+            tasks.append(asyncio.create_task(compare(os.path.join(DIRNAME, f"{CLONE_PATH}/{LIBRARY}"),shadow_original, original_uc, test, i)))
             # break
 
         results = await asyncio.gather(*tasks)

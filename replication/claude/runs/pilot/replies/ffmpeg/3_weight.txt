@@ -1,0 +1,178 @@
+```c
+static int weight(int i, int blen, int offset)
+{
+    int d;
+    if (i < 2*offset)
+        d = i;
+    else if (i > blen-1 - 2*offset)
+        d = blen-1 - i;
+    else
+        return 8;
+    if (offset == 1)
+        return d ? 5 : 3;
+    return 1 + (6*d + offset - 1) / (2*offset - 1);
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    int d = (i < 2*offset) ? i : ((i > blen-1 - 2*offset) ? blen-1 - i : -1);
+    if (d == -1 && !(i < 2*offset) && !(i > blen-1 - 2*offset))
+        return 8;
+    return offset == 1 ? (d ? 5 : 3) : (1 + (6*d + offset - 1) / (2*offset - 1));
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    if (offset == 1) {
+        if (i < 2)
+            return i ? 5 : 3;
+        if (i > blen - 3)
+            return (blen-1 - i) ? 5 : 3;
+        return 8;
+    }
+    if (i < 2*offset)
+        return 1 + (6*i + offset - 1) / (2*offset - 1);
+    if (i > blen-1 - 2*offset)
+        return 1 + (6*(blen-1 - i) + offset - 1) / (2*offset - 1);
+    return 8;
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    int region = (i < 2*offset) ? 0 : ((i > blen-1 - 2*offset) ? 1 : 2);
+    int d;
+    switch (region) {
+    case 0:
+        d = i;
+        break;
+    case 1:
+        d = blen-1 - i;
+        break;
+    default:
+        return 8;
+    }
+    return offset == 1 ? (d ? 5 : 3) : (1 + (6*d + offset - 1) / (2*offset - 1));
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    int lim = 2*offset;
+    int hi = blen - 1 - lim;
+    int d;
+    if (!(i < lim)) {
+        if (!(i > hi))
+            return 8;
+        d = blen - 1 - i;
+    } else {
+        d = i;
+    }
+    if (offset != 1) {
+        int num = 6*d + offset - 1;
+        int den = 2*offset - 1;
+        return 1 + num / den;
+    }
+    return d != 0 ? 5 : 3;
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    int d;
+    if (i < 2*offset) {
+        d = i;
+        goto compute;
+    }
+    if (i > blen-1 - 2*offset) {
+        d = blen-1 - i;
+        goto compute;
+    }
+    return 8;
+compute:
+    if (offset == 1)
+        return d ? 5 : 3;
+    return 1 + (6*d + offset - 1) / (2*offset - 1);
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    int result = 8;
+    do {
+        int d;
+        if (i < 2*offset)
+            d = i;
+        else if (i > blen-1 - 2*offset)
+            d = blen-1 - i;
+        else
+            break;
+        result = (offset == 1) ? (d ? 5 : 3)
+                               : (1 + (6*d + offset - 1) / (2*offset - 1));
+    } while (0);
+    return result;
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    int inLow = i < 2*offset;
+    int inHigh = !inLow && (i > blen-1 - 2*offset);
+    int d;
+    if (!inLow && !inHigh)
+        return 8;
+    d = inLow ? i : (blen-1 - i);
+    if (offset == 1)
+        return 3 + 2 * (d != 0);
+    return 1 + (6*d + offset - 1) / (2*offset - 1);
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    if (i >= 2*offset && i <= blen-1 - 2*offset)
+        return 8;
+    {
+        int d = (i < 2*offset) ? i : blen-1 - i;
+        if (offset == 1)
+            return (d == 0) ? 3 : 5;
+        return (6*d + offset - 1) / (2*offset - 1) + 1;
+    }
+}
+```
+
+```c
+static int weight(int i, int blen, int offset)
+{
+    int d, w;
+    if (i < 2*offset) {
+        d = i;
+    } else if (i > blen-1 - 2*offset) {
+        d = blen-1 - i;
+    } else {
+        w = 8;
+        return w;
+    }
+    if (offset == 1) {
+        w = 3;
+        if (d)
+            w += 2;
+    } else {
+        w = 6*d;
+        w += offset - 1;
+        w /= 2*offset - 1;
+        w += 1;
+    }
+    return w;
+}
+```

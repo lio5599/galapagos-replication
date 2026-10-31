@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int mantissa = 15 - (u_val & 0x0f);
+	int exponent = 7 - ((u_val >> 4) & 0x07);
+	int t = ((mantissa << 3) + 0x84) << exponent;
+
+	if (!(u_val & 0x80))
+		return 0x84 - t;
+	return t - 0x84;
+}
+
+
+int main(){
+    ulaw_to_s16('a');
+}

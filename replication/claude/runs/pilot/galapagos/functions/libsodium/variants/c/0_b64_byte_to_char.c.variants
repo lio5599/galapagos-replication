@@ -1,0 +1,167 @@
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int lt26 = ((x - 26U) >> 8) & 0xFF;
+    unsigned int lt52 = ((x - 52U) >> 8) & 0xFF;
+    unsigned int lt62 = ((x - 62U) >> 8) & 0xFF;
+    unsigned int eq62 = (((0U - (x ^ 62U)) >> 8) & 0xFF) ^ 0xFF;
+    unsigned int eq63 = (((0U - (x ^ 63U)) >> 8) & 0xFF) ^ 0xFF;
+
+    return (lt26 & (x + 'A')) |
+           ((lt26 ^ 0xFF) & lt52 & (x + ('a' - 26))) |
+           ((lt52 ^ 0xFF) & lt62 & (x + ('0' - 52))) |
+           (eq62 & '+') |
+           (eq63 & '/');
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    static const char table[] =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    if (x < 64U) {
+        return (unsigned char) table[x];
+    }
+    return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x < 26U) {
+        return (int) (x + 'A');
+    }
+    if (x < 52U) {
+        return (int) (x - 26U + 'a');
+    }
+    if (x < 62U) {
+        return (int) (x - 52U + '0');
+    }
+    if (x == 62U) {
+        return '+';
+    }
+    if (x == 63U) {
+        return '/';
+    }
+    return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int c = x + 'A';
+    if (x >= 64U) {
+        return 0;
+    }
+    c += ((25U - x) >> 8) & 6U;
+    c -= ((51U - x) >> 8) & 75U;
+    c -= ((61U - x) >> 8) & 15U;
+    c += ((62U - x) >> 8) & 3U;
+    return (int) c;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    return (x < 26U) ? (int) ('A' + x) :
+           (x < 52U) ? (int) ('a' + (x - 26U)) :
+           (x < 62U) ? (int) ('0' + (x - 52U)) :
+           (x == 62U) ? '+' :
+           (x == 63U) ? '/' : 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int m_upper = 0U - (unsigned int) (x < 26U);
+    unsigned int m_lower = 0U - (unsigned int) (x >= 26U && x < 52U);
+    unsigned int m_digit = 0U - (unsigned int) (x >= 52U && x < 62U);
+    unsigned int m_plus  = 0U - (unsigned int) (x == 62U);
+    unsigned int m_slash = 0U - (unsigned int) (x == 63U);
+
+    return (int) ((m_upper & (x + 'A')) |
+                  (m_lower & (x + ('a' - 26))) |
+                  (m_digit & (x + ('0' - 52))) |
+                  (m_plus & '+') |
+                  (m_slash & '/'));
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    switch (x) {
+    case 62:
+        return '+';
+    case 63:
+        return '/';
+    default:
+        break;
+    }
+    if (x <= 25U) {
+        return (int) ('A' + x);
+    }
+    if (x <= 51U) {
+        return (int) ('a' + x - 26U);
+    }
+    if (x <= 61U) {
+        return (int) ('0' + x - 52U);
+    }
+    return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int c;
+    if (x >= 64U) {
+        return 0;
+    }
+    c = x + 'A';
+    c += (unsigned int) (x > 25U) * 6U;
+    c -= (unsigned int) (x > 51U) * 75U;
+    c -= (unsigned int) (x > 61U) * 15U;
+    c += (unsigned int) (x > 62U) * 3U;
+    return (int) c;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    static const unsigned int limits[5] = { 26U, 52U, 62U, 63U, 64U };
+    static const int bases[5] = { 'A', 'a' - 26, '0' - 52, '+' - 62, '/' - 63 };
+    unsigned int i;
+
+    for (i = 0; i < 5U; i++) {
+        if (x < limits[i]) {
+            return (int) x + bases[i];
+        }
+    }
+    return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x >= 64U) {
+        return 0;
+    }
+    if (x >= 62U) {
+        return (x == 62U) ? '+' : '/';
+    }
+    if (x >= 52U) {
+        return (int) (x - 4U);
+    }
+    if (x >= 26U) {
+        return (int) (x + 71U);
+    }
+    return (int) (x + 65U);
+}

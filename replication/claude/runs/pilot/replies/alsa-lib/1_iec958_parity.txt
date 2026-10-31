@@ -1,0 +1,122 @@
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	data &= 0x7FFFFFF0U;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data ^= data >> 2;
+	data ^= data >> 1;
+	return data & 1;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+
+	data &= 0x7FFFFFF0U;
+	while (data) {
+		data &= data - 1;
+		parity ^= 1;
+	}
+	return parity;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	return (unsigned int)__builtin_parity(data & 0x7FFFFFF0U);
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	unsigned int mask;
+
+	for (mask = 1U << 4; mask <= (1U << 30); mask <<= 1) {
+		if (data & mask)
+			parity ^= 1;
+	}
+	return parity;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	data &= 0x7FFFFFF0U;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	return (0x6996U >> (data & 0xF)) & 1;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int x = data & 0x7FFFFFF0U;
+
+	x = x - ((x >> 1) & 0x55555555U);
+	x = (x & 0x33333333U) + ((x >> 2) & 0x33333333U);
+	x = (x + (x >> 4)) & 0x0F0F0F0FU;
+	x = (x * 0x01010101U) >> 24;
+	return x & 1;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 30; bit >= 4; bit--)
+		parity ^= (data >> bit) & 1;
+	return parity;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int x = data & 0x7FFFFFF0U;
+
+	x ^= x >> 1;
+	x ^= x >> 2;
+	x = (x & 0x11111111U) * 0x11111111U;
+	return (x >> 28) & 1;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int x = data & 0x7FFFFFF0U;
+	unsigned int parity = 0;
+
+	while (x) {
+		parity ^= (0x6996U >> (x & 0xF)) & 1;
+		x >>= 4;
+	}
+	return parity;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int count = 0;
+	unsigned int x = (data >> 4) & 0x07FFFFFFU;
+
+	do {
+		count += x & 1;
+	} while (x >>= 1);
+	return count % 2;
+}
+```

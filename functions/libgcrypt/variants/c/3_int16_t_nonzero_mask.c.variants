@@ -1,0 +1,83 @@
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  return -(int)(x != 0);
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  uint32_t v = (uint16_t)x;
+  return -(int)((v | (0u - v)) >> 31);
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  uint32_t v = (uint16_t)x;
+  v = (v + 0xFFFFu) >> 16;
+  return -(int)v;
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  uint64_t v = (uint16_t)x;
+  v = (uint64_t)0 - v;
+  return -(int)(v >> 63);
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  uint32_t v = (uint16_t)x;
+  v = (v - 1u) >> 31;
+  return (int)v - 1;
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  uint16_t u = (uint16_t)x;
+  u |= (uint16_t)(u >> 8);
+  u |= (uint16_t)(u >> 4);
+  u |= (uint16_t)(u >> 2);
+  u |= (uint16_t)(u >> 1);
+  return -(int)(u & 1u);
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  return x ? -1 : 0;
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  uint32_t v = (uint16_t)x;
+  return -(int)(((v - 1u) >> 31) ^ 1u);
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  return -(int)!!x;
+}
+
+
+
+static int int16_t_nonzero_mask (int16_t x)
+{
+  uint32_t v = (uint16_t)x;
+  uint32_t m = ((v - 1u) >> 16) & 1u;
+  return (int)m - 1;
+}

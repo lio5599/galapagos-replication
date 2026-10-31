@@ -1,0 +1,144 @@
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int count = 16 + ch * ((bps + 14) / 8);
+    if (ch == 2)
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        count += (ch * bps * blocksize + 7) / 8;
+    return count + 2;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int header = 16;
+    int subframe_headers = ch * ((7 + bps + 7) / 8);
+    int bits_per_sample_total = (ch == 2) ? (2 * bps + 1) : (ch * bps);
+    int data = (bits_per_sample_total * blocksize + 7) / 8;
+    int footer = 2;
+    return header + subframe_headers + data + footer;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int bits;
+    if (ch == 2)
+        bits = 2 * bps + 1;
+    else
+        bits = ch * bps;
+    return 18 + ch * ((bps + 14) / 8) + (bits * blocksize + 7) / 8;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int count = 0;
+    count += 2;
+    count += (ch == 2) ? (((2 * bps + 1) * blocksize + 7) / 8)
+                       : ((ch * bps * blocksize + 7) / 8);
+    count += ch * ((7 + bps + 7) / 8);
+    count += 16;
+    return count;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int per_ch = (bps + 14) / 8;
+    int sample_bits;
+    int data_bytes;
+
+    switch (ch) {
+    case 2:
+        sample_bits = 2 * bps + 1;
+        break;
+    default:
+        sample_bits = ch * bps;
+        break;
+    }
+    data_bytes = (sample_bits * blocksize + 7) / 8;
+    return 16 + ch * per_ch + data_bytes + 2;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int count = 18;
+    int i;
+    int per_ch = (7 + bps + 7) / 8;
+    for (i = 0; i < ch; i++)
+        count += per_ch;
+    if (ch != 2) {
+        count += (ch * bps * blocksize + 7) / 8;
+    } else {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    }
+    return count;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int m = (ch == 2) ? (2 * bps + 1) : (ch * bps);
+    int a = 16;
+    int b = ch * ((bps + 7 + 7) / 8);
+    int c = (m * blocksize + 7) / 8;
+    int result = a;
+    result += b;
+    result += c;
+    result += 2;
+    return result;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int count;
+    int bits;
+
+    bits = ch * bps;
+    if (ch == 2)
+        bits = bps + bps + 1;
+    count = (bits * blocksize + 7) / 8;
+    count += ch * ((bps + 14) / 8);
+    count += 16 + 2;
+    return count;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    const int frame_header = 16;
+    const int frame_footer = 2;
+    int stereo = (ch == 2);
+    int sample_bits = stereo ? (2 * bps + 1) : (ch * bps);
+    int total = frame_header + frame_footer;
+
+    total += ch * ((7 + bps + 7) / 8);
+    total += (sample_bits * blocksize + 7) / 8;
+    return total;
+}
+
+
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int sub = (bps + 14) / 8;
+    if (ch == 2) {
+        int stereo_bits = (2 * bps + 1) * blocksize;
+        return 16 + 2 * sub + (stereo_bits + 7) / 8 + 2;
+    } else {
+        int bits = ch * bps * blocksize;
+        return 16 + ch * sub + (bits + 7) / 8 + 2;
+    }
+}

@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	if (s < a)
+		return 4294967295U;
+	return s;
+}
+
+
+int main(){
+    add(0,0);
+}

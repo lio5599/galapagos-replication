@@ -1,0 +1,139 @@
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (unsigned char)~u_val;
+	int t;
+
+	t = ((int)(u & 0x0f) << 3) + 0x84;
+	t <<= (u & 0x70) >> 4;
+
+	if (u & 0x80)
+		return 0x84 - t;
+	return t - 0x84;
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = u_val ^ 0xff;
+	int mantissa = u & 0x0f;
+	int segment = (u >> 4) & 0x07;
+	int magnitude = (((mantissa << 3) + 0x84) << segment) - 0x84;
+
+	return (u & 0x80) ? -magnitude : magnitude;
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (~(unsigned int)u_val) & 0xffu;
+	int mantissa = (int)(u & 0x0f);
+	int segment = (int)((u >> 4) & 0x07);
+	int t = (mantissa * 8 + 132) * (1 << segment);
+	int magnitude = t - 132;
+
+	if (u >> 7)
+		magnitude = -magnitude;
+	return magnitude;
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (unsigned char)~u_val;
+	int t = ((int)(u & 0x0f) << 3) + 0x84;
+	int seg = (int)((u >> 4) & 0x07);
+	int i;
+
+	for (i = 0; i < seg; i++)
+		t += t;
+
+	return (u & 0x80) ? (0x84 - t) : (t - 0x84);
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (unsigned char)~u_val;
+	int base = ((int)(u & 0x0f) << 3) + 0x84;
+	int t;
+
+	switch ((u >> 4) & 0x07) {
+	case 0: t = base; break;
+	case 1: t = base * 2; break;
+	case 2: t = base * 4; break;
+	case 3: t = base * 8; break;
+	case 4: t = base * 16; break;
+	case 5: t = base * 32; break;
+	case 6: t = base * 64; break;
+	default: t = base * 128; break;
+	}
+
+	return (u & 0x80) ? (0x84 - t) : (t - 0x84);
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (unsigned char)~u_val;
+	int sign = (int)((u >> 7) & 1);
+	int mag = ((((int)(u & 0x0f) << 3) + 0x84) << ((u >> 4) & 0x07)) - 0x84;
+
+	return (mag ^ -sign) + sign;
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (unsigned char)~u_val;
+	int mantissa = (int)(u & 0x0f);
+	int segment = (int)((u >> 4) & 0x07);
+	int mag = ((2 * mantissa + 33) << (segment + 2)) - 132;
+
+	return (u & 0x80) ? -mag : mag;
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int mantissa = 15 - (u_val & 0x0f);
+	int segment = 7 - ((u_val >> 4) & 0x07);
+	int t = ((mantissa << 3) + 0x84) << segment;
+
+	return (u_val & 0x80) ? (t - 0x84) : (0x84 - t);
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	static const int seg_bias[8] = {
+		0, 132, 396, 924, 1980, 4092, 8316, 16764
+	};
+	unsigned int u = (unsigned char)~u_val;
+	int segment = (int)((u >> 4) & 0x07);
+	int mag = ((int)(u & 0x0f) << (segment + 3)) + seg_bias[segment];
+
+	return (u & 0x80) ? -mag : mag;
+}
+```
+
+```c
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = 0xffu - u_val;
+	int segment = (int)((u & 0x70) >> 4);
+	int t = (int)(((u & 0x0f) | 0x10) << 3);
+	int sign = (u & 0x80) ? -1 : 1;
+
+	t = (t + 4) << segment;
+	return sign * (t - 0x84);
+}
+```

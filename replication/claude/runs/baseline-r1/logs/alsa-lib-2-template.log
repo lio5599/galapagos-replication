@@ -1,0 +1,7 @@
+$ python3 template_variants.py c alsa-lib
+Traceback (most recent call last):
+  File "/home/liolsen/galapagos-replication/scripts/template_variants.py", line 41, in <module>
+    template_variants(read_variants(function_path), lang, function_path)
+  File "/home/liolsen/galapagos-replication/scripts/template_variants.py", line 27, in template_variants
+    with open(path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.{lang}.raw')) as variant_file:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/liolsen/galapagos-replication/functions/alsa-lib/variants/c/4_val_seg_0.c.raw'

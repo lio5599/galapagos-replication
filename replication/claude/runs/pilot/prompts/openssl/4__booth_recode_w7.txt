@@ -1,0 +1,14 @@
+The following code is a reference implementeation of a function in C.
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int s, d;
+
+    s = ~((in >> 7) - 1);
+    d = (1 << 8) - in - 1;
+    d = (d & s) | (in & ~s);
+    d = (d >> 1) + (d & 1);
+
+    return (d << 1) + (s & 1);
+}
+Create 10 substitute implementation(s) of the function, which are different but equivalent . It should be possible to directly replace the function and it should provide the same functionality
+Do not output any other text apart from code. Do not create auxiliary or helper functions. Maintain the original function's signature.

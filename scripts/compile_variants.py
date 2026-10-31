@@ -1,6 +1,6 @@
 import subprocess
 import json
-from generate_variants import WORKSPACE, variants_dir
+from generate_variants import WORKSPACE
 from split_variants import read_params
 import os
 import os.path as path
@@ -11,34 +11,29 @@ def read_variants(function_path):
         return json.loads(f.read())
 
 def compile_variants(variants, lang, function_path):
-    vdir = variants_dir(path.basename(function_path), lang)
     #for each variant
     for i, v in enumerate(variants):
         for j in range(10):
-            source = path.join(vdir, f'{i}_{v["name"]}_{j}.{lang}')
-            output = path.join(vdir, f'{i}_{v["name"]}_{j}.ll')
+            source = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.{lang}')
+            output = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.ll')
             command = [CC, '-c', '-S', '-emit-llvm', '-o', output, source] 
             try:
                 subprocess.check_output(command)
             except Exception:
                 print(f'failed to compile {source}')
-                # also remove a .bc left over from an earlier attempt, otherwise
-                # tests.usecase would test that old bitcode as this variant
-                for stale in (output, output[:-3] + '.bc'):
-                    try:
-                        os.remove(stale)
-                    except OSError:
-                        pass
+                try:
+                    os.remove(output)
+                except OSError:
+                    pass
 
 
 def strip_variants(variants, lang, function_path):
-    vdir = variants_dir(path.basename(function_path), lang)
     for i, v in enumerate(variants):
         for j in range(10):
-            input = path.join(vdir, f'{i}_{v["name"]}_{j}.ll')
+            input = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.ll')
             if not path.exists(input):
                 continue
-            bc = path.join(vdir, f'{i}_{v["name"]}_{j}.bc')
+            bc = path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.bc')
             opt_command = [OPT, '-strip-debug', '-o', bc, input] 
             dis_command = [DIS, '-o', input, bc] 
             try:

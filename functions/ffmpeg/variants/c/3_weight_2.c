@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int weight(int i, int blen, int offset)
+{
+    int d;
+    int lo = i < 2*offset;
+    int hi = !lo && (i > blen-1 - 2*offset);
+    if (!lo && !hi)
+        return 8;
+    d = lo ? i : blen-1 - i;
+    if (offset != 1)
+        return 1 + (6*d + offset - 1) / (2*offset - 1);
+    return d == 0 ? 3 : 5;
+}
+
+
+int main(){
+    weight(0,0,0);
+}

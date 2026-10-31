@@ -1,0 +1,104 @@
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  t = ((int32_t)20159*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t q;
+  int32_t r;
+  q = ((int32_t)20159 * (int32_t)a + 33554432) >> 26;
+  r = (int32_t)a - q * 3329;
+  return (int16_t)r;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int64_t q;
+  q = ((int64_t)a * 20159 + ((int64_t)1 << 25)) >> 26;
+  return (int16_t)((int64_t)a - q * 3329);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t prod;
+  int16_t t;
+  prod = (int32_t)a * 20159;
+  prod += (int32_t)1 << 25;
+  prod >>= 26;
+  t = (int16_t)prod;
+  return (int16_t)(a - (int16_t)(t * 3329));
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t q;
+  uint32_t uq;
+  q = ((int32_t)20159 * a + (1 << 25)) >> 26;
+  uq = (uint32_t)q;
+  uq = (uq << 11) + (uq << 10) + (uq << 8) + uq;
+  return (int16_t)((uint16_t)a - (uint16_t)uq);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  uint32_t biased;
+  int32_t q;
+  biased = (uint32_t)((int32_t)20159 * a + (1 << 25) + (16 << 26));
+  q = (int32_t)(biased >> 26) - 16;
+  return (int16_t)(a - q * 3329);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  const int32_t v = ((1 << 26) + 3329 / 2) / 3329;
+  const int32_t half = 1 << 25;
+  int32_t q;
+  q = (v * (int32_t)a + half) >> 26;
+  return (int16_t)((uint16_t)a - (uint16_t)(q * 3329));
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  int32_t x = a;
+  const int16_t v = 20159;
+  x = x * v;
+  x = x + (1 << 25);
+  t = (int16_t)(x >> 26);
+  t = (int16_t)(t * 3329);
+  return (int16_t)(a - t);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int32_t q;
+  int32_t m;
+  q = ((int32_t)a * 20159 + 0x2000000) >> 26;
+  m = (q << 11) + (q << 10) + (q << 8) + q;
+  return (int16_t)((int32_t)a - m);
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  const int64_t v = ((1LL << 26) + 1664) / 3329;
+  int64_t acc;
+  int32_t q;
+  acc = v * (int64_t)a;
+  acc += 1LL << 25;
+  q = (int32_t)(acc >> 26);
+  return (int16_t)((uint16_t)a - (uint16_t)((uint32_t)q * 3329u));
+}
+```

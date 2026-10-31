@@ -1,0 +1,102 @@
+
+static uint64_t fpr_half(uint64_t x) {
+    if (((x >> 52) & 0x7FF) == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t m;
+
+    m = (uint64_t)0 - (uint64_t)(((x >> 52) & 0x7FF) != 0);
+    return (x - ((uint64_t)1 << 52)) & m;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    return (x & (uint64_t)0x7FF0000000000000) ? (x - ((uint64_t)1 << 52)) : (uint64_t)0;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y;
+    uint32_t t;
+
+    y = x - ((uint64_t)1 << 52);
+    t = (uint32_t)(((y >> 52) & 0x7FF) == 0x7FF);
+    return y & ((uint64_t)t - 1);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t e;
+    uint64_t m;
+
+    e = (uint32_t)(x >> 52) & 0x7FF;
+    m = (uint64_t)0 - (uint64_t)((e + 0x7FF) >> 11);
+    return (x - ((uint64_t)1 << 52)) & m;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e;
+
+    e = (x >> 52) & 0x7FF;
+    return (x - ((uint64_t)1 << 52)) * (uint64_t)(e != 0);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e, m;
+
+    e = (x >> 52) & 0x7FF;
+    m = ((e - 1) >> 63) - 1;
+    return (x - ((uint64_t)1 << 52)) & m;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e;
+
+    e = (x << 1) >> 53;
+    if (e) {
+        x -= (uint64_t)1 << 52;
+    } else {
+        x = 0;
+    }
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t s, e, mant;
+
+    s = x & ((uint64_t)1 << 63);
+    e = (x >> 52) & 0x7FF;
+    mant = x & (((uint64_t)1 << 52) - 1);
+    if (e == 0) {
+        return 0;
+    }
+    return s | ((e - 1) << 52) | mant;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y, hi;
+
+    y = x - ((uint64_t)1 << 52);
+    hi = (y >> 52) & 0x7FF;
+    y &= (uint64_t)0 - (uint64_t)(hi != 0x7FF);
+    return y;
+}

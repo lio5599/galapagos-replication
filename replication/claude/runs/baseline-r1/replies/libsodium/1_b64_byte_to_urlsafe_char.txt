@@ -1,0 +1,174 @@
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int lt26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int lt52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int lt62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int eq62 = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int eq63 = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) ((lt26 & (x + 'A')) |
+                  ((lt26 ^ 0xFFU) & lt52 & (x + ('a' - 26))) |
+                  ((lt52 ^ 0xFFU) & lt62 & (x + ('0' - 52))) |
+                  (eq62 & '-') |
+                  (eq63 & '_'));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int m26 = ((x - 26U) & 0xFF00U) >> 8;
+    unsigned int m52 = ((x - 52U) & 0xFF00U) >> 8;
+    unsigned int m62 = ((x - 62U) & 0xFF00U) >> 8;
+    unsigned int e62 = (((0U - (x ^ 62U)) & 0xFF00U) >> 8) ^ 0xFFU;
+    unsigned int e63 = (((0U - (x ^ 63U)) & 0xFF00U) >> 8) ^ 0xFFU;
+    unsigned int r = 0U;
+    r |= m26 & (x + 'A');
+    r |= (m26 ^ 0xFFU) & m52 & (x + ('a' - 26));
+    r |= (m52 ^ 0xFFU) & m62 & (x + ('0' - 52));
+    r |= e62 & '-';
+    r |= e63 & '_';
+    return (int) r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = x - 26U;
+    unsigned int b = x - 52U;
+    unsigned int c = x - 62U;
+    unsigned int d = 0U - (x ^ 62U);
+    unsigned int e = 0U - (x ^ 63U);
+    return (int) ((((a >> 8) & 0xFFU) & (x + 'A')) |
+                  (((~a >> 8) & 0xFFU) & ((b >> 8) & 0xFFU) & (x + ('a' - 26))) |
+                  (((~b >> 8) & 0xFFU) & ((c >> 8) & 0xFFU) & (x + ('0' - 52))) |
+                  (((~d >> 8) & 0xFFU) & '-') |
+                  (((~e >> 8) & 0xFFU) & '_'));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int result = 0U;
+    unsigned int mask_lo = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int mask_mid = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int mask_hi = ((x - 62U) >> 8) & 0xFFU;
+
+    result |= mask_lo & (x + 65U);
+    result |= (mask_lo ^ 0xFFU) & mask_mid & (x + 71U);
+    result |= (mask_mid ^ 0xFFU) & mask_hi & (x - 4U);
+    result |= ((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & 45U;
+    result |= ((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & 95U;
+    return (int) result;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int s26 = (x - 26U) >> 8 & 0xFFU;
+    unsigned int s52 = (x - 52U) >> 8 & 0xFFU;
+    unsigned int s62 = (x - 62U) >> 8 & 0xFFU;
+    unsigned int z62 = 0xFFU ^ ((0U - (x ^ 62U)) >> 8 & 0xFFU);
+    unsigned int z63 = 0xFFU ^ ((0U - (x ^ 63U)) >> 8 & 0xFFU);
+    return (int) ((z63 & (unsigned int) '_') |
+                  (z62 & (unsigned int) '-') |
+                  ((0xFFU ^ s52) & s62 & (x + (unsigned int) ('0' - 52))) |
+                  ((0xFFU ^ s26) & s52 & (x + (unsigned int) ('a' - 26))) |
+                  (s26 & (x + (unsigned int) 'A')));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int m1 = (unsigned int) (unsigned char) ((x - 26U) >> 8);
+    unsigned int m2 = (unsigned int) (unsigned char) ((x - 52U) >> 8);
+    unsigned int m3 = (unsigned int) (unsigned char) ((x - 62U) >> 8);
+    unsigned int m4 = (unsigned int) (unsigned char) (~((0U - (x ^ 62U)) >> 8));
+    unsigned int m5 = (unsigned int) (unsigned char) (~((0U - (x ^ 63U)) >> 8));
+    unsigned int t1 = m1 & (x + 'A');
+    unsigned int t2 = (m1 ^ 0xFFU) & m2 & (x + ('a' - 26));
+    unsigned int t3 = (m2 ^ 0xFFU) & m3 & (x + ('0' - 52));
+    unsigned int t4 = m4 & '-';
+    unsigned int t5 = m5 & '_';
+    return (int) (t1 | t2 | t3 | t4 | t5);
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int n62 = x ^ 62U;
+    unsigned int n63 = x ^ 63U;
+    unsigned int lt26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int lt52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int lt62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int is62 = ((-n62 >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int is63 = ((-n63 >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int upper = lt26 & (x + 'A');
+    unsigned int lower = ~lt26 & lt52 & 0xFFU & (x + ('a' - 26));
+    unsigned int digit = ~lt52 & lt62 & 0xFFU & (x + ('0' - 52));
+    return (int) (upper | lower | digit | (is62 & '-') | (is63 & '_'));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int lt[3];
+    unsigned int eq[2];
+    unsigned int r;
+
+    lt[0] = ((x - 26U) >> 8) & 0xFFU;
+    lt[1] = ((x - 52U) >> 8) & 0xFFU;
+    lt[2] = ((x - 62U) >> 8) & 0xFFU;
+    eq[0] = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    eq[1] = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+
+    r = lt[0] & (x + 'A');
+    r |= (lt[0] ^ 0xFFU) & lt[1] & (x + ('a' - 26));
+    r |= (lt[1] ^ 0xFFU) & lt[2] & (x + ('0' - 52));
+    r |= eq[0] & '-';
+    r |= eq[1] & '_';
+    return (int) r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int lt26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int lt52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int lt62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int ge26 = 0xFFU - lt26;
+    unsigned int ge52 = 0xFFU - lt52;
+    unsigned int is62 = 0xFFU - (((0U - (x ^ 62U)) >> 8) & 0xFFU);
+    unsigned int is63 = 0xFFU - (((0U - (x ^ 63U)) >> 8) & 0xFFU);
+    return (int) ((lt26 & (x + 'A')) |
+                  (ge26 & lt52 & (x + ('a' - 26))) |
+                  (ge52 & lt62 & (x + ('0' - 52))) |
+                  (is62 & '-') |
+                  (is63 & '_'));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int alpha_upper, alpha_lower, digits, dash, underscore;
+    unsigned int k26 = (x - 26U) >> 8;
+    unsigned int k52 = (x - 52U) >> 8;
+    unsigned int k62 = (x - 62U) >> 8;
+
+    alpha_upper = (k26 & 0xFFU) & (x + 'A');
+    alpha_lower = (~k26 & 0xFFU) & (k52 & 0xFFU) & (x + ('a' - 26));
+    digits = (~k52 & 0xFFU) & (k62 & 0xFFU) & (x + ('0' - 52));
+    dash = (~((0U - (x ^ 62U)) >> 8) & 0xFFU) & '-';
+    underscore = (~((0U - (x ^ 63U)) >> 8) & 0xFFU) & '_';
+
+    return (int) (alpha_upper | alpha_lower | digits | dash | underscore);
+}
+```

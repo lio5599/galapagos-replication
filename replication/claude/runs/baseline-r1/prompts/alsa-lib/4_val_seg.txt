@@ -1,0 +1,19 @@
+The following code is a reference implementeation of a function in C.
+static int val_seg(int val)
+{
+	int r = 1;
+	val >>= 8;
+	if (val & 0xf0) {
+		val >>= 4;
+		r += 4;
+	}
+	if (val & 0x0c) {
+		val >>= 2;
+		r += 2;
+	}
+	if (val & 0x02)
+		r += 1;
+	return r;
+}
+Create 10 substitute implementation(s) of the function, which are different but equivalent . It should be possible to directly replace the function and it should provide the same functionality
+Do not output any other text apart from code. Do not create auxiliary or helper functions. Maintain the original function's signature.

@@ -1,0 +1,101 @@
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return ~(~Ai);
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t r = (Ai << 32) | (Ai >> 32);
+    r = (r << 32) | (r >> 32);
+    return r;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t r = 0;
+    int i;
+    for (i = 0; i < 64; i++) {
+        r |= ((Ai >> i) & 1ULL) << i;
+    }
+    return r;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t r = 0;
+    int i;
+    for (i = 7; i >= 0; i--) {
+        r = (r << 8) | ((Ai >> (i * 8)) & 0xffULL);
+    }
+    return r;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    const uint64_t mask = 0x5555555555555555ULL;
+    return (Ai & mask) | (Ai & ~mask);
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t key = 0x9e3779b97f4a7c15ULL;
+    uint64_t t = Ai ^ key;
+    return t ^ key;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    if (0) {
+        uint64_t even = Ai & 0x5555555555555555ULL;
+        uint64_t odd = (Ai >> 1) & 0x5555555555555555ULL;
+        even = (even | (even >> 1)) & 0x3333333333333333ULL;
+        even = (even | (even >> 2)) & 0x0f0f0f0f0f0f0f0fULL;
+        even = (even | (even >> 4)) & 0x00ff00ff00ff00ffULL;
+        even = (even | (even >> 8)) & 0x0000ffff0000ffffULL;
+        odd = (odd | (odd >> 1)) & 0x3333333333333333ULL;
+        odd = (odd | (odd >> 2)) & 0x0f0f0f0f0f0f0f0fULL;
+        odd = (odd | (odd >> 4)) & 0x00ff00ff00ff00ffULL;
+        odd = (odd | (odd >> 8)) & 0x0000ffff0000ffffULL;
+        Ai = ((odd & 0x0000ffff00000000ULL) << 16) | ((odd & 0xffffULL) << 32) |
+             ((even & 0x0000ffff00000000ULL) >> 16) | (even & 0xffffULL);
+    }
+    return Ai;
+}
+```

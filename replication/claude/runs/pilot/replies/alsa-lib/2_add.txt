@@ -1,0 +1,87 @@
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	if (s < a)
+		return 4294967295;
+	return s;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (b > 4294967295U - a)
+		return 4294967295U;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	return (s < b) ? 4294967295U : s;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long s = (unsigned long long)a + (unsigned long long)b;
+	if (s >= 4294967295ULL)
+		return 4294967295U;
+	return (unsigned int)s;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	return s | (unsigned int)-(s < a);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long s = (unsigned long long)a + b;
+	return (unsigned int)s | (unsigned int)(0ULL - (s >> 32));
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (~a < b)
+		return ~0U;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	unsigned int mask = 0U - (unsigned int)(s < a);
+	return (s & ~mask) | (4294967295U & mask);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int room = 4294967295U - a;
+	return (b >= room) ? 4294967295U : a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long s = (unsigned long long)a + (unsigned long long)b;
+	unsigned long long m = 4294967295ULL;
+	return (unsigned int)(s < m ? s : m);
+}
+```

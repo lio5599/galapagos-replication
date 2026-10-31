@@ -1,0 +1,146 @@
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s, d;
+
+    s = 0u - (in >> 5);
+    d = 63u - in;
+    d = in ^ ((in ^ d) & s);
+    d = d - (d >> 1);
+
+    return (d << 1) | (s & 1u);
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s, d;
+
+    s = ~((in >> 5) + 0xFFFFFFFFu);
+    d = ~in + 64u;
+    d = (d & s) | (in & ~s);
+    d = (d >> 1) + (d & 1u);
+
+    return d * 2u + ((in >> 5) & 1u);
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int t = in >> 5;
+    unsigned int s = ~t + 1u;
+    unsigned int d = (1u << 6) + ~in;
+    unsigned int m;
+
+    m = (d & s) | (in & ~s);
+    m = (m & 1u) + (m >> 1);
+
+    return m + m + (s & 1u);
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s, d;
+
+    if ((in >> 5) == 0u) {
+        s = 0u;
+        d = in;
+    } else {
+        s = ~((in >> 5) - 1u);
+        d = (64u - in - 1u) & s;
+        d |= in & ~s;
+    }
+    d = (d >> 1) + (d & 1u);
+
+    return (d << 1) + (s & 1u);
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s = 0u - (in >> 5);
+    unsigned int ns = ~s;
+    unsigned int d = ((63u - in) & s) + (in & ns);
+    unsigned int h = d >> 1;
+    unsigned int lo = d & 1u;
+
+    return ((h + lo) << 1) ^ (s & 1u);
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s, d, x;
+
+    s = ~((in >> 5) - 1u);
+    x = (63u - in) ^ in;
+    d = in ^ (x & s);
+    d = d - (d >> 1);
+
+    return (d << 1) + ((in >> 5) & 1u);
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s, d, r;
+
+    s = ~((in >> 5) - 1u);
+    d = (1u << 6) - in - 1u;
+    d = (d & s) | (in & ~s);
+    r = d >> 1;
+    if (d & 1u)
+        r++;
+
+    return (r << 1) | (s & 1u);
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int k = in >> 5;
+    unsigned int s = (unsigned int)(0u - k);
+    unsigned int a = (~in + 64u) & s;
+    unsigned int b = in & ~s;
+    unsigned int d = a | b;
+    unsigned int sign = k & 1u;
+
+    d = (d >> 1) + (d & 1u);
+    return (d << 1) + sign;
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s, d;
+
+    s = ~((in >> 5) - 1u);
+    d = ((63u - in) & s) ^ (in & ~s);
+    d = (d >> 1) + (d & 1u);
+    d <<= 1;
+    d += s & 1u;
+
+    return d;
+}
+
+
+
+static unsigned int _booth_recode_w5(unsigned int in)
+{
+    unsigned int s = -(in >> 5);
+    unsigned int d = in;
+
+    d ^= (d ^ (0x3Fu - in)) & s;
+    d = (d >> 1) + (d & 1u);
+
+    return (d + d) | (s & 1u);
+}

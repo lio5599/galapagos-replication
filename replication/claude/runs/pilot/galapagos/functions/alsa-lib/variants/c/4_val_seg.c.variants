@@ -1,0 +1,127 @@
+
+static int val_seg(int val)
+{
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	int r = 1;
+	while (b > 1) {
+		b >>= 1;
+		r++;
+	}
+	return r;
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	if (b >= 0x80) return 8;
+	if (b >= 0x40) return 7;
+	if (b >= 0x20) return 6;
+	if (b >= 0x10) return 5;
+	if (b >= 0x08) return 4;
+	if (b >= 0x04) return 3;
+	if (b >= 0x02) return 2;
+	return 1;
+}
+
+
+
+static int val_seg(int val)
+{
+	static const unsigned char tab[16] = {
+		1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4
+	};
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	unsigned int hi = b >> 4;
+	if (hi)
+		return 4 + tab[hi];
+	return tab[b];
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = ((unsigned int)(val >> 8) & 0xffu) | 1u;
+	return (int)(sizeof(unsigned int) * 8) - __builtin_clz(b);
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	int i;
+	for (i = 7; i > 0; i--) {
+		if (b & (1u << i))
+			return i + 1;
+	}
+	return 1;
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	return 1 + (b >= 0x02) + (b >= 0x04) + (b >= 0x08) + (b >= 0x10)
+		 + (b >= 0x20) + (b >= 0x40) + (b >= 0x80);
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	int r = 1;
+	if (b >= 0x10) {
+		b >>= 4;
+		r += 4;
+	}
+	if (b >= 0x04) {
+		b >>= 2;
+		r += 2;
+	}
+	if (b >= 0x02)
+		r += 1;
+	return r;
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = ((unsigned int)(val >> 8) & 0xffu) | 1u;
+	b |= b >> 1;
+	b |= b >> 2;
+	b |= b >> 4;
+	b = b - ((b >> 1) & 0x55u);
+	b = (b & 0x33u) + ((b >> 2) & 0x33u);
+	b = (b + (b >> 4)) & 0x0fu;
+	return (int)b;
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	unsigned int mask = 0x80u;
+	int r = 8;
+	while (mask > 1u && !(b & mask)) {
+		mask >>= 1;
+		r--;
+	}
+	return r;
+}
+
+
+
+static int val_seg(int val)
+{
+	unsigned int b = (unsigned int)(val >> 8) & 0xffu;
+	return (b & 0xf0u)
+		? ((b & 0xc0u) ? ((b & 0x80u) ? 8 : 7) : ((b & 0x20u) ? 6 : 5))
+		: ((b & 0x0cu) ? ((b & 0x08u) ? 4 : 3) : ((b & 0x02u) ? 2 : 1));
+}

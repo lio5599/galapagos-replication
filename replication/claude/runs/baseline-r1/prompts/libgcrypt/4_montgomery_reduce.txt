@@ -1,0 +1,11 @@
+The following code is a reference implementeation of a function in C.
+int16_t montgomery_reduce(int32_t a)
+{
+  int16_t t;
+
+  t = (int16_t)a*-3327;
+  t = (a - (int32_t)t*3329) >> 16;
+  return t;
+}
+Create 10 substitute implementation(s) of the function, which are different but equivalent . It should be possible to directly replace the function and it should provide the same functionality
+Do not output any other text apart from code. Do not create auxiliary or helper functions. Maintain the original function's signature.

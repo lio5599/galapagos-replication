@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	static const int base[8] = { 8, 0x108, 0x108, 0x108, 0x108, 0x108, 0x108, 0x108 };
+	static const int shift[8] = { 0, 0, 1, 2, 3, 4, 5, 6 };
+	int v = a_val ^ 0x55;
+	int seg = (v >> 4) & 0x07;
+	int t = (((v & 0x0f) << 4) + base[seg]) << shift[seg];
+
+	return (v & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

@@ -1,0 +1,138 @@
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned char u = (unsigned char)~u_val;
+	int mantissa = u & 0x0f;
+	int exponent = (u >> 4) & 0x07;
+	int t = ((mantissa << 3) + 0x84) << exponent;
+
+	if (u & 0x80)
+		return 0x84 - t;
+	return t - 0x84;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = u_val ^ 0xff;
+	int t = ((u & 0x0f) << 3) | 0x84;
+	int mag;
+
+	t <<= (u >> 4) & 0x07;
+	mag = t - 0x84;
+
+	return (u & 0x80) ? -mag : mag;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = (~u_val) & 0xff;
+	int exponent = (u >> 4) & 0x07;
+	int t = (((u & 0x0f) << 3) + 0x84) * (1 << exponent);
+	int mag = t - 0x84;
+
+	return (u & 0x80) ? (0 - mag) : mag;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	static const int bias[8] = { 0, 132, 396, 924, 1980, 4092, 8316, 16764 };
+	int u = u_val ^ 0xff;
+	int exponent = (u >> 4) & 0x07;
+	int mag = ((u & 0x0f) << (exponent + 3)) + bias[exponent];
+
+	return (u & 0x80) ? -mag : mag;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = u_val ^ 0xff;
+	int sign = (u >> 7) & 1;
+	int t = (((u & 0x0f) << 3) + 0x84) << ((u >> 4) & 0x07);
+	int mag = t - 0x84;
+
+	return (mag ^ -sign) + sign;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int mantissa = 15 - (u_val & 0x0f);
+	int exponent = 7 - ((u_val >> 4) & 0x07);
+	int t = ((mantissa << 3) + 0x84) << exponent;
+
+	if (!(u_val & 0x80))
+		return 0x84 - t;
+	return t - 0x84;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = u_val ^ 0xff;
+	int t = ((u & 0x0f) << 3) + 0x84;
+	int e = (u >> 4) & 0x07;
+
+	while (e > 0) {
+		t += t;
+		e--;
+	}
+
+	return (u & 0x80) ? (0x84 - t) : (t - 0x84);
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = u_val ^ 0xff;
+	int mantissa = u & 0x0f;
+	int t;
+
+	switch ((u >> 4) & 0x07) {
+	case 0: t = (mantissa << 3) + 0x84; break;
+	case 1: t = (mantissa << 4) + 0x108; break;
+	case 2: t = (mantissa << 5) + 0x210; break;
+	case 3: t = (mantissa << 6) + 0x420; break;
+	case 4: t = (mantissa << 7) + 0x840; break;
+	case 5: t = (mantissa << 8) + 0x1080; break;
+	case 6: t = (mantissa << 9) + 0x2100; break;
+	default: t = (mantissa << 10) + 0x4200; break;
+	}
+
+	t -= 0x84;
+	return (u & 0x80) ? -t : t;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (unsigned int)(~u_val) & 0xffu;
+	unsigned int t = (((u & 0x0fu) << 3) + 0x84u) << ((u & 0x70u) >> 4);
+	int mag = (int)(t - 0x84u);
+	int s = (u & 0x80u) ? -1 : 1;
+
+	return s * mag;
+}
+
+
+
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = 0xff - u_val;
+	int exponent = (u & 0x70) >> 4;
+	int mag = (((u & 0x0f) << 3) << exponent) + ((0x84 << exponent) - 0x84);
+	int neg = -((u & 0x80) >> 7);
+
+	return (mag & ~neg) | (-mag & neg);
+}

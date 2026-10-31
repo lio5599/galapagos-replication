@@ -1,4 +1,4 @@
-from generate_variants import WORKSPACE, variants_dir
+from generate_variants import WORKSPACE
 from split_variants import read_params
 
 import json
@@ -19,13 +19,12 @@ def read_variants(function_path):
         return json.loads(f.read())
 
 def template_variants(variants, lang, function_path):
-    vdir = variants_dir(path.basename(function_path), lang)
     with open(path.join(WORKSPACE, 'functions', f'template.{lang}')) as template_file:
         template = template_file.read()
         #for each variant
         for i, v in enumerate(variants):
             for j in range(10):
-                with open(path.join(vdir, f'{i}_{v["name"]}_{j}.{lang}.raw')) as variant_file:
+                with open(path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.{lang}.raw')) as variant_file:
                     text = variant_file.read()
                     replace_body = template.replace('<FUNCTION>', text)
                     
@@ -34,7 +33,7 @@ def template_variants(variants, lang, function_path):
                     fn_call = f'{fn_call}({params})'
                     replace_call = replace_body.replace('<FUNCTION CALL>', fn_call)
 
-                    with open(path.join(vdir, f'{i}_{v["name"]}_{j}.{lang}'), 'w') as templated_file:
+                    with open(path.join(function_path, 'variants', lang, f'{i}_{v["name"]}_{j}.{lang}'), 'w') as templated_file:
                         templated_file.write(replace_call)
 
 lang, project = read_params()

@@ -1,0 +1,119 @@
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 4; bit <= 30; bit++)
+		parity ^= (data >> bit) & 1;
+	return parity;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	data &= 0x7FFFFFF0u;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data ^= data >> 2;
+	data ^= data >> 1;
+	return data & 1;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+
+	data &= 0x7FFFFFF0u;
+	while (data) {
+		parity ^= 1;
+		data &= data - 1;
+	}
+	return parity;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	return (unsigned int)__builtin_parity(data & 0x7FFFFFF0u);
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	return (unsigned int)__builtin_popcount(data & 0x7FFFFFF0u) & 1u;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	unsigned int mask;
+
+	for (mask = 1u << 4; mask <= (1u << 30); mask <<= 1)
+		if (data & mask)
+			parity = !parity;
+	return parity;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	data &= 0x7FFFFFF0u;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data &= 0xFu;
+	return (0x6996u >> data) & 1u;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int v = data & 0x7FFFFFF0u;
+
+	v = v - ((v >> 1) & 0x55555555u);
+	v = (v & 0x33333333u) + ((v >> 2) & 0x33333333u);
+	v = (v + (v >> 4)) & 0x0F0F0F0Fu;
+	v = (v * 0x01010101u) >> 24;
+	return v & 1u;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit = 30;
+
+	data <<= 1;
+	do {
+		parity += data >> 31;
+		data <<= 1;
+	} while (--bit >= 4);
+	return parity % 2;
+}
+```
+
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int v = (data >> 4) & 0x07FFFFFFu;
+	unsigned int parity = 0;
+
+	while (v) {
+		parity ^= v & 0xFu;
+		v >>= 4;
+	}
+	return (0x6996u >> parity) & 1u;
+}
+```
