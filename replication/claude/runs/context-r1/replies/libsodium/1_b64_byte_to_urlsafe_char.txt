@@ -1,0 +1,187 @@
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int lt26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int lt52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int lt62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int eq62 = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int eq63 = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+
+    return (int) ((lt26 & (x + 65U)) |
+                  ((lt26 ^ 0xFFU) & lt52 & (x + 71U)) |
+                  ((lt52 ^ 0xFFU) & lt62 & (x - 4U)) |
+                  (eq62 & 45U) |
+                  (eq63 & 95U));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) << 16) >> 24;
+    unsigned int b = ((x - 52U) << 16) >> 24;
+    unsigned int c = ((x - 62U) << 16) >> 24;
+    unsigned int d = ((0U - (x ^ 62U)) << 16) >> 24;
+    unsigned int e = ((0U - (x ^ 63U)) << 16) >> 24;
+    unsigned int r = 0U;
+
+    r |= (e ^ 0xFFU) & 95U;
+    r |= (d ^ 0xFFU) & 45U;
+    r |= (b ^ 0xFFU) & c & (x - 4U);
+    r |= (a ^ 0xFFU) & b & (x + 71U);
+    r |= a & (x + 65U);
+    return (int) r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned char a = (unsigned char) ((x - 26U) >> 8);
+    unsigned char b = (unsigned char) ((x - 52U) >> 8);
+    unsigned char c = (unsigned char) ((x - 62U) >> 8);
+    unsigned char na = (unsigned char) ~a;
+    unsigned char nb = (unsigned char) ~b;
+    unsigned char d = (unsigned char) ~(unsigned char) ((0U - (x ^ 62U)) >> 8);
+    unsigned char e = (unsigned char) ~(unsigned char) ((0U - (x ^ 63U)) >> 8);
+    unsigned int r;
+
+    r = (unsigned int) a & (x + 65U);
+    r |= (unsigned int) na & (unsigned int) b & (x + 71U);
+    r |= (unsigned int) nb & (unsigned int) c & (x - 4U);
+    r |= (unsigned int) d & 45U;
+    r |= (unsigned int) e & 95U;
+    return (int) r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x + 0xFFFFFFE6U) >> 8) & 0xFFU;
+    unsigned int b = ((x + 0xFFFFFFCCU) >> 8) & 0xFFU;
+    unsigned int c = ((x + 0xFFFFFFC2U) >> 8) & 0xFFU;
+    unsigned int d = (((~(x ^ 62U) + 1U) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((~(x ^ 63U) + 1U) >> 8) & 0xFFU) ^ 0xFFU;
+
+    return (int) ((e & 95U) |
+                  (d & 45U) |
+                  ((b ^ 0xFFU) & c & (x + 0xFFFFFFFCU)) |
+                  ((a ^ 0xFFU) & b & (x + 71U)) |
+                  (a & (x + 65U)));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int t1 = a & (x + 65U);
+    unsigned int t2 = ((a | b) ^ a) & (x + 71U);
+    unsigned int t3 = ((b | c) ^ b) & (x - 4U);
+    unsigned int t4 = (((0U - (x ^ 62U)) >> 8) ^ 0xFFU) & 45U;
+    unsigned int t5 = (((0U - (x ^ 63U)) >> 8) ^ 0xFFU) & 95U;
+
+    return (int) (t1 | t2 | t3 | t4 | t5);
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int n = ((0U - (x ^ 62U)) >> 8) & 0xFFU;
+    unsigned int m = ((0U - (x ^ 63U)) >> 8) & 0xFFU;
+    unsigned int t1 = ~(~a | ~(x + 65U));
+    unsigned int t2 = ~(a | ~b | ~(x + 71U));
+    unsigned int t3 = ~(b | ~c | ~(x - 4U));
+    unsigned int t4 = ~(n | ~45U);
+    unsigned int t5 = ~(m | ~95U);
+
+    return (int) (t1 | t2 | t3 | t4 | t5);
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) & 0xFF00U) >> 8;
+    unsigned int b = ((x - 52U) & 0xFF00U) >> 8;
+    unsigned int c = ((x - 62U) & 0xFF00U) >> 8;
+    unsigned int d = ((((0U - (x ^ 62U)) & 0xFF00U) ^ 0xFF00U) >> 8);
+    unsigned int e = ((((0U - (x ^ 63U)) & 0xFF00U) ^ 0xFF00U) >> 8);
+    unsigned int low = (a & ((x + 65U) & 0xFFU)) | ((a ^ 0xFFU) & b & ((x + 71U) & 0xFFU));
+    unsigned int high = ((b ^ 0xFFU) & c & ((x - 4U) & 0xFFU)) | (d & 45U) | (e & 95U);
+
+    return (int) (high | low);
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = 0xFFU - (((0U - (x ^ 62U)) >> 8) & 0xFFU);
+    unsigned int e = 0xFFU - (((0U - (x ^ 63U)) >> 8) & 0xFFU);
+    unsigned int t2 = (0xFFU - a) & b & (x + 71U);
+    unsigned int t3 = (0xFFU - b) & c & (x - 4U);
+    unsigned int t4 = d & 45U;
+    unsigned int t5 = e & 95U;
+    unsigned int r = a & (x + 65U);
+
+    r = r + t2 - (r & t2);
+    r = r + t3 - (r & t3);
+    r = r + t4 - (r & t4);
+    r = r + t5 - (r & t5);
+    return (int) r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int base = x + 65U;
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int t1 = a & base;
+    unsigned int t2 = (a ^ 0xFFU) & b & (base + 6U);
+    unsigned int t3 = (b ^ 0xFFU) & c & (base - 69U);
+    unsigned int t45 = (d & 45U) | (e & 95U);
+    unsigned int r = (t1 ^ t2) ^ (t1 & t2);
+
+    r = (r ^ t3) ^ (r & t3);
+    r = (r ^ t45) ^ (r & t45);
+    return (int) r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int s26 = x - 26U;
+    unsigned int s52 = s26 - 26U;
+    unsigned int s62 = s52 - 10U;
+    unsigned int y62 = x ^ 62U;
+    unsigned int y63 = y62 ^ 1U;
+    unsigned int a = (s26 >> 8) & 0xFFU;
+    unsigned int b = (s52 >> 8) & 0xFFU;
+    unsigned int c = (s62 >> 8) & 0xFFU;
+    unsigned int d = ((y62 - 1U) >> 8) & 0xFFU;
+    unsigned int e = ((y63 - 1U) >> 8) & 0xFFU;
+
+    return (int) ((d & 45U) |
+                  (a & (x + 65U)) |
+                  (e & 95U) |
+                  (b & (a ^ 0xFFU) & (x + 71U)) |
+                  (c & (b ^ 0xFFU) & (x - 4U)));
+}
+```

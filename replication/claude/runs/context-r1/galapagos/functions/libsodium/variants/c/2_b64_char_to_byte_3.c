@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int a1 = 0xFFU - (((u - 65U) >> 8) & 0xFFU);
+    const unsigned int a2 = 0xFFU - (((90U - u) >> 8) & 0xFFU);
+    const unsigned int b1 = 0xFFU - (((u - 97U) >> 8) & 0xFFU);
+    const unsigned int b2 = 0xFFU - (((122U - u) >> 8) & 0xFFU);
+    const unsigned int d1 = 0xFFU - (((u - 48U) >> 8) & 0xFFU);
+    const unsigned int d2 = 0xFFU - (((57U - u) >> 8) & 0xFFU);
+    const unsigned int p = 0xFFU - (((0U - (u ^ 43U)) >> 8) & 0xFFU);
+    const unsigned int s = 0xFFU - (((0U - (u ^ 47U)) >> 8) & 0xFFU);
+    const unsigned int x =
+        (a1 & a2 & (u - 65U)) |
+        (b1 & b2 & (u - 71U)) |
+        (d1 & d2 & (u + 4U)) |
+        (p & 62U) |
+        (s & 63U);
+    const unsigned int z = 0xFFU - (((0U - x) >> 8) & 0xFFU);
+    const unsigned int n = ((0U - (u ^ 65U)) >> 8) & 0xFFU;
+
+    return x | (z & n);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

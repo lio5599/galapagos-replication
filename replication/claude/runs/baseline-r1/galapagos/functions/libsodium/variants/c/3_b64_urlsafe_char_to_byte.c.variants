@@ -1,0 +1,219 @@
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    unsigned int       x;
+
+    x  = ((~(uc - 65U) >> 8) & 0xFFU) & ((~(90U - uc) >> 8) & 0xFFU) & (uc - 65U);
+    x |= ((~(uc - 97U) >> 8) & 0xFFU) & ((~(122U - uc) >> 8) & 0xFFU) & (uc - 71U);
+    x |= ((~(uc - 48U) >> 8) & 0xFFU) & ((~(57U - uc) >> 8) & 0xFFU) & (uc + 4U);
+    x |= ((((uc ^ 45U) - 1U) >> 8) & 0xFFU) & 62U;
+    x |= ((((uc ^ 95U) - 1U) >> 8) & 0xFFU) & 63U;
+
+    return x | ((((x - 1U) >> 8) & 0xFFU) & (((((uc ^ 65U) - 1U) >> 8) & 0xFFU) ^ 0xFFU));
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    unsigned int ge_A = (((uc - (unsigned int) 'A') >> 8) & 0xFF) ^ 0xFF;
+    unsigned int le_Z = ((((unsigned int) 'Z' - uc) >> 8) & 0xFF) ^ 0xFF;
+    unsigned int ge_a = (((uc - (unsigned int) 'a') >> 8) & 0xFF) ^ 0xFF;
+    unsigned int le_z = ((((unsigned int) 'z' - uc) >> 8) & 0xFF) ^ 0xFF;
+    unsigned int ge_0 = (((uc - (unsigned int) '0') >> 8) & 0xFF) ^ 0xFF;
+    unsigned int le_9 = ((((unsigned int) '9' - uc) >> 8) & 0xFF) ^ 0xFF;
+    unsigned int eq_dash = (((0U - (uc ^ (unsigned int) '-')) >> 8) & 0xFF) ^ 0xFF;
+    unsigned int eq_us   = (((0U - (uc ^ (unsigned int) '_')) >> 8) & 0xFF) ^ 0xFF;
+    unsigned int eq_A    = (((0U - (uc ^ (unsigned int) 'A')) >> 8) & 0xFF) ^ 0xFF;
+    unsigned int x, eq_x0;
+
+    x = (ge_A & le_Z & (uc - (unsigned int) 'A')) |
+        (ge_a & le_z & (uc - (unsigned int) ('a' - 26))) |
+        (ge_0 & le_9 & (uc + 4U)) |
+        (eq_dash & 62U) |
+        (eq_us & 63U);
+
+    eq_x0 = (((0U - x) >> 8) & 0xFF) ^ 0xFF;
+
+    return x | (eq_x0 & (eq_A ^ 0xFF));
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    static const unsigned int lo[3]  = { 65U, 97U, 48U };
+    static const unsigned int hi[3]  = { 90U, 122U, 57U };
+    static const unsigned int off[3] = { 65U, 71U, 0xFFFFFFFCU };
+    static const unsigned int sym[2] = { 45U, 95U };
+    static const unsigned int val[2] = { 62U, 63U };
+    const unsigned int uc = (unsigned int) c;
+    unsigned int x = 0U;
+    unsigned int eq_x0, eq_A;
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        unsigned int ge = (((uc - lo[i]) >> 8) & 0xFFU) ^ 0xFFU;
+        unsigned int le = (((hi[i] - uc) >> 8) & 0xFFU) ^ 0xFFU;
+        x |= ge & le & (uc - off[i]);
+    }
+    for (i = 0; i < 2; i++) {
+        unsigned int eq = (((0U - (uc ^ sym[i])) >> 8) & 0xFFU) ^ 0xFFU;
+        x |= eq & val[i];
+    }
+    eq_x0 = (((0U - x) >> 8) & 0xFFU) ^ 0xFFU;
+    eq_A  = (((0U - (uc ^ 65U)) >> 8) & 0xFFU) ^ 0xFFU;
+
+    return x | (eq_x0 & (eq_A ^ 0xFFU));
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    unsigned int x;
+    unsigned int m_up, m_lo, m_dg, m_dash, m_us, m_zero, m_notA;
+
+    m_up   = (unsigned int) (unsigned char) ~((uc - 65U) >> 8) &
+             (unsigned int) (unsigned char) ~((90U - uc) >> 8);
+    m_lo   = (unsigned int) (unsigned char) ~((uc - 97U) >> 8) &
+             (unsigned int) (unsigned char) ~((122U - uc) >> 8);
+    m_dg   = (unsigned int) (unsigned char) ~((uc - 48U) >> 8) &
+             (unsigned int) (unsigned char) ~((57U - uc) >> 8);
+    m_dash = (unsigned int) (unsigned char) ~((0U - (uc ^ 45U)) >> 8);
+    m_us   = (unsigned int) (unsigned char) ~((0U - (uc ^ 95U)) >> 8);
+
+    x = (m_up & (uc - 65U)) | (m_lo & (uc - 71U)) | (m_dg & (uc + 4U)) |
+        (m_dash & 62U) | (m_us & 63U);
+
+    m_zero = (unsigned int) (unsigned char) ~((0U - x) >> 8);
+    m_notA = (unsigned int) (unsigned char) ((0U - (uc ^ 65U)) >> 8);
+
+    return x | (m_zero & m_notA);
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    unsigned int x;
+
+    x = ((0xFFU - (((uc - 65U) >> 8) & 0xFFU)) & (0xFFU - (((90U - uc) >> 8) & 0xFFU)) & (uc - 65U)) |
+        ((0xFFU - (((uc - 97U) >> 8) & 0xFFU)) & (0xFFU - (((122U - uc) >> 8) & 0xFFU)) & (uc - 71U)) |
+        ((0xFFU - (((uc - 48U) >> 8) & 0xFFU)) & (0xFFU - (((57U - uc) >> 8) & 0xFFU)) & (uc + 4U)) |
+        ((0xFFU - (((0U - (uc ^ 45U)) >> 8) & 0xFFU)) & 62U) |
+        ((0xFFU - (((0U - (uc ^ 95U)) >> 8) & 0xFFU)) & 63U);
+
+    return x | ((0xFFU - (((0U - x) >> 8) & 0xFFU)) & (((0U - (uc ^ 65U)) >> 8) & 0xFFU));
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    unsigned int x = 0U;
+
+    x |= ((((uc - 65U) >> 8) ^ 0xFFU) & 0xFFU) & ((((90U - uc) >> 8) ^ 0xFFU) & 0xFFU) & (uc - 65U);
+    x |= ((((uc - 97U) >> 8) ^ 0xFFU) & 0xFFU) & ((((122U - uc) >> 8) ^ 0xFFU) & 0xFFU) & (uc - 71U);
+    x |= ((((uc - 48U) >> 8) ^ 0xFFU) & 0xFFU) & ((((57U - uc) >> 8) ^ 0xFFU) & 0xFFU) & (uc + 4U);
+    x |= ((((0U - (uc ^ 45U)) >> 8) ^ 0xFFU) & 0xFFU) & 62U;
+    x |= ((((0U - (uc ^ 95U)) >> 8) ^ 0xFFU) & 0xFFU) & 63U;
+
+    return x | (((((0U - x) >> 8) ^ 0xFFU) & 0xFFU) & (((0U - (uc ^ 65U)) >> 8) & 0xFFU));
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    const unsigned int r_up = ((~(uc - 65U) & ~(90U - uc)) >> 8) & 0xFFU;
+    const unsigned int r_lo = ((~(uc - 97U) & ~(122U - uc)) >> 8) & 0xFFU;
+    const unsigned int r_dg = ((~(uc - 48U) & ~(57U - uc)) >> 8) & 0xFFU;
+    const unsigned int e_dash = (~(0U - (uc ^ 45U)) >> 8) & 0xFFU;
+    const unsigned int e_us   = (~(0U - (uc ^ 95U)) >> 8) & 0xFFU;
+    const unsigned int x = (r_up & (uc - 65U)) | (r_lo & (uc - 71U)) | (r_dg & (uc + 4U)) |
+                           (e_dash & 62U) | (e_us & 63U);
+    const unsigned int e_x0 = (~(0U - x) >> 8) & 0xFFU;
+    const unsigned int n_A  = ((0U - (uc ^ 65U)) >> 8) & 0xFFU;
+
+    return x | (e_x0 & n_A);
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    unsigned int x;
+
+    x = ((~((uc - 65U) | (90U - uc)) >> 8) & 0xFFU & (uc - 65U)) |
+        ((~((uc - 97U) | (122U - uc)) >> 8) & 0xFFU & (uc - 71U)) |
+        ((~((uc - 48U) | (57U - uc)) >> 8) & 0xFFU & (uc + 4U)) |
+        ((((uc ^ 45U) - 1U) >> 8) & 62U) |
+        ((((uc ^ 95U) - 1U) >> 8) & 63U);
+
+    return x | (((x - 1U) >> 8) & ~((((uc ^ 65U) - 1U) >> 8)) & 0xFFU);
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    static const unsigned int lo[5]  = { 65U, 97U, 48U, 45U, 95U };
+    static const unsigned int hi[5]  = { 90U, 122U, 57U, 45U, 95U };
+    static const unsigned int off[5] = { 65U, 71U, 0xFFFFFFFCU, 0U, 0U };
+    static const unsigned int con[5] = { 0U, 0U, 0U, 62U, 63U };
+    static const unsigned int rng[5] = { 1U, 1U, 1U, 0U, 0U };
+    const unsigned int uc = (unsigned int) c;
+    unsigned int x = 0U;
+    unsigned int k;
+
+    for (k = 0U; k < 5U; k++) {
+        if (rng[k]) {
+            unsigned int m = ((~(uc - lo[k]) >> 8) & 0xFFU) & ((~(hi[k] - uc) >> 8) & 0xFFU);
+            x |= m & (uc - off[k]);
+        } else {
+            unsigned int m = (((uc ^ lo[k]) - 1U) >> 8) & 0xFFU;
+            x |= m & con[k];
+        }
+    }
+
+    return x | ((((x - 1U) >> 8) & 0xFFU) & ((((0U - (uc ^ 65U)) >> 8)) & 0xFFU));
+}
+
+
+
+static unsigned int b64_urlsafe_char_to_byte(int c)
+{
+    const unsigned int uc = (unsigned int) c;
+    unsigned int d, t, x, eq_zero, eq_A;
+
+    d = uc - 65U;
+    t = 90U - uc;
+    x = ((((d >> 8) & 0xFFU) | ((t >> 8) & 0xFFU)) ^ 0xFFU) & d;
+
+    d = uc - 97U;
+    t = 122U - uc;
+    x |= ((((d >> 8) & 0xFFU) | ((t >> 8) & 0xFFU)) ^ 0xFFU) & (uc - 71U);
+
+    d = uc - 48U;
+    t = 57U - uc;
+    x |= ((((d >> 8) & 0xFFU) | ((t >> 8) & 0xFFU)) ^ 0xFFU) & (uc + 4U);
+
+    d = 0U - (uc ^ 45U);
+    x |= (((d >> 8) & 0xFFU) ^ 0xFFU) & 62U;
+
+    d = 0U - (uc ^ 95U);
+    x |= (((d >> 8) & 0xFFU) ^ 0xFFU) & 63U;
+
+    eq_zero = (((0U - x) >> 8) & 0xFFU) ^ 0xFFU;
+    eq_A    = (((0U - (uc ^ 65U)) >> 8) & 0xFFU) ^ 0xFFU;
+
+    return x | (eq_zero & ~eq_A & 0xFFU);
+}

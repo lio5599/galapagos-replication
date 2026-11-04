@@ -1,0 +1,1050 @@
+$ python3 -m tests.usecase libsodium c
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium
+INFO:root:No change provided
+INFO:root:Setting up autogen
+INFO:root:Running ./autogen.sh -s
+DEBUG:root:autoconf scripts already exist.
+
+INFO:root:Calling configure
+INFO:root:Running ./configure
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Pipeline for variants of b64_byte_to_char /home/diogo/galapagos-clones/libsodium/src/libsodium/sodium/codecs.c
+INFO:root:Pipeline for variants of b64_byte_to_urlsafe_char /home/diogo/galapagos-clones/libsodium/src/libsodium/sodium/codecs.c
+INFO:root:Pipeline for variants of b64_char_to_byte /home/diogo/galapagos-clones/libsodium/src/libsodium/sodium/codecs.c
+INFO:root:Variants to check 30
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-3-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+llvm-as: /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.ll:859:55: error: use of undefined value '@b64_byte_to_char.chr'
+  %arrayidx16 = getelementptr inbounds [2 x i32], ptr @b64_byte_to_char.chr, i64 0, i64 %idxprom15
+                                                      ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.ll', '-o', '/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-1-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+llvm-as: /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.ll:737:53: error: use of undefined value '@b64_byte_to_urlsafe_char.t'
+  %arrayidx = getelementptr inbounds [65 x i8], ptr @b64_byte_to_urlsafe_char.t, i64 0, i64 %idxprom
+                                                    ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.ll', '-o', '/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-7-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+llvm-as: /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.ll:764:53: error: use of undefined value '@b64_byte_to_urlsafe_char.off'
+  %arrayidx = getelementptr inbounds [5 x i32], ptr @b64_byte_to_urlsafe_char.off, i64 0, i64 %idxprom
+                                                    ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.ll', '-o', '/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-9-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+llvm-as: /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.ll:756:53: error: use of undefined value '@b64_byte_to_urlsafe_char.base'
+  %arrayidx4 = getelementptr inbounds [5 x i8], ptr @b64_byte_to_urlsafe_char.base, i64 0, i64 %idxprom3
+                                                    ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.ll', '-o', '/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-9-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+llvm-as: /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.ll:1233:53: error: use of undefined value '@b64_char_to_byte.t'
+  %arrayidx = getelementptr inbounds [80 x i8], ptr @b64_char_to_byte.t, i64 0, i64 %idxprom
+                                                    ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.ll', '-o', '/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-7-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+llvm-as: /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.ll:1250:54: error: use of undefined value '@b64_char_to_byte.base'
+  %arrayidx5 = getelementptr inbounds [5 x i32], ptr @b64_char_to_byte.base, i64 0, i64 %idxprom4
+                                                     ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.ll', '-o', '/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-2-c
+Parsing original bitcode /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+llvm-as: /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.ll:1250:53: error: use of undefined value '@b64_char_to_byte.alphabet'
+  %arrayidx = getelementptr inbounds [65 x i8], ptr @b64_char_to_byte.alphabet, i64 0, i64 %idxprom
+                                                    ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.ll', '-o', '/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+Results will be in /home/liolsen/galapagos-replication/scripts/out/libsodium
+Shadowing /home/liolsen/galapagos-replication/scripts/tests/../../use_cases/libsodium
+Copying /home/liolsen/galapagos-replication/scripts/tests/../../use_cases/libsodium to /home/liolsen/galapagos-clones/libsodium
+/home/liolsen/galapagos-clones/libsodium
+/home/liolsen/galapagos-clones/libsodium
+Compiled in 70.00s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c
+Compiled in 1.00s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c
+Compiled in 0.88s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c
+Compiled in 1.00s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c
+Compiled in 0.97s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c
+Compiled in 1.11s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c
+Compiled in 1.15s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-3-c
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c
+Compiled in 2.66s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c
+Compiled in 1.05s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c
+/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c
+Compiled in 1.50s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-1-c
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c
+/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c
+Compiled in 1.10s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-7-c
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c
+/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c
+Compiled in 1.17s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c
+/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c
+Compiled in 1.36s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-9-c
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c
+/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c
+Compiled in 1.34s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c
+/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c
+Compiled in 1.19s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c
+/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c
+Compiled in 1.00s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c
+/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c
+Compiled in 1.32s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-9-c
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c
+Compiled in 6.99s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c
+Compiled in 5.39s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c
+Compiled in 8.00s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c
+Compiled in 4.61s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c
+Compiled in 1.55s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-7-c
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c
+Compiled in 1.46s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c
+Compiled in 1.34s
+Shadowing /home/liolsen/galapagos-clones/libsodium
+Copying /home/liolsen/galapagos-clones/libsodium to /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-2-c
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+Mismatch INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+/home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/.libs/libsodium.so
+Mismatch INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+/home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp0u_eaqj1 and /tmp/tmp2zplsm33 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5mkod78r
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp492m7rc9
+INFO:root:Alive verifier for: /tmp/tmp0u_eaqj1 /tmp/tmp2zplsm33
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpxodv80tt and /tmp/tmpbs8xn6tg to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5cipyabc
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7_zsax3f
+INFO:root:Alive verifier for: /tmp/tmpxodv80tt /tmp/tmpbs8xn6tg
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpkjeddnho and /tmp/tmpxt7wg_1o to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi36tbmme
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmplp73ib3t
+INFO:root:Alive verifier for: /tmp/tmpkjeddnho /tmp/tmpxt7wg_1o
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpx917itye and /tmp/tmpihqvk1a3 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpo39q3srn
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_zdyo0a2
+INFO:root:Alive verifier for: /tmp/tmpx917itye /tmp/tmpihqvk1a3
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp7e048ux1 and /tmp/tmpr5_qjscs to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp08q82xed
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7k4ob7a4
+INFO:root:Alive verifier for: /tmp/tmp7e048ux1 /tmp/tmpr5_qjscs
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpak1stijo and /tmp/tmp96su0fne to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpa0s7q11n
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp9h6c_sni
+INFO:root:Alive verifier for: /tmp/tmpak1stijo /tmp/tmp96su0fne
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpbvg60eza and /tmp/tmp0233ctn4 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpf5m1ysvv
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmppeowpwb7
+INFO:root:Alive verifier for: /tmp/tmpbvg60eza /tmp/tmp0233ctn4
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpq_tnbj9g and /tmp/tmpz2_4hbbg to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp9wkl66gt
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpal2h6kyq
+INFO:root:Alive verifier for: /tmp/tmpq_tnbj9g /tmp/tmpz2_4hbbg
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c
+WARNING:root:b'Making check in builds\nmake[1]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/builds\'\nmake[1]: Nothing to be done for \'check\'.\nmake[1]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/builds\'\nMaking check in dist-build\nmake[1]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/dist-build\'\nmake[1]: Nothing to be done for \'check\'.\nmake[1]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/dist-build\'\nMaking check in msvc-scripts\nmake[1]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/msvc-scripts\'\nmake[1]: Nothing to be done for \'check\'.\nmake[1]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/msvc-scripts\'\nMaking check in src\nmake[1]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src\'\nMaking check in libsodium\nmake[2]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium\'\nMaking check in include\nmake[3]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/include\'\nmake[3]: Nothing to be done for \'check\'.\nmake[3]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/include\'\nmake[3]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium\'\nmake[3]: Nothing to be done for \'check-am\'.\nmake[3]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium\'\nmake[2]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium\'\nmake[2]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src\'\nmake[2]: Nothing to be done for \'check-am\'.\nmake[2]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src\'\nmake[1]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src\'\nMaking check in test\nmake[1]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test\'\nMaking check in default\nmake[2]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\nmake  aead_aegis128l aead_aegis256 aead_aes256gcm aead_aes256gcm2 aead_chacha20poly1305 aead_chacha20poly13052 aead_xchacha20poly1305 auth auth2 auth3 auth5 auth6 auth7 box box2 box7 box8 box_easy box_easy2 box_seal box_seed chacha20 codecs core1 core2 core3 core4 core5 core6 ed25519_convert generichash generichash2 generichash3 hash hash3 kdf keygen kx metamorphic misuse onetimeauth onetimeauth2 onetimeauth7 pwhash_argon2i pwhash_argon2id randombytes scalarmult scalarmult2 scalarmult5 scalarmult6 scalarmult7 scalarmult8 secretbox secretbox2 secretbox7 secretbox8 secretbox_easy secretbox_easy2 secretstream_xchacha20poly1305 shorthash sign sign2 sodium_core sodium_utils sodium_version stream stream2 stream3 stream4 verify1 sodium_utils2 sodium_utils3 core_ed25519 core_ed25519_h2c core_ristretto255 kdf_hkdf pwhash_scrypt pwhash_scrypt_ll scalarmult_ed25519 scalarmult_ristretto255 siphashx24 xchacha20\nmake[3]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\n  CC       aead_aegis128l.o\n  CCLD     aead_aegis128l\n  CC       aead_aegis256.o\n  CCLD     aead_aegis256\n  CC       aead_aes256gcm.o\n  CCLD     aead_aes256gcm\n  CC       aead_aes256gcm2.o\n  CCLD     aead_aes256gcm2\n  CC       aead_chacha20poly1305.o\n  CCLD     aead_chacha20poly1305\n  CC       aead_chacha20poly13052.o\n  CCLD     aead_chacha20poly13052\n  CC       aead_xchacha20poly1305.o\n  CCLD     aead_xchacha20poly1305\n  CC       auth.o\n  CCLD     auth\n  CC       auth2.o\n  CCLD     auth2\n  CC       auth3.o\n  CCLD     auth3\n  CC       auth5.o\n  CCLD     auth5\n  CC       auth6.o\n  CCLD     auth6\n  CC       auth7.o\n  CCLD     auth7\n  CC       box.o\n  CCLD     box\n  CC       box2.o\n  CCLD     box2\n  CC       box7.o\n  CCLD     box7\n  CC       box8.o\n  CCLD     box8\n  CC       box_easy.o\n  CCLD     box_easy\n  CC       box_easy2.o\n  CCLD     box_easy2\n  CC       box_seal.o\n  CCLD     box_seal\n  CC       box_seed.o\n  CCLD     box_seed\n  CC       chacha20.o\n  CCLD     chacha20\n  CC       codecs.o\n  CCLD     codecs\n  CC       core1.o\n  CCLD     core1\n  CC       core2.o\n  CCLD     core2\n  CC       core3.o\n  CCLD     core3\n  CC       core4.o\n  CCLD     core4\n  CC       core5.o\n  CCLD     core5\n  CC       core6.o\n  CCLD     core6\n  CC       ed25519_convert.o\n  CCLD     ed25519_convert\n  CC       generichash.o\n  CCLD     generichash\n  CC       generichash2.o\n  CCLD     generichash2\n  CC       generichash3.o\n  CCLD     generichash3\n  CC       hash.o\n  CCLD     hash\n  CC       hash3.o\n  CCLD     hash3\n  CC       kdf.o\n  CCLD     kdf\n  CC       keygen.o\n  CCLD     keygen\n  CC       kx.o\n  CCLD     kx\n  CC       metamorphic.o\n  CCLD     metamorphic\n  CC       misuse.o\n  CCLD     misuse\n  CC       onetimeauth.o\n  CCLD     onetimeauth\n  CC       onetimeauth2.o\n  CCLD     onetimeauth2\n  CC       onetimeauth7.o\n  CCLD     onetimeauth7\n  CC       pwhash_argon2i.o\n  CCLD     pwhash_argon2i\n  CC       pwhash_argon2id.o\n  CCLD     pwhash_argon2id\n  CC       randombytes.o\n  CCLD     randombytes\n  CC       scalarmult.o\n  CCLD     scalarmult\n  CC       scalarmult2.o\n  CCLD     scalarmult2\n  CC       scalarmult5.o\n  CCLD     scalarmult5\n  CC       scalarmult6.o\n  CCLD     scalarmult6\n  CC       scalarmult7.o\n  CCLD     scalarmult7\n  CC       scalarmult8.o\n  CCLD     scalarmult8\n  CC       secretbox.o\n  CCLD     secretbox\n  CC       secretbox2.o\n  CCLD     secretbox2\n  CC       secretbox7.o\n  CCLD     secretbox7\n  CC       secretbox8.o\n  CCLD     secretbox8\n  CC       secretbox_easy.o\n  CCLD     secretbox_easy\n  CC       secretbox_easy2.o\n  CCLD     secretbox_easy2\n  CC       secretstream_xchacha20poly1305.o\n  CCLD     secretstream_xchacha20poly1305\n  CC       shorthash.o\n  CCLD     shorthash\n  CC       sign.o\n  CCLD     sign\n  CC       sign2.o\n  CCLD     sign2\n  CC       sodium_core.o\n  CCLD     sodium_core\n  CC       sodium_utils.o\n  CCLD     sodium_utils\n  CC       sodium_version.o\n  CCLD     sodium_version\n  CC       stream.o\n  CCLD     stream\n  CC       stream2.o\n  CCLD     stream2\n  CC       stream3.o\n  CCLD     stream3\n  CC       stream4.o\n  CCLD     stream4\n  CC       verify1.o\n  CCLD     verify1\n  CC       sodium_utils2.o\n  CCLD     sodium_utils2\n  CC       sodium_utils3.o\n  CCLD     sodium_utils3\n  CC       core_ed25519.o\n  CCLD     core_ed25519\n  CC       core_ed25519_h2c.o\n  CCLD     core_ed25519_h2c\n  CC       core_ristretto255.o\n  CCLD     core_ristretto255\n  CC       kdf_hkdf.o\n  CCLD     kdf_hkdf\n  CC       pwhash_scrypt.o\n  CCLD     pwhash_scrypt\n  CC       pwhash_scrypt_ll.o\n  CCLD     pwhash_scrypt_ll\n  CC       scalarmult_ed25519.o\n  CCLD     scalarmult_ed25519\n  CC       scalarmult_ristretto255.o\n  CCLD     scalarmult_ristretto255\n  CC       siphashx24.o\n  CCLD     siphashx24\n  CC       xchacha20.o\n  CCLD     xchacha20\nmake[3]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\nmake  check-TESTS\nmake[3]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\nmake[4]: Entering directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\nPASS: aead_aegis128l\nPASS: aead_aegis256\nPASS: aead_aes256gcm\nPASS: aead_aes256gcm2\nPASS: aead_chacha20poly1305\nPASS: aead_chacha20poly13052\nPASS: aead_xchacha20poly1305\nPASS: auth\nPASS: auth2\nPASS: auth3\nPASS: auth5\nPASS: auth6\nPASS: auth7\nPASS: box\nPASS: box2\nPASS: box7\nPASS: box8\nPASS: box_easy\nPASS: box_easy2\nPASS: box_seal\nPASS: box_seed\nPASS: chacha20\nERROR: codecs\nPASS: core1\nPASS: core2\nPASS: core3\nPASS: core4\nPASS: core5\nPASS: core6\nPASS: ed25519_convert\nPASS: generichash\nPASS: generichash2\nPASS: generichash3\nPASS: hash\nPASS: hash3\nPASS: kdf\nPASS: keygen\nPASS: kx\nPASS: metamorphic\nPASS: misuse\nPASS: onetimeauth\nPASS: onetimeauth2\nPASS: onetimeauth7\n../../build-aux/test-driver: line 112: 3666441 Aborted                 (core dumped) "$@" >> "$log_file" 2>&1\nFAIL: pwhash_argon2i\n../../build-aux/test-driver: line 112: 3666978 Aborted                 (core dumped) "$@" >> "$log_file" 2>&1\nFAIL: pwhash_argon2id\nPASS: randombytes\nPASS: scalarmult\nPASS: scalarmult2\nPASS: scalarmult5\nPASS: scalarmult6\nPASS: scalarmult7\nPASS: scalarmult8\nPASS: secretbox\nPASS: secretbox2\nPASS: secretbox7\nPASS: secretbox8\nPASS: secretbox_easy\nPASS: secretbox_easy2\nPASS: secretstream_xchacha20poly1305\nPASS: shorthash\nPASS: sign\nPASS: sign2\nPASS: sodium_core\nPASS: sodium_utils\nPASS: sodium_version\nPASS: stream\nPASS: stream2\nPASS: stream3\nPASS: stream4\nPASS: verify1\nPASS: sodium_utils2\nPASS: sodium_utils3\nPASS: core_ed25519\nPASS: core_ed25519_h2c\nPASS: core_ristretto255\nPASS: kdf_hkdf\nPASS: pwhash_scrypt\nPASS: pwhash_scrypt_ll\nPASS: scalarmult_ed25519\nPASS: scalarmult_ristretto255\nPASS: siphashx24\nPASS: xchacha20\n============================================================================\nTestsuite summary for libsodium 1.0.18\n============================================================================\n# TOTAL: 82\n# PASS:  79\n# SKIP:  0\n# XFAIL: 0\n# FAIL:  2\n# XPASS: 0\n# ERROR: 1\n============================================================================\nSee test/default/test-suite.log\nPlease report to https://github.com/jedisct1/libsodium/issues\n============================================================================\nmake[4]: *** [Makefile:1858: test-suite.log] Error 1\nmake[4]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\nmake[3]: *** [Makefile:1966: check-TESTS] Error 2\nmake[3]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\nmake[2]: *** [Makefile:2606: check-am] Error 2\nmake[2]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test/default\'\nmake[1]: *** [Makefile:411: check-recursive] Error 1\nmake[1]: Leaving directory \'/home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/test\'\nmake: *** [Makefile:522: check-recursive] Error 1\n'
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpx7cvhhhh and /tmp/tmpgeqbbcdh to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp0mi05yb5
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpzxhg0lel
+INFO:root:Alive verifier for: /tmp/tmpx7cvhhhh /tmp/tmpgeqbbcdh
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/FailedToProve/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpb65h6a7i and /tmp/tmpgrbt6oiz to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6ait0b53
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6l055xu6
+INFO:root:Alive verifier for: /tmp/tmpb65h6a7i /tmp/tmpgrbt6oiz
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpmnjwjmqf and /tmp/tmplxxj3j9d to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_5uknd0e
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpskslg819
+INFO:root:Alive verifier for: /tmp/tmpmnjwjmqf /tmp/tmplxxj3j9d
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpfyx7fajr and /tmp/tmp4ulaf3mu to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_7380ue1
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpqogoq85i
+INFO:root:Alive verifier for: /tmp/tmpfyx7fajr /tmp/tmp4ulaf3mu
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpibt85su7 and /tmp/tmpxb7fwfo6 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_2pkcqfy
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7qr6_d3u
+INFO:root:Alive verifier for: /tmp/tmpibt85su7 /tmp/tmpxb7fwfo6
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmphumya9h5 and /tmp/tmpaim6fs3d to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpjlrlsa0l
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp1xc2l5eg
+INFO:root:Alive verifier for: /tmp/tmphumya9h5 /tmp/tmpaim6fs3d
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp3yz0xm_b and /tmp/tmp48i763yz to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp045jqb3k
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpn22v_j0v
+INFO:root:Alive verifier for: /tmp/tmp3yz0xm_b /tmp/tmp48i763yz
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpxniwb993 and /tmp/tmpnwrcjt8o to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpncbw3o0j
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp1oridl2m
+INFO:root:Alive verifier for: /tmp/tmpxniwb993 /tmp/tmpnwrcjt8o
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpv96g5uid and /tmp/tmpllnod0b7 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpuhpjvf3a
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpgi4az44r
+INFO:root:Alive verifier for: /tmp/tmpv96g5uid /tmp/tmpllnod0b7
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpoh2t6xqs and /tmp/tmp22o3tllm to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpf1ws8h0l
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpp0faodff
+INFO:root:Alive verifier for: /tmp/tmpoh2t6xqs /tmp/tmp22o3tllm
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp9p55g0dw and /tmp/tmpqvgtlq_7 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpv9tdrpcj
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5ivrypwd
+INFO:root:Alive verifier for: /tmp/tmp9p55g0dw /tmp/tmpqvgtlq_7
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpnhr_6orr and /tmp/tmpgwi3bxd2 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5xr9pzvz
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpn5jf84u7
+INFO:root:Alive verifier for: /tmp/tmpnhr_6orr /tmp/tmpgwi3bxd2
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmptz04tmnw and /tmp/tmpcyni38o6 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpvtur76gb
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpvh6nbamd
+INFO:root:Alive verifier for: /tmp/tmptz04tmnw /tmp/tmpcyni38o6
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp0irnkozf and /tmp/tmp9xd1t33j to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpecuezpc4
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpfol57584
+INFO:root:Alive verifier for: /tmp/tmp0irnkozf /tmp/tmp9xd1t33j
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c
+INFO:root:Creating temporary files for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp_218_6z6 and /tmp/tmp1z5cd0a0 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpc4eqa9s7
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp4q7mqz3p
+INFO:root:Alive verifier for: /tmp/tmp_218_6z6 /tmp/tmp1z5cd0a0
+INFO:root:Calling alive for /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc and /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/liolsen/galapagos-replication/scripts/verifier/debug/codecs.bccmp/Incorrect/codecs.bc.alive.txt
+WARNING:root:The tests did not pass, so we will not verify the bitcodes
+/home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/codecs.bc /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/liolsen/galapagos-clones/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/liolsen/galapagos-clones/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+Tested in 58.79s
+Tested in 71.39s
+Tested in 64.80s
+Tested in 65.01s
+Tested in 93.20s
+Tested in 70.81s
+Tested in 97.46s
+Tested in 64.30s
+Tested in 68.70s
+Tested in 72.84s
+Tested in 78.45s
+Tested in 56.70s
+Tested in 93.83s
+Tested in 63.59s
+Tested in 94.07s
+Tested in 82.54s
+Tested in 101.37s
+Tested in 64.73s
+Tested in 91.67s
+Tested in 66.72s
+Tested in 86.87s
+Tested in 66.74s

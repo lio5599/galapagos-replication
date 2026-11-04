@@ -1,0 +1,11 @@
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t s, e, mant;
+
+    s = x & ((uint64_t)1 << 63);
+    e = (x >> 52) & 0x7FF;
+    mant = x & (((uint64_t)1 << 52) - 1);
+    if (e == 0) {
+        return 0;
+    }
+    return s | ((e - 1) << 52) | mant;
+}

@@ -1,0 +1,166 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Reference: decodes one G.711 A-law byte into a signed linear PCM sample.
+	// Approach: XOR 0x55, split into mantissa m and segment seg, form m*16+8.
+	// If seg is nonzero, add the implicit 0x100 bit and shift left by seg-1.
+	// This gives m*16+8 for seg 0 and ((m<<4)+0x108)<<(seg-1) otherwise, as in the reference.
+	// XOR 0x55 leaves bit 7 alone, so testing bit 7 of the input gives the same sign.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int m = x & 0x0f;
+	int seg = x >> 4;
+	int t = (m << 4) + 8;
+	if (seg) {
+		t += 0x100;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: expand the reference formula per segment into tables of shift and base.
+	// seg 0: (m<<4)+8. seg s>=1: (m<<(s+3)) + (0x108<<(s-1)).
+	// The tables hold those shifts and bases, for example 0x108<<6 = 0x4200 for seg 7.
+	// The sign comes from bit 7, which XOR 0x55 does not change.
+	static const int sh[8] = { 4, 4, 5, 6, 7, 8, 9, 10 };
+	static const int base[8] = { 8, 0x108, 0x210, 0x420, 0x840, 0x1080, 0x2100, 0x4200 };
+	int x = (a_val ^ 0x55) & 0x7f;
+	int seg = x >> 4;
+	int t = ((x & 0x0f) << sh[seg]) + base[seg];
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: build (m<<4)+8, and for seg>=1 add 0x100.
+	// Then double the value seg-1 times in a loop.
+	// The loop does nothing for seg 0 and seg 1, matching the reference.
+	// The sign is taken from bit 7 of the input, which XOR 0x55 does not change.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int seg = x >> 4;
+	int t = ((x & 0x0f) << 4) + 8;
+	if (seg > 0) {
+		t += 0x100;
+		while (--seg > 0)
+			t <<= 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: use multiplication instead of shifts.
+	// value = (m*16 + 8 + 256*(seg!=0)) * 2^(seg-1), using a factor of 1 for seg 0.
+	// For seg 0 this is m*16+8, and for seg>=1 it is ((m<<4)+0x108)<<(seg-1).
+	// The result is then multiplied by +1 or -1 according to bit 7 of the input.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int seg = x >> 4;
+	int m = x & 0x0f;
+	int scale = seg ? (1 << (seg - 1)) : 1;
+	int t = (m * 16 + 8 + (seg ? 256 : 0)) * scale;
+	int sign = (a_val & 0x80) ? 1 : -1;
+	return sign * t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: XOR with 0xD5 instead of 0x55, which also inverts the sign bit.
+	// The low 7 bits are the same as after XOR 0x55, so the magnitude is identical.
+	// Bit 7 is now set exactly when the reference returns a negative value.
+	// The magnitude uses one conditional expression covering both segment cases.
+	unsigned int x = (unsigned int)a_val ^ 0xD5u;
+	int t7 = (int)(x & 0x7f);
+	int seg = t7 >> 4;
+	int t = seg ? (((t7 & 0x0f) << 4) + 0x108) << (seg - 1) : ((t7 & 0x0f) << 4) + 8;
+	return (x & 0x80) ? -t : t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: branchless. nz = (seg != 0) adds 0x100 and reduces the shift by one.
+	// t = ((m<<4) + 8 + (nz<<8)) << (seg - nz), which matches both reference cases.
+	// mask is 0 when bit 7 is set and -1 otherwise.
+	// (t ^ mask) - mask then yields t or -t, the same sign as the reference.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int seg = x >> 4;
+	int nz = (seg != 0);
+	int t = (((x & 0x0f) << 4) + 8 + (nz << 8)) << (seg - nz);
+	int mask = ((a_val >> 7) & 1) - 1;
+	return (t ^ mask) - mask;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: fill a 256-entry lookup table on the first call, then index it.
+	// Each entry is computed with exactly the reference algorithm.
+	// All 256 possible inputs are covered, so every result matches the reference.
+	static int table[256];
+	static int ready = 0;
+	if (!ready) {
+		int i;
+		for (i = 0; i < 256; i++) {
+			int v = i ^ 0x55;
+			int t = v & 0x7f;
+			if (t < 16)
+				t = (t << 4) + 8;
+			else {
+				int seg = (t >> 4) & 0x07;
+				t = ((t & 0x0f) << 4) + 0x108;
+				t <<= seg - 1;
+			}
+			table[i] = (v & 0x80) ? t : -t;
+		}
+		ready = 1;
+	}
+	return table[a_val];
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: switch on the segment, with each case's shift and offset written out.
+	// The offsets are 0x108<<(seg-1), and the mantissa shift is 4 for seg 0 and seg+3 otherwise.
+	// Segment 0 uses m*16+8, which is the reference's t<16 branch.
+	// The sign comes from bit 7, which XOR 0x55 does not change.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int m = x & 0x0f;
+	int t;
+	switch (x >> 4) {
+	case 0: t = (m << 4) + 8; break;
+	case 1: t = (m << 4) + 0x108; break;
+	case 2: t = (m << 5) + 0x210; break;
+	case 3: t = (m << 6) + 0x420; break;
+	case 4: t = (m << 7) + 0x840; break;
+	case 5: t = (m << 8) + 0x1080; break;
+	case 6: t = (m << 9) + 0x2100; break;
+	default: t = (m << 10) + 0x4200; break;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: classic g711.c style, with t = m<<4 and a switch adding the offset.
+	// Case 0 adds 8, case 1 adds 0x108, and other segments add 0x108 then shift by seg-1.
+	// This is the same arithmetic as the reference for every segment.
+	// The sign is decided by bit 7 after the XOR, exactly as in the reference.
+	int v = a_val ^ 0x55;
+	int t = (v & 0x0f) << 4;
+	int seg = (v & 0x70) >> 4;
+	switch (seg) {
+	case 0:
+		t += 8;
+		break;
+	case 1:
+		t += 0x108;
+		break;
+	default:
+		t += 0x108;
+		t <<= seg - 1;
+	}
+	return (v & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: use bit OR. (m<<4)+0x108 equals ((m | 0x10) << 4) | 8.
+	// This holds because m<<4 occupies bits 4..7 only, so no carries occur.
+	// For seg 0 the leading bit is omitted, giving (m<<4)|8 = m*16+8.
+	// The shift is seg-1 for seg>=1 and 0 for seg 0, and the sign comes from bit 7.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int seg = x >> 4;
+	int lead = seg ? 0x10 : 0;
+	int t = (((x & 0x0f) | lead) << 4) | 8;
+	t <<= seg ? seg - 1 : 0;
+	return (a_val & 0x80) ? t : -t;
+}

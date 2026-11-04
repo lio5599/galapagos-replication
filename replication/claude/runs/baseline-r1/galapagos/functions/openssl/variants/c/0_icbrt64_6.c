@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t y, t;
+
+    if (x == 0)
+        return 0;
+    y = 2642245;
+    for (;;) {
+        t = (2 * y + x / (y * y)) / 3;
+        if (t >= y)
+            break;
+        y = t;
+    }
+    return y << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

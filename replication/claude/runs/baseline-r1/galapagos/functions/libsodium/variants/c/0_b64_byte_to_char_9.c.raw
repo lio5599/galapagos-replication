@@ -1,0 +1,16 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int r;
+    unsigned int m_lo, m_mid, m_hi;
+
+    m_lo = 0xFFU & ((x - 26U) >> 8);
+    m_mid = 0xFFU & ((x - 52U) >> 8);
+    m_hi = 0xFFU & ((x - 62U) >> 8);
+
+    r = ((0xFFU & ((0U - (x ^ 63U)) >> 8)) ^ 0xFFU) & 47U;
+    r = r | (((0xFFU & ((0U - (x ^ 62U)) >> 8)) ^ 0xFFU) & 43U);
+    r = r | (m_hi & (m_mid ^ 0xFFU) & (x + ('0' - 52)));
+    r = r | (m_mid & (m_lo ^ 0xFFU) & (x + ('a' - 26)));
+    r = r | ((x + 'A') & m_lo);
+    return (int) r;
+}

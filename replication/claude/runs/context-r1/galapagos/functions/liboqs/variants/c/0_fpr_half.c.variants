@@ -1,0 +1,91 @@
+
+static uint64_t fpr_half(uint64_t x) {
+    if (((x >> 52) & 0x7FF) == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    return (x & 0x7FF0000000000000ULL) == 0 ? 0 : x - 0x0010000000000000ULL;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint32_t e = (uint32_t)(y >> 52) & 0x7FF;
+    uint64_t mask = (uint64_t)0 - (uint64_t)(e != 0x7FF);
+    return y & mask;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    const uint64_t exp_mask = 0x7FF0000000000000ULL;
+    uint64_t y = x - 0x0010000000000000ULL;
+    if ((y & exp_mask) == exp_mask) {
+        y = 0;
+    }
+    return y;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x + 0xFFF0000000000000ULL;
+    uint64_t t = (((y << 1) >> 53) + 1) >> 11;
+    return y & (t - 1);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (e + 0x7FF) >> 11;
+    uint64_t mask = (uint64_t)0 - (uint64_t)t;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (e - 1) >> 31;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)t - 1);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t s = x & 0x8000000000000000ULL;
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t m = x & 0x000FFFFFFFFFFFFFULL;
+    if (e == 0) {
+        return 0;
+    }
+    return s | ((e - 1) << 52) | m;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t hi = (uint32_t)(x >> 32);
+    uint32_t lo = (uint32_t)x;
+    uint32_t t, mask;
+
+    hi -= (uint32_t)0x00100000;
+    t = (((hi >> 20) & 0x7FF) + 1) >> 11;
+    mask = t - 1;
+    return ((uint64_t)(hi & mask) << 32) | (uint64_t)(lo & mask);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    const uint64_t exp_mask = 0x7FF0000000000000ULL;
+    uint64_t t = ((x & exp_mask) + exp_mask) >> 63;
+    return (x - 0x0010000000000000ULL) & ((uint64_t)0 - t);
+}

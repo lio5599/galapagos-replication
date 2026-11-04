@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ int r = 0;
+ int n;
+
+ if (in == 0)
+  return 64;
+
+ n = ((in & 0xFFFFFFFFULL) == 0) << 5; r += n; in >>= n;
+ n = ((in & 0xFFFFULL) == 0) << 4;     r += n; in >>= n;
+ n = ((in & 0xFFULL) == 0) << 3;       r += n; in >>= n;
+ n = ((in & 0xFULL) == 0) << 2;        r += n; in >>= n;
+ n = ((in & 0x3ULL) == 0) << 1;        r += n; in >>= n;
+ n = (int)((in & 0x1ULL) == 0);        r += n;
+
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

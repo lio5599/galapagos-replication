@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t r = 0;
+    int i;
+    for (i = 0; i < 8; i++) {
+        r |= (uint64_t)(uint8_t)(Ai >> (i * 8)) << (i * 8);
+    }
+    return r;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int m26 = ((x - 26U) / 256U) % 256U;
+    unsigned int m52 = ((x - 52U) / 256U) % 256U;
+    unsigned int m62 = ((x - 62U) / 256U) % 256U;
+    unsigned int e62 = 255U - (((0U - (x ^ 62U)) / 256U) % 256U);
+    unsigned int e63 = 255U - (((0U - (x ^ 63U)) / 256U) % 256U);
+
+    return (int) ((m26 & (x + 'A')) |
+                  ((255U - m26) & m52 & (x + ('a' - 26))) |
+                  ((255U - m52) & m62 & (x + ('0' - 52))) |
+                  (e62 & '+') |
+                  (e63 & '/'));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

@@ -1,0 +1,9 @@
+static int ulaw_to_s16(unsigned char u_val)
+{
+	unsigned int u = (unsigned int)(~u_val) & 0xffu;
+	unsigned int t = (((u & 0x0fu) << 3) + 0x84u) << ((u & 0x70u) >> 4);
+	int mag = (int)(t - 0x84u);
+	int s = (u & 0x80u) ? -1 : 1;
+
+	return s * mag;
+}

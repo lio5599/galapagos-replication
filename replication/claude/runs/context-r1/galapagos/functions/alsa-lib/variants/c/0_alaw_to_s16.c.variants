@@ -1,0 +1,154 @@
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned char x = a_val ^ 0x55;
+	int t = x & 0x7f;
+	int mag;
+
+	if (t >= 16) {
+		int seg = (t >> 4) & 0x07;
+		mag = (((t & 0x0f) << 4) + 0x108) << (seg - 1);
+	} else {
+		mag = (t << 4) + 8;
+	}
+	if (x & 0x80)
+		return mag;
+	return -mag;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 0x07;
+	int mant = x & 0x0f;
+	int mag;
+
+	if (seg == 0)
+		mag = (mant << 4) + 8;
+	else
+		mag = ((mant << 4) + 0x108) << (seg - 1);
+	return (x & 0x80) ? mag : -mag;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 0x07;
+	int t = ((x & 0x0f) << 4) | 8;
+
+	if (seg > 0) {
+		t += 0x100;
+		t <<= seg - 1;
+	}
+	return (x & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int m = x & 0x0f;
+	int t;
+
+	switch ((x >> 4) & 0x07) {
+	case 0:
+		t = (m << 4) + 0x8;
+		break;
+	case 1:
+		t = (m << 4) + 0x108;
+		break;
+	case 2:
+		t = (m << 5) + 0x210;
+		break;
+	case 3:
+		t = (m << 6) + 0x420;
+		break;
+	case 4:
+		t = (m << 7) + 0x840;
+		break;
+	case 5:
+		t = (m << 8) + 0x1080;
+		break;
+	case 6:
+		t = (m << 9) + 0x2100;
+		break;
+	default:
+		t = (m << 10) + 0x4200;
+		break;
+	}
+	return (x & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 0x07;
+	int base = seg ? 0x108 : 8;
+	int shift = seg ? seg - 1 : 0;
+	int t = (((x & 0x0f) << 4) + base) << shift;
+	int mask = ((x >> 7) & 1) - 1;
+
+	return (t ^ mask) - mask;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 0x07;
+	int t;
+
+	if (seg == 0)
+		t = ((x & 0x0f) * 16) + 8;
+	else
+		t = (((x & 0x0f) * 16) + 264) * (1 << (seg - 1));
+	return t * ((x & 0x80) ? 1 : -1);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int seg = ((a_val >> 4) ^ 0x05) & 0x07;
+	int mant = (a_val ^ 0x05) & 0x0f;
+	int t = (mant << 4) + 8;
+
+	if (seg != 0)
+		t = (t + 0x100) << (seg - 1);
+	if (a_val & 0x80)
+		return t;
+	return -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 0x07;
+	int t = (((x & 0x0f) * 2) + 1 + (seg ? 32 : 0)) << 3;
+
+	if (seg > 1)
+		t <<= seg - 1;
+	return (x & 0x80) ? t : 0 - t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int t = x & 0x7f;
+
+	if (x & 0x80) {
+		if (t < 16)
+			return (t << 4) + 8;
+		return (((t & 0x0f) << 4) + 0x108) << (((t >> 4) & 0x07) - 1);
+	}
+	if (t < 16)
+		return -((t << 4) + 8);
+	return -((((t & 0x0f) << 4) + 0x108) << (((t >> 4) & 0x07) - 1));
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int t = x & 0x7f;
+	int seg = t >> 4;
+	int mag = (t < 16) ? (t << 4) + 8 : (((t & 0x0f) << 4) + 0x108) << (seg - 1);
+	int neg = -mag;
+
+	return ((x >> 7) & 1) ? mag : neg;
+}

@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t p0 = Ai & 0x000000000000FFFFULL;
+    uint64_t p1 = Ai & 0x00000000FFFF0000ULL;
+    uint64_t p2 = Ai & 0x0000FFFF00000000ULL;
+    uint64_t p3 = Ai & 0xFFFF000000000000ULL;
+    return p0 + p1 + p2 + p3;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

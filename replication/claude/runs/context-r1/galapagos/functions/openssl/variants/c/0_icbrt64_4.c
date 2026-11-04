@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    uint64_t bit = (uint64_t)1 << 21;
+
+    while (bit != 0) {
+        uint64_t c = r | bit;
+
+        if (c <= 2642245 && c * c * c <= x) {
+            r = c;
+        }
+        bit >>= 1;
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

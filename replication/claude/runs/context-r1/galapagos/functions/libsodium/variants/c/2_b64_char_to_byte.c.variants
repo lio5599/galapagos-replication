@@ -1,0 +1,167 @@
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((~(u - 65U) >> 8) & (~(90U - u) >> 8) & 0xFFU & (u - 65U)) |
+        ((~(u - 97U) >> 8) & (~(122U - u) >> 8) & 0xFFU & (u - 71U)) |
+        ((~(u - 48U) >> 8) & (~(57U - u) >> 8) & 0xFFU & (u + 4U)) |
+        ((~(0U - (u ^ 43U)) >> 8) & 62U) |
+        ((~(0U - (u ^ 47U)) >> 8) & 63U);
+
+    return x | ((~(0U - x) >> 8) & ((0U - (u ^ 65U)) >> 8) & 0xFFU);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((((64U - u) & (u - 91U)) >> 8) & 0xFFU & (u - 65U)) |
+        ((((96U - u) & (u - 123U)) >> 8) & 0xFFU & (u - 71U)) |
+        ((((47U - u) & (u - 58U)) >> 8) & 0xFFU & (u + 4U)) |
+        ((((u ^ 43U) - 1U) >> 8) & 62U) |
+        ((((u ^ 47U) - 1U) >> 8) & 63U);
+
+    return x | (((x - 1U) >> 8) & ((0U - (u ^ 65U)) >> 8) & 0xFFU);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int upper = u - 65U;
+    const unsigned int lower = u - 97U;
+    const unsigned int digit = u - 48U;
+    const unsigned int x =
+        ((~(upper | (90U - u)) >> 8) & 0xFFU & upper) |
+        ((~(lower | (122U - u)) >> 8) & 0xFFU & (u - 71U)) |
+        ((~(digit | (57U - u)) >> 8) & 0xFFU & (u + 4U)) |
+        ((~(0U - (u ^ 43U)) >> 8) & 62U) |
+        ((~(0U - (u ^ 47U)) >> 8) & 63U);
+
+    return x | (((~(0U - x) & (0U - (u ^ 65U))) >> 8) & 0xFFU);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int a1 = 0xFFU - (((u - 65U) >> 8) & 0xFFU);
+    const unsigned int a2 = 0xFFU - (((90U - u) >> 8) & 0xFFU);
+    const unsigned int b1 = 0xFFU - (((u - 97U) >> 8) & 0xFFU);
+    const unsigned int b2 = 0xFFU - (((122U - u) >> 8) & 0xFFU);
+    const unsigned int d1 = 0xFFU - (((u - 48U) >> 8) & 0xFFU);
+    const unsigned int d2 = 0xFFU - (((57U - u) >> 8) & 0xFFU);
+    const unsigned int p = 0xFFU - (((0U - (u ^ 43U)) >> 8) & 0xFFU);
+    const unsigned int s = 0xFFU - (((0U - (u ^ 47U)) >> 8) & 0xFFU);
+    const unsigned int x =
+        (a1 & a2 & (u - 65U)) |
+        (b1 & b2 & (u - 71U)) |
+        (d1 & d2 & (u + 4U)) |
+        (p & 62U) |
+        (s & 63U);
+    const unsigned int z = 0xFFU - (((0U - x) >> 8) & 0xFFU);
+    const unsigned int n = ((0U - (u ^ 65U)) >> 8) & 0xFFU;
+
+    return x | (z & n);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((((u - 65U) & 0xFF00U) ^ 0xFF00U) >> 8 & ((((90U - u) & 0xFF00U) ^ 0xFF00U) >> 8) & (u - 65U)) |
+        ((((u - 97U) & 0xFF00U) ^ 0xFF00U) >> 8 & ((((122U - u) & 0xFF00U) ^ 0xFF00U) >> 8) & (u - 71U)) |
+        ((((u - 48U) & 0xFF00U) ^ 0xFF00U) >> 8 & ((((57U - u) & 0xFF00U) ^ 0xFF00U) >> 8) & (u + 4U)) |
+        ((((0U - (u ^ 43U)) & 0xFF00U) ^ 0xFF00U) >> 8 & 62U) |
+        ((((0U - (u ^ 47U)) & 0xFF00U) ^ 0xFF00U) >> 8 & 63U);
+
+    return x | ((((0U - x) & 0xFF00U) ^ 0xFF00U) >> 8 & (((0U - (u ^ 65U)) & 0xFF00U) >> 8));
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    unsigned int x = 0U;
+
+    x |= (~((u - 65U) | (90U - u)) >> 8) & 0xFFU & (u - 65U);
+    x |= (~((u - 97U) | (122U - u)) >> 8) & 0xFFU & (u - 71U);
+    x |= (~((u - 48U) | (57U - u)) >> 8) & 0xFFU & (u + 4U);
+    x |= (~(0U - (u ^ 43U)) >> 8) & 62U;
+    x |= (~(0U - (u ^ 47U)) >> 8) & 63U;
+    x |= ((x - 1U) >> 8) & ((0U - (u ^ 65U)) >> 8) & 0xFFU;
+
+    return x;
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        (((~((u - 65U) | (90U - u)) & 0xFF00U) >> 8) & (u - 65U)) |
+        (((~((u - 97U) | (122U - u)) & 0xFF00U) >> 8) & (u - 71U)) |
+        (((~((u - 48U) | (57U - u)) & 0xFF00U) >> 8) & (u + 4U)) |
+        ((~(0U - (u ^ 43U)) & 0x3E00U) >> 8) |
+        ((~(0U - (u ^ 47U)) & 0x3F00U) >> 8);
+
+    return x | (((x - 1U) & (0U - (u ^ 65U)) & 0xFF00U) >> 8);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int t1 = (~((u - 65U) | (90U - u)) >> 8) & 0xFFU & (u - 65U);
+    const unsigned int t2 = (~((u - 97U) | (122U - u)) >> 8) & 0xFFU & (u - 71U);
+    const unsigned int t3 = (~((u - 48U) | (57U - u)) >> 8) & 0xFFU & (u + 4U);
+    const unsigned int t4 = (~(0U - (u ^ 43U)) >> 8) & 62U;
+    const unsigned int t5 = (~(0U - (u ^ 47U)) >> 8) & 63U;
+    const unsigned int x = ~(~t1 & ~t2 & ~t3 & ~t4 & ~t5);
+    const unsigned int t6 = ((x - 1U) >> 8) & ((0U - (u ^ 65U)) >> 8) & 0xFFU;
+
+    return ~(~x & ~t6);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((~(u - 65U) >> 8) & (~(90U - u) >> 8) & 0xFFU & (u - 65U)) |
+        ((~(u - 97U) >> 8) & (~(122U - u) >> 8) & 0xFFU & (u - 71U)) |
+        ((~(u - 48U) >> 8) & (~(57U - u) >> 8) & 0xFFU & (u + 4U)) |
+        ((((u ^ 43U) - 1U) >> 8) & 62U) |
+        ((((u ^ 47U) - 1U) >> 8) & 63U);
+
+    if (x != 0U) {
+        return x;
+    }
+    return ((0U - (u ^ 65U)) >> 8) & 0xFFU;
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((((u - 65U) >> 8) ^ 0xFFU) & (((90U - u) >> 8) ^ 0xFFU) & 0xFFU & (u - 65U)) |
+        ((((u - 97U) >> 8) ^ 0xFFU) & (((122U - u) >> 8) ^ 0xFFU) & 0xFFU & (u - 71U)) |
+        ((((u - 48U) >> 8) ^ 0xFFU) & (((57U - u) >> 8) ^ 0xFFU) & 0xFFU & (u + 4U)) |
+        ((((0U - (u ^ 43U)) >> 8) ^ 0xFFU) & 62U) |
+        ((((0U - (u ^ 47U)) >> 8) ^ 0xFFU) & 63U);
+
+    return x != 0U ? x : (((0U - (u ^ 65U)) >> 8) & 0xFFU);
+}

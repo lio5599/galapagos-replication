@@ -1,0 +1,161 @@
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    // Reference: maps a 6-bit value 0..63 to its Base64 char A-Z a-z 0-9 + / without branches.
+    // Approach: compute each byte mask once in a named local, then combine them as the reference does.
+    // ((x-t)>>8)&0xFF is 0xFF for x<t because the subtraction borrows; the eq masks are 0xFF iff x==k.
+    // The final expression is the reference with its subexpressions named, so it returns the same
+    // value for every unsigned input, including out-of-range x >= 64.
+    unsigned int lt26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int lt52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int lt62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int eq62 = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int eq63 = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) ((lt26 & (x + 'A')) | ((lt26 ^ 0xFFU) & lt52 & (x + ('a' - 26))) |
+                  ((lt52 ^ 0xFFU) & lt62 & (x + ('0' - 52))) | (eq62 & '+') | (eq63 & '/'));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: hold the masks in unsigned char, so the cast does the reference's & 0xFF.
+    // Byte complement is ~ then truncation, which equals ^ 0xFF. Negation is written as ~v + 1.
+    // Every mask is at most 0xFF, so only the low byte of x+65, x+71, x-4 matters.
+    // Truncating those sums to a byte keeps every result bit, so all inputs, x >= 64 included, match.
+    unsigned char a = (unsigned char) ((x - 26U) >> 8);
+    unsigned char b = (unsigned char) ((x - 52U) >> 8);
+    unsigned char c = (unsigned char) ((x - 62U) >> 8);
+    unsigned char d = (unsigned char) ~((~(x ^ 62U) + 1U) >> 8);
+    unsigned char e = (unsigned char) ~((~(x ^ 63U) + 1U) >> 8);
+    unsigned char na = (unsigned char) ~a;
+    unsigned char nb = (unsigned char) ~b;
+    return (a & (unsigned char) (x + 65U)) | (na & b & (unsigned char) (x + 71U)) |
+           (nb & c & (unsigned char) (x - 4U)) | (d & 0x2B) | (e & 0x2F);
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: for unsigned values, v >> 8 equals v / 256 and v & 0xFF equals v % 256.
+    // The complement of a byte m, which is m ^ 0xFF, equals 255 - m because m <= 255.
+    // The masks are therefore the same as in the reference, and the combination is unchanged.
+    // So the result matches for all unsigned x, including wrapped subtractions and x >= 64.
+    unsigned int a = (x - 26U) / 256U % 256U;
+    unsigned int b = (x - 52U) / 256U % 256U;
+    unsigned int c = (x - 62U) / 256U % 256U;
+    unsigned int d = 255U - (0U - (x ^ 62U)) / 256U % 256U;
+    unsigned int e = 255U - (0U - (x ^ 63U)) / 256U % 256U;
+    return (int) ((a & (x + 65U)) | ((255U - a) & b & (x + 71U)) |
+                  ((255U - b) & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: a table-driven loop over the three range thresholds 26, 52, 62 and their offsets.
+    // Each step ORs prev & m & (x + off), where prev is the complement of the previous mask.
+    // For the first step prev starts at 0xFF, which reproduces the reference's first term exactly.
+    // The offset -4 is stored as an unsigned value, so x + off wraps the same way x + ('0' - 52) does.
+    // A second loop adds the equality terms for 62 and 63, so all inputs give identical results.
+    static const unsigned int lim[3] = { 26U, 52U, 62U };
+    static const unsigned int off[3] = { 'A', 'a' - 26, (unsigned int) ('0' - 52) };
+    static const unsigned int eqv[2] = { 62U, 63U };
+    static const unsigned int chr[2] = { '+', '/' };
+    unsigned int r = 0U, prev = 0xFFU, m;
+    int i;
+    for (i = 0; i < 3; i++) {
+        m = ((x - lim[i]) >> 8) & 0xFFU;
+        r |= prev & m & (x + off[i]);
+        prev = m ^ 0xFFU;
+    }
+    for (i = 0; i < 2; i++)
+        r |= ((((0U - (x ^ eqv[i])) >> 8) & 0xFFU) ^ 0xFFU) & chr[i];
+    return (int) r;
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: take bits 8..15 as (v & 0xFF00) >> 8, which equals (v >> 8) & 0xFF.
+    // Negation 0U - y is written as y * ~0U; both equal -y modulo 2^N for any unsigned width.
+    // The masks are bit-identical to the reference's masks, and they combine in the same way.
+    // The result is therefore equal for every unsigned input, including out-of-range ones.
+    unsigned int a = ((x - 26U) & 0xFF00U) >> 8;
+    unsigned int b = ((x - 52U) & 0xFF00U) >> 8;
+    unsigned int c = ((x - 62U) & 0xFF00U) >> 8;
+    unsigned int d = ((((x ^ 62U) * ~0U) & 0xFF00U) >> 8) ^ 0xFFU;
+    unsigned int e = ((((x ^ 63U) * ~0U) & 0xFF00U) >> 8) ^ 0xFFU;
+    return (int) ((a & (x + 'A')) | ((a ^ 0xFFU) & b & (x + 'a' - 26U)) |
+                  ((b ^ 0xFFU) & c & (x + '0' - 52U)) | (d & '+') | (e & '/'));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: for valid input 0..63, index the Base64 alphabet string directly.
+    // In that range the reference gives exactly one active term: A-Z, a-z, 0-9, '+', or '/'.
+    // For x >= 64 the reference returns odd, mask-dependent bytes, which a table cannot reproduce.
+    // That case falls back to the same mask arithmetic, so the result is identical for every unsigned x.
+    unsigned int a, b, c, d, e;
+    if (x < 64U)
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[x];
+    a = ((x - 26U) >> 8) & 0xFFU;
+    b = ((x - 52U) >> 8) & 0xFFU;
+    c = ((x - 62U) >> 8) & 0xFFU;
+    d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) ((a & (x + 65U)) | ((a ^ 0xFFU) & b & (x + 71U)) | ((b ^ 0xFFU) & c & (x - 4U)) |
+                  (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: use a plain if-ladder over the Base64 ranges when x is in 0..63.
+    // For x < 26 the reference mask a is 0xFF and the other terms are 0, giving 'A'+x. Similarly,
+    // 26..51 gives 'a'+x-26, 52..61 gives '0'+x-52, 62 gives '+', and 63 gives '/'.
+    // For x >= 64, the reference's mask expression is evaluated unchanged, so out-of-range
+    // inputs still return the reference's exact byte.
+    if (x < 26U) return (int) ('A' + x);
+    if (x < 52U) return (int) ('a' + (x - 26U));
+    if (x < 62U) return (int) ('0' + (x - 52U));
+    if (x == 62U) return '+';
+    if (x == 63U) return '/';
+    return (int) (((((x - 26U) >> 8) & 0xFFU) & (x + 65U)) |
+                  (((((x - 26U) >> 8) & 0xFFU) ^ 0xFFU) & (((x - 52U) >> 8) & 0xFFU) & (x + 71U)) |
+                  (((((x - 52U) >> 8) & 0xFFU) ^ 0xFFU) & (((x - 62U) >> 8) & 0xFFU) & (x - 4U)) |
+                  (((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & 43U) |
+                  (((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: keep the full-width shifted values and apply the & 0xFF once at the end.
+    // Because AND distributes over OR, masking every term by 0xFF equals masking the total.
+    // ~t & 0xFF equals ((t & 0xFF) ^ 0xFF), so the per-term logic is bit-identical in the low byte.
+    // The result is the same as the reference for every unsigned x.
+    unsigned int t26 = (x - 26U) >> 8;
+    unsigned int t52 = (x - 52U) >> 8;
+    unsigned int t62 = (x - 62U) >> 8;
+    unsigned int n62 = (0U - (x ^ 62U)) >> 8;
+    unsigned int n63 = (0U - (x ^ 63U)) >> 8;
+    return (int) (((t26 & (x + 65U)) | (~t26 & t52 & (x + 71U)) | (~t52 & t62 & (x - 4U)) |
+                   (~n62 & 43U) | (~n63 & 47U)) & 0xFFU);
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: merge the first two terms with the bitwise select identity
+    // (m & p) | (~m & s) == s ^ (m & (s ^ p)), applied to the 8 bits of mask a.
+    // Here s = b & (x+71) already fits in 8 bits, so no stray high bits appear.
+    // The other terms are ORed in as in the reference, so every unsigned input gives the same result.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int s = b & (x + 71U);
+    unsigned int first = s ^ (a & (s ^ (x + 65U)));
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) (first | ((b ^ 0xFFU) & c & (x - 4U)) | (d & '+') | (e & '/'));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: express the range masks as "x >= t" masks g = 0xFF - lt, and use nonzero masks
+    // z = byte((0-(x^k))>>8). The equality mask is then 0xFF - z.
+    // Then lt26 = 0xFF - g26, ~lt26 & lt52 = g26 & ~g52, ~lt52 & lt62 = g52 & ~g62, all as bytes.
+    // This is the same logic in complemented form, so every unsigned input, x >= 64 included, matches.
+    unsigned int g26 = 0xFFU - (((x - 26U) >> 8) & 0xFFU);
+    unsigned int g52 = 0xFFU - (((x - 52U) >> 8) & 0xFFU);
+    unsigned int g62 = 0xFFU - (((x - 62U) >> 8) & 0xFFU);
+    unsigned int z62 = ((0U - (x ^ 62U)) >> 8) & 0xFFU;
+    unsigned int z63 = ((0U - (x ^ 63U)) >> 8) & 0xFFU;
+    return (int) (((0xFFU - g26) & (x + 'A')) | (g26 & (0xFFU - g52) & (x + 71U)) |
+                  (g52 & (0xFFU - g62) & (x - 4U)) | ((0xFFU - z62) & '+') | ((0xFFU - z63) & '/'));
+}
+```

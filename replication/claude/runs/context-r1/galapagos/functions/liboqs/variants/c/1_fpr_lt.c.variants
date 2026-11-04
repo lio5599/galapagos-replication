@@ -1,0 +1,108 @@
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = (int64_t)x;
+    int64_t sy = (int64_t)y;
+
+    if (((x & y) >> 63) != 0) {
+        return sy < sx;
+    }
+    return sx < sy;
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    return ((int64_t)(x & y) < 0) ? ((int64_t)y < (int64_t)x) : ((int64_t)x < (int64_t)y);
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t m = (uint64_t)1 << 63;
+
+    if ((x & y & m) != 0) {
+        return y < x;
+    }
+    return (x ^ m) < (y ^ m);
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int signx = (int)(x >> 63);
+    int signy = (int)(y >> 63);
+
+    if (signx != signy) {
+        return signx;
+    }
+    if (signx != 0) {
+        return y < x;
+    }
+    return x < y;
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int both = (int)((x & y) >> 63);
+    int a = (int64_t)x < (int64_t)y;
+    int b = (int64_t)y < (int64_t)x;
+
+    return a ^ ((a ^ b) & both);
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t mask = (uint64_t)0 - ((x & y) >> 63);
+    uint64_t t = (x ^ y) & mask;
+    uint64_t a = x ^ t;
+    uint64_t b = y ^ t;
+
+    return (int64_t)a < (int64_t)b;
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t d0 = x - y;
+    uint64_t d1 = y - x;
+    uint64_t lt0 = (d0 ^ ((x ^ y) & (x ^ d0))) >> 63;
+    uint64_t lt1 = (d1 ^ ((x ^ y) & (y ^ d1))) >> 63;
+
+    return (int)((((x & y) >> 63) != 0) ? lt1 : lt0);
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t m = (uint64_t)0 - ((x & y) >> 63);
+    uint64_t d = ((y - x) & m) | ((x - y) & ~m);
+
+    return (int)(((x & ~y) | (~(x ^ y) & d)) >> 63);
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    if ((int64_t)x < 0) {
+        if ((int64_t)y < 0) {
+            return y < x;
+        }
+        return 1;
+    }
+    if ((int64_t)y < 0) {
+        return 0;
+    }
+    return x < y;
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int lt = (int64_t)x < (int64_t)y;
+    int both = (int)((x & y) >> 63);
+    int ne = x != y;
+
+    return ne & (lt ^ both);
+}

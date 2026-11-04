@@ -1,0 +1,132 @@
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    if (d >> 31) {
+        d += p;
+    }
+    return d;
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = (uint64_t)(((uint32_t)z * p0i) & 0x7FFFFFFFu) * (uint64_t)p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & (uint32_t)((int32_t)d >> 31);
+    return d;
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = (((z * (uint64_t)p0i) << 33) >> 33) * (uint64_t)p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    return (d & 0x80000000u) ? d + p : d;
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t r, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    r = (uint32_t)((z + w) >> 31);
+    d = r - p;
+    return ((int32_t)d < 0) ? r : d;
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t r, d, m;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    r = (uint32_t)((z + w) >> 31);
+    d = r - p;
+    m = (uint32_t)0 - (d >> 31);
+    return (d & ~m) | (r & m);
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p * (d >> 31);
+    return d;
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t t, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    t = ((uint32_t)z * p0i) << 1;
+    t >>= 1;
+    w = (uint64_t)t * (uint64_t)p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w, s;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    s = z + w;
+    d = (uint32_t)((s << 1) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t r, d, m;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    r = (uint32_t)((z + w) >> 31);
+    d = r + ~p + 1u;
+    m = (uint32_t)((int32_t)d >> 31);
+    return d ^ ((d ^ r) & m);
+}
+
+
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint32_t t = (uint32_t)(z * (uint64_t)p0i) & 0x7FFFFFFFu;
+    uint64_t s = (uint64_t)t * (uint64_t)p + z;
+    uint32_t d = (uint32_t)(s >> 31) - p;
+
+    return d + (p & (~(d >> 31) + 1u));
+}

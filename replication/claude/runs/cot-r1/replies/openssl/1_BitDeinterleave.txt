@@ -1,0 +1,111 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Summary: the reference returns Ai unchanged because its if ((0)) block never runs.
+    // Approach: return the argument directly.
+    // The bit-shuffling code in the reference is dead, so only "return Ai" takes effect.
+    // This holds for every 64-bit input, including 0 and all-ones.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: rebuild the value one bit at a time in a loop over all 64 positions.
+    // Bit i of the result is set exactly when bit i of Ai is set, so result equals Ai.
+    // Shifts are by 0..63 on uint64_t, so none is undefined behavior.
+    // Zero and all-ones inputs are copied exactly like any other input.
+    uint64_t r = 0;
+    int i;
+    for (i = 0; i < 64; i++)
+        r |= ((Ai >> i) & (uint64_t)1) << i;
+    return r;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: reverse the byte order twice with mask-and-shift swaps.
+    // A byte swap undoes itself, so applying it twice gives back the original Ai,
+    // which matches the reference identity.
+    // All operations are on unsigned 64-bit values, so every input is well defined.
+    int k;
+    uint64_t x = Ai;
+    for (k = 0; k < 2; k++) {
+        x = ((x & 0x00ff00ff00ff00ffULL) << 8) | ((x >> 8) & 0x00ff00ff00ff00ffULL);
+        x = ((x & 0x0000ffff0000ffffULL) << 16) | ((x >> 16) & 0x0000ffff0000ffffULL);
+        x = (x << 32) | (x >> 32);
+    }
+    return x;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: split Ai into its 32-bit halves and recombine them in the same positions.
+    // hi holds bits 63..32 and lo holds bits 31..0, so (hi << 32) | lo rebuilds Ai exactly.
+    // This is the same identity the reference returns, for every input.
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: XOR with a constant mask twice.
+    // (x ^ m) ^ m == x for any m, so the result equals Ai, matching the reference.
+    // XOR is defined for all unsigned values, so there are no edge cases.
+    const uint64_t m = 0xaaaaaaaa55555555ULL;
+    uint64_t x = Ai ^ m;
+    return x ^ m;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: add a constant and then subtract the same constant.
+    // Unsigned arithmetic wraps modulo 2^64, so (x + c) - c == x for every x.
+    // Even when the addition wraps, as for all-ones inputs, the subtraction restores Ai.
+    const uint64_t c = 0x0123456789abcdefULL;
+    uint64_t x = Ai + c;
+    return x - c;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: rotate by 32 bits twice, which is a full 64-bit rotation.
+    // A 64-bit rotation returns every bit to its own position, so the result is Ai.
+    // Shift amounts are exactly 32, so there is no undefined behavior for any input.
+    uint64_t x = (Ai << 32) | (Ai >> 32);
+    x = (x << 32) | (x >> 32);
+    return x;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: pull out the 8 bytes into an array, then rebuild the value from them.
+    // Byte i is taken from bits 8i..8i+7 and put back at the same shift, so the result is Ai.
+    // Shifts range over 0..56, so they are always valid on uint64_t.
+    unsigned char b[8];
+    uint64_t r = 0;
+    int i;
+    for (i = 0; i < 8; i++)
+        b[i] = (unsigned char)(Ai >> (8 * i));
+    for (i = 0; i < 8; i++)
+        r |= (uint64_t)b[i] << (8 * i);
+    return r;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: reverse all 64 bits twice with mask-and-shift swap stages.
+    // Bit reversal undoes itself, so doing it twice gives back Ai, matching the reference.
+    // Every step uses unsigned masks and shifts, so all inputs are handled correctly.
+    int k;
+    uint64_t x = Ai;
+    for (k = 0; k < 2; k++) {
+        x = ((x >> 1) & 0x5555555555555555ULL) | ((x & 0x5555555555555555ULL) << 1);
+        x = ((x >> 2) & 0x3333333333333333ULL) | ((x & 0x3333333333333333ULL) << 2);
+        x = ((x >> 4) & 0x0f0f0f0f0f0f0f0fULL) | ((x & 0x0f0f0f0f0f0f0f0fULL) << 4);
+        x = ((x >> 8) & 0x00ff00ff00ff00ffULL) | ((x & 0x00ff00ff00ff00ffULL) << 8);
+        x = ((x >> 16) & 0x0000ffff0000ffffULL) | ((x & 0x0000ffff0000ffffULL) << 16);
+        x = (x >> 32) | (x << 32);
+    }
+    return x;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: take the bitwise complement twice.
+    // ~~x == x for unsigned integers, so the result equals Ai, as in the reference.
+    // Applying ~ to uint64_t produces a uint64_t with no integer promotion problems.
+    // Zero becomes all-ones and then zero again, so it is restored correctly.
+    uint64_t x = ~Ai;
+    return ~x;
+}

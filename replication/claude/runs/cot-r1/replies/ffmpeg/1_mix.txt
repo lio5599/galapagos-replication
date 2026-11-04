@@ -1,0 +1,118 @@
+```c
+static int mix(int c0, int c1)
+{
+    // Blends two 15-bit RGB555 colors 2:1 (c0 weighted twice) per channel, each divided by 3.
+    // Approach: extract the 5-bit fields with shift+mask before weighting.
+    // ((c0 & 0x03E0) >> 5) equals (c0 >> 5) & 31, and the weighted green sum is a multiple of 32,
+    // so shifting the fields first gives the same green value as shifting the sum.
+    // Red keeps c0 >> 10 and c1 >> 10 unmasked and uses / 3, so any high or sign bits
+    // behave exactly as in the reference, including truncation toward zero for negatives.
+    int b0 = c0 & 31, b1 = c1 & 31;
+    int g0 = (c0 >> 5) & 31, g1 = (c1 >> 5) & 31;
+    int r = 2 * (c0 >> 10) + (c1 >> 10);
+    int g = 2 * g0 + g1;
+    int b = 2 * b0 + b1;
+    return r / 3 * 1024 + g / 3 * 32 + b / 3;
+}
+static int mix(int c0, int c1)
+{
+    // Approach: blue and green sums lie in 0..93, so x / 3 == (x * 171) >> 9 there.
+    // 171/512 exceeds 1/3 by x/1536, which stays below 1/3 for x < 512, so the floor is unchanged.
+    // Red can be negative or large, so it keeps the exact C division as in the reference.
+    int blue = 2 * (c0 & 0x1F) + (c1 & 0x1F);
+    int green = 2 * ((c0 >> 5) & 0x1F) + ((c1 >> 5) & 0x1F);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + ((green * 171) >> 9) * 32 + ((blue * 171) >> 9);
+}
+static int mix(int c0, int c1)
+{
+    // Approach: divide blue and green by 3 using repeated subtraction.
+    // Both sums are nonnegative (0..93), so counting subtractions of 3 equals x / 3.
+    // Red keeps the exact signed division, matching the reference for every input.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int qb = 0, qg = 0;
+    while (blue >= 3) { blue -= 3; qb++; }
+    while (green >= 3) { green -= 3; qg++; }
+    return red / 3 * 1024 + qg * 32 + qb;
+}
+static int mix(int c0, int c1)
+{
+    // Approach: unsigned multiply by 0xAAAB, then shift right 17, gives floor(x/3) for small x.
+    // 43691/131072 exceeds 1/3 by about x/393216, which is far below 1/3 for x <= 93.
+    // The products stay well within 32-bit unsigned range. Red uses exact signed division.
+    unsigned blue = 2u * (unsigned)(c0 & 0x1F) + (unsigned)(c1 & 0x1F);
+    unsigned green = 2u * (unsigned)((c0 >> 5) & 0x1F) + (unsigned)((c1 >> 5) & 0x1F);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int qb = (int)((blue * 0xAAABu) >> 17);
+    int qg = (int)((green * 0xAAABu) >> 17);
+    return red / 3 * 1024 + qg * 32 + qb;
+}
+static int mix(int c0, int c1)
+{
+    // Approach: for 0 <= x < 128, x / 3 == (x * 43) >> 7.
+    // 43/128 exceeds 1/3 by x/384, and that error stays below 1/3 while x < 128.
+    // Blue and green sums are at most 93, so the result is exact. Red is unchanged.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + ((green * 43) >> 7) * 32 + ((blue * 43) >> 7);
+}
+static int mix(int c0, int c1)
+{
+    // Approach: keep green unshifted. G = 2*(c0&0x3E0) + (c1&0x3E0) = 32*g with g >= 0.
+    // floor(32g / 96) == floor(g / 3), so G / 96 * 32 equals green / 3 * 32 from the reference.
+    // Blue and red are computed exactly as in the reference.
+    int G = 2 * (c0 & 0x03E0) + (c1 & 0x03E0);
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + G / 96 * 32 + blue / 3;
+}
+static int mix(int c0, int c1)
+{
+    // Approach: the green and blue quotients are each in 0..31, so they occupy disjoint bits.
+    // (qg << 5) | qb therefore equals qg * 32 + qb. Red is added arithmetically
+    // because it may be negative. Each quotient is the same nonnegative division as the reference.
+    int qb = (2 * (c0 & 0x1F) + (c1 & 0x1F)) / 3;
+    int qg = (2 * ((c0 >> 5) & 0x1F) + ((c1 >> 5) & 0x1F)) / 3;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + ((qg << 5) | qb);
+}
+static int mix(int c0, int c1)
+{
+    // Approach: loop over the two low channels at bit offsets 0 and 5.
+    // (c >> s) & 31 extracts the same 5 bits as the reference masks, even for negative c.
+    // Each quotient is at most 31, so shifting it left by s is exact and nonnegative.
+    // Red is handled as in the reference with exact signed division.
+    int low = 0;
+    for (int s = 0; s < 10; s += 5)
+    {
+        int v = 2 * ((c0 >> s) & 31) + ((c1 >> s) & 31);
+        low += (v / 3) << s;
+    }
+    return (2 * (c0 >> 10) + (c1 >> 10)) / 3 * 1024 + low;
+}
+static int mix(int c0, int c1)
+{
+    // Approach: divide in double precision, then truncate with an int cast.
+    // All sums have magnitude below 2^23, so x / 3.0 never rounds across an integer boundary.
+    // The cast truncates toward zero, matching C integer division, including for negative red.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (int)(red / 3.0) * 1024 + (int)(green / 3.0) * 32 + (int)(blue / 3.0);
+}
+static int mix(int c0, int c1)
+{
+    // Approach: compute signed red / 3 with the compiler-style magic number 0x55555556.
+    // The high half of red * 0x55555556 is floor(red / 3) for red >= 0. Adding 1 when red < 0
+    // converts that floor into truncation toward zero, which is exact for every 32-bit int.
+    // Blue and green use (x * 171) >> 9, which is exact for 0 <= x < 512.
+    int blue = 2 * (c0 & 0x1F) + (c1 & 0x1F);
+    int green = 2 * ((c0 >> 5) & 0x1F) + ((c1 >> 5) & 0x1F);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int qr = (int)(((long long)red * 0x55555556LL) >> 32) + (red < 0);
+    return qr * 1024 + ((green * 171) >> 9) * 32 + ((blue * 171) >> 9);
+}
+```

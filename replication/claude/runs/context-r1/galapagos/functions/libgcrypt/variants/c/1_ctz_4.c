@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ uint64_t y = (in & (~in + 1)) - 1;
+
+ y = y - ((y >> 1) & 0x5555555555555555ULL);
+ y = (y & 0x3333333333333333ULL) + ((y >> 2) & 0x3333333333333333ULL);
+ y = (y + (y >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+
+ return (int)((y * 0x0101010101010101ULL) >> 56);
+}
+
+
+int main(){
+    ctz(0);
+}

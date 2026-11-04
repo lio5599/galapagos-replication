@@ -1,0 +1,127 @@
+
+// Implementation 1
+static unsigned int iec958_parity(unsigned int data)
+{
+	data &= 0x7FFFFFF0u;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data ^= data >> 2;
+	data ^= data >> 1;
+	return data & 1u;
+}
+
+// Implementation 2
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0u;
+	int count;
+
+	data &= 0x7FFFFFF0u;
+	for (count = 0; count < 27; count++) {
+		parity ^= (data != 0u) ? 1u : 0u;
+		data &= data - 1u;
+	}
+	return parity;
+}
+
+// Implementation 3
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0u;
+	int bit;
+
+	for (bit = 30; bit >= 4; bit--)
+		parity ^= (data >> bit) & 1u;
+	return parity;
+}
+
+// Implementation 4
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0u;
+	int count;
+
+	data <<= 1;
+	for (count = 0; count < 27; count++) {
+		parity ^= data >> 31;
+		data <<= 1;
+	}
+	return parity;
+}
+
+// Implementation 5
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int v = data & 0x7FFFFFF0u;
+
+	v = v - ((v >> 1) & 0x55555555u);
+	v = (v & 0x33333333u) + ((v >> 2) & 0x33333333u);
+	v = (v + (v >> 4)) & 0x0F0F0F0Fu;
+	v = (v * 0x01010101u) >> 24;
+	return v & 1u;
+}
+
+// Implementation 6
+static unsigned int iec958_parity(unsigned int data)
+{
+	data &= 0x7FFFFFF0u;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	return (0x6996u >> (data & 0xFu)) & 1u;
+}
+
+// Implementation 7
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int v = data & 0x7FFFFFF0u;
+
+	v ^= v >> 1;
+	v ^= v >> 2;
+	v = (v & 0x11111111u) * 0x11111111u;
+	return (v >> 28) & 1u;
+}
+
+// Implementation 8
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int mask;
+	unsigned int parity = 0u;
+
+	for (mask = 0x10u; mask <= 0x40000000u; mask <<= 1) {
+		if (data & mask)
+			parity ^= 1u;
+	}
+	return parity;
+}
+
+// Implementation 9
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int acc = 0u;
+	int i;
+
+	data &= 0x7FFFFFF0u;
+	for (i = 0; i < 4; i++) {
+		acc ^= data & 0xFFu;
+		data >>= 8;
+	}
+	acc ^= acc >> 4;
+	acc ^= acc >> 2;
+	acc ^= acc >> 1;
+	return acc & 1u;
+}
+
+// Implementation 10
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int v = data & 0x7FFFFFF0u;
+
+	v ^= v << 16;
+	v ^= v << 8;
+	v ^= v << 4;
+	v ^= v << 2;
+	v ^= v << 1;
+	return v >> 31;
+}

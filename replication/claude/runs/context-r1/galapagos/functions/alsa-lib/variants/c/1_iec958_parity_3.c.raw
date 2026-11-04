@@ -1,0 +1,12 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0u;
+	int count;
+
+	data <<= 1;
+	for (count = 0; count < 27; count++) {
+		parity ^= data >> 31;
+		data <<= 1;
+	}
+	return parity;
+}

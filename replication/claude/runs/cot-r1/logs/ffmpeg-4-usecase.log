@@ -1,0 +1,124 @@
+$ python3 -m tests.usecase ffmpeg c
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:root:Compiling /home/liolsen/galapagos-clones/ffmpeg
+INFO:root:No change provided
+INFO:root:Calling configure
+INFO:root:Running ./configure --cc=clang --extra-cflags="-save-temps=obj -fno-strict-aliasing"
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Pipeline for variants of flac_get_max_frame_size /home/diogo/galapagos-clones/ffmpeg/libavcodec/flacenc.c
+INFO:root:Pipeline for variants of mix /home/diogo/galapagos-clones/ffmpeg/libavcodec/4xm.c
+INFO:root:Pipeline for variants of vp5_adjust /home/diogo/galapagos-clones/ffmpeg/libavcodec/vp56dsp.c
+INFO:root:Variants to check 30
+INFO:root:Compiling /home/liolsen/galapagos-clones/ffmpeg-0_flac_get_max_frame_size-3-c
+Parsing original bitcode /home/liolsen/galapagos-clones/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 205, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.10/asyncio/runners.py", line 47, in run
+    _cancel_all_tasks(loop)
+  File "/usr/lib/python3.10/asyncio/runners.py", line 63, in _cancel_all_tasks
+    loop.run_until_complete(tasks.gather(*to_cancel, return_exceptions=True))
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 202, in main
+    results = await asyncio.gather(*tasks)
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 33, in compare
+    variant_shadow = await variant.shadow(original_folder)
+  File "/home/liolsen/galapagos-replication/scripts/usecases/case.py", line 292, in shadow
+    os.sync()
+KeyboardInterrupt
+Results will be in /home/liolsen/galapagos-replication/scripts/out/ffmpeg
+Shadowing /home/liolsen/galapagos-replication/scripts/tests/../../use_cases/ffmpeg
+Copying /home/liolsen/galapagos-replication/scripts/tests/../../use_cases/ffmpeg to /home/liolsen/galapagos-clones/ffmpeg
+/home/liolsen/galapagos-clones/ffmpeg
+/home/liolsen/galapagos-clones/ffmpeg
+Compiled in 82.37s
+Shadowing /home/liolsen/galapagos-clones/ffmpeg
+Copying /home/liolsen/galapagos-clones/ffmpeg to /home/liolsen/galapagos-clones/ffmpeg-0_flac_get_max_frame_size-3-c
+/home/liolsen/galapagos-clones/ffmpeg-0_flac_get_max_frame_size-3-c
+Compiled in 11.90s
+Shadowing /home/liolsen/galapagos-clones/ffmpeg
+Copying /home/liolsen/galapagos-clones/ffmpeg to /home/liolsen/galapagos-clones/ffmpeg-0_flac_get_max_frame_size-7-c
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-1' coro=<main() done, defined at /home/liolsen/galapagos-replication/scripts/tests/usecase.py:134> exception=KeyboardInterrupt()>
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 205, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.10/asyncio/runners.py", line 47, in run
+    _cancel_all_tasks(loop)
+  File "/usr/lib/python3.10/asyncio/runners.py", line 63, in _cancel_all_tasks
+    loop.run_until_complete(tasks.gather(*to_cancel, return_exceptions=True))
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 202, in main
+    results = await asyncio.gather(*tasks)
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 636, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 603, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1909, in _run_once
+    handle._run()
+  File "/usr/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 33, in compare
+    variant_shadow = await variant.shadow(original_folder)
+  File "/home/liolsen/galapagos-replication/scripts/usecases/case.py", line 292, in shadow
+    os.sync()
+KeyboardInterrupt
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-2' coro=<compare() running at /home/liolsen/galapagos-replication/scripts/tests/usecase.py:56> wait_for=<_GatheringFuture finished exception=CancelledError()> cb=[gather.<locals>._done_callback() at /usr/lib/python3.10/asyncio/tasks.py:720, gather.<locals>._done_callback() at /usr/lib/python3.10/asyncio/tasks.py:720]>
+Exception ignored in: <coroutine object compare at 0x7f65716d1460>
+Traceback (most recent call last):
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 131, in compare
+  File "/home/liolsen/galapagos-replication/scripts/tests/usecase.py", line 46, in save
+NameError: name 'open' is not defined
+ERROR:asyncio:_GatheringFuture exception was never retrieved
+future: <_GatheringFuture finished exception=CancelledError()>
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+asyncio.exceptions.CancelledError

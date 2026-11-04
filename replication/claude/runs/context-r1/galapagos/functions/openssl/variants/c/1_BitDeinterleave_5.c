@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t rotated = (Ai << 32) | (Ai >> 32);
+
+    return (rotated << 32) | (rotated >> 32);
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

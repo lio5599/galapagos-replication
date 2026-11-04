@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int ge_A = 0xFFU & ~((u - 0x41U) >> 8);
+    const unsigned int le_Z = 0xFFU & ~((0x5AU - u) >> 8);
+    const unsigned int ge_a = 0xFFU & ~((u - 0x61U) >> 8);
+    const unsigned int le_z = 0xFFU & ~((0x7AU - u) >> 8);
+    const unsigned int ge_0 = 0xFFU & ~((u - 0x30U) >> 8);
+    const unsigned int le_9 = 0xFFU & ~((0x39U - u) >> 8);
+    const unsigned int eq_p = 0xFFU & ~((0U - (u ^ 0x2BU)) >> 8);
+    const unsigned int eq_s = 0xFFU & ~((0U - (u ^ 0x2FU)) >> 8);
+    const unsigned int ne_A = 0xFFU & ((0U - (u ^ 0x41U)) >> 8);
+    unsigned int x = (ge_A & le_Z & (u - 0x41U));
+    x |= (ge_a & le_z & (u - 0x47U));
+    x |= (ge_0 & le_9 & (u + 0x04U));
+    x |= (eq_p & 0x3EU);
+    x |= (eq_s & 0x3FU);
+    return x | ((0xFFU & ~((0U - x) >> 8)) & ne_A);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

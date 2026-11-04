@@ -68,7 +68,7 @@ LIBRARY_INFO = {
             # it's just glibc and make so it should be fine
         ],
         "flags": [
-            # "-no-asm" # -no-asm to generate all .i and bc. files
+            "-no-asm" # -no-asm to generate all .i and bc. files
         ],
         "env": {
             "CFLAGS": "-save-temps=obj -O0 -Dinline=",

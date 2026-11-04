@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int64_t int_sin(int64_t a)
+{
+    int64_t a2, res = 0, d;
+    int i;
+    if (a < 0) a = 3294199 - a;
+    a %= 2 * 3294199;
+    if (a >= 3294199 * 3 / 2) a -= 2 * 3294199;
+    if (a >= 3294199 / 2) a = 3294199 - a;
+    a2 = (a * a) / (1 << 20);
+    for (i = 0; i < 5; i++) {
+        res += a;
+        d = (int64_t)(2 * i + 2) * (2 * i + 3);
+        a = -a * a2 / (d * 1048576);
+    }
+    return (res + 8) >> 4;
+}
+
+
+int main(){
+    int_sin(0);
+}

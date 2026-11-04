@@ -1,0 +1,19 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t p;
+        uint64_t b;
+
+        r += r;
+        p = r * (r + 1);
+        b = (p << 1) + p + 1;
+        if (b <= (x >> s)) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}

@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t mask = UINT64_C(0x0f0f0f0f0f0f0f0f);
+    uint64_t a = Ai | mask;
+    uint64_t b = Ai | ~mask;
+
+    return a & b;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

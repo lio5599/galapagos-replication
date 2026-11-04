@@ -1,0 +1,85 @@
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	if (s < a)
+		return 4294967295U;
+	return s;
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	return (a + b < a) ? 4294967295U : a + b;
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long s = (unsigned long long)a + (unsigned long long)b;
+	if (s > 4294967295ULL)
+		return 4294967295U;
+	return (unsigned int)s;
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	return s | (0U - (unsigned int)(s < a));
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (b >= 4294967295U - a)
+		return 4294967295U;
+	return a + b;
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (b >= (4294967295U ^ a))
+		return 4294967295U;
+	return a + b;
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long s = (unsigned long long)a + b;
+	return (unsigned int)(s < 4294967295ULL ? s : 4294967295ULL);
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long s = (unsigned long long)a + b;
+	return (unsigned int)s | (unsigned int)(0ULL - (s >> 32));
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a > 4294967295U - b)
+		return 4294967295U;
+	return a + b;
+}
+
+
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int s = a + b;
+	unsigned int overflow = (s < b);
+	return overflow ? 4294967295U : s;
+}

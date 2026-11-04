@@ -1,0 +1,126 @@
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int s, d;
+
+    s = 0u - (in >> 7);
+    d = 255u - in;
+    d = in ^ ((in ^ d) & s);
+    d = d - (d >> 1);
+
+    return (d << 1) | (s & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int t, s, d;
+
+    t = in >> 7;
+    s = ~(t - 1u);
+    d = ~in + 256u;
+    d = (d & s) | (in & ~s);
+    d = (d >> 1) + (d & 1u);
+
+    return d * 2u + (t & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int m, d;
+
+    m = (in >> 7) - 1u;
+    d = (in & m) | ((0xFFu - in) & ~m);
+    d = (d & 1u) + (d >> 1);
+
+    return (d << 1) + (~m & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int t, s, d;
+
+    t = in >> 7;
+    if (t == 0u) {
+        s = 0u;
+        d = in;
+    } else {
+        s = ~(t - 1u);
+        d = ((255u - in) & s) | (in & ~s);
+    }
+    d = (d >> 1) + (d & 1u);
+
+    return (d << 1) + (s & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int s, x, d;
+
+    s = ~((in >> 7) - 1u);
+    x = (255u - in) ^ in;
+    d = in ^ (x & s);
+    d = (d >> 1) + (d & 1u);
+
+    return (d << 1) | ((in >> 7) & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int s, d;
+
+    s = ~((in >> 7) - 1u);
+    d = (1u << 8) - in - 1u;
+    d = (d & s) | (in & ~s);
+    d = d / 2u + d % 2u;
+
+    return 2u * d + s % 2u;
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int s, d;
+
+    s = -(in >> 7);
+    d = 255u - in;
+    d = (d & s) + (in & ~s);
+    d = (d >> 1) + (d & 1u);
+
+    return (d << 1) + (s & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int s, d, r;
+
+    s = ~((in >> 7) - 1u);
+    d = (255u - in) & s;
+    d |= in & ~s;
+    r = d - (d >> 1);
+
+    return ((r << 1) + 1u) - (~s & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int s, ns, d;
+
+    ns = (in >> 7) - 1u;
+    s = ~ns;
+    d = ((0xFFu ^ 0u) - in) & s;
+    d = d | (in & ns);
+    d = (d >> 1) + (d & 1u);
+
+    return (d << 1) ^ (s & 1u);
+}
+
+static unsigned int _booth_recode_w7(unsigned int in)
+{
+    unsigned int hi, s, d;
+
+    hi = in >> 7;
+    s = 0u - hi;
+    d = (((1u << 8) - 1u - in) & s) ^ (in & ~s);
+    d = (d >> 1) + (d & 1u);
+
+    return (d + d) ^ (hi & 1u);
+}

@@ -1,0 +1,17 @@
+static int64_t int_sin(int64_t a)
+{
+    const int64_t P = 3294199;
+    int64_t x, x2, term, sum = 0;
+    int n;
+    x = (a < 0) ? P - a : a;
+    x %= 2 * P;
+    if (x >= P * 3 / 2) x -= 2 * P;
+    if (x >= P / 2) x = P - x;
+    x2 = (x * x) >> 20;
+    term = x;
+    for (n = 1; n <= 5; n++) {
+        sum += term;
+        term = -(term * x2 / ((int64_t)(2 * n) * (2 * n + 1) << 20));
+    }
+    return (sum + 8) >> 4;
+}

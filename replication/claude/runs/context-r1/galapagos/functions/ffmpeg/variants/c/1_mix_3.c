@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = 2 * ((c0 >> 5) & 0x001F) + ((c1 >> 5) & 0x001F);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    unsigned int result = (unsigned int)(red / 3) * 1024u;
+    result += (unsigned int)(green / 3) * 32u;
+    result += (unsigned int)(blue / 3);
+    return (int)result;
+}
+
+
+int main(){
+    mix(0,0);
+}

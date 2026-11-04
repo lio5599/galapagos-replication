@@ -1,0 +1,167 @@
+
+static int ctz(uint64_t in)
+{
+ int r = 0;
+
+ while (r < 64 && ((in >> r) & 1) == 0)
+  r++;
+
+ return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ int r = 0;
+
+ if (in == 0)
+  return 64;
+
+ if ((in & 0xFFFFFFFFULL) == 0) { r += 32; in >>= 32; }
+ if ((in & 0xFFFFULL) == 0)     { r += 16; in >>= 16; }
+ if ((in & 0xFFULL) == 0)       { r += 8;  in >>= 8;  }
+ if ((in & 0xFULL) == 0)        { r += 4;  in >>= 4;  }
+ if ((in & 0x3ULL) == 0)        { r += 2;  in >>= 2;  }
+ if ((in & 0x1ULL) == 0)        { r += 1; }
+
+ return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ const uint64_t debruijn = 0x022fdd63cc95386dULL;
+ int table[64];
+ int i;
+
+ if (in == 0)
+  return 64;
+
+ for (i = 0; i < 64; i++)
+  table[(int)(((1ULL << i) * debruijn) >> 58)] = i;
+
+ return table[(int)(((in & (~in + 1)) * debruijn) >> 58)];
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ if (in == 0)
+  return 64;
+
+ return __builtin_ctzll((unsigned long long)in);
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ uint64_t mask = (in & (~in + 1)) - 1;
+ int r = 0;
+
+ while (mask)
+ {
+  r += (int)(mask & 1);
+  mask >>= 1;
+ }
+
+ return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ uint64_t x = ~in & (in - 1);
+
+ x = x - ((x >> 1) & 0x5555555555555555ULL);
+ x = (x & 0x3333333333333333ULL) + ((x >> 2) & 0x3333333333333333ULL);
+ x = (x + (x >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+
+ return (int)((x * 0x0101010101010101ULL) >> 56);
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ int r = 0;
+ int i;
+
+ if (in == 0)
+  return 64;
+
+ while ((in & 0xFFULL) == 0)
+ {
+  in >>= 8;
+  r += 8;
+ }
+
+ for (i = 0; i < 8; i++)
+ {
+  if ((in >> i) & 1)
+   break;
+  r++;
+ }
+
+ return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ int r = 0;
+ int n;
+
+ if (in == 0)
+  return 64;
+
+ n = ((in & 0xFFFFFFFFULL) == 0) << 5; r += n; in >>= n;
+ n = ((in & 0xFFFFULL) == 0) << 4;     r += n; in >>= n;
+ n = ((in & 0xFFULL) == 0) << 3;       r += n; in >>= n;
+ n = ((in & 0xFULL) == 0) << 2;        r += n; in >>= n;
+ n = ((in & 0x3ULL) == 0) << 1;        r += n; in >>= n;
+ n = (int)((in & 0x1ULL) == 0);        r += n;
+
+ return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ int r;
+
+ for (r = 0; r < 64; r++)
+ {
+  if (in & (1ULL << r))
+   break;
+ }
+
+ return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+ uint64_t lowbit;
+ int r = 0;
+
+ if (in == 0)
+  return 64;
+
+ lowbit = in & (~in + 1);
+
+ while (lowbit > 1)
+ {
+  lowbit >>= 1;
+  r++;
+ }
+
+ return r;
+}

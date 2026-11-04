@@ -1,0 +1,31 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ int r = 0;
+ int i;
+
+ if (in == 0)
+  return 64;
+
+ while ((in & 0xFFULL) == 0)
+ {
+  in >>= 8;
+  r += 8;
+ }
+
+ for (i = 0; i < 8; i++)
+ {
+  if ((in >> i) & 1)
+   break;
+  r++;
+ }
+
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

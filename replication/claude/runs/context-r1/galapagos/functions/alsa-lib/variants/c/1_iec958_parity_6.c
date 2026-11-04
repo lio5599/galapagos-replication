@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int v = data & 0x7FFFFFF0u;
+
+	v ^= v >> 1;
+	v ^= v >> 2;
+	v = (v & 0x11111111u) * 0x11111111u;
+	return (v >> 28) & 1u;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

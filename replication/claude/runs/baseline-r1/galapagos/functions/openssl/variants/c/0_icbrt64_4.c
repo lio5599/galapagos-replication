@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t lo = 0;
+    uint64_t hi = 2642245;
+    uint64_t mid;
+
+    while (lo < hi) {
+        mid = lo + (hi - lo + 1) / 2;
+        if (mid * mid * mid <= x)
+            lo = mid;
+        else
+            hi = mid - 1;
+    }
+    return lo << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}
