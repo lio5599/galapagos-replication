@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    int blue = (int)(((unsigned int)c0 << 1) & 0x3Eu) + (c1 & 0x001F);
+    int green = (int)((((unsigned int)c0 << 1) & 0x7C0u) + ((unsigned int)c1 & 0x3E0u)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int red_q = (red - red % 3) / 3;
+    int green_q = (green - green % 3) / 3;
+    int blue_q = (blue - blue % 3) / 3;
+    return red_q * 1024 + green_q * 32 + blue_q;
+}
+
+
+int main(){
+    mix(0,0);
+}

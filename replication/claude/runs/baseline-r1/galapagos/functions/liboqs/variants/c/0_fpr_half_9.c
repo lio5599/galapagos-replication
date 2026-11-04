@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y, hi;
+
+    y = x - ((uint64_t)1 << 52);
+    hi = (y >> 52) & 0x7FF;
+    y &= (uint64_t)0 - (uint64_t)(hi != 0x7FF);
+    return y;
+}
+
+
+int main(){
+    fpr_half(0);
+}

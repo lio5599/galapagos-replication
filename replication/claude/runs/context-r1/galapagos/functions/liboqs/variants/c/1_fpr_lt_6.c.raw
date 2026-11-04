@@ -1,0 +1,8 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t d0 = x - y;
+    uint64_t d1 = y - x;
+    uint64_t lt0 = (d0 ^ ((x ^ y) & (x ^ d0))) >> 63;
+    uint64_t lt1 = (d1 ^ ((x ^ y) & (y ^ d1))) >> 63;
+
+    return (int)((((x & y) >> 63) != 0) ? lt1 : lt0);
+}

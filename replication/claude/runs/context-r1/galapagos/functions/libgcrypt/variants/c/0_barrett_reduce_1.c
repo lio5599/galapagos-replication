@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  int32_t wide = a;
+  int32_t product = wide * 20159;
+  int32_t rounded = product + (1 << 25);
+  int32_t quotient = rounded >> 26;
+  int32_t multiple = quotient * 3329;
+  int32_t result = wide - multiple;
+  return (int16_t)result;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

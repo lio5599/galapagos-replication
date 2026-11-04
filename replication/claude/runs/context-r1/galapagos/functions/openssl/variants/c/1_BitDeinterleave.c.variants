@@ -1,0 +1,91 @@
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t t = Ai ^ UINT64_C(0xa5a5a5a5a5a5a5a5);
+
+    return t ^ UINT64_C(0xa5a5a5a5a5a5a5a5);
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t t = Ai + UINT64_C(0x123456789abcdef0);
+
+    return t - UINT64_C(0x123456789abcdef0);
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t inverted = ~Ai;
+
+    return ~inverted;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t rotated = (Ai << 32) | (Ai >> 32);
+
+    return (rotated << 32) | (rotated >> 32);
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t even = Ai & UINT64_C(0x5555555555555555);
+    uint64_t odd = Ai & UINT64_C(0xaaaaaaaaaaaaaaaa);
+
+    return even | odd;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t negated = UINT64_C(0) - Ai;
+
+    return UINT64_C(0) - negated;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t low_half = Ai & UINT64_C(0x00000000ffffffff);
+    uint64_t high_half = Ai & UINT64_C(0xffffffff00000000);
+
+    return high_half + low_half;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t mask = UINT64_C(0x0f0f0f0f0f0f0f0f);
+    uint64_t a = Ai | mask;
+    uint64_t b = Ai | ~mask;
+
+    return a & b;
+}

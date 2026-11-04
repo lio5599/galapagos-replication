@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    if ((0)) {
+        uint64_t r = 0;
+        int i;
+        for (i = 0; i < 16; i++) {
+            r |= ((Ai >> (2 * i)) & 1ULL) << i;
+            r |= ((Ai >> (2 * i + 1)) & 1ULL) << (i + 32);
+            r |= ((Ai >> (2 * i + 32)) & 1ULL) << (i + 16);
+            r |= ((Ai >> (2 * i + 33)) & 1ULL) << (i + 48);
+        }
+        Ai = r;
+    }
+    return Ai;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

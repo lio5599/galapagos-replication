@@ -1,0 +1,13 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    const uint64_t exp_mask = 0x7FF0000000000000ULL;
+    uint64_t t = ((x & exp_mask) + exp_mask) >> 63;
+    return (x - 0x0010000000000000ULL) & ((uint64_t)0 - t);
+}
+
+
+int main(){
+    fpr_half(0);
+}

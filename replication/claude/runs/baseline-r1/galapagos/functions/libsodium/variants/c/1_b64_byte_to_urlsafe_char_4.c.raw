@@ -1,0 +1,13 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int s26 = (x - 26U) >> 8 & 0xFFU;
+    unsigned int s52 = (x - 52U) >> 8 & 0xFFU;
+    unsigned int s62 = (x - 62U) >> 8 & 0xFFU;
+    unsigned int z62 = 0xFFU ^ ((0U - (x ^ 62U)) >> 8 & 0xFFU);
+    unsigned int z63 = 0xFFU ^ ((0U - (x ^ 63U)) >> 8 & 0xFFU);
+    return (int) ((z63 & (unsigned int) '_') |
+                  (z62 & (unsigned int) '-') |
+                  ((0xFFU ^ s52) & s62 & (x + (unsigned int) ('0' - 52))) |
+                  ((0xFFU ^ s26) & s52 & (x + (unsigned int) ('a' - 26))) |
+                  (s26 & (x + (unsigned int) 'A')));
+}

@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    static const unsigned int r[3][3] = {
+        { 65U, 90U, 65U },
+        { 97U, 122U, 71U },
+        { 48U, 57U, 0xFFFFFFFCU }
+    };
+    static const unsigned int s[2][2] = {
+        { 43U, 62U },
+        { 47U, 63U }
+    };
+    const unsigned int u = (unsigned int) c;
+    unsigned int x = 0U;
+    int i;
+    for (i = 0; i < 3; i++) {
+        x |= (((u - r[i][0]) >> 8) & 0xFFU ^ 0xFFU) &
+             (((r[i][1] - u) >> 8) & 0xFFU ^ 0xFFU) &
+             (u - r[i][2]);
+    }
+    for (i = 0; i < 2; i++) {
+        x |= ((((0U - (u ^ s[i][0])) >> 8) & 0xFFU) ^ 0xFFU) & s[i][1];
+    }
+    return x | (((((0U - x) >> 8) & 0xFFU) ^ 0xFFU) & (((0U - (u ^ 65U)) >> 8) & 0xFFU));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

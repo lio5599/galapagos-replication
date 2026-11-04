@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    unsigned int overhead = 18u;
+    unsigned int headers = (unsigned int)(ch * ((bps + 14) / 8));
+    unsigned int samples;
+
+    if (ch == 2) {
+        samples = (unsigned int)((blocksize * (2 * bps + 1) + 7) / 8);
+    } else {
+        samples = (unsigned int)((ch * bps * blocksize + 7) / 8);
+    }
+
+    return (int)(overhead + headers + samples);
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

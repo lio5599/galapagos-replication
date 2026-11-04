@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ int r;
+
+ for (r = 0; r < 64; r++)
+ {
+  if (in & (1ULL << r))
+   break;
+ }
+
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

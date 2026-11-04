@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int result = 0U;
+    unsigned int previous;
+    unsigned int current;
+    current = ((x - 26U) >> 8) & 0xFFU;
+    result |= current & (x + 'A');
+    previous = current;
+    current = ((x - 52U) >> 8) & 0xFFU;
+    result |= (previous ^ 0xFFU) & current & (x + ('a' - 26));
+    previous = current;
+    current = ((x - 62U) >> 8) & 0xFFU;
+    result |= (previous ^ 0xFFU) & current & (x + ('0' - 52));
+    current = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    result |= current & '+';
+    current = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    result |= current & '/';
+    return (int) result;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

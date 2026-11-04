@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x + 0xFFFFFFE6U) >> 8) & 0xFFU;
+    unsigned int b = ((x + 0xFFFFFFCCU) >> 8) & 0xFFU;
+    unsigned int c = ((x + 0xFFFFFFC2U) >> 8) & 0xFFU;
+    unsigned int d = (((~(x ^ 62U) + 1U) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((~(x ^ 63U) + 1U) >> 8) & 0xFFU) ^ 0xFFU;
+
+    return (int) ((e & 95U) |
+                  (d & 45U) |
+                  ((b ^ 0xFFU) & c & (x + 0xFFFFFFFCU)) |
+                  ((a ^ 0xFFU) & b & (x + 71U)) |
+                  (a & (x + 65U)));
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

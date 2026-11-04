@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int ulaw_to_s16(unsigned char u_val)
+{
+	int u = 0xff - u_val;
+	int exponent = (u & 0x70) >> 4;
+	int mag = (((u & 0x0f) << 3) << exponent) + ((0x84 << exponent) - 0x84);
+	int neg = -((u & 0x80) >> 7);
+
+	return (mag & ~neg) | (-mag & neg);
+}
+
+
+int main(){
+    ulaw_to_s16('a');
+}

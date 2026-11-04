@@ -1,0 +1,11 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int m26 = (~(~x + 26U) >> 8) & 0xFFU;
+    unsigned int m52 = (~(~x + 52U) >> 8) & 0xFFU;
+    unsigned int m62 = (~(~x + 62U) >> 8) & 0xFFU;
+    unsigned int e62 = ((0U - (x ^ 62U)) >> 8) ^ 0xFFU;
+    unsigned int e63 = ((0U - (x ^ 63U)) >> 8) ^ 0xFFU;
+    unsigned int lower = m52 & (x + 71U);
+    unsigned int letters = (((x + 65U) ^ lower) & m26) ^ lower;
+    return (int) (letters | (~m52 & m62 & (x - 4U)) | (e62 & 43U) | (e63 & 47U));
+}

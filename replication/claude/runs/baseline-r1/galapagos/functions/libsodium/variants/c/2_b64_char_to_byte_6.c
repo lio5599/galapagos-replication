@@ -1,0 +1,35 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    unsigned int m1, m2, x, z, n;
+
+    m1 = (unsigned int) (unsigned char) ~((u - 65U) >> 8);
+    m2 = (unsigned int) (unsigned char) ~((90U - u) >> 8);
+    x = m1 & m2 & (u - 65U);
+
+    m1 = (unsigned int) (unsigned char) ~((u - 97U) >> 8);
+    m2 = (unsigned int) (unsigned char) ~((122U - u) >> 8);
+    x |= m1 & m2 & (u - 71U);
+
+    m1 = (unsigned int) (unsigned char) ~((u - 48U) >> 8);
+    m2 = (unsigned int) (unsigned char) ~((57U - u) >> 8);
+    x |= m1 & m2 & (u + 4U);
+
+    m1 = (unsigned int) (unsigned char) ~((0U - (u ^ 43U)) >> 8);
+    x |= m1 & 62U;
+
+    m1 = (unsigned int) (unsigned char) ~((0U - (u ^ 47U)) >> 8);
+    x |= m1 & 63U;
+
+    z = (unsigned int) (unsigned char) ~((0U - x) >> 8);
+    n = (unsigned int) (unsigned char) ((0U - (u ^ 65U)) >> 8);
+    return x | (z & n);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

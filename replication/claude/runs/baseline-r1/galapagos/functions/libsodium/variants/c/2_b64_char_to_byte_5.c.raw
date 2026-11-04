@@ -1,0 +1,19 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int notA = ((0U - (u ^ (unsigned int) 'A')) >> 8) & 0xFFU;
+    const unsigned int sl = (((((0U - (u ^ (unsigned int) '/')) >> 8) & 0xFFU) ^ 0xFFU) & 63U);
+    const unsigned int pl = (((((0U - (u ^ (unsigned int) '+')) >> 8) & 0xFFU) ^ 0xFFU) & 62U);
+    const unsigned int di = ((((u - (unsigned int) '0') >> 8) & 0xFFU) ^ 0xFFU) &
+                            (((((unsigned int) '9' - u) >> 8) & 0xFFU) ^ 0xFFU) &
+                            (u - ((unsigned int) '0' - 52U));
+    const unsigned int lo = ((((u - (unsigned int) 'a') >> 8) & 0xFFU) ^ 0xFFU) &
+                            (((((unsigned int) 'z' - u) >> 8) & 0xFFU) ^ 0xFFU) &
+                            (u - ((unsigned int) 'a' - 26U));
+    const unsigned int up = ((((u - (unsigned int) 'A') >> 8) & 0xFFU) ^ 0xFFU) &
+                            (((((unsigned int) 'Z' - u) >> 8) & 0xFFU) ^ 0xFFU) &
+                            (u - (unsigned int) 'A');
+    const unsigned int x = sl | pl | di | lo | up;
+    const unsigned int isz = (((0U - x) >> 8) & 0xFFU) ^ 0xFFU;
+    return x | (isz & notA);
+}

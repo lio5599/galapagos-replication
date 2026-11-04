@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int is_stereo = (ch == 2);
+    int total_bits = is_stereo ? ((2 * bps + 1) * blocksize) : (ch * bps * blocksize);
+    int sample_bytes = (total_bits + 7) / 8;
+    int header_bytes = ch * ((bps + 7 + 7) / 8);
+    int count = 16 + header_bytes;
+
+    count = count + sample_bytes;
+    count = count + 2;
+
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

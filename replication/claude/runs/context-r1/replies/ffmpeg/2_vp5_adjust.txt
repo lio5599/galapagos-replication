@@ -1,0 +1,144 @@
+```c
+static int vp5_adjust(int v, int t)
+{
+    int a = v < 0 ? -v : v;
+    int r;
+    if (a >= 2 * t)
+        a = 0;
+    r = a < t ? a : 2 * t - a;
+    return v < 0 ? -r : r;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    if (v >= 0) {
+        if (v >= 2 * t)
+            v = 0;
+        if (v < t)
+            return v;
+        return 2 * t - v;
+    }
+    v = -v;
+    if (v >= 2 * t)
+        v = 0;
+    if (v < t)
+        return -v;
+    return v - 2 * t;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s = v >> 31;
+    int a = (v ^ s) - s;
+    int mask = -(a < 2 * t);
+    int d, sd, r;
+    a &= mask;
+    d = a - t;
+    sd = d >> 31;
+    d = (d ^ sd) - sd;
+    r = t - d;
+    return (r ^ s) - s;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int neg = v < 0;
+    int a = neg ? -v : v;
+    int d, r;
+    a *= a < 2 * t;
+    d = a > t ? a - t : t - a;
+    r = t - d;
+    return neg ? -r : r;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = v < 0 ? -1 : 1;
+    int a = sign * v;
+    if (!(a < 2 * t))
+        a = 0;
+    if (a > t)
+        a = 2 * t - a;
+    return sign * a;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    unsigned int m = (unsigned int)(v >> 31);
+    unsigned int a = ((unsigned int)v ^ m) - m;
+    unsigned int r;
+    if ((int)a >= 2 * t)
+        a = 0;
+    r = (int)a < t ? a : 2u * (unsigned int)t - a;
+    return (int)((r ^ m) - m);
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int a = v < 0 ? -v : v;
+    int at = t < 0 ? -t : t;
+    int d, r;
+    if (a < 2 * t)
+        d = a > t ? a - t : t - a;
+    else
+        d = at;
+    r = t - d;
+    return v < 0 ? -r : r;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int s2;
+    v = (v + s1) ^ s1;
+    v = v < 2 * t ? v : 0;
+    v -= t;
+    s2 = v >> 31;
+    v = (v + s2) ^ s2;
+    v = t - v;
+    return (v ^ s1) - s1;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int a = v < 0 ? -v : v;
+    int r;
+    if (a < t)
+        r = a;
+    else if (a < 2 * t)
+        r = 2 * t - a;
+    else
+        r = t < 0 ? 2 * t : 0;
+    if (v < 0)
+        r = -r;
+    return r;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int a = v < 0 ? -v : v;
+    int b, r;
+    a = a < 2 * t ? a : 0;
+    b = 2 * t - a;
+    r = a < b ? a : b;
+    return v < 0 ? 0 - r : r;
+}
+```

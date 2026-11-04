@@ -1,0 +1,132 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Maps a 6-bit value to its URL-safe base64 char: A-Z, a-z, 0-9, '-', '_'.
+    // Approach: a plain if/else chain over the same ranges the masks select.
+    // 0..25 gives x+'A', 26..51 gives x+'a'-26, 52..61 gives x+'0'-52.
+    // 62 gives '-' and 63 gives '_'.
+    // For 64..255 every reference mask is zero, so the result is 0, as here.
+    if (x < 26) return (int) (x + 'A');
+    else if (x < 52) return (int) (x + ('a' - 26));
+    else if (x < 62) return (int) (x + ('0' - 52));
+    else if (x == 62) return '-';
+    else if (x == 63) return '_';
+    return 0;
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: index directly into the 64-char URL-safe alphabet string.
+    // Entry x is exactly the char the reference builds for x in 0..63.
+    // Indices 64..255 are out of the table and yield 0, like the reference.
+    static const char t[] =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    return x < 64 ? (int) t[x] : 0;
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: start from x+'A' and add range-dependent corrections.
+    // Past 25 add 6 to reach 'a'. Past 51 subtract 75 to reach '0'.
+    // At 62 subtract 13 more, so 62+65+6-75-13 = 45 = '-'.
+    // At 63 add 49, so 63+65+6-75-13+49 = 95 = '_'.
+    // Inputs of 64 or more return 0, matching the reference for 64..255.
+    int c = (int) x + 'A';
+    c += (x > 25) * 6;
+    c -= (x > 51) * 75;
+    c -= (x > 61) * 13;
+    c += (x > 62) * 49;
+    return x < 64 ? c : 0;
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: a nested ternary that tests the ranges from the top down.
+    // Values above 63 give 0. 63 gives '_' and 62 gives '-'.
+    // 52..61 give digits, 26..51 give lowercase, and the rest give uppercase.
+    // The offsets are the same ones the reference adds within each range.
+    return x > 63 ? 0
+         : x == 63 ? '_'
+         : x == 62 ? '-'
+         : x >= 52 ? (int) (x - 4)
+         : x >= 26 ? (int) (x + 71)
+         : (int) (x + 65);
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: sum the products of 0/1 range predicates and per-range values.
+    // The ranges are disjoint, so at most one product is nonzero, like the OR.
+    // Unsigned x-26<26 and x-52<10 wrap for small x, which keeps them exact.
+    // A wrapped x-4 is multiplied by 0, so it adds nothing. 64..255 sum to 0.
+    return (int) ((x < 26) * (x + 'A') + (x - 26 < 26) * (x + ('a' - 26)) +
+                  (x - 52 < 10) * (x - 4) + (x == 62) * (unsigned int) '-' +
+                  (x == 63) * (unsigned int) '_');
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: binary-search style nested ifs, splitting first at 52.
+    // Below 52, split at 26 into uppercase or lowercase.
+    // From 52 up, 52..61 are digits via x-4, 62 is '-', and 63 is '_'.
+    // Anything at 64 or above returns 0, as the reference does for 64..255.
+    if (x < 52) {
+        if (x < 26) return (int) (x + 'A');
+        return (int) (x + 71);
+    }
+    if (x < 62) return (int) (x - 4);
+    if (x == 62) return '-';
+    if (x == 63) return '_';
+    return 0;
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: switch on x/26 to choose the block, then refine within it.
+    // Block 0 is 0..25, uppercase. Block 1 is 26..51, lowercase.
+    // Block 2 covers 52..77: digits up to 61, then '-' at 62 and '_' at 63.
+    // Higher blocks and 64..77 return 0, matching the reference.
+    switch (x / 26) {
+    case 0: return (int) (x + 'A');
+    case 1: return (int) (x + ('a' - 26));
+    case 2:
+        if (x < 62) return (int) (x + ('0' - 52));
+        if (x == 62) return '-';
+        if (x == 63) return '_';
+        return 0;
+    default: return 0;
+    }
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: count the thresholds 26, 52, 62, 63 and 64 that x reaches.
+    // That count picks the offset to add: +65, +71, -4, -17 or +32.
+    // Check: 62-17 = 45 = '-' and 63+32 = 95 = '_'.
+    // A count of 5 means x >= 64, which returns 0 like the reference.
+    static const int off[5] = { 65, 71, -4, -17, 32 };
+    unsigned int i = (x >= 26) + (x >= 52) + (x >= 62) + (x >= 63) + (x >= 64);
+    if (i == 5) return 0;
+    return (int) x + off[i];
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: the reference's mask-and-OR structure, with full-width masks.
+    // Each mask is 0u minus a 0/1 comparison, so it is all ones or zero.
+    // The ranges are disjoint, so exactly one mask is set for 0..63.
+    // For 64..255 no mask is set and the OR is 0, as in the reference.
+    unsigned int m1 = 0U - (unsigned int) (x < 26);
+    unsigned int m2 = 0U - (unsigned int) (x - 26 < 26);
+    unsigned int m3 = 0U - (unsigned int) (x - 52 < 10);
+    unsigned int m4 = 0U - (unsigned int) (x == 62);
+    unsigned int m5 = 0U - (unsigned int) (x == 63);
+    return (int) ((m1 & (x + 'A')) | (m2 & (x + 71)) | (m3 & (x - 4)) | (m4 & 45U) | (m5 & 95U));
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: walk the segments, subtracting each length from the remainder.
+    // The segments are 26 'A', 26 'a', 10 '0', 1 '-' and 1 '_'.
+    // When the remainder fits a segment, return that segment's base plus it.
+    // This gives the same char as the reference for every x in 0..63.
+    // If no segment matches, x >= 64 and the result is 0, as in the reference.
+    static const unsigned char len[5] = { 26, 26, 10, 1, 1 };
+    static const unsigned char base[5] = { 'A', 'a', '0', '-', '_' };
+    unsigned int r = x, i;
+    for (i = 0; i < 5; i++) {
+        if (r < len[i]) return (int) (base[i] + r);
+        r -= len[i];
+    }
+    return 0;
+}

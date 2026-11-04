@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y;
+    uint32_t t;
+
+    y = x - ((uint64_t)1 << 52);
+    t = (uint32_t)(((y >> 52) & 0x7FF) == 0x7FF);
+    return y & ((uint64_t)t - 1);
+}

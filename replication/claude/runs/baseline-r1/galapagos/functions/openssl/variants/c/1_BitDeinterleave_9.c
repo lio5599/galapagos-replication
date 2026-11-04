@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint16_t a = (uint16_t)(Ai);
+    uint16_t b = (uint16_t)(Ai >> 16);
+    uint16_t c = (uint16_t)(Ai >> 32);
+    uint16_t d = (uint16_t)(Ai >> 48);
+    return ((uint64_t)d << 48) | ((uint64_t)c << 32) | ((uint64_t)b << 16) | (uint64_t)a;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

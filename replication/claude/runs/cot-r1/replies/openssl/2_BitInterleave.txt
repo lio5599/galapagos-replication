@@ -1,0 +1,105 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Summary: the reference returns Ai unchanged, because its interleave block is guarded by if ((0)).
+    // That block is dead code and never executes, so the function is the identity on all 64-bit inputs.
+    // This version returns the argument directly.
+    // Every value, including 0 and UINT64_MAX, is passed through unmodified.
+    return Ai;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we XOR with a constant twice.
+    // (x ^ k) ^ k == x for any k, because XOR is its own inverse bitwise.
+    // Unsigned 64-bit XOR has no overflow or edge cases, so all inputs round-trip exactly.
+    const uint64_t k = 0x9E3779B97F4A7C15ULL;
+    uint64_t t = Ai ^ k;
+    return t ^ k;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we split the value into 32-bit halves and rebuild it.
+    // The high half is shifted back to bits 32..63 and ORed with the low half.
+    // The two halves do not overlap, so OR loses no bits and the original value is recovered for every input.
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we copy the bits one at a time in a loop.
+    // Each bit i of Ai is tested and set in the result at the same position.
+    // All 64 positions are visited, so the result equals Ai, including 0 and all-ones.
+    uint64_t r = 0;
+    int i;
+    for (i = 0; i < 64; i++)
+        if ((Ai >> i) & 1u)
+            r |= (uint64_t)1 << i;
+    return r;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we apply bitwise complement twice.
+    // ~~x == x because NOT flips every bit and a second NOT flips each bit back.
+    // On uint64_t this holds for every value with no promotion issues.
+    uint64_t t = ~Ai;
+    return ~t;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we negate twice using modular unsigned arithmetic.
+    // 0 - (0 - x) == x mod 2^64, which C guarantees for uint64_t wraparound.
+    // Edge cases such as 0 and 2^63 also map back to themselves.
+    uint64_t n = (uint64_t)0 - Ai;
+    return (uint64_t)0 - n;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we rotate left by 32 twice, for 64 bits in total.
+    // A full 64-bit rotation returns every bit to its original position.
+    // The shift counts are exactly 32, so there is no undefined shift-by-64.
+    uint64_t t = (Ai << 32) | (Ai >> 32);
+    return (t << 32) | (t >> 32);
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we swap adjacent bit pairs twice.
+    // Even and odd bits are exchanged with masks, and a second swap restores them.
+    // The masks partition all 64 bits, so no bit is lost for any input.
+    const uint64_t m = 0x5555555555555555ULL;
+    uint64_t t = ((Ai & m) << 1) | ((Ai >> 1) & m);
+    return ((t & m) << 1) | ((t >> 1) & m);
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we reverse the byte order twice.
+    // Each byte is extracted and placed at its mirrored position, and a second reversal restores the order.
+    // Only shifts of 0..56 are used, so every input value round-trips exactly.
+    uint64_t t = 0, r = 0;
+    int i;
+    for (i = 0; i < 8; i++)
+        t |= ((Ai >> (8 * i)) & 0xFFu) << (8 * (7 - i));
+    for (i = 0; i < 8; i++)
+        r |= ((t >> (8 * i)) & 0xFFu) << (8 * (7 - i));
+    return r;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we copy the value byte by byte through a union.
+    // The bytes are copied in order into a second union, which preserves the object representation.
+    // Reading the uint64_t member back therefore yields the original value for any input.
+    union U { uint64_t v; unsigned char b[8]; } src, dst;
+    int i;
+    src.v = Ai;
+    for (i = 0; i < 8; i++)
+        dst.b[i] = src.b[i];
+    return dst.v;
+}

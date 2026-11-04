@@ -1,0 +1,13 @@
+static int mix(int c0, int c1)
+{
+    int r0 = c0 >> 10;
+    int r1 = c1 >> 10;
+    int g0 = (c0 >> 5) & 0x1F;
+    int g1 = (c1 >> 5) & 0x1F;
+    int b0 = c0 & 0x1F;
+    int b1 = c1 & 0x1F;
+    int red = r0 * 2 + r1;
+    int green = g0 * 2 + g1;
+    int blue = b0 * 2 + b1;
+    return blue / 3 + green / 3 * 32 + red / 3 * 1024;
+}

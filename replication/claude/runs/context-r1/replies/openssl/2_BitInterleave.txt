@@ -1,0 +1,86 @@
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t even = Ai & 0x5555555555555555ULL;
+    uint64_t odd = Ai & 0xAAAAAAAAAAAAAAAAULL;
+    return odd | even;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t t = Ai ^ 0xA5A5A5A5A5A5A5A5ULL;
+    t ^= 0xA5A5A5A5A5A5A5A5ULL;
+    return t;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t t = Ai + 0x0123456789ABCDEFULL;
+    t -= 0x0123456789ABCDEFULL;
+    return t;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t t = (Ai << 32) | (Ai >> 32);
+    t = (t << 32) | (t >> 32);
+    return t;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t inverted = ~Ai;
+    return ~inverted;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t p0 = Ai & 0x000000000000FFFFULL;
+    uint64_t p1 = Ai & 0x00000000FFFF0000ULL;
+    uint64_t p2 = Ai & 0x0000FFFF00000000ULL;
+    uint64_t p3 = Ai & 0xFFFF000000000000ULL;
+    return p0 + p1 + p2 + p3;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t negated = (uint64_t)0 - Ai;
+    return (uint64_t)0 - negated;
+}
+```

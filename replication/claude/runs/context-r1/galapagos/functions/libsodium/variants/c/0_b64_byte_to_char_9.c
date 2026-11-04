@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int m26 = ((x - 26U) >> 8) & 255U;
+    unsigned int m52 = ((x - 52U) >> 8) & 255U;
+    unsigned int m62 = ((x - 62U) >> 8) & 255U;
+    unsigned int e62 = 255U - (((0U - (x ^ 62U)) >> 8) & 255U);
+    unsigned int e63 = 255U - (((0U - (x ^ 63U)) >> 8) & 255U);
+    unsigned int symbols = (e62 & 43U) | (e63 & 47U);
+    unsigned int digit = (255U - m52) & m62 & (x - 4U);
+    unsigned int lower = (255U - m26) & m52 & (x + 71U);
+    unsigned int upper = m26 & (x + 65U);
+    return (int) (symbols | digit | lower | upper);
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

@@ -1,0 +1,151 @@
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes Montgomery product a*b/2^31 mod p (p odd < 2^31, p0i = -1/p mod 2^31).
+    // Same arithmetic as the reference, but the final correction uses a branch.
+    // d = t - p has its top bit set exactly when the reference mask is all ones.
+    // In that case p is added, otherwise d is kept, matching d += p & -(d >> 31).
+    // All operations are bit-identical for every input, including out-of-range ones.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    if (d & 0x80000000u) {
+        d += p;
+    }
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The Montgomery factor m only needs z*p0i mod 2^31.
+    // The low 31 bits of a product depend only on the low 31 bits of its factors.
+    // So a 32-bit product of (uint32_t)z and p0i gives the same m as the 64-bit one.
+    // w = m*p and the rest of the reduction are identical to the reference.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = ((uint32_t)z * p0i) & 0x7FFFFFFFu;
+    w = (uint64_t)m * (uint64_t)p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Bits 31..62 of z+w are computed by splitting each term at bit 31.
+    // The high parts are added plus the carry from adding the low 31-bit parts.
+    // Truncating to 32 bits equals (uint32_t)((z+w)>>31), even if z+w wraps 2^64,
+    // because any wrap affects only bits that the truncation discards.
+    // The final conditional add of p is the same as in the reference.
+    uint64_t z, w, carry;
+    uint32_t t, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    carry = ((z & 0x7FFFFFFFu) + (w & 0x7FFFFFFFu)) >> 31;
+    t = (uint32_t)((z >> 31) + (w >> 31) + carry);
+    d = t - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The reduction is the same as the reference.
+    // The correction uses a ternary that picks p or 0 based on the sign bit of d.
+    // -(d >> 31) is all ones when the bit is 1 and zero otherwise.
+    // So p & mask equals the ternary result in both cases.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += (d >> 31) ? p : 0u;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The mask is built as ~((d >> 31) - 1) instead of -(d >> 31).
+    // If the sign bit is 1: 1 - 1 = 0, and ~0 is all ones.
+    // If the sign bit is 0: 0 - 1 wraps to all ones, and its complement is 0.
+    // So the mask, and therefore the result, is identical to the reference.
+    uint64_t z, w;
+    uint32_t d, mask;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    mask = ~((d >> 31) - 1u);
+    d += p & mask;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Keeps t = (uint32_t)((z+w)>>31) and the candidate d = t - p.
+    // The reference adds p back when d has its top bit set, and (t - p) + p == t mod 2^32.
+    // So returning t in that case and d otherwise is the same value.
+    // This holds for all inputs, because the wraparound is modulo 2^32.
+    uint64_t z, w;
+    uint32_t t, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    t = (uint32_t)((z + w) >> 31);
+    d = t - p;
+    return (d >> 31) ? t : d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // z*p0i mod 2^31 depends only on the low 31 bits of p0i and of z.
+    // So p0i is masked first and the product is computed in 32 bits, giving the same m.
+    // The 64-bit sum z + m*p and the shift by 31 match the reference exactly.
+    // The final correction uses the same mask-and-add as the reference.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = ((uint32_t)z * (p0i & 0x7FFFFFFFu)) & 0x7FFFFFFFu;
+    w = (uint64_t)p * (uint64_t)m;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Bits 31..62 of s = z+w are extracted as ((s << 1) >> 32).
+    // The left shift drops bit 63, and the right shift drops bits 0..30.
+    // That leaves exactly the 32 bits that (uint32_t)(s >> 31) keeps.
+    // The rest of the computation is the same as the reference.
+    uint64_t z, w, s;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    s = z + w;
+    d = (uint32_t)((s << 1) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The correction adds p * (d >> 31) instead of a masked p.
+    // d >> 31 is 0 or 1, so the product is 0 or p.
+    // This is the same value as p & -(d >> 31), with 32-bit wraparound as in the reference.
+    // The reduction step is unchanged.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p * (d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Selects between d = t - p and t without branches, using a bitwise mux.
+    // mask = 0 - (d >> 31) is all ones when the reference would add p, and zero otherwise.
+    // (d & ~mask) | (t & mask) gives t or d, and t == d + p mod 2^32.
+    // So the result is the reference result for every input.
+    uint64_t z, w;
+    uint32_t t, d, mask;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    t = (uint32_t)((z + w) >> 31);
+    d = t - p;
+    mask = 0u - (d >> 31);
+    return (d & ~mask) | (t & mask);
+}

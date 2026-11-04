@@ -1,0 +1,13 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int) c;
+    const unsigned int t1 = (~((u - 65U) | (90U - u)) >> 8) & 0xFFU & (u - 65U);
+    const unsigned int t2 = (~((u - 97U) | (122U - u)) >> 8) & 0xFFU & (u - 71U);
+    const unsigned int t3 = (~((u - 48U) | (57U - u)) >> 8) & 0xFFU & (u + 4U);
+    const unsigned int t4 = (~(0U - (u ^ 43U)) >> 8) & 62U;
+    const unsigned int t5 = (~(0U - (u ^ 47U)) >> 8) & 63U;
+    const unsigned int x = ~(~t1 & ~t2 & ~t3 & ~t4 & ~t5);
+    const unsigned int t6 = ((x - 1U) >> 8) & ((0U - (u ^ 65U)) >> 8) & 0xFFU;
+
+    return ~(~x & ~t6);
+}

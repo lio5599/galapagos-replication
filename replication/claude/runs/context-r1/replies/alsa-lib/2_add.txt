@@ -1,0 +1,89 @@
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 4294967295U;
+	return sum;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	return (a + b < a) ? 4294967295U : a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	return sum | (0U - (unsigned int)(sum < a));
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (b > 4294967295U - a)
+		return 4294967295U;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a > ~b)
+		return ~0U;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long wide = (unsigned long long)a + (unsigned long long)b;
+	if (wide > 4294967295ULL)
+		return 4294967295U;
+	return (unsigned int)wide;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned long long wide = (unsigned long long)a + (unsigned long long)b;
+	return (unsigned int)(wide | (0ULL - (wide >> 32)));
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int limit = ~b;
+	if (a > limit)
+		a = limit;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	unsigned int carry = ((a & b) | ((a | b) & ~sum)) >> 31;
+	return sum | (0U - carry);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	if (sum >= a && sum >= b)
+		return sum;
+	return 4294967295U;
+}
+```

@@ -1,0 +1,16 @@
+static int64_t int_sin(int64_t a)
+{
+    static const int64_t div[5] = { 6, 20, 42, 72, 110 };
+    int64_t a2, res = 0;
+    int k;
+    if (a < 0) a = 3294199 - a;
+    a %= 2 * 3294199;
+    if (a >= 3294199 * 3 / 2) a -= 2 * 3294199;
+    if (a >= 3294199 / 2) a = 3294199 - a;
+    a2 = (a * a) / (1 << 20);
+    for (k = 0; k < 5; k++) {
+        res += a;
+        a = -a * a2 / (div[k] << 20);
+    }
+    return (res + 8) >> 4;
+}
