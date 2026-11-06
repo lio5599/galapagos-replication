@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Compute y = x - 2^52, then XOR its exponent with 0x7FF: the result is 0 iff the reference's t is 1.
+    // For d in 0..0x7FF, (d + 0x7FF) >> 11 is 1 iff d is nonzero.
+    // Negating that bit gives a mask equal to the reference's (uint64_t)t - 1.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint32_t d = ((uint32_t)(y >> 52) & 0x7FF) ^ 0x7FF;
+    uint32_t k = (d + 0x7FF) >> 11;
+    return y & ((uint64_t)0 - (uint64_t)k);
+}
+
+
+int main(){
+    fpr_half(0);
+}

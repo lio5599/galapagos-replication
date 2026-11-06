@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The Montgomery factor m only needs z*p0i mod 2^31.
+    // The low 31 bits of a product depend only on the low 31 bits of its factors.
+    // So a 32-bit product of (uint32_t)z and p0i gives the same m as the 64-bit one.
+    // w = m*p and the rest of the reduction are identical to the reference.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = ((uint32_t)z * p0i) & 0x7FFFFFFFu;
+    w = (uint64_t)m * (uint64_t)p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

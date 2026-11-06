@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Builds the mantissa with OR: (m<<4) | 8 | (seg ? 0x100 : 0).
+	// The bit positions do not overlap (bits 4-7, bit 3, bit 8), so OR equals the reference's addition.
+	// The shift is seg-1 for seg>=1 and 0 for seg 0. Seg 0 then gives 16m+8.
+	// The sign is taken from bit 7 of the XORed value, as in the reference.
+	unsigned int v = ((unsigned int)a_val ^ 0x55u) & 0xffu;
+	unsigned int seg = (v >> 4) & 7u;
+	unsigned int mant = ((v & 0x0fu) << 4) | 8u | (seg ? 0x100u : 0u);
+	unsigned int sh = seg ? seg - 1u : 0u;
+	int t = (int)(mant << sh);
+	return (v & 0x80u) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

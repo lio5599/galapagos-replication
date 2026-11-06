@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: branchless; the comparison sum < a is 1 on overflow, else 0.
+	// Negating it gives all-ones on overflow or zero otherwise, used as an OR mask.
+	// OR with all-ones yields 4294967295; OR with zero leaves the exact sum.
+	// No overflow, including a + b == max, returns the true sum like the reference.
+	unsigned int sum = a + b;
+	sum |= 0u - (unsigned int)(sum < a);
+	return sum;
+}
+
+
+int main(){
+    add(0,0);
+}

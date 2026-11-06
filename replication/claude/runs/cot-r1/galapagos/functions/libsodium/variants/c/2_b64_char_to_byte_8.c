@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Sign-bit masks: because w <= 0xFFFF, (w - lo) | (hi - w) has bit 31 set exactly when w is outside [lo, hi].
+    // Shifting that bit down and subtracting 1 gives all-ones when w is inside the range and 0 otherwise.
+    // The masked class values are OR-ed together, and 0xFF is added only when no class matched, so 'A' gives 0.
+    // The quirk mask covers w >= 0xFF00 with value 63 minus (w == 0xFF2F), as in the reference.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    const unsigned int mU = (((w - 65U) | (90U - w)) >> 31) - 1U;
+    const unsigned int mL = (((w - 97U) | (122U - w)) >> 31) - 1U;
+    const unsigned int mD = (((w - 48U) | (57U - w)) >> 31) - 1U;
+    const unsigned int mP = (((w - 43U) | (43U - w)) >> 31) - 1U;
+    const unsigned int mS = (((w - 47U) | (47U - w)) >> 31) - 1U;
+    const unsigned int mH = ((w - 0xFF00U) >> 31) - 1U;
+    const unsigned int x = (mU & (w - 65U)) | (mL & (w - 71U)) | (mD & (w + 4U)) | (mP & 62U) | (mS & 63U) |
+                           (mH & (63U - (unsigned int) (w == 0xFF2FU)));
+    return x | (~(mU | mL | mD | mP | mS | mH) & 0xFFU);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

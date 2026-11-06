@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Approach: add a constant, then subtract it, using unsigned modular arithmetic.
+    // Unsigned wraparound is well defined, so (x + k) - k == x for every x.
+    const uint64_t k = 0x0123456789abcdefULL;
+    uint64_t t = Ai + k;
+    return t - k;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

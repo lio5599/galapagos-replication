@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Reference: worst-case FLAC frame size in bytes for given block size, channels, bps.
+    // Approach: one expression; a ternary picks the stereo or generic residual term.
+    // Stereo uses 2*bps+1 bits per sample pair (side channel needs one extra bit).
+    // 16 header bytes, per-channel subframe headers and 2 CRC bytes match the reference.
+    // Same int operations and truncating divisions, so results match for all inputs.
+    return 16 + ch * ((7 + bps + 7) / 8)
+           + (ch == 2 ? ((2 * bps + 1) * blocksize + 7) / 8
+                      : (ch * bps * blocksize + 7) / 8)
+           + 2;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

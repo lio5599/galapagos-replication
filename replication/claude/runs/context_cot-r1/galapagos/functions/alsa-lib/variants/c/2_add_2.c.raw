@@ -1,0 +1,9 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Widen to 64 bits so the sum never wraps, then clamp to the max.
+	// Sum up to 8589934590 fits in unsigned long long without overflow.
+	// Values above 4294967295 clamp; values at or below are returned as is,
+	// so the exact-max case yields 4294967295 like the reference.
+	unsigned long long s = (unsigned long long)a + (unsigned long long)b;
+	return s > 4294967295ULL ? 4294967295u : (unsigned int)s;
+}

@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: take the sign bit s (0 or 1) with the reference shift, then compute ~(s - 1).
+  // If s = 1, then s - 1 = 0, and ~0 = -1.
+  // If s = 0, then s - 1 = -1, and ~(-1) = 0.
+  // This matches -s for both possible values, so it matches the reference.
+  int s = (int)((uint16_t)x >> 15);
+  return ~(s - 1);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

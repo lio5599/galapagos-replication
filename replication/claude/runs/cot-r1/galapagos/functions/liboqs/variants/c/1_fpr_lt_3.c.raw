@@ -1,0 +1,10 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Split each value into a sign and a 63-bit magnitude.
+    // Different signs: return x's sign, so the negative operand is the lesser one.
+    // Same sign: compare magnitudes, reversed when both are negative.
+    // Equal magnitudes with the same sign give 0, as in the reference.
+    uint64_t sx = x >> 63, sy = y >> 63;
+    uint64_t ax = x & 0x7FFFFFFFFFFFFFFFULL, ay = y & 0x7FFFFFFFFFFFFFFFULL;
+    if (sx ^ sy) return (int)sx;
+    return sx ? (ax > ay) : (ax < ay);
+}

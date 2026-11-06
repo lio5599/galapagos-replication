@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // For e in 0..2047, (0 - e) >> 31 as uint32 is 1 iff e != 0.
+    // That bit becomes a full 64-bit mask via negation.
+    // A nonzero original exponent means the reference keeps x - 2^52; zero means it returns 0.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t nz = ((uint32_t)0 - e) >> 31;
+    uint64_t m = (uint64_t)0 - (uint64_t)nz;
+    return (x - ((uint64_t)1 << 52)) & m;
+}
+
+
+int main(){
+    fpr_half(0);
+}

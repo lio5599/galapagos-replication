@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Carry extracted from the high half of a 64-bit sum, 0 or 1.
+	// 0 - carry is all ones on overflow, forcing the result to the max.
+	// Without carry the low 32-bit sum is exact, including the max itself.
+	unsigned int hi = (unsigned int)(((unsigned long long)a + (unsigned long long)b) >> 32);
+	return (a + b) | (0u - hi);
+}
+
+
+int main(){
+    add(0,0);
+}

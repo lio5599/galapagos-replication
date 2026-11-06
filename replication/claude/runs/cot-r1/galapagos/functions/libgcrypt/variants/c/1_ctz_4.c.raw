@@ -1,0 +1,14 @@
+int ctz(uint64_t in)
+{
+ // Approach: 2 is a primitive root mod 67.
+ // So 2^0 to 2^63 all leave distinct remainders mod 67.
+ // A table built once maps each remainder back to its exponent.
+ // The isolated lowest set bit is looked up in that table.
+ // in == 0 is checked first and returns 64, matching the reference.
+ static signed char t[67];
+ static int init = 0;
+ int i;
+ if (!init) { for (i = 0; i < 64; i++) t[(1ULL << i) % 67] = (signed char)i; init = 1; }
+ if (in == 0) return 64;
+ return t[(in & (0 - in)) % 67];
+}

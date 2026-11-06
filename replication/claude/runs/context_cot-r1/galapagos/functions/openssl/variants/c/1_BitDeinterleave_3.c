@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: rotate by 32 bits twice, which totals 64 bits.
+    // A 64-bit rotation leaves the value unchanged, giving the identity.
+    // Both shift amounts are 32, so neither shift is undefined.
+    uint64_t r = (Ai << 32) | (Ai >> 32);
+    r = (r << 32) | (r >> 32);
+    return r;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

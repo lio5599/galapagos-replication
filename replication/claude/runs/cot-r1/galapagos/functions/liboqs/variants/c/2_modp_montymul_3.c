@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The reduction is the same as the reference.
+    // The correction uses a ternary that picks p or 0 based on the sign bit of d.
+    // -(d >> 31) is all ones when the bit is 1 and zero otherwise.
+    // So p & mask equals the ternary result in both cases.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += (d >> 31) ? p : 0u;
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

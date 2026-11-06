@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Piecewise on a = |v|: a <= t gives a. t < a < 2t gives 2t - a.
+    // a >= 2t gives t - |t|: 0 if t >= 0, 2t if t < 0.
+    // a < 2t forces t > 0, so the first two cases match t - |a - t| exactly.
+    // The sign is restored by negating when v < 0, as the reference does.
+    int a = v < 0 ? -v : v;
+    int r;
+    if (a < 2 * t)
+        r = a <= t ? a : 2 * t - a;
+    else
+        r = t < 0 ? 2 * t : 0;
+    return v < 0 ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

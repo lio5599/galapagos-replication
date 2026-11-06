@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Signed key transform: flip the 63 magnitude bits of a negative value.
+    // This makes larger-magnitude negatives smaller, while keeping them negative.
+    // Non-negative values are unchanged, so a signed compare of the keys gives the reference order.
+    // -0 becomes -1, which is less than 0, so -0 < +0 gives 1.
+    // Equal inputs give equal keys, so the result is 0.
+    uint64_t mx = (uint64_t)((int64_t)x >> 63) >> 1;
+    uint64_t my = (uint64_t)((int64_t)y >> 63) >> 1;
+    int64_t kx = (int64_t)(x ^ mx);
+    int64_t ky = (int64_t)(y ^ my);
+    return kx < ky;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

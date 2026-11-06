@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Inverts masks with 0xFF - m and ORs the terms in reverse order.
+    // Every m is in 0..0xFF, so 0xFF - m has no borrow and equals m ^ 0xFF.
+    // OR is commutative and associative, so the reordering does not change the value.
+    unsigned int m26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int m52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int m62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int e62 = 0xFFU - (((0U - (x ^ 62U)) >> 8) & 0xFFU);
+    unsigned int e63 = 0xFFU - (((0U - (x ^ 63U)) >> 8) & 0xFFU);
+    unsigned int r = (e63 & 95U) | (e62 & 45U);
+    r |= (0xFFU - m52) & m62 & (x - 4U);
+    r |= (0xFFU - m26) & m52 & (x + 71U);
+    r |= m26 & (x + 65U);
+    return (int) r;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

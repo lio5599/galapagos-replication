@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Uses the identity ~(a-b) == b-a-1 mod 2^32, so each mask becomes ((b-a-1)>>8)&0xFF.
+    // For example, ~(u-65) is 64-u and ~(90-u) is u-91. This is exact for all u.
+    // The equality masks use ~(0-d) == d-1, giving ((d-1)>>8)&0xFF.
+    // Range offsets use unsigned arithmetic, and only the low byte survives the masks.
+    // The final term is identical to the reference, since x is at most 0xFF.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        (((64u - u) >> 8) & ((u - 91u) >> 8) & (u - 65u) & 0xFFu) |
+        (((96u - u) >> 8) & ((u - 123u) >> 8) & (u - 71u) & 0xFFu) |
+        (((47u - u) >> 8) & ((u - 58u) >> 8) & (u + 4u) & 0xFFu) |
+        ((((u ^ 43u) - 1u) >> 8) & 62u) |
+        ((((u ^ 47u) - 1u) >> 8) & 63u);
+
+    return x | (((x - 1u) >> 8) & ((0u - (u ^ 65u)) >> 8) & 0xFFu);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

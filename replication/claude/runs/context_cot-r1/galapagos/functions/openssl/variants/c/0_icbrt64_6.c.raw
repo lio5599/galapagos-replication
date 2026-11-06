@@ -1,0 +1,25 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // The top chunk t = x >> s is compared with b, and the difference is reused.
+    // When t >= b, x - (b << s) leaves the low s bits unchanged and sets the high part to t - b.
+    // So x = ((t - b) << s) | (x & low_mask) is the same as x -= b << s.
+    // low_mask = (1 << s) - 1 is valid because s <= 63.
+    // r is doubled and incremented as in the reference, and the result is r << 12.
+    uint64_t r = 0;
+    uint64_t b;
+    uint64_t t;
+    uint64_t low;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        t = x >> s;
+        if (t >= b) {
+            low = x & ((((uint64_t)1) << s) - 1);
+            x = ((t - b) << s) | low;
+            r++;
+        }
+    }
+    return r << 12;
+}

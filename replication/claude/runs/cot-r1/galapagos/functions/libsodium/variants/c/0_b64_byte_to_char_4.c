@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: take bits 8..15 as (v & 0xFF00) >> 8, which equals (v >> 8) & 0xFF.
+    // Negation 0U - y is written as y * ~0U; both equal -y modulo 2^N for any unsigned width.
+    // The masks are bit-identical to the reference's masks, and they combine in the same way.
+    // The result is therefore equal for every unsigned input, including out-of-range ones.
+    unsigned int a = ((x - 26U) & 0xFF00U) >> 8;
+    unsigned int b = ((x - 52U) & 0xFF00U) >> 8;
+    unsigned int c = ((x - 62U) & 0xFF00U) >> 8;
+    unsigned int d = ((((x ^ 62U) * ~0U) & 0xFF00U) >> 8) ^ 0xFFU;
+    unsigned int e = ((((x ^ 63U) * ~0U) & 0xFF00U) >> 8) ^ 0xFFU;
+    return (int) ((a & (x + 'A')) | ((a ^ 0xFFU) & b & (x + 'a' - 26U)) |
+                  ((b ^ 0xFFU) & c & (x + '0' - 52U)) | (d & '+') | (e & '/'));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

@@ -1,0 +1,7 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: branchless mask built from the exponent's nonzeroness.
+    // m is all ones when exponent != 0, else 0, so the result is (x - 2^52) or 0.
+    // This matches the reference: its mask t-1 is zero exactly when the exponent was 0.
+    uint64_t m = (uint64_t)0 - (uint64_t)((((uint32_t)(x >> 52)) & 0x7FF) != 0);
+    return (x - ((uint64_t)1 << 52)) & m;
+}

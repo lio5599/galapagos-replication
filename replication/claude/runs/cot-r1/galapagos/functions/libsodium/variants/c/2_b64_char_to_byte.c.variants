@@ -1,0 +1,167 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Reference: decodes one Base64 character to its 6-bit value, or returns 0xFF if it is not valid.
+    // Its masks look only at bits 0..15 of c, so we work on w = c & 0xFFFF and use plain range checks.
+    // 'A'..'Z' -> 0..25, 'a'..'z' -> 26..51, '0'..'9' -> 52..61, '+' -> 62, '/' -> 63. 'A' returns 0, not 0xFF.
+    // Quirk: the reference's equality masks also fire when bits 8..15 are all ones.
+    // So any w >= 0xFF00 returns 63, or 62 when the low byte is '/'. All other inputs return 0xFF.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    if (w >= 'A' && w <= 'Z') return w - 'A';
+    if (w >= 'a' && w <= 'z') return w - ('a' - 26);
+    if (w >= '0' && w <= '9') return w + (52 - '0');
+    if (w == '+') return 62U;
+    if (w == '/') return 63U;
+    if ((w >> 8) == 0xFFU) return (w & 0xFFU) == '/' ? 62U : 63U;
+    return 0xFFU;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Unsigned wrap-around trick: (w - lo) < n holds exactly when lo <= w < lo + n, since a smaller w wraps huge.
+    // w is the low 16 bits of c, which are the only bits the reference inspects.
+    // Each class returns its offset, and '+' and '/' map to 62 and 63.
+    // w >= 0xFF00 mirrors the reference quirk: 62 only for 0xFF2F, otherwise 63. All else returns 0xFF.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    if (w - 'A' < 26U) return w - 'A';
+    if (w - 'a' < 26U) return w - 'a' + 26U;
+    if (w - '0' < 10U) return w - '0' + 52U;
+    if (w == '+') return 62U;
+    if (w == '/') return 63U;
+    if (w >= 0xFF00U) return w == 0xFF2FU ? 62U : 63U;
+    return 0xFFU;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Searches the Base64 alphabet string; the index found is the decoded value.
+    // The 16-bit quirk region w >= 0xFF00 is handled first: 62 if the low byte is '/', otherwise 63.
+    // That matches the reference, whose '+' and '/' equality masks wrongly fire there.
+    // Every other w that is not one of the 64 alphabet characters returns 0xFF, as the reference does.
+    static const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    unsigned int i;
+    if (w >= 0xFF00U) return (w & 0xFFU) == '/' ? 62U : 63U;
+    for (i = 0; i < 64U; i++)
+        if ((unsigned int) (unsigned char) alphabet[i] == w) return i;
+    return 0xFFU;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Branchless: each class gets an all-ones or all-zero mask from 0U - (comparison result).
+    // The masked values are OR-ed together; the classes are disjoint, so at most one mask is set.
+    // The 0xFF fallback is applied only when no class matched, so 'A' still correctly yields 0.
+    // The quirk class w >= 0xFF00 yields 63, minus 1 when w == 0xFF2F, matching the reference.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    const unsigned int up = 0U - (unsigned int) (w - 'A' < 26U);
+    const unsigned int lo = 0U - (unsigned int) (w - 'a' < 26U);
+    const unsigned int dg = 0U - (unsigned int) (w - '0' < 10U);
+    const unsigned int pl = 0U - (unsigned int) (w == '+');
+    const unsigned int sl = 0U - (unsigned int) (w == '/');
+    const unsigned int hi = 0U - (unsigned int) (w >= 0xFF00U);
+    const unsigned int x = (up & (w - 65U)) | (lo & (w - 71U)) | (dg & (w + 4U)) | (pl & 62U) | (sl & 63U) |
+                           (hi & (63U ^ (unsigned int) (w == 0xFF2FU)));
+    return x | (~(up | lo | dg | pl | sl | hi) & 0xFFU);
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Dispatches on the high byte of w (the low 16 bits of c): 0 means a normal char, 0xFF is the quirk region.
+    // In the quirk region the reference's '+' and '/' masks fire, giving 63, or 62 if the low byte is '/'.
+    // Any other high byte returns 0xFF.
+    // For a plain byte, '+' and '/' are handled by a switch and letters/digits by ordered threshold tests.
+    // The gaps between 'Z'/'a', '9'/'A' and below '0' fall through to 0xFF.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    const unsigned int b = w & 0xFFU;
+    switch (w >> 8) {
+    case 0: break;
+    case 0xFF: return b == '/' ? 62U : 63U;
+    default: return 0xFFU;
+    }
+    switch (b) {
+    case '+': return 62U;
+    case '/': return 63U;
+    default: break;
+    }
+    if (b >= 'a') return b <= 'z' ? b - 71U : 0xFFU;
+    if (b >= 'A') return b <= 'Z' ? b - 65U : 0xFFU;
+    if (b >= '0') return b <= '9' ? b + 4U : 0xFFU;
+    return 0xFFU;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Handles out-of-byte values first: w >= 0xFF00 is the reference quirk (63, or 62 for low byte '/').
+    // Any other w above 0xFF is invalid and returns 0xFF.
+    // A chained conditional then yields a signed value, using -1 as the "invalid" sentinel.
+    // -1 is converted to 0xFF. Valid values, including 0 for 'A', pass through unchanged.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    int v;
+    if (w >= 0xFF00U) return 63U - (unsigned int) ((w & 0xFFU) == '/');
+    if (w > 0xFFU) return 0xFFU;
+    v = (w >= 'A' && w <= 'Z') ? (int) w - 65 :
+        (w >= 'a' && w <= 'z') ? (int) w - 71 :
+        (w >= '0' && w <= '9') ? (int) w + 4 :
+        (w == '+') ? 62 : (w == '/') ? 63 : -1;
+    return v < 0 ? 0xFFU : (unsigned int) v;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Case folding: f = w | 0x20 lands in 'a'..'z' exactly when w is an ASCII letter of either case.
+    // Bit 0x20 of w then tells lowercase apart, which adds 26. If w > 0xFF, f also exceeds 'z', so it fails.
+    // (w | 4) == '/' matches exactly '+' (0x2B) and '/' (0x2F); bit 2 of w picks 62 or 63.
+    // The quirk region w >= 0xFF00 gives 63, or 62 when w == 0xFF2F. Everything else gives 0xFF.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    const unsigned int f = w | 0x20U;
+    if (w >= 0xFF00U) return w == 0xFF2FU ? 62U : 63U;
+    if (f - 'a' < 26U) return (f - 'a') + ((w & 0x20U) ? 26U : 0U);
+    if (w - '0' < 10U) return w + 4U;
+    if ((w | 4U) == '/') return 62U + ((w >> 2) & 1U);
+    return 0xFFU;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Table-driven ranges: each entry gives a start char, a length, and the base value of that range.
+    // Unsigned wrap-around makes (w - first) < len an exact range test, so the matching range returns base + offset.
+    // The ranges are disjoint, so the result is the same as the reference's OR of class terms.
+    // No match: the quirk region (high byte 0xFF) gives 63 minus (w == 0xFF2F); anything else gives 0xFF.
+    static const unsigned int first[5] = { 'A', 'a', '0', '+', '/' };
+    static const unsigned int len[5] = { 26U, 26U, 10U, 1U, 1U };
+    static const unsigned int base[5] = { 0U, 26U, 52U, 62U, 63U };
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    unsigned int i;
+    for (i = 0; i < 5U; i++)
+        if (w - first[i] < len[i]) return base[i] + (w - first[i]);
+    return (w >> 8) == 0xFFU ? 63U - (unsigned int) (w == 0xFF2FU) : 0xFFU;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Sign-bit masks: because w <= 0xFFFF, (w - lo) | (hi - w) has bit 31 set exactly when w is outside [lo, hi].
+    // Shifting that bit down and subtracting 1 gives all-ones when w is inside the range and 0 otherwise.
+    // The masked class values are OR-ed together, and 0xFF is added only when no class matched, so 'A' gives 0.
+    // The quirk mask covers w >= 0xFF00 with value 63 minus (w == 0xFF2F), as in the reference.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    const unsigned int mU = (((w - 65U) | (90U - w)) >> 31) - 1U;
+    const unsigned int mL = (((w - 97U) | (122U - w)) >> 31) - 1U;
+    const unsigned int mD = (((w - 48U) | (57U - w)) >> 31) - 1U;
+    const unsigned int mP = (((w - 43U) | (43U - w)) >> 31) - 1U;
+    const unsigned int mS = (((w - 47U) | (47U - w)) >> 31) - 1U;
+    const unsigned int mH = ((w - 0xFF00U) >> 31) - 1U;
+    const unsigned int x = (mU & (w - 65U)) | (mL & (w - 71U)) | (mD & (w + 4U)) | (mP & 62U) | (mS & 63U) |
+                           (mH & (63U - (unsigned int) (w == 0xFF2FU)));
+    return x | (~(mU | mL | mD | mP | mS | mH) & 0xFFU);
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Uses an 80-entry lookup table covering '+' (43) through 'z' (122).
+    // Gaps between the valid classes hold 0xFF, and every valid character holds its Base64 value.
+    // Any w outside that window either is the quirk region w >= 0xFF00 or is invalid.
+    // The quirk region gives 63, or 62 for 0xFF2F, and anything else gives 0xFF.
+    static const unsigned char t[80] = {
+        62, 255, 255, 255, 63,
+        52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
+        255, 255, 255, 255, 255, 255, 255,
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+        255, 255, 255, 255, 255, 255,
+        26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
+    };
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    if (w - 43U < 80U) return t[w - 43U];
+    if (w >= 0xFF00U) return 63U - (unsigned int) (w == 0xFF2FU);
+    return 0xFFU;
+}

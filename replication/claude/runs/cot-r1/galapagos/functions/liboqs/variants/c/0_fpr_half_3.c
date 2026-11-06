@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: same carry trick as the reference, applied to the original exponent.
+    // With e in 0..0x7FF, (e + 0x7FF) >> 11 is 1 iff e >= 1, so it is the complement of t.
+    // Negating it gives an all-ones mask for e >= 1, and 0 for e == 0, which forces +0.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t m = (uint64_t)0 - ((e + 0x7FF) >> 11);
+    return (x - ((uint64_t)1 << 52)) & m;
+}
+
+
+int main(){
+    fpr_half(0);
+}

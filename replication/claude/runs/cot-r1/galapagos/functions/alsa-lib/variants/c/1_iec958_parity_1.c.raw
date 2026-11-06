@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: Kernighan's trick clears the lowest set bit each iteration.
+	// Toggling parity once per cleared bit gives the set-bit count mod 2.
+	// Masking with 0x7FFFFFF0 keeps only bits 4..30, the bits the reference counts.
+	// No bits set means no iterations, so the result is 0, matching the reference.
+	unsigned int x = data & 0x7FFFFFF0U;
+	unsigned int parity = 0;
+	while (x) {
+		x &= x - 1U;
+		parity ^= 1U;
+	}
+	return parity;
+}

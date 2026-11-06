@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Approach: start from the 2 CRC bytes and accumulate the rest in reverse order.
+    // Residual is added first, then subframe headers, then the 16-byte frame header.
+    // Integer addition is commutative, so the final sum equals the reference total.
+    // Per-term expressions and the ch == 2 stereo test are taken from the reference.
+    int count = 2;
+    if (ch == 2)
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        count += (ch * bps * blocksize + 7) / 8;
+    count += ch * ((7 + bps + 7) / 8);
+    count += 16;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

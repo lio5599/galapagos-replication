@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: index directly into the 64-char URL-safe alphabet string.
+    // Entry x is exactly the char the reference builds for x in 0..63.
+    // Indices 64..255 are out of the table and yield 0, like the reference.
+    static const char t[] =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    return x < 64 ? (int) t[x] : 0;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

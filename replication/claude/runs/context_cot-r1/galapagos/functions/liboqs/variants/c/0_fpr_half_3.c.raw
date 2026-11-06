@@ -1,0 +1,10 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Same as the reference: subtract first, then check the new exponent.
+    // If the new exponent field is all ones, return 0; else return the difference.
+    // This is exactly the reference's t == 1 case versus the t == 0 case.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    if ((y & (uint64_t)0x7FF0000000000000) == (uint64_t)0x7FF0000000000000) {
+        return 0;
+    }
+    return y;
+}

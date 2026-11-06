@@ -1,0 +1,9 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: widen the 16-bit two's complement pattern of x to 32 bits unsigned.
+  // Bit 15 of that pattern is the sign bit, so u >> 15 is 0 or 1.
+  // Negating it as an int gives 0 or -1, exactly as the reference does.
+  // The upper bits are zero, so no other bits reach the result.
+  uint32_t u = (uint16_t)x;
+  return -(int)(u >> 15);
+}

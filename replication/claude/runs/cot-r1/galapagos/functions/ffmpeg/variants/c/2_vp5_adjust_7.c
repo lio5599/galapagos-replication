@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Absolute values are formed by multiplying by the signum (-1, 0, +1).
+    // x * sgn(x) == |x| for every x, including 0. The clamp and t - |c - t| follow the reference.
+    // For the output sign, v == 0 must count as positive, so (v < 0) is used, not sgn(v).
+    // This preserves the 2t result for v == 0 with t < 0.
+    int a = v * ((v > 0) - (v < 0));
+    int c = a < 2 * t ? a : 0;
+    int d = c - t;
+    int r = t - d * ((d > 0) - (d < 0));
+    return v < 0 ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

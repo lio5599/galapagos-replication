@@ -1,0 +1,16 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // A switch on ch replaces the if statement: case 2 is stereo, default covers all other values.
+    // Each branch evaluates the same expression as the matching reference branch.
+    // The order of the additions is preserved.
+    int count = 16 + ch * ((7 + bps + 7) / 8);
+    switch (ch) {
+    case 2:
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        break;
+    default:
+        count += (ch * bps * blocksize + 7) / 8;
+        break;
+    }
+    return count + 2;
+}

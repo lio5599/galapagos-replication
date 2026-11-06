@@ -1,0 +1,12 @@
+static int mix(int c0, int c1)
+{
+    // Approach: compute signed red / 3 with the compiler-style magic number 0x55555556.
+    // The high half of red * 0x55555556 is floor(red / 3) for red >= 0. Adding 1 when red < 0
+    // converts that floor into truncation toward zero, which is exact for every 32-bit int.
+    // Blue and green use (x * 171) >> 9, which is exact for 0 <= x < 512.
+    int blue = 2 * (c0 & 0x1F) + (c1 & 0x1F);
+    int green = 2 * ((c0 >> 5) & 0x1F) + ((c1 >> 5) & 0x1F);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int qr = (int)(((long long)red * 0x55555556LL) >> 32) + (red < 0);
+    return qr * 1024 + ((green * 171) >> 9) * 32 + ((blue * 171) >> 9);
+}

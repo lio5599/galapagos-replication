@@ -1,0 +1,8 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: divide the uint16_t pattern by 32768 to extract the top bit.
+  // Values 0..32767 give 0, and values 32768..65535 (negative x) give 1.
+  // Negating that 0 or 1 as an int gives 0 or -1, as in the reference.
+  // Edge case: x = -1 maps to 65535, and 65535 / 32768 = 1, giving -1.
+  return -(int)((uint16_t)x / 32768u);
+}

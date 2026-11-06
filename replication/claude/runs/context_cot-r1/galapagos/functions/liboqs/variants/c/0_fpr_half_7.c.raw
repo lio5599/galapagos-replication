@@ -1,0 +1,10 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Rebuild the result from its fields: sign, exponent minus 1, mantissa.
+    // When e >= 1 there is no borrow, so this equals x - 2^52 bit for bit.
+    // When e == 0 the reference returns 0, so handle that case first.
+    uint64_t e = (x >> 52) & 0x7FF;
+    if (e == 0) {
+        return 0;
+    }
+    return (x & ((uint64_t)1 << 63)) | ((e - 1) << 52) | (x & (((uint64_t)1 << 52) - 1));
+}

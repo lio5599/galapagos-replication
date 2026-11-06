@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: fold pairs and nibbles, then sum the nibble parities with one multiply.
+	// After two XOR folds, bit 0 of each nibble holds that nibble's parity.
+	// Multiplying by 0x11111111 sums those 8 bits into bits 28..31, and the sum is at most 8, so it never carries.
+	// Bit 28 is the low bit of the sum, which is the parity of the masked bits 4..30.
+	unsigned int x = data & 0x7FFFFFF0U;
+	x ^= x >> 1;
+	x ^= x >> 2;
+	x = (x & 0x11111111U) * 0x11111111U;
+	return (x >> 28) & 1U;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

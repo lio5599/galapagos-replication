@@ -1,0 +1,11 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask bits 4..30, then fold the 32 bits down to a 4-bit nibble with XOR.
+	// 0x6996 is a 16-entry bit table where bit n is the parity of n.
+	// Folding keeps the parity unchanged, so the table lookup gives the result.
+	unsigned int x = data & 0x7FFFFFF0u;
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	return (0x6996u >> (x & 0xFu)) & 1u;
+}

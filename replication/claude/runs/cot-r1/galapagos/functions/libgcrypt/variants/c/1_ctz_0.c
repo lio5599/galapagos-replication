@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Reference: returns the number of trailing zero bits of in, or 64 if in is 0.
+ // Approach: scan upward from bit 0 and stop at the first set bit.
+ // r counts the zero bits passed, which is the trailing zero count.
+ // The r < 64 test runs first, so the shift amount never reaches 64.
+ // If in == 0, the loop runs to r == 64, matching the reference.
+ int r = 0;
+ while (r < 64 && !((in >> r) & 1))
+  r++;
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

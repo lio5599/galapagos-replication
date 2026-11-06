@@ -1,0 +1,140 @@
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    // Reference: maps a 6-bit value to its Base64 char (A-Z, a-z, 0-9, +, /) without branches.
+    // Approach: compute each byte mask from the reference into its own local variable.
+    // Each mask is bits 8..15 of a wrapped subtraction, exactly as in the reference.
+    // The final OR of masked terms is unchanged, so every 32-bit input, large ones included, matches.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) ((a & (x + 65U)) | ((a ^ 0xFFU) & b & (x + 71U)) |
+                  ((b ^ 0xFFU) & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Extract bits 8..15 as (v & 0xFF00) >> 8, which is identical to (v >> 8) & 0xFF.
+    // 'a'-26 = 71 and '0'-52 = -4 are applied as unsigned +71 and -4, with the same wraparound.
+    // The masks and the OR structure are as in the reference, so the result is equal for all x.
+    unsigned int a = ((x - 26U) & 0xFF00U) >> 8;
+    unsigned int b = ((x - 52U) & 0xFF00U) >> 8;
+    unsigned int c = ((x - 62U) & 0xFF00U) >> 8;
+    unsigned int d = (((0U - (x ^ 62U)) & 0xFF00U) >> 8) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) & 0xFF00U) >> 8) ^ 0xFFU;
+    return (int) ((a & (x + 65U)) | ((a ^ 0xFFU) & b & (x + 71U)) |
+                  ((b ^ 0xFFU) & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Extract bits 8..15 as (v << 16) >> 24 on 32-bit unsigned, which equals (v >> 8) & 0xFF.
+    // The left shift discards bits 16..31, and the right shift brings bits 8..15 down to 0..7.
+    // All other operations mirror the reference, so the outputs are identical for every input.
+    unsigned int a = ((x - 26U) << 16) >> 24;
+    unsigned int b = ((x - 52U) << 16) >> 24;
+    unsigned int c = ((x - 62U) << 16) >> 24;
+    unsigned int d = (((0U - (x ^ 62U)) << 16) >> 24) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) << 16) >> 24) ^ 0xFFU;
+    return (int) ((a & (x + 65U)) | ((a ^ 0xFFU) & b & (x + 71U)) |
+                  ((b ^ 0xFFU) & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Truncating to unsigned char keeps the low 8 bits, so (unsigned char)(v >> 8) == (v >> 8) & 0xFF.
+    // For any m in 0..255, 255 - m equals m ^ 0xFF, so the complement masks are preserved.
+    // The combination is unchanged, so the result equals the reference even for large x.
+    unsigned int a = (unsigned char) ((x - 26U) >> 8);
+    unsigned int b = (unsigned char) ((x - 52U) >> 8);
+    unsigned int c = (unsigned char) ((x - 62U) >> 8);
+    unsigned int d = 255U - (unsigned char) ((0U - (x ^ 62U)) >> 8);
+    unsigned int e = 255U - (unsigned char) ((0U - (x ^ 63U)) >> 8);
+    return (int) ((a & (x + 65U)) | ((255U - a) & b & (x + 71U)) |
+                  ((255U - b) & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Two's-complement negation 0U - y is written as ~y + 1U, which is identical modulo 2^32.
+    // The complement m ^ 0xFF is written as ~m & 0xFF, which is the same for m in 0..255.
+    // The same masks are ANDed with the same offsets, so the output is equal for all x.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = ~(((~(x ^ 62U) + 1U) >> 8) & 0xFFU) & 0xFFU;
+    unsigned int e = ~(((~(x ^ 63U) + 1U) >> 8) & 0xFFU) & 0xFFU;
+    return (int) ((a & (x + 65U)) | (~a & 0xFFU & b & (x + 71U)) |
+                  (~b & 0xFFU & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Build the result by accumulating each reference term into r with |=.
+    // OR is associative and commutative, so the final value equals the reference OR of all five terms.
+    // Each term is computed with exactly the reference masks and offsets, so large x also matches.
+    unsigned int r = 0U;
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    r |= (((0U - (x ^ 63U)) >> 8) & 0xFFU ^ 0xFFU) & 47U;
+    r |= (((0U - (x ^ 62U)) >> 8) & 0xFFU ^ 0xFFU) & 43U;
+    r |= (b ^ 0xFFU) & c & (x - 4U);
+    r |= (a ^ 0xFFU) & b & (x + 71U);
+    r |= a & (x + 65U);
+    return (int) r;
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Subtractions are written as additions of their two's-complement constants, e.g. x - 26 = x + 0xFFFFFFE6.
+    // Likewise, x - 4 = x + 0xFFFFFFFC. Unsigned arithmetic wraps identically, so every mask is unchanged.
+    // The terms and their OR are the same as in the reference, giving identical results for all x.
+    unsigned int a = ((x + 0xFFFFFFE6U) >> 8) & 0xFFU;
+    unsigned int b = ((x + 0xFFFFFFCCU) >> 8) & 0xFFU;
+    unsigned int c = ((x + 0xFFFFFFC2U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) ((a & (x + 65U)) | ((a ^ 0xFFU) & b & (x + 71U)) |
+                  ((b ^ 0xFFU) & c & (x + 0xFFFFFFFCU)) | (d & 43U) | (e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Reorder the AND and OR operands using commutativity, and keep the character constants.
+    // 'A', 'a' - 26, '0' - 52, '+' and '/' are converted to unsigned exactly as in the reference.
+    // Only the operand order changes, so the bitwise result is identical for every x.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = 0xFFU ^ (((0U - (62U ^ x)) >> 8) & 0xFFU);
+    unsigned int e = 0xFFU ^ (((0U - (63U ^ x)) >> 8) & 0xFFU);
+    return (int) (((unsigned int) '/' & e) | ((unsigned int) '+' & d) |
+                  ((x + (unsigned int) ('0' - 52)) & c & (0xFFU ^ b)) |
+                  ((x + (unsigned int) ('a' - 26)) & b & (0xFFU ^ a)) | ((x + (unsigned int) 'A') & a));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Store each mask in an unsigned char, which truncates to bits 8..15 like & 0xFF.
+    // The complement (unsigned char) ~m keeps only the low byte of ~m, which equals m ^ 0xFF.
+    // The masks are widened back to unsigned before ANDing, so every term equals the reference.
+    unsigned char a = (unsigned char) ((x - 26U) >> 8);
+    unsigned char b = (unsigned char) ((x - 52U) >> 8);
+    unsigned char c = (unsigned char) ((x - 62U) >> 8);
+    unsigned char d = (unsigned char) ~(unsigned char) ((0U - (x ^ 62U)) >> 8);
+    unsigned char e = (unsigned char) ~(unsigned char) ((0U - (x ^ 63U)) >> 8);
+    return (int) (((unsigned int) a & (x + 65U)) | ((unsigned int) (unsigned char) ~a & (unsigned int) b & (x + 71U)) |
+                  ((unsigned int) (unsigned char) ~b & (unsigned int) c & (x - 4U)) | ((unsigned int) d & 43U) | ((unsigned int) e & 47U));
+}
+static int b64_byte_to_char(unsigned int x)
+{
+    // Reuse the shifted differences: p = x - 26 gives x + 71 = p + 97, and q = x - 52 gives x - 4 = q + 48.
+    // These identities hold modulo 2^32, so the offset values match the reference exactly.
+    // The masks come from the same p, q and r = x - 62, and the + and / masks are kept as in the reference.
+    unsigned int p = x - 26U;
+    unsigned int q = x - 52U;
+    unsigned int r = x - 62U;
+    unsigned int a = (p >> 8) & 0xFFU;
+    unsigned int b = (q >> 8) & 0xFFU;
+    unsigned int c = (r >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) ((a & (x + 65U)) | ((a ^ 0xFFU) & b & (p + 97U)) |
+                  ((b ^ 0xFFU) & c & (q + 48U)) | (d & 43U) | (e & 47U));
+}
+```

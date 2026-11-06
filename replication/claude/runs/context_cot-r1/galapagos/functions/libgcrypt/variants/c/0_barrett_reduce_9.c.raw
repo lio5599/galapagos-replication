@@ -1,0 +1,9 @@
+int16_t barrett_reduce(int16_t a) {
+  // Bias by 16*2^26 so the numerator is positive, then use a logical shift on uint32.
+  // Min: -660570112 + 33554432 + 1073741824 > 0. Max: 694104385 + 1073741824 < 2^32.
+  // floor((x + 16*2^26)/2^26) - 16 == floor(x/2^26), so this matches the reference shift.
+  // The remainder is computed in int32. It is exact and lies in int16 range.
+  uint32_t x = (uint32_t)((int32_t)a * 20159 + 33554432) + 1073741824u;
+  int32_t t = (int32_t)(x >> 26) - 16;
+  return (int16_t)((int32_t)a - t * 3329);
+}

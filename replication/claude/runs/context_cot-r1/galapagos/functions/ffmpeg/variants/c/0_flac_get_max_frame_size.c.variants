@@ -1,0 +1,132 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Reference: upper bound in bytes of a FLAC frame (header, subframe headers, samples, CRC).
+    // Approach: the same arithmetic split into named temporaries.
+    // ch*bps*blocksize is evaluated as (ch*bps)*blocksize, as in the reference.
+    // The signed /8 truncation and the order of the additions are unchanged.
+    int hdr = (7 + bps + 7) / 8;
+    int bits;
+    int count = 16;
+    count += ch * hdr;
+    if (ch == 2)
+        bits = 2 * bps + 1;
+    else
+        bits = ch * bps;
+    count += (bits * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // A single expression that uses a ternary to choose the bits per sample frame.
+    // The additions still run left to right: 16, header, payload, 2, as in the reference.
+    // bps+14 overflows exactly when 7+bps+7 does, and the result is the same otherwise.
+    // Signed division truncates toward zero, as the reference does.
+    return 16 + ch * ((bps + 14) / 8)
+           + (((ch == 2) ? (2 * bps + 1) : (ch * bps)) * blocksize + 7) / 8
+           + 2;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // The products and divisions are signed as in the reference, but the terms are summed as unsigned.
+    // Unsigned addition wraps, so the low 32 bits match the reference whenever it has no overflow.
+    // The two constants 16 and 2 are therefore merged into 18 safely.
+    unsigned int u = 18u;
+    int bits = (ch == 2) ? (2 * bps + 1) : (ch * bps);
+    u += (unsigned int)(ch * ((7 + bps + 7) / 8));
+    u += (unsigned int)((bits * blocksize + 7) / 8);
+    return (int)u;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // A switch on ch replaces the if statement: case 2 is stereo, default covers all other values.
+    // Each branch evaluates the same expression as the matching reference branch.
+    // The order of the additions is preserved.
+    int count = 16 + ch * ((7 + bps + 7) / 8);
+    switch (ch) {
+    case 2:
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        break;
+    default:
+        count += (ch * bps * blocksize + 7) / 8;
+        break;
+    }
+    return count + 2;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // 2*bps is written as bps+bps, which has the same value and the same overflow condition.
+    // The branch is inverted (ch != 2 is tested first), with the same paths.
+    // The order of the additions and the signed truncating divisions are unchanged.
+    int count = 16;
+    count += ch * ((bps + 7 + 7) / 8);
+    if (ch != 2)
+        count += (ch * bps * blocksize + 7) / 8;
+    else
+        count += ((bps + bps + 1) * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // The arithmetic is done in long long and then truncated back to int.
+    // Where the int reference has no overflow, the wider math gives the same exact values.
+    // long long division also truncates toward zero, so negative inputs behave the same.
+    long long b = bps, n = ch, bs = blocksize;
+    long long bits = (ch == 2) ? (2 * b + 1) : (n * b);
+    long long count = 16 + n * ((7 + b + 7) / 8) + (bits * bs + 7) / 8 + 2;
+    return (int)count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // The payload and header byte counts are computed first, then summed in reference order.
+    // The multiplication operands are commuted (bps*ch, blocksize*bits). This changes neither values nor overflow.
+    int bits = (ch == 2) ? (bps * 2 + 1) : (bps * ch);
+    int payload = (blocksize * bits + 7) / 8;
+    int header = ((7 + bps + 7) / 8) * ch;
+    int count = 16 + header;
+    count = count + payload;
+    return count + 2;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Unsigned accumulation in a different order: the CRC (2), the sample bytes, then 16 and the header.
+    // The signed products and divisions match the reference exactly.
+    // Wrapping unsigned sums are equal modulo 2^32, so the final int matches.
+    unsigned int acc = 2u;
+    if (ch == 2)
+        acc += (unsigned int)(((2 * bps + 1) * blocksize + 7) / 8);
+    else
+        acc += (unsigned int)((ch * bps * blocksize + 7) / 8);
+    acc += 16u;
+    acc += (unsigned int)(ch * ((7 + bps + 7) / 8));
+    return (int)acc;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // The stereo flag is computed as an int, and an if/else selects the total bits per sample.
+    // Stereo uses 2*bps+1 because of the side channel. Otherwise the value is ch*bps, as in the reference.
+    // The additions are done step by step in reference order, with the same signed truncating divides.
+    int stereo = (ch == 2);
+    int total;
+    int count = 16;
+    if (stereo)
+        total = 2 * bps + 1;
+    else
+        total = ch * bps;
+    count = count + ch * ((7 + bps + 7) / 8);
+    count = count + (total * blocksize + 7) / 8;
+    count = count + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Every value is computed in unsigned arithmetic except the two divisions.
+    // Each dividend is converted back to int before dividing, so /8 stays signed and truncating.
+    // The low 32 bits of the products and sums match the int results wherever the reference is defined.
+    unsigned int ub = (unsigned int)bps;
+    unsigned int bits = (ch == 2) ? (2u * ub + 1u) : ((unsigned int)ch * ub);
+    int hb = (int)(ub + 14u) / 8;
+    int pb = (int)(bits * (unsigned int)blocksize + 7u) / 8;
+    return (int)(16u + (unsigned int)ch * (unsigned int)hb + (unsigned int)pb + 2u);
+}

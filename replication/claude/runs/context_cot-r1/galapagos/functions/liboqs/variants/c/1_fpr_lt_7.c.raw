@@ -1,0 +1,9 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Starts from the signed compare lt = [sx<sy] and flips it when both are negative and x != y.
+    // Both negative and unequal: the reference wants sx > sy, which equals !lt.
+    // Both negative and equal: lt is 0 and no flip occurs, giving 0 as in the reference.
+    // In all other cases, lt is already the reference result.
+    int lt = (int64_t)x < (int64_t)y;
+    int n = (int)((x & y) >> 63);
+    return lt ^ (n & (x != y));
+}

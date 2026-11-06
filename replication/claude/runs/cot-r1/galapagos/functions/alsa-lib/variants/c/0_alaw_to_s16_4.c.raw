@@ -1,0 +1,12 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: XOR with 0xD5 instead of 0x55, which also inverts the sign bit.
+	// The low 7 bits are the same as after XOR 0x55, so the magnitude is identical.
+	// Bit 7 is now set exactly when the reference returns a negative value.
+	// The magnitude uses one conditional expression covering both segment cases.
+	unsigned int x = (unsigned int)a_val ^ 0xD5u;
+	int t7 = (int)(x & 0x7f);
+	int seg = t7 >> 4;
+	int t = seg ? (((t7 & 0x0f) << 4) + 0x108) << (seg - 1) : ((t7 & 0x0f) << 4) + 8;
+	return (x & 0x80) ? -t : t;
+}

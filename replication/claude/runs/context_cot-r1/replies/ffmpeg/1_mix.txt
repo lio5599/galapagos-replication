@@ -1,0 +1,111 @@
+static int mix(int c0, int c1)
+{
+    // Reference: blends two 15-bit RGB555 colors 2:1 (c0 weighted twice), per channel /3.
+    // Approach: extract each channel with shift-then-mask instead of mask-then-shift.
+    // (c>>5)&31 equals (c&0x3E0)>>5 exactly, also for negative c (arithmetic shift).
+    // Red keeps signed c>>10 and signed truncating division, as in the reference.
+    // No overflow is possible: red/3*1024 lies in [-2^31, 2^31-1024].
+    int b = ((c0 & 31) << 1) + (c1 & 31);
+    int g = (((c0 >> 5) & 31) << 1) + ((c1 >> 5) & 31);
+    int r = (c0 >> 10) * 2 + (c1 >> 10);
+    return r / 3 * 1024 + g / 3 * 32 + b / 3;
+}
+static int mix(int c0, int c1)
+{
+    // Combine the fields with bitwise OR instead of addition.
+    // red/3*1024 has its low 10 bits zero in two's complement, even when negative.
+    // green/3 <= 31 occupies bits 5..9 and blue/3 <= 31 occupies bits 0..4.
+    // The fields do not overlap, so OR gives the same value as the sum.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (red / 3 * 1024) | (green / 3 * 32) | (blue / 3);
+}
+static int mix(int c0, int c1)
+{
+    // Blue and green sums lie in 0..93, so x/3 == (x*171)>>9 there.
+    // The error x*(171/512-1/3) is below 1/3 for x < 512, so floor is unchanged.
+    // Red can be negative, so it keeps the signed truncating division.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + ((green * 171) >> 9) * 32 + ((blue * 171) >> 9);
+}
+static int mix(int c0, int c1)
+{
+    // Signed division of red by 3 uses the magic multiply: hi32(n*0x55555556) - (n>>31).
+    // This standard identity gives truncation toward zero for every 32-bit n.
+    // red is within about +-6.3M, so the 64-bit product cannot overflow.
+    // Blue and green are unchanged from the reference.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int rq = (int)(((long long)red * 0x55555556LL) >> 32) - (red >> 31);
+    return rq * 1024 + green / 3 * 32 + blue / 3;
+}
+static int mix(int c0, int c1)
+{
+    // Red division handles the sign explicitly: for negative red use -((-red)/3).
+    // This matches C truncation toward zero. -red cannot overflow because
+    // red >= -3*2^21. Nonnegative red is divided directly.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int rq = red < 0 ? -((-red) / 3) : red / 3;
+    return rq * 1024 + green / 3 * 32 + blue / 3;
+}
+static int mix(int c0, int c1)
+{
+    // The whole computation is done in 64-bit long long, then converted back.
+    // Signed 64-bit division truncates the same way, and the shifts and masks
+    // give identical channel values. The final value fits in int,
+    // so the conversion back to int is exact.
+    long long a = c0, b = c1;
+    long long blue = 2 * (a & 0x1F) + (b & 0x1F);
+    long long green = (2 * (a & 0x3E0) + (b & 0x3E0)) >> 5;
+    long long red = 2 * (a >> 10) + (b >> 10);
+    return (int)(red / 3 * 1024 + green / 3 * 32 + blue / 3);
+}
+static int mix(int c0, int c1)
+{
+    // Blue and green are always nonnegative (masked fields, at most 93),
+    // so unsigned division by 3 gives the same quotient as signed division.
+    // Red stays signed because it can be negative for negative inputs.
+    unsigned blue = 2u * ((unsigned)c0 & 0x1Fu) + ((unsigned)c1 & 0x1Fu);
+    unsigned green = (2u * ((unsigned)c0 & 0x3E0u) + ((unsigned)c1 & 0x3E0u)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + (int)(green / 3u) * 32 + (int)(blue / 3u);
+}
+static int mix(int c0, int c1)
+{
+    // Subtract the remainder first: red - red%3 is an exact multiple of 3.
+    // C guarantees red == (red/3)*3 + red%3, with the remainder taking red's sign,
+    // so (red - red%3)/3 equals red/3 for all red, including negatives.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int rq = (red - red % 3) / 3;
+    return rq * 1024 + green / 3 * 32 + blue / 3;
+}
+static int mix(int c0, int c1)
+{
+    // Blue and green sums lie in 0..93, so x/3 == (x*43)>>7 there.
+    // The error x*(43/128-1/3) is below 1/3 for x < 128, so floor is unchanged.
+    // The green field is placed with *32 and red keeps the signed division.
+    int blue = ((c0 & 31) << 1) + (c1 & 31);
+    int green = (((c0 >> 5) & 31) << 1) + ((c1 >> 5) & 31);
+    int red = (c0 >> 10) + (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + ((green * 43) >> 7) * 32 + ((blue * 43) >> 7);
+}
+static int mix(int c0, int c1)
+{
+    // Blue and green use x/3 == (x*21846)>>16 for 0 <= x <= 93.
+    // The error is about 1e-5*x, well below 1/3, so the floor is exact.
+    // Red is computed in signed form and combined into the high field with OR,
+    // which is valid because red/3*1024 has its low 10 bits zero.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int low = (((green * 21846) >> 16) << 5) | ((blue * 21846) >> 16);
+    return (red / 3 * 1024) | low;
+}

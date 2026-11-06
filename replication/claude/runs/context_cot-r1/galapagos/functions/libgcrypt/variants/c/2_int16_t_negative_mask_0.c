@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Reference computes -1 if x is negative, else 0 (an all-ones mask for negatives).
+  // Approach: a direct ternary on the sign of x.
+  // x < 0 holds exactly when the top bit of the uint16_t view is set,
+  // which is when the reference's u >> 15 equals 1 and it returns -1.
+  // Edge cases: x = -32768 gives -1, and x = 0 gives 0.
+  return x < 0 ? -1 : 0;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

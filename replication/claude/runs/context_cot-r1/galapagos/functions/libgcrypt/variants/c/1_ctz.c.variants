@@ -1,0 +1,133 @@
+static int ctz(uint64_t in)
+{
+ // Reference: counts trailing zero bits of in, returning 64 when in is 0.
+ // Approach: scan upward from bit 0 while the current bit is zero.
+ // The loop stops at the first set bit, so r is its index = trailing zeros.
+ // The r < 64 bound stops the scan for in == 0, giving 64 like the reference.
+ int r = 0;
+ while (r < 64 && ((in >> r) & 1) == 0)
+  r++;
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Binary search: if the low half of the window is zero, add its width and shift.
+ // Widths 32,16,8,4,2 narrow down to the lowest set bit, then the last bit is checked.
+ // The zero input is handled first and returns 64, matching the reference.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ if ((in & 0xFFFFFFFFULL) == 0) { r += 32; in >>= 32; }
+ if ((in & 0xFFFFULL) == 0) { r += 16; in >>= 16; }
+ if ((in & 0xFFULL) == 0) { r += 8; in >>= 8; }
+ if ((in & 0xFULL) == 0) { r += 4; in >>= 4; }
+ if ((in & 0x3ULL) == 0) { r += 2; in >>= 2; }
+ if ((in & 0x1ULL) == 0) { r += 1; }
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit with in & -in (two's complement via ~in + 1).
+ // Its index is built bit by bit by testing it against fixed bit-position masks.
+ // A zero input has no set bit and returns 64, as in the reference.
+ uint64_t b = in & (~in + 1);
+ int r = 0;
+ if (b == 0)
+  return 64;
+ if (b & 0xFFFFFFFF00000000ULL) r += 32;
+ if (b & 0xFFFF0000FFFF0000ULL) r += 16;
+ if (b & 0xFF00FF00FF00FF00ULL) r += 8;
+ if (b & 0xF0F0F0F0F0F0F0F0ULL) r += 4;
+ if (b & 0xCCCCCCCCCCCCCCCCULL) r += 2;
+ if (b & 0xAAAAAAAAAAAAAAAAULL) r += 1;
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // (in & -in) - 1 sets exactly the trailing-zero positions of in.
+ // A SWAR popcount of that value is the number of trailing zeros.
+ // For in == 0 the value is all ones, so the popcount is 64, as in the reference.
+ uint64_t x = (in & (~in + 1)) - 1;
+ x = x - ((x >> 1) & 0x5555555555555555ULL);
+ x = (x & 0x3333333333333333ULL) + ((x >> 2) & 0x3333333333333333ULL);
+ x = (x + (x >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+ return (int)((x * 0x0101010101010101ULL) >> 56);
+}
+static int ctz(uint64_t in)
+{
+ // Scan from bit 63 down to bit 0, recording the index of every set bit.
+ // The last recorded index is the lowest set bit, i.e. the trailing zero count.
+ // If no bit is set, r keeps its initial value 64, matching the reference.
+ int i, r = 64;
+ for (i = 63; i >= 0; i--)
+  if ((in >> i) & 1)
+   r = i;
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // First skip whole zero bytes from the bottom, adding 8 for each one.
+ // Then step bit by bit within the first nonzero byte up to its lowest set bit.
+ // If all 8 bytes are zero, r reaches 64 and is returned, as in the reference.
+ int r = 0;
+ while (r < 64 && ((in >> r) & 0xFFULL) == 0)
+  r += 8;
+ if (r == 64)
+  return 64;
+ while (((in >> r) & 1) == 0)
+  r++;
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Branchless binary search: t is the step width if the low window is zero, else 0.
+ // Adding t to r and shifting by t moves toward the lowest set bit.
+ // After the steps, bit 0 is set for nonzero input, so the final add is 0.
+ // For in == 0 the steps add 63 and the final add contributes 1, giving 64.
+ int r = 0, t;
+ t = ((in & 0xFFFFFFFFULL) == 0) << 5; r += t; in >>= t;
+ t = ((in & 0xFFFFULL) == 0) << 4; r += t; in >>= t;
+ t = ((in & 0xFFULL) == 0) << 3; r += t; in >>= t;
+ t = ((in & 0xFULL) == 0) << 2; r += t; in >>= t;
+ t = ((in & 0x3ULL) == 0) << 1; r += t; in >>= t;
+ t = ((in & 0x1ULL) == 0); r += t; in >>= t;
+ r += (int)((in & 1) ^ 1);
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // For each i in 0..63, test whether the low i+1 bits of in are all zero.
+ // Exactly ctz(in) such prefixes are zero, so counting them gives the result.
+ // For in == 0 all 64 prefixes are zero, giving 64 as in the reference.
+ int i, r = 0;
+ for (i = 0; i < 64; i++)
+  r += (in & (~0ULL >> (63 - i))) == 0;
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // x = (in & -in) - 1 has ones exactly at the trailing-zero positions of in.
+ // Kernighan's loop clears one set bit per iteration, counting them.
+ // For in == 0, x is all ones and 64 iterations give 64, as in the reference.
+ uint64_t x = (in & (~in + 1)) - 1;
+ int r = 0;
+ while (x)
+ {
+  x &= x - 1;
+  r++;
+ }
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Shifting left by k makes in zero exactly when k >= 64 - ctz(in).
+ // The loop therefore runs 64 - ctz(in) times, decrementing r from 64.
+ // For in == 0 the loop does not run and r stays 64, as in the reference.
+ int r = 64;
+ while (in)
+ {
+  in <<= 1;
+  r--;
+ }
+ return r;
+}

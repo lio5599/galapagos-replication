@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Two's-complement negation 0U - y is written as ~y + 1U, which is identical modulo 2^32.
+    // The complement m ^ 0xFF is written as ~m & 0xFF, which is the same for m in 0..255.
+    // The same masks are ANDed with the same offsets, so the output is equal for all x.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = ~(((~(x ^ 62U) + 1U) >> 8) & 0xFFU) & 0xFFU;
+    unsigned int e = ~(((~(x ^ 63U) + 1U) >> 8) & 0xFFU) & 0xFFU;
+    return (int) ((a & (x + 65U)) | (~a & 0xFFU & b & (x + 71U)) |
+                  (~b & 0xFFU & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

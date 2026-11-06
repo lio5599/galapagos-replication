@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Reference computes [x < y] for raw IEEE-754 doubles held as uint64_t (no NaN handling).
+    // If both are negative, the signed order is reversed, so the result is sx > sy.
+    // Otherwise sx < sy is correct for two non-negative values.
+    // When signs differ, sx < sy holds exactly when x is negative, matching the reference.
+    // -0 vs +0 gives 1 because x is negative. Equal negative inputs give 0, as in the reference.
+    int64_t sx = (int64_t)x;
+    int64_t sy = (int64_t)y;
+    if ((x & y) >> 63) {
+        return sx > sy;
+    }
+    return sx < sy;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

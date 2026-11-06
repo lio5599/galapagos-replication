@@ -1,0 +1,193 @@
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes floor(cbrt(x)) shifted left by 12, since r * 1 << 12 parses as (r * 1) << 12.
+    // Same base-8 digit-by-digit root as the reference, driven by a counter i = 0..21.
+    // The shift s = 63 - 3*i takes the same values 63, 60, ..., 0 as the reference loop.
+    // Testing (rem >> s) >= b is exactly rem >= b*2^s, so b << s never overflows.
+    // x = 0 gives r = 0. The largest root, 2642245, still fits after the shift.
+    uint64_t rem = x;
+    uint64_t r = 0;
+    uint64_t b;
+    int i, s;
+    for (i = 0; i < 22; i++) {
+        s = 63 - 3 * i;
+        r = 2 * r;
+        b = 3 * r * (r + 1) + 1;
+        if ((rem >> s) >= b) {
+            rem -= b << s;
+            r += 1;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Binary search for the largest r in [0, 2642245] with r^3 <= x.
+    // 2642245^3 < 2^64 <= 2642246^3, so the answer lies in this range and no cube overflows.
+    // Invariant: lo^3 <= x, and every value above hi has a cube greater than x.
+    // Using mid = lo + (hi - lo + 1) / 2 ensures progress. x = 0 yields lo = 0.
+    // The result is shifted left by 12, matching the reference return value.
+    uint64_t lo = 0, hi = 2642245, mid;
+    while (lo < hi) {
+        mid = lo + (hi - lo + 1) / 2;
+        if (mid * mid * mid <= x)
+            lo = mid;
+        else
+            hi = mid - 1;
+    }
+    return lo << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Integer Newton iteration y' = (2y + x / y^2) / 3, starting at 2642246.
+    // That start exceeds floor(cbrt(x)) for every 64-bit x, and by AM-GM y' never drops below it.
+    // The iterates strictly decrease until y' >= y, at which point y = floor(cbrt(x)).
+    // x = 0 is handled first because y would otherwise reach 0 and divide by zero.
+    // y^2 <= 2642246^2 fits easily in 64 bits. The result is shifted left by 12 as in the reference.
+    uint64_t y, y1;
+    if (x == 0)
+        return 0;
+    y = 2642246;
+    for (;;) {
+        y1 = (2 * y + x / (y * y)) / 3;
+        if (y1 >= y)
+            break;
+        y = y1;
+    }
+    return y << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Greedy bit setting: the root is below 2^22, so try bits 21 down to 0.
+    // A bit is kept when t^3 <= x, tested as t <= x / (t*t) to avoid overflow.
+    // For integer t this test is exact, and t >= 1 so there is no division by zero.
+    // Because t^3 <= x is monotone in t, the greedy result is floor(cbrt(x)).
+    // x = 0 keeps no bits. The result is shifted left by 12 as in the reference.
+    uint64_t r = 0, t;
+    int bit;
+    for (bit = 21; bit >= 0; bit--) {
+        t = r | ((uint64_t)1 << bit);
+        if (t <= x / (t * t))
+            r = t;
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Reference digit algorithm that also tracks y2 = y*y incrementally.
+    // Doubling y multiplies y2 by 4, and y++ adds 2y+1 to y2.
+    // So b = 3*(y2 + y) + 1 equals the reference's 3*r*(r+1) + 1.
+    // The comparison and subtraction match the reference step for step, including x = 0.
+    // The result is shifted left by 12.
+    uint64_t y = 0, y2 = 0, b;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        y2 <<= 2;
+        y <<= 1;
+        b = 3 * (y2 + y) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            y2 += 2 * y + 1;
+            y++;
+        }
+    }
+    return y << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // The reference's first iteration has r = 0 and b = 1, so it only checks the top bit.
+    // Here that step is done directly: if bit 63 is set, clear it and set r = 1.
+    // The remaining iterations, s = 60 down to 0, are identical to the reference.
+    // This gives floor(cbrt(x)) for all x, including 0 and UINT64_MAX.
+    // The result is shifted left by 12 as in the reference.
+    uint64_t r = 0, b;
+    int s;
+    if (x >> 63) {
+        x -= (uint64_t)1 << 63;
+        r = 1;
+    }
+    for (s = 60; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Half-open binary search keeping lo^3 <= x < hi^3, with lo = 0 and hi = 2^22 at the start.
+    // The invariant holds initially since (2^22)^3 = 2^66 exceeds any 64-bit x.
+    // mid^3 <= x is tested as mid <= x / (mid*mid), which is exact for integers and cannot overflow.
+    // mid > lo >= 0, so the divisor is never zero. The loop ends with lo = floor(cbrt(x)).
+    // The result is shifted left by 12 as in the reference.
+    uint64_t lo = 0, hi = (uint64_t)1 << 22, mid;
+    while (hi - lo > 1) {
+        mid = lo + (hi - lo) / 2;
+        if (mid <= x / (mid * mid))
+            lo = mid;
+        else
+            hi = mid;
+    }
+    return lo << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Newton iteration starting from 2^ceil(n/3), where n is the bit length of x.
+    // Since x < 2^n, the start is at least cbrt(x), and at most 2^22, so y*y fits.
+    // y' = (2y + x / y^2) / 3 stays >= floor(cbrt(x)) by AM-GM, with floors applied safely.
+    // Stopping when y' >= y leaves y = floor(cbrt(x)). x = 0 returns 0 right away.
+    // The result is shifted left by 12 as in the reference.
+    uint64_t t = x, y, y1;
+    int n = 0;
+    if (x == 0)
+        return 0;
+    while (t) {
+        n++;
+        t >>= 1;
+    }
+    y = (uint64_t)1 << ((n + 2) / 3);
+    for (;;) {
+        y1 = (2 * y + x / (y * y)) / 3;
+        if (y1 >= y)
+            break;
+        y = y1;
+    }
+    return y << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // With s = 3k, floor(cbrt(x >> s)) equals floor(floor(cbrt(x)) / 2^k).
+    // So each step's root is twice the previous root, or twice plus one.
+    // Each step sets r = 2r and adds 1 when (2r+1)^3 <= (x >> s).
+    // Every candidate is at most 2642245, so its cube fits in 64 bits.
+    // After s = 0, r = floor(cbrt(x)), including x = 0. The result is shifted left by 12.
+    uint64_t r = 0, t;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        t = r + 1;
+        if (t * t * t <= (x >> s))
+            r = t;
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Greedy bit setting from bit 21 down to 0, comparing cubes directly.
+    // Candidates above 2642245 are rejected first, because their cubes would overflow
+    // and in any case exceed every 64-bit x. Within that bound t*t*t is exact.
+    // Since t^3 <= x is monotone in t, the greedy result is the largest r with r^3 <= x.
+    // x = 0 gives 0. The result is shifted left by 12 as in the reference.
+    uint64_t r = 0, t;
+    int bit;
+    for (bit = 21; bit >= 0; bit--) {
+        t = r + ((uint64_t)1 << bit);
+        if (t <= 2642245 && t * t * t <= x)
+            r = t;
+    }
+    return r << 12;
+}

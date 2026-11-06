@@ -1,0 +1,11 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: add in 64-bit unsigned arithmetic, where the true sum cannot overflow.
+	// Then clamp the result to 4294967295 if it exceeds the 32-bit range.
+	// The maximum true sum is 2*4294967295, which fits in unsigned long long.
+	// The equality case a + b == max gives max either way, as in the reference.
+	unsigned long long s = (unsigned long long)a + (unsigned long long)b;
+	if (s > 4294967295ull)
+		return 4294967295u;
+	return (unsigned int)s;
+}

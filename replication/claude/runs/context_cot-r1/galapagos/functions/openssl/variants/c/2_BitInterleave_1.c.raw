@@ -1,0 +1,8 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Approach: XOR twice with the same constant, which cancels out (x ^ k ^ k == x).
+    // This holds bitwise for every input, so all values are preserved.
+    const uint64_t k = 0x9e3779b97f4a7c15ULL;
+    uint64_t t = Ai ^ k;
+    return t ^ k;
+}

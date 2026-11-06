@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// After the two XOR steps, bit 4k holds the parity of nibble k.
+	// Keep only those bits, then multiply by 0x11111111 to sum them into bits 28..31.
+	// Each column sum is at most 8, so it fits in 4 bits and does not carry into bit 28.
+	// Bit 28 is then the overall parity of the masked bits 4..30.
+	unsigned int x = data & 0x7FFFFFF0u;
+	x ^= x >> 1;
+	x ^= x >> 2;
+	x &= 0x11111111u;
+	x *= 0x11111111u;
+	return (x >> 28) & 1u;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

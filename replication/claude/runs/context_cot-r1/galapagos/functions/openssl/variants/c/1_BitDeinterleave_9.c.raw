@@ -1,0 +1,12 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: mirror the reference structure with a dead branch on a zero flag.
+    // The flag is always 0, so the branch never runs and Ai is returned as is.
+    // This is the identity for all inputs, matching the reference.
+    int enabled = 0;
+    uint64_t r = Ai;
+    if (enabled) {
+        r = (r >> 32) | (r << 32);
+    }
+    return r;
+}

@@ -1,0 +1,122 @@
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Reference: returns the parity (XOR) of bits 4..30 of data.
+	// Mask bits 4..30 with 0x7FFFFFF0, then XOR-fold halves down to bit 0.
+	// Each fold keeps bit 0 equal to the XOR of all bits still in range.
+	// Bits 0..3 and bit 31 are excluded by the mask, as in the reference.
+	unsigned int x = data & 0x7FFFFFF0u;
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	x ^= x >> 2;
+	x ^= x >> 1;
+	return x & 1u;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Shift left by 1 to drop bit 31, then right by 5 to drop bits 0..3.
+	// What remains is original bits 4..30 in positions 0..26.
+	// Count the set bits until the value is zero, then return the count's low bit.
+	// This counts the same 27 bits as the reference loop.
+	unsigned int x = (data << 1) >> 5;
+	unsigned int count = 0;
+	while (x != 0) {
+		count += x & 1u;
+		x >>= 1;
+	}
+	return count & 1u;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Kernighan method: each x &= x - 1 clears the lowest set bit.
+	// Toggle p once per cleared bit, so p is the parity of the set bits.
+	// The mask 0x7FFFFFF0 limits the bits to 4..30, as in the reference.
+	unsigned int x = data & 0x7FFFFFF0u;
+	unsigned int p = 0;
+	while (x != 0) {
+		x &= x - 1u;
+		p ^= 1u;
+	}
+	return p;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask bits 4..30, then fold the 32 bits down to a 4-bit nibble with XOR.
+	// 0x6996 is a 16-entry bit table where bit n is the parity of n.
+	// Folding keeps the parity unchanged, so the table lookup gives the result.
+	unsigned int x = data & 0x7FFFFFF0u;
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	return (0x6996u >> (x & 0xFu)) & 1u;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// After the two XOR steps, bit 4k holds the parity of nibble k.
+	// Keep only those bits, then multiply by 0x11111111 to sum them into bits 28..31.
+	// Each column sum is at most 8, so it fits in 4 bits and does not carry into bit 28.
+	// Bit 28 is then the overall parity of the masked bits 4..30.
+	unsigned int x = data & 0x7FFFFFF0u;
+	x ^= x >> 1;
+	x ^= x >> 2;
+	x &= 0x11111111u;
+	x *= 0x11111111u;
+	return (x >> 28) & 1u;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Visit bits 30 down to 4 and XOR each one into p.
+	// This covers the same 27 bit positions as the reference loop.
+	// The visiting order does not matter, because XOR is commutative.
+	unsigned int p = 0;
+	int bit;
+	for (bit = 30; bit >= 4; bit--)
+		p ^= (data >> bit) & 1u;
+	return p;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask bits 4..30, then XOR the four bytes together into one byte.
+	// Fold that byte into a nibble and look up its parity in the table 0x6996.
+	// Every XOR step keeps the total parity, so the result matches the reference.
+	unsigned int x = data & 0x7FFFFFF0u;
+	unsigned int b = (x ^ (x >> 8) ^ (x >> 16) ^ (x >> 24)) & 0xFFu;
+	b ^= b >> 4;
+	return (0x6996u >> (b & 0xFu)) & 1u;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Add each bit at positions 4..30 into a counter without changing data.
+	// The counter's low bit is the parity, the same value the reference returns.
+	// The largest possible count is 27, so the counter cannot overflow.
+	unsigned int p = 0;
+	int bit;
+	for (bit = 4; bit < 31; bit++)
+		p += (data >> bit) & 1u;
+	return p & 1u;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// XOR together every right shift of the masked value, for i from 0 to 31.
+	// Bit 0 of acc then becomes the XOR of all 32 bits of x.
+	// The mask leaves only bits 4..30, so the result is their parity.
+	unsigned int x = data & 0x7FFFFFF0u;
+	unsigned int acc = 0;
+	int i;
+	for (i = 0; i < 32; i++)
+		acc ^= x >> i;
+	return acc & 1u;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// SWAR population count of the masked bits 4..30, then return its low bit.
+	// The count's low bit is the parity, which is what the reference returns.
+	// The count is at most 27, so the byte sum in the top byte is exact.
+	unsigned int x = data & 0x7FFFFFF0u;
+	x = x - ((x >> 1) & 0x55555555u);
+	x = (x & 0x33333333u) + ((x >> 2) & 0x33333333u);
+	x = (x + (x >> 4)) & 0x0F0F0F0Fu;
+	x = (x * 0x01010101u) >> 24;
+	return x & 1u;
+}

@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Byte extraction uses unsigned char casts: (unsigned char)(t >> 8) == (t >> 8) & 0xFF.
+    // Each inverted mask is taken from ~t before the cast, so no int promotion issue arises.
+    // Offsets are cast to unsigned char, which keeps only the low byte as the masks do.
+    // All parts are unsigned int before combining, so x is in 0..255 as in the reference.
+    // A zero x yields the byte of -(c^'A'); otherwise x is returned unchanged.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int ra = (unsigned int) (unsigned char) (~(u - 65u) >> 8) & (unsigned int) (unsigned char) (~(90u - u) >> 8) & (unsigned int) (unsigned char) (u - 65u);
+    const unsigned int rl = (unsigned int) (unsigned char) (~(u - 97u) >> 8) & (unsigned int) (unsigned char) (~(122u - u) >> 8) & (unsigned int) (unsigned char) (u - 71u);
+    const unsigned int rd = (unsigned int) (unsigned char) (~(u - 48u) >> 8) & (unsigned int) (unsigned char) (~(57u - u) >> 8) & (unsigned int) (unsigned char) (u + 4u);
+    const unsigned int rp = (unsigned int) (unsigned char) (~(0u - (u ^ 43u)) >> 8) & 62u;
+    const unsigned int rs = (unsigned int) (unsigned char) (~(0u - (u ^ 47u)) >> 8) & 63u;
+    const unsigned int x = ra | rl | rd | rp | rs;
+    return x ? x : (unsigned int) (unsigned char) ((0u - (u ^ 65u)) >> 8);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

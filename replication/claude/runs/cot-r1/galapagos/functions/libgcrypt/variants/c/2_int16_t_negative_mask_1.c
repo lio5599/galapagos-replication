@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: the comparison (x < 0) evaluates to the int 1 or 0.
+  // Negating it gives -1 for negative x and 0 otherwise.
+  // This matches the reference, where the shifted sign bit is 1 iff x < 0.
+  // Edge cases: INT16_MIN gives -(1) = -1, and 0 gives -(0) = 0.
+  return -(x < 0);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

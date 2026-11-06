@@ -1,0 +1,134 @@
+
+static int vp5_adjust(int v, int t)
+{
+    // Reference: returns sign(v) * (t - |c - t|), c = |v| if |v| < 2t else 0 (sign(0) = +).
+    // Plain branching version of the same steps: abs, clamp to 0, distance from t, restore sign.
+    // v < 0 replaces the (v >> 31) mask. Negating twice equals the xor/add trick.
+    // Negative t gives c = 0 and t - |t| = 2t, as in the reference. Zero t gives 0.
+    // Inputs that are UB in the reference (v == INT_MIN, overflowing 2*t) are not covered.
+    int a = v < 0 ? -v : v;
+    int c = a < 2 * t ? a : 0;
+    int d = c - t;
+    if (d < 0)
+        d = -d;
+    int r = t - d;
+    return v < 0 ? -r : r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Piecewise on a = |v|: a <= t gives a. t < a < 2t gives 2t - a.
+    // a >= 2t gives t - |t|: 0 if t >= 0, 2t if t < 0.
+    // a < 2t forces t > 0, so the first two cases match t - |a - t| exactly.
+    // The sign is restored by negating when v < 0, as the reference does.
+    int a = v < 0 ? -v : v;
+    int r;
+    if (a < 2 * t)
+        r = a <= t ? a : 2 * t - a;
+    else
+        r = t < 0 ? 2 * t : 0;
+    return v < 0 ? -r : r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Multiply by an explicit sign s = -1 or +1. v == 0 must use +1 so 2t survives when t < 0.
+    // The clamp c = a * (a < 2t) mirrors the reference multiply-by-comparison.
+    // t - |c - t| is computed with a conditional absolute value.
+    // s * r equals the reference's (r + s1) ^ s1 for every r it defines.
+    int s = v < 0 ? -1 : 1;
+    int a = v * s;
+    int c = a * (a < 2 * t);
+    int d = c - t;
+    int r = t - (d < 0 ? -d : d);
+    return s * r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Uses mask m = -(v < 0), which is 0 or -1, like s1 but built from a comparison.
+    // (x ^ m) - m gives |x| for the input and negates the result when m = -1.
+    // This equals the reference's (r + m) ^ m, since both yield -r for m = -1.
+    // The middle step t - |c - t| uses its own mask from (d < 0). Edge cases are unchanged.
+    int m = -(v < 0);
+    int a = (v ^ m) - m;
+    int c = a < 2 * t ? a : 0;
+    int d = c - t;
+    int md = -(d < 0);
+    int r = t - ((d ^ md) - md);
+    return (r ^ m) - m;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Identity: t - |c - t| == min(c, 2t - c), because one term is c and the other is 2t - c.
+    // c = |v| when |v| < 2t, otherwise 0. With t < 0 and c = 0, min(0, 2t) = 2t, as required.
+    // With t == 0 the result is 0. Subtracting c from 2t cannot overflow when 2t is defined.
+    // The final sign follows v, with zero treated as positive.
+    int a = v < 0 ? -v : v;
+    int c = a < 2 * t ? a : 0;
+    int r = c < 2 * t - c ? c : 2 * t - c;
+    return v < 0 ? -r : r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Classify a = |v| into a region: 0 if a <= t, 1 if t < a < 2t, 2 if a >= 2t.
+    // Region 0 gives a, region 1 gives 2t - a, region 2 gives t - |t| (0, or 2t if t < 0).
+    // Regions 0 and 1 need a < 2t, which forces t > 0 and matches t - |a - t|.
+    // When t <= 0 the region is always 2. The sign is restored afterwards.
+    int a = v < 0 ? -v : v;
+    int region = a >= 2 * t ? 2 : (a > t);
+    int r;
+    switch (region) {
+    case 0: r = a; break;
+    case 1: r = 2 * t - a; break;
+    default: r = t < 0 ? t + t : 0; break;
+    }
+    return v < 0 ? -r : r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // With c clamped as in the reference, t - |c - t| is c if c <= t, else 2t - c.
+    // When t < 0, c is 0 > t, so the result is 2t - 0 = 2t, matching t - |t|.
+    // When t == 0, c is 0 <= t, so the result is 0.
+    // The sign is applied to the result exactly as the reference applies s1.
+    int a = v >= 0 ? v : -v;
+    int c = (a < 2 * t) ? a : 0;
+    int r = (c <= t) ? c : 2 * t - c;
+    return v >= 0 ? r : -r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Absolute values are formed by multiplying by the signum (-1, 0, +1).
+    // x * sgn(x) == |x| for every x, including 0. The clamp and t - |c - t| follow the reference.
+    // For the output sign, v == 0 must count as positive, so (v < 0) is used, not sgn(v).
+    // This preserves the 2t result for v == 0 with t < 0.
+    int a = v * ((v > 0) - (v < 0));
+    int c = a < 2 * t ? a : 0;
+    int d = c - t;
+    int r = t - d * ((d > 0) - (d < 0));
+    return v < 0 ? -r : r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // n = (v < 0). The factor (1 - 2n) is +1 or -1, used for both the abs and the sign.
+    // a = |v|, c = a * (a < 2t), and r = t - |c - t| using a conditional negation.
+    // Return (1 - 2n) * r, which equals the reference's xor/add sign restore.
+    // Zero v gives n = 0, so the result r is kept unchanged, including 2t for t < 0.
+    int n = v < 0;
+    int f = 1 - 2 * n;
+    int a = f * v;
+    int c = a * (a < 2 * t);
+    int d = c - t;
+    int r = t - (d < 0 ? -d : d);
+    return f * r;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Same steps as the reference, done in long long so no intermediate can overflow.
+    // Wherever the reference is defined, every value equals the int computation.
+    // The final result fits in int, so the cast back is exact.
+    // Edge cases match: t <= 0 gives t - |t| (0 or 2t). The sign follows v, with 0 positive.
+    long long a = v < 0 ? -(long long)v : (long long)v;
+    long long tt = t;
+    long long c = a < 2 * tt ? a : 0;
+    long long d = c - tt;
+    long long r = tt - (d < 0 ? -d : d);
+    return (int)(v < 0 ? -r : r);
+}

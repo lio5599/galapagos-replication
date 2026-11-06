@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Reference: maps a 6-bit value 0..63 to its Base64 char A-Z a-z 0-9 + / without branches.
+    // Approach: compute each byte mask once in a named local, then combine them as the reference does.
+    // ((x-t)>>8)&0xFF is 0xFF for x<t because the subtraction borrows; the eq masks are 0xFF iff x==k.
+    // The final expression is the reference with its subexpressions named, so it returns the same
+    // value for every unsigned input, including out-of-range x >= 64.
+    unsigned int lt26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int lt52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int lt62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int eq62 = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int eq63 = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) ((lt26 & (x + 'A')) | ((lt26 ^ 0xFFU) & lt52 & (x + ('a' - 26))) |
+                  ((lt52 ^ 0xFFU) & lt62 & (x + ('0' - 52))) | (eq62 & '+') | (eq63 & '/'));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

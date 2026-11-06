@@ -1,0 +1,16 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Builds the result incrementally with |= in a running accumulator.
+    // Each step adds one of the reference's five masked terms.
+    // Starting from 0 and ORing all terms gives the same value as the single expression.
+    unsigned int r = 0U;
+    unsigned int m26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int m52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int m62 = ((x - 62U) >> 8) & 0xFFU;
+    r |= m26 & (x + 'A');
+    r |= (m26 ^ 0xFFU) & m52 & (x + ('a' - 26));
+    r |= (m52 ^ 0xFFU) & m62 & (x + ('0' - 52));
+    r |= ((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & '-';
+    r |= ((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & '_';
+    return (int) r;
+}

@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Extract the new exponent by dropping the sign with a left shift, then shift right by 53.
+    // This gives the 11 exponent bits of y = x - 2^52.
+    // If they equal 0x7FF, the reference masks to 0; otherwise it returns y.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t ne = (y << 1) >> 53;
+    return (ne == 0x7FF) ? (uint64_t)0 : y;
+}

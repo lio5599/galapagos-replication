@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: promote x to a 32-bit int and arithmetic-shift right by 31.
+  // The sign is preserved in the promotion, so bit 31 is set iff x < 0.
+  // An arithmetic shift by 31 then yields -1 for negatives and 0 otherwise.
+  // This is identical to the reference's -(u >> 15) for all int16_t values.
+  return (int)x >> 31;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

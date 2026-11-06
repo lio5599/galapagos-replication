@@ -1,0 +1,16 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Approach: compute each component in a named variable and sum at the end.
+    // header=16, subframe headers ch*ceil-ish term, residual bytes, crc=2.
+    // Each variable uses the identical expression from the reference.
+    // Sum order 16, subframes, residual, crc matches the reference accumulation.
+    int header = 16;
+    int subhdr = ch * ((7 + bps + 7) / 8);
+    int residual;
+    int crc = 2;
+    if (ch == 2)
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        residual = (ch * bps * blocksize + 7) / 8;
+    return header + subhdr + residual + crc;
+}

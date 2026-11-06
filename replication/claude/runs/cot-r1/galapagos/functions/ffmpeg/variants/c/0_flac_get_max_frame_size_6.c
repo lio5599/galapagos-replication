@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Approach: do the arithmetic in long long and cast back to int at the end.
+    // For any input where the reference does not overflow, all values are identical.
+    // C division truncates toward zero for long long just as for int.
+    // The stereo test ch == 2 selects the same residual formula as the reference.
+    long long b = blocksize, c = ch, p = bps;
+    long long count = 16 + c * ((7 + p + 7) / 8);
+    if (c == 2)
+        count += ((2 * p + 1) * b + 7) / 8;
+    else
+        count += (c * p * b + 7) / 8;
+    count += 2;
+    return (int)count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

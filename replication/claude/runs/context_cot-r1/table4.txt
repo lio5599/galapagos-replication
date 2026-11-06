@@ -1,0 +1,26 @@
+Table 4 counts (C-to-C), live Galapagos folders
+
+Project    Function                   Comp.Isol Comp.Proj  Test Verif
+alsa-lib   alaw_to_s16                       10         9     9     9
+alsa-lib   iec958_parity                     10        10    10    10
+alsa-lib   add                               10        10    10    10
+ffmpeg     flac_get_max_frame_size           10        10    10     1
+ffmpeg     mix                               10        10    10     6
+ffmpeg     vp5_adjust                         0         0     0     0
+libgcrypt  barrett_reduce                    10        10    10    10
+libgcrypt  ctz                               10        10    10    10
+libgcrypt  int16_t_negative_mask             10        10    10    10
+liboqs     fpr_half                          10        10    10    10
+liboqs     fpr_lt                            10        10    10    10
+liboqs     modp_montymul                     10        10    10    10
+libsodium  b64_byte_to_char                  10        10    10    10
+libsodium  b64_byte_to_urlsafe_char          10        10    10    10
+libsodium  b64_char_to_byte                  10        10    10    10
+openssl    icbrt64                           10        10    10    10
+openssl    BitDeinterleave                   10        10    10    10
+openssl    BitInterleave                     10        10    10    10
+
+Total                                       170       169   169   156   (out of 180 variants, 18 functions)
+%                                          94.4      93.9  93.9  86.7
+
+Per-function counts written to runs/context_cot-r1/table4.csv

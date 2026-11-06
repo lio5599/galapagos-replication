@@ -1,0 +1,8 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// 64-bit sum; bit 32 is the carry and is 1 only when sum exceeds max.
+	// Negating the carry gives an all-ones 64-bit mask on overflow, else 0.
+	// OR then truncation yields 4294967295 on overflow, or the exact sum.
+	unsigned long long s = (unsigned long long)a + (unsigned long long)b;
+	return (unsigned int)(s | (0ULL - (s >> 32)));
+}

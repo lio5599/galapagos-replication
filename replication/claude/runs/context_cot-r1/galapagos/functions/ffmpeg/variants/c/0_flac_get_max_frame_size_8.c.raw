@@ -1,0 +1,17 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // The stereo flag is computed as an int, and an if/else selects the total bits per sample.
+    // Stereo uses 2*bps+1 because of the side channel. Otherwise the value is ch*bps, as in the reference.
+    // The additions are done step by step in reference order, with the same signed truncating divides.
+    int stereo = (ch == 2);
+    int total;
+    int count = 16;
+    if (stereo)
+        total = 2 * bps + 1;
+    else
+        total = ch * bps;
+    count = count + ch * ((7 + bps + 7) / 8);
+    count = count + (total * blocksize + 7) / 8;
+    count = count + 2;
+    return count;
+}

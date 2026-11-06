@@ -1,0 +1,17 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Combines the b-a-1 form for range masks with the merged-OR form:
+    // ~(u-65) & ~(90-u) == (64-u) & (u-91), so one AND is shifted and masked.
+    // The equality masks use ~(0-d) == d-1, and the x==0 mask uses x-1.
+    // For x at most 0xFF, x-1 has bits 8..15 all set only when x is 0.
+    // The low byte of the offsets matches the reference's signed results where defined.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((((64u - u) & (u - 91u)) >> 8) & (u - 65u) & 0xFFu) |
+        ((((96u - u) & (u - 123u)) >> 8) & (u - 71u) & 0xFFu) |
+        ((((47u - u) & (u - 58u)) >> 8) & (u + 4u) & 0xFFu) |
+        ((((u ^ 43u) - 1u) >> 8) & 62u) |
+        ((((u ^ 47u) - 1u) >> 8) & 63u);
+
+    return x | ((((x - 1u) & (0u - (u ^ 65u))) >> 8) & 0xFFu);
+}

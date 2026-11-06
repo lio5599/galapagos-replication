@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Reference: returns 1 iff x < y with x,y as IEEE-754 binary64 bit patterns (-0 < +0).
+    // Differing signs: the result is x's sign bit, as in the reference's cc0 = sgn(sx).
+    // Both non-negative: signed order equals unsigned order, so x < y.
+    // Both negative: the order reverses, so the result is unsigned x > y.
+    // Equal inputs give 0 in both same-sign cases, matching sgn(0) = 0.
+    unsigned sx = (unsigned)(x >> 63), sy = (unsigned)(y >> 63);
+    if (sx != sy) return (int)sx;
+    if (sx) return x > y;
+    return x < y;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

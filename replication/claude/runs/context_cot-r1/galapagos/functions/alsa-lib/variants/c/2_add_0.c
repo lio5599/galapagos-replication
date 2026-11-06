@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reference: saturating unsigned add, returns min(a + b, 4294967295).
+	// Approach: compute the wrapped sum and detect overflow when sum < a.
+	// If a + b mathematically equals 4294967295 the sum does not wrap and
+	// the result is 4294967295, matching the reference's >= branch.
+	// When the sum wraps, the true result exceeds the max, so saturate.
+	unsigned int s = a + b;
+	if (s < a)
+		return 4294967295u;
+	return s;
+}
+
+
+int main(){
+    add(0,0);
+}

@@ -1,0 +1,15 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Table-driven ranges: each entry gives a start char, a length, and the base value of that range.
+    // Unsigned wrap-around makes (w - first) < len an exact range test, so the matching range returns base + offset.
+    // The ranges are disjoint, so the result is the same as the reference's OR of class terms.
+    // No match: the quirk region (high byte 0xFF) gives 63 minus (w == 0xFF2F); anything else gives 0xFF.
+    static const unsigned int first[5] = { 'A', 'a', '0', '+', '/' };
+    static const unsigned int len[5] = { 26U, 26U, 10U, 1U, 1U };
+    static const unsigned int base[5] = { 0U, 26U, 52U, 62U, 63U };
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    unsigned int i;
+    for (i = 0; i < 5U; i++)
+        if (w - first[i] < len[i]) return base[i] + (w - first[i]);
+    return (w >> 8) == 0xFFU ? 63U - (unsigned int) (w == 0xFF2FU) : 0xFFU;
+}

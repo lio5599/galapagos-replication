@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: a nested ternary that tests the ranges from the top down.
+    // Values above 63 give 0. 63 gives '_' and 62 gives '-'.
+    // 52..61 give digits, 26..51 give lowercase, and the rest give uppercase.
+    // The offsets are the same ones the reference adds within each range.
+    return x > 63 ? 0
+         : x == 63 ? '_'
+         : x == 62 ? '-'
+         : x >= 52 ? (int) (x - 4)
+         : x >= 26 ? (int) (x + 71)
+         : (int) (x + 65);
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

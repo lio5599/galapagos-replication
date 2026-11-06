@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Branchless: mask is all ones when the wrapped sum is below a.
+	// Overflow happens exactly when the mathematical sum exceeds the max.
+	// OR with all ones yields 4294967295, otherwise mask is 0 and sum stays.
+	// The exact-max case does not wrap and already equals 4294967295.
+	unsigned int s = a + b;
+	unsigned int m = 0u - (unsigned int)(s < a);
+	return s | m;
+}
+
+
+int main(){
+    add(0,0);
+}

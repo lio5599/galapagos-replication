@@ -1,0 +1,11 @@
+static int mix(int c0, int c1)
+{
+    // Subtract the remainder first: red - red%3 is an exact multiple of 3.
+    // C guarantees red == (red/3)*3 + red%3, with the remainder taking red's sign,
+    // so (red - red%3)/3 equals red/3 for all red, including negatives.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int rq = (red - red % 3) / 3;
+    return rq * 1024 + green / 3 * 32 + blue / 3;
+}

@@ -1,0 +1,19 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Precomputes the three range terms and the two equality masks, then combines them.
+    // The terms are lower=x+65, upper=x+71, digit=x-4, gated by the same byte masks.
+    // The equality masks select '-' (45) and '_' (95), exactly as in the reference.
+    // The result is at most 0xFF, so the conversion to int is exact.
+    unsigned int lower = x + 65U;
+    unsigned int upper = x + 71U;
+    unsigned int digit = x - 4U;
+    unsigned int m26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int m52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int m62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int t1 = m26 & lower;
+    unsigned int t2 = (m26 ^ 0xFFU) & m52 & upper;
+    unsigned int t3 = (m52 ^ 0xFFU) & m62 & digit;
+    unsigned int t4 = ((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & 45U;
+    unsigned int t5 = ((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & 95U;
+    return (int) (t1 | t2 | t3 | t4 | t5);
+}

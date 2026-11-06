@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The 31-bit mask is done by shifting left 33 and back right 33 in uint64.
+    // This keeps exactly bits 0..30, the same as & 0x7FFFFFFF.
+    // The rest of the computation follows the reference.
+    // The mask is built as 0 - top bit, which equals -(d>>31) in uint32.
+    uint64_t z, t, w;
+    uint32_t d, mask;
+
+    z = (uint64_t)a * (uint64_t)b;
+    t = ((z * (uint64_t)p0i) << 33) >> 33;
+    w = t * (uint64_t)p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    mask = (uint32_t)0 - (d >> 31);
+    d += p & mask;
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

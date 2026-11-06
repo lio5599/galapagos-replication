@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: hold the masks in unsigned char, so the cast does the reference's & 0xFF.
+    // Byte complement is ~ then truncation, which equals ^ 0xFF. Negation is written as ~v + 1.
+    // Every mask is at most 0xFF, so only the low byte of x+65, x+71, x-4 matters.
+    // Truncating those sums to a byte keeps every result bit, so all inputs, x >= 64 included, match.
+    unsigned char a = (unsigned char) ((x - 26U) >> 8);
+    unsigned char b = (unsigned char) ((x - 52U) >> 8);
+    unsigned char c = (unsigned char) ((x - 62U) >> 8);
+    unsigned char d = (unsigned char) ~((~(x ^ 62U) + 1U) >> 8);
+    unsigned char e = (unsigned char) ~((~(x ^ 63U) + 1U) >> 8);
+    unsigned char na = (unsigned char) ~a;
+    unsigned char nb = (unsigned char) ~b;
+    return (a & (unsigned char) (x + 65U)) | (na & b & (unsigned char) (x + 71U)) |
+           (nb & c & (unsigned char) (x - 4U)) | (d & 0x2B) | (e & 0x2F);
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

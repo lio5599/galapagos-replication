@@ -1,0 +1,15 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Reference: returns the parity (XOR) of bits 4..30 of data, ignoring bits 0-3 and 31.
+	// Approach: mask bits 4..30 with 0x7FFFFFF0, then XOR-fold the word in halves
+	// until bit 0 holds the XOR of all remaining bits.
+	// Bits outside the mask cannot affect the result, matching the reference's 27-bit loop.
+	// data == 0 or only excluded bits set gives 0, as in the reference.
+	unsigned int x = data & 0x7FFFFFF0U;
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	x ^= x >> 2;
+	x ^= x >> 1;
+	return x & 1U;
+}

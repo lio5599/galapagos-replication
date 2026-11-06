@@ -1,0 +1,13 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Kernighan method: each x &= x - 1 clears the lowest set bit.
+	// Toggle p once per cleared bit, so p is the parity of the set bits.
+	// The mask 0x7FFFFFF0 limits the bits to 4..30, as in the reference.
+	unsigned int x = data & 0x7FFFFFF0u;
+	unsigned int p = 0;
+	while (x != 0) {
+		x &= x - 1u;
+		p ^= 1u;
+	}
+	return p;
+}

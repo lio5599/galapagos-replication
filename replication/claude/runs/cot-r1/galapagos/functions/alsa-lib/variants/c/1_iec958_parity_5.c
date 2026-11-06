@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: test each bit position 4..30 in place, without shifting data itself.
+	// XOR-accumulating each bit gives the same result as counting and taking & 1.
+	// The loop bounds are the same as the reference's, so bits 0-3 and 31 are never examined.
+	// data == 0 gives 0.
+	unsigned int parity = 0;
+	int bit;
+	for (bit = 4; bit <= 30; bit++)
+		parity ^= (data >> bit) & 1U;
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

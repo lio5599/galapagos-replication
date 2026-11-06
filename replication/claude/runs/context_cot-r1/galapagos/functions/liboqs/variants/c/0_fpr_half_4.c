@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // t = (e + 0x7FF) >> 11 is 1 iff the original exponent e is in 1..0x7FF.
+    // For e = 0 the sum is 0x7FF, giving t = 0. For max e it is 0xFFE, giving t = 1.
+    // A mask of -t keeps x - 2^52 for nonzero exponents and clears it otherwise.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (e + 0x7FF) >> 11;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)0 - (uint64_t)t);
+}
+
+
+int main(){
+    fpr_half(0);
+}

@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: widen x to int32_t, convert to uint32_t (modular), then shift by 31.
+  // Sign extension keeps the sign, so bit 31 is 1 iff x < 0.
+  // Negating the resulting 0 or 1 gives 0 or -1, as in the reference.
+  // Edge cases: INT16_MIN becomes 0xFFFF8000, so bit 31 is 1 and the result is -1.
+  uint32_t w = (uint32_t)(int32_t)x;
+  return -(int)(w >> 31);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

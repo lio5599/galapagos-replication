@@ -1,0 +1,8 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: a wrapped sum is smaller than either operand exactly on overflow.
+	// This version tests against b instead of a, which is equally valid.
+	// Without overflow, the sum is at least b, so the exact sum is returned.
+	// That includes a + b == max, which matches the reference result.
+	return (a + b < b) ? 4294967295u : a + b;
+}

@@ -1,0 +1,8 @@
+int16_t barrett_reduce(int16_t a) {
+  // Use 64-bit arithmetic for the product and rounding constant. The values are identical
+  // to the int32 ones because no overflow occurs in either case. The arithmetic shift is floor.
+  // The final result is truncated to int16. It is exact because |a - 3329*t| is small.
+  int64_t x = (int64_t)a * 20159 + 33554432;
+  int64_t t = x >> 26;
+  return (int16_t)((int64_t)a - t * 3329);
+}

@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Maps each value to an unsigned key whose natural order matches the reference order.
+    // A negative value maps to ~x, giving top bit 0 and reversing the order among negatives.
+    // A non-negative value maps to x with the top bit flipped, giving top bit 1.
+    // -0 maps to 0x7FF..F and +0 maps to 0x800..0, so -0 < +0 gives 1 as in the reference.
+    // Equal inputs give equal keys, so the result is 0.
+    uint64_t kx = x ^ ((0 - (x >> 63)) | 0x8000000000000000ULL);
+    uint64_t ky = y ^ ((0 - (y >> 63)) | 0x8000000000000000ULL);
+    return kx < ky;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

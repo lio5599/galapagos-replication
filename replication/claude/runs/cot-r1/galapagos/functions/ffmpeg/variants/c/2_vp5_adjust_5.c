@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Classify a = |v| into a region: 0 if a <= t, 1 if t < a < 2t, 2 if a >= 2t.
+    // Region 0 gives a, region 1 gives 2t - a, region 2 gives t - |t| (0, or 2t if t < 0).
+    // Regions 0 and 1 need a < 2t, which forces t > 0 and matches t - |a - t|.
+    // When t <= 0 the region is always 2. The sign is restored afterwards.
+    int a = v < 0 ? -v : v;
+    int region = a >= 2 * t ? 2 : (a > t);
+    int r;
+    switch (region) {
+    case 0: r = a; break;
+    case 1: r = 2 * t - a; break;
+    default: r = t < 0 ? t + t : 0; break;
+    }
+    return v < 0 ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Signed division of red by 3 uses the magic multiply: hi32(n*0x55555556) - (n>>31).
+    // This standard identity gives truncation toward zero for every 32-bit n.
+    // red is within about +-6.3M, so the 64-bit product cannot overflow.
+    // Blue and green are unchanged from the reference.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int rq = (int)(((long long)red * 0x55555556LL) >> 32) - (red >> 31);
+    return rq * 1024 + green / 3 * 32 + blue / 3;
+}
+
+
+int main(){
+    mix(0,0);
+}

@@ -1,0 +1,11 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: decompose into sign, exponent and mantissa, then rebuild with exponent - 1.
+    // Exponent 0 returns +0 like the reference; otherwise e-1 fits in 11 bits with no borrow.
+    // The reassembled value equals x - 2^52 because only the exponent field changes.
+    uint64_t s = x >> 63;
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t m = x & (((uint64_t)1 << 52) - 1);
+    if (e == 0)
+        return 0;
+    return (s << 63) | ((e - 1) << 52) | m;
+}

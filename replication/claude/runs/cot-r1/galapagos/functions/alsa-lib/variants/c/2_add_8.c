@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: clamp b to the headroom room = 4294967295 - a, then add it to a.
+	// If b <= room, the result is a + b exactly and fits in 32 bits.
+	// If b > room, the result is a + room = 4294967295, the saturated value.
+	// For b == room both branches give max, consistent with the reference.
+	unsigned int room = 4294967295u - a;
+	return a + (b < room ? b : room);
+}
+
+
+int main(){
+    add(0,0);
+}

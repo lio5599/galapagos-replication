@@ -1,0 +1,16 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // For a byte b, b ^ 0xFF == 0xFF - b, so every mask is written as a subtraction.
+    // Each mask stays a byte and is bit-identical to the reference's mask.
+    // Offsets c-65, c-71 and c+4 use unsigned math, which has the same low byte.
+    // Equality masks for '+', '/' and for x==0 use the same byte subtraction.
+    // Because x is at most 0xFF, (0xFF - byte(-x)) is 0xFF only when x is 0.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int a = (0xFFu - (((u - 65u) >> 8) & 0xFFu)) & (0xFFu - (((90u - u) >> 8) & 0xFFu)) & (u - 65u);
+    const unsigned int l = (0xFFu - (((u - 97u) >> 8) & 0xFFu)) & (0xFFu - (((122u - u) >> 8) & 0xFFu)) & (u - 71u);
+    const unsigned int d = (0xFFu - (((u - 48u) >> 8) & 0xFFu)) & (0xFFu - (((57u - u) >> 8) & 0xFFu)) & (u + 4u);
+    const unsigned int p = (0xFFu - (((0u - (u ^ 43u)) >> 8) & 0xFFu)) & 62u;
+    const unsigned int s = (0xFFu - (((0u - (u ^ 47u)) >> 8) & 0xFFu)) & 63u;
+    const unsigned int x = a | l | d | p | s;
+    return x | ((0xFFu - (((0u - x) >> 8) & 0xFFu)) & (((0u - (u ^ 65u)) >> 8) & 0xFFu));
+}

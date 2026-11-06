@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Build an all-ones mask when the original exponent is nonzero, else zero.
+    // The new exponent is 0x7FF exactly when the old one is 0.
+    // So masking x - 2^52 with this mask matches the reference.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t m = (uint64_t)0 - (uint64_t)(e != 0);
+    return (x - ((uint64_t)1 << 52)) & m;
+}

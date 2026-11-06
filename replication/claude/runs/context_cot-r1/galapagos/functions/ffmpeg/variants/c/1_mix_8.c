@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Blue and green sums lie in 0..93, so x/3 == (x*43)>>7 there.
+    // The error x*(43/128-1/3) is below 1/3 for x < 128, so floor is unchanged.
+    // The green field is placed with *32 and red keeps the signed division.
+    int blue = ((c0 & 31) << 1) + (c1 & 31);
+    int green = (((c0 >> 5) & 31) << 1) + ((c1 >> 5) & 31);
+    int red = (c0 >> 10) + (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + ((green * 43) >> 7) * 32 + ((blue * 43) >> 7);
+}
+
+
+int main(){
+    mix(0,0);
+}

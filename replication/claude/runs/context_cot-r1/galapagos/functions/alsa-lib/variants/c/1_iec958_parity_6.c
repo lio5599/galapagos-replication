@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask bits 4..30, then XOR the four bytes together into one byte.
+	// Fold that byte into a nibble and look up its parity in the table 0x6996.
+	// Every XOR step keeps the total parity, so the result matches the reference.
+	unsigned int x = data & 0x7FFFFFF0u;
+	unsigned int b = (x ^ (x >> 8) ^ (x >> 16) ^ (x >> 24)) & 0xFFu;
+	b ^= b >> 4;
+	return (0x6996u >> (b & 0xFu)) & 1u;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Approach: compute the residual bit count first, then convert to bytes once.
+    // bits is (2*bps+1)*blocksize for stereo, else ch*bps*blocksize.
+    // (bits+7)/8 is the same truncating division the reference applies per branch.
+    // Fixed 18 bytes is 16 header plus 2 CRC; addition order does not change the sum.
+    int bits;
+    if (ch == 2)
+        bits = (2 * bps + 1) * blocksize;
+    else
+        bits = ch * bps * blocksize;
+    return 18 + ch * ((7 + bps + 7) / 8) + (bits + 7) / 8;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

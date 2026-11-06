@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Approach: isolate the lowest set bit, giving the value 2^k.
+ // Then take log2 by counting right shifts until the value becomes 0.
+ // The number of shifts after the first is k, the trailing zero count.
+ // in == 0 is checked first and returns 64, matching the reference.
+ uint64_t x;
+ int r = 0;
+ if (in == 0) return 64;
+ x = in & (0 - in);
+ while (x >>= 1) r++;
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

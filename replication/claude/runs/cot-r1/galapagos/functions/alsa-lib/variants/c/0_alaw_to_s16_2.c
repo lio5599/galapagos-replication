@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: build (m<<4)+8, and for seg>=1 add 0x100.
+	// Then double the value seg-1 times in a loop.
+	// The loop does nothing for seg 0 and seg 1, matching the reference.
+	// The sign is taken from bit 7 of the input, which XOR 0x55 does not change.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int seg = x >> 4;
+	int t = ((x & 0x0f) << 4) + 8;
+	if (seg > 0) {
+		t += 0x100;
+		while (--seg > 0)
+			t <<= 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

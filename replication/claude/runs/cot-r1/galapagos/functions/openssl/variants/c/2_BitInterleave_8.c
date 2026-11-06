@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we reverse the byte order twice.
+    // Each byte is extracted and placed at its mirrored position, and a second reversal restores the order.
+    // Only shifts of 0..56 are used, so every input value round-trips exactly.
+    uint64_t t = 0, r = 0;
+    int i;
+    for (i = 0; i < 8; i++)
+        t |= ((Ai >> (8 * i)) & 0xFFu) << (8 * (7 - i));
+    for (i = 0; i < 8; i++)
+        r |= ((t >> (8 * i)) & 0xFFu) << (8 * (7 - i));
+    return r;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

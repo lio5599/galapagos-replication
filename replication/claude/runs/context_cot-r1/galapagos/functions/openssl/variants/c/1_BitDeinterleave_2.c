@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: split into 32-bit halves and rebuild the 64-bit value.
+    // (hi << 32) | lo restores every original bit position exactly.
+    // This is the identity, as in the reference, including 0 and all ones.
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

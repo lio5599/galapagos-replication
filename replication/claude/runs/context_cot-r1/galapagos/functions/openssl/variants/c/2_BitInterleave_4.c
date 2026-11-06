@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Approach: double bitwise complement, since ~~x == x for every bit pattern.
+    // No arithmetic is involved, so there are no edge cases.
+    uint64_t t = ~Ai;
+    return ~t;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

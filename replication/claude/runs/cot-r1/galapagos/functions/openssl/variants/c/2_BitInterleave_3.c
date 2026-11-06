@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we copy the bits one at a time in a loop.
+    // Each bit i of Ai is tested and set in the result at the same position.
+    // All 64 positions are visited, so the result equals Ai, including 0 and all-ones.
+    uint64_t r = 0;
+    int i;
+    for (i = 0; i < 64; i++)
+        if ((Ai >> i) & 1u)
+            r |= (uint64_t)1 << i;
+    return r;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

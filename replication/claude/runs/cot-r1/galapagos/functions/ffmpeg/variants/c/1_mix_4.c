@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Approach: for 0 <= x < 128, x / 3 == (x * 43) >> 7.
+    // 43/128 exceeds 1/3 by x/384, and that error stays below 1/3 while x < 128.
+    // Blue and green sums are at most 93, so the result is exact. Red is unchanged.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + ((green * 43) >> 7) * 32 + ((blue * 43) >> 7);
+}
+
+
+int main(){
+    mix(0,0);
+}

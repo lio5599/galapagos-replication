@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Computes in unsigned arithmetic and negates via 0u - mag, cast back to int.
+	// The magnitude is at most 32256, so the conversion to int is exact.
+	// Segments 1..7 add the implicit leading 1 (0x100) and then shift by seg-1.
+	// Segment 0 has no implicit bit and no shift: (m<<4)+8.
+	unsigned int v = (unsigned int)(unsigned char)(a_val ^ 0x55);
+	unsigned int m = v & 0x0fu;
+	unsigned int seg = (v >> 4) & 0x07u;
+	unsigned int mag;
+	if (seg)
+		mag = ((m << 4) + 0x108u) << (seg - 1u);
+	else
+		mag = (m << 4) + 8u;
+	if (v & 0x80u)
+		return (int)mag;
+	return -(int)mag;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

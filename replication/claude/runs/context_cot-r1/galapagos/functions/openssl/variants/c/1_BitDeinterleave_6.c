@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: split the bits with complementary masks and merge them with OR.
+    // (x & m) | (x & ~m) == x because m and ~m together cover all 64 bits.
+    // This is the identity, as in the reference, for every input value.
+    uint64_t m = 0xAAAAAAAAAAAAAAAAULL;
+    return (Ai & m) | (Ai & ~m);
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

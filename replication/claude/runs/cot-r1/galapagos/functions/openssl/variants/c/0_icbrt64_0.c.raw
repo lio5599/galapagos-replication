@@ -1,0 +1,22 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes floor(cbrt(x)) shifted left by 12, since r * 1 << 12 parses as (r * 1) << 12.
+    // Same base-8 digit-by-digit root as the reference, driven by a counter i = 0..21.
+    // The shift s = 63 - 3*i takes the same values 63, 60, ..., 0 as the reference loop.
+    // Testing (rem >> s) >= b is exactly rem >= b*2^s, so b << s never overflows.
+    // x = 0 gives r = 0. The largest root, 2642245, still fits after the shift.
+    uint64_t rem = x;
+    uint64_t r = 0;
+    uint64_t b;
+    int i, s;
+    for (i = 0; i < 22; i++) {
+        s = 63 - 3 * i;
+        r = 2 * r;
+        b = 3 * r * (r + 1) + 1;
+        if ((rem >> s) >= b) {
+            rem -= b << s;
+            r += 1;
+        }
+    }
+    return r << 12;
+}

@@ -1,0 +1,10 @@
+int16_t barrett_reduce(int16_t a) {
+  // Mirrors the reference's wraparound using explicit uint16_t modular arithmetic.
+  // t is the same Barrett quotient; t*3329 and the subtraction are done modulo 2^16.
+  // The reference also wraps t*3329 and a - t into int16, which is congruent mod 2^16.
+  // The true result fits in int16, so converting back gives the same value.
+  int32_t t = ((int32_t)20159 * a + (1 << 25)) >> 26;
+  uint16_t p = (uint16_t)((uint32_t)t * 3329u);
+  uint16_t r = (uint16_t)((uint16_t)a - p);
+  return (int16_t)(int32_t)(r >= 32768u ? (int32_t)r - 65536 : (int32_t)r);
+}

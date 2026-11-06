@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Inverts each mask with (~m) & 0xFF instead of m ^ 0xFF.
+    // Since every mask m is at most 0xFF, (~m) & 0xFF equals m ^ 0xFF exactly.
+    // All other terms and constants are identical to the reference.
+    // 'A' is 65, 'a'-26 is 71, and '0'-52 is -4, which wraps to x-4 in unsigned math.
+    unsigned int m26 = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int m52 = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int m62 = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int n26 = (~m26) & 0xFFU;
+    unsigned int n52 = (~m52) & 0xFFU;
+    unsigned int e62 = (~((0U - (x ^ 62U)) >> 8)) & 0xFFU;
+    unsigned int e63 = (~((0U - (x ^ 63U)) >> 8)) & 0xFFU;
+    return (int) ((m26 & (x + 65U)) | (n26 & m52 & (x + 71U)) |
+                  (n52 & m62 & (x - 4U)) | (e62 & 45U) | (e63 & 95U));
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

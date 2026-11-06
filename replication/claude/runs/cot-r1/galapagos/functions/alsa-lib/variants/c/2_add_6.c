@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: 64-bit sum; bit 32 is the carry and is 1 only if the sum exceeds max.
+	// Negating that carry gives all-ones or zero, ORed into the sum as a mask.
+	// Truncation to 32 bits gives 4294967295 on overflow, else the exact sum.
+	// When there is no carry, including sum == max, the low 32 bits are returned unchanged.
+	unsigned long long s = (unsigned long long)a + b;
+	s |= 0ull - (s >> 32);
+	return (unsigned int)s;
+}
+
+
+int main(){
+    add(0,0);
+}

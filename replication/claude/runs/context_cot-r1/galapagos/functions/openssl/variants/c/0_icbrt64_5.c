@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses a do-while loop with an unsigned shift counter, run exactly 22 times.
+    // s takes the values 63,60,...,0, and the loop stops after s == 0.
+    // b is computed as (r * (r + 1)) * 3 + 1, which equals 3*r*(r+1)+1 modulo 2^64.
+    // The comparison against x >> s and the subtraction match the reference.
+    // The result is r shifted left by 12.
+    uint64_t r = 0;
+    uint64_t b;
+    unsigned int s = 63;
+
+    do {
+        r <<= 1;
+        b = (r * (r + 1)) * 3 + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+        if (s == 0)
+            break;
+        s -= 3;
+    } while (1);
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

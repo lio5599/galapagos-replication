@@ -1,0 +1,31 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses a counter k from 22 down to 1, with shift s = 3*(k-1).
+    // That gives s = 63,60,...,0, the same sequence as the reference.
+    // The core step (double r, compute b, conditional subtract and increment) is unchanged.
+    // The conditional increment is written as r += 1 inside the taken branch.
+    // The return is (r * 1) << 12, the reference expression with its constant folded.
+    uint64_t r = 0;
+    uint64_t b;
+    int k;
+    int s;
+
+    for (k = 22; k > 0; k--) {
+        s = 3 * (k - 1);
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r += 1;
+        }
+    }
+    return (r * 1) << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

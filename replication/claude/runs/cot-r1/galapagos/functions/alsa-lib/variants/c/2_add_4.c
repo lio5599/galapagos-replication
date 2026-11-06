@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: use the GCC/Clang builtin that reports unsigned overflow directly.
+	// It stores the wrapped sum and returns true only when the true sum exceeds max.
+	// On overflow we saturate; otherwise the stored sum is exact.
+	// A sum of exactly max does not overflow and is returned as max, as in the reference.
+	unsigned int sum;
+	if (__builtin_add_overflow(a, b, &sum))
+		return 4294967295u;
+	return sum;
+}
+
+
+int main(){
+    add(0,0);
+}

@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: x is promoted to int in [-32768, 32767], then shifted right by 15.
+  // Clang (LLVM ashr) does an arithmetic shift, so the sign bit is copied.
+  // A negative value yields -1, since every value >= -32768 shifted by 15 gives -1.
+  // A non-negative value yields 0, since 32767 >> 15 is 0.
+  // This matches the reference for every input.
+  return (int)x >> 15;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

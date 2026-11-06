@@ -1,0 +1,9 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we swap adjacent bit pairs twice.
+    // Even and odd bits are exchanged with masks, and a second swap restores them.
+    // The masks partition all 64 bits, so no bit is lost for any input.
+    const uint64_t m = 0x5555555555555555ULL;
+    uint64_t t = ((Ai & m) << 1) | ((Ai >> 1) & m);
+    return ((t & m) << 1) | ((t >> 1) & m);
+}

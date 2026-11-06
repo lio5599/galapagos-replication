@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Approach: swap adjacent even/odd bits twice; the swap is its own inverse.
+    // The masks select disjoint bit sets and the shifts drop no selected bits, so this is exact.
+    const uint64_t e = 0x5555555555555555ULL;
+    const uint64_t o = 0xaaaaaaaaaaaaaaaaULL;
+    uint64_t t = ((Ai & e) << 1) | ((Ai & o) >> 1);
+    return ((t & e) << 1) | ((t & o) >> 1);
+}
+
+
+int main(){
+    BitInterleave(0);
+}

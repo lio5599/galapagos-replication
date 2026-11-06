@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// XOR together every right shift of the masked value, for i from 0 to 31.
+	// Bit 0 of acc then becomes the XOR of all 32 bits of x.
+	// The mask leaves only bits 4..30, so the result is their parity.
+	unsigned int x = data & 0x7FFFFFF0u;
+	unsigned int acc = 0;
+	int i;
+	for (i = 0; i < 32; i++)
+		acc ^= x >> i;
+	return acc & 1u;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

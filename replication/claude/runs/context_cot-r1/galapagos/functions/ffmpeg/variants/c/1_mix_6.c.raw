@@ -1,0 +1,10 @@
+static int mix(int c0, int c1)
+{
+    // Blue and green are always nonnegative (masked fields, at most 93),
+    // so unsigned division by 3 gives the same quotient as signed division.
+    // Red stays signed because it can be negative for negative inputs.
+    unsigned blue = 2u * ((unsigned)c0 & 0x1Fu) + ((unsigned)c1 & 0x1Fu);
+    unsigned green = (2u * ((unsigned)c0 & 0x3E0u) + ((unsigned)c1 & 0x3E0u)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + (int)(green / 3u) * 32 + (int)(blue / 3u);
+}

@@ -1,0 +1,11 @@
+int ctz(uint64_t in)
+{
+ // Reference: counts trailing zero bits of in, returning 64 when in is 0.
+ // Approach: scan upward from bit 0 while the current bit is zero.
+ // The loop stops at the first set bit, so r is its index = trailing zeros.
+ // The r < 64 bound stops the scan for in == 0, giving 64 like the reference.
+ int r = 0;
+ while (r < 64 && ((in >> r) & 1) == 0)
+  r++;
+ return r;
+}

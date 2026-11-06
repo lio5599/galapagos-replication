@@ -1,0 +1,88 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Reference: halves a double by decrementing the exponent field; returns 0 when exponent is 0.
+    // After x -= 2^52 the exponent field is the old one minus 1 mod 2^11.
+    // It equals 0x7FF only when the old exponent was 0 (zero or subnormal).
+    // So test the original exponent directly: zero gives 0, else x - 2^52.
+    // Inf/NaN (exp 0x7FF) become exp 0x7FE, the same as the reference.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    return (e == 0) ? (uint64_t)0 : (x - ((uint64_t)1 << 52));
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Build an all-ones mask when the original exponent is nonzero, else zero.
+    // The new exponent is 0x7FF exactly when the old one is 0.
+    // So masking x - 2^52 with this mask matches the reference.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t m = (uint64_t)0 - (uint64_t)(e != 0);
+    return (x - ((uint64_t)1 << 52)) & m;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Test the exponent bits in place with a 64-bit mask.
+    // If they are all zero (zero or subnormal input), the reference yields 0.
+    // Otherwise subtracting 2^52 decrements the exponent without a borrow out.
+    if ((x & (uint64_t)0x7FF0000000000000) == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Same as the reference: subtract first, then check the new exponent.
+    // If the new exponent field is all ones, return 0; else return the difference.
+    // This is exactly the reference's t == 1 case versus the t == 0 case.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    if ((y & (uint64_t)0x7FF0000000000000) == (uint64_t)0x7FF0000000000000) {
+        return 0;
+    }
+    return y;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // t = (e + 0x7FF) >> 11 is 1 iff the original exponent e is in 1..0x7FF.
+    // For e = 0 the sum is 0x7FF, giving t = 0. For max e it is 0xFFE, giving t = 1.
+    // A mask of -t keeps x - 2^52 for nonzero exponents and clears it otherwise.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (e + 0x7FF) >> 11;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)0 - (uint64_t)t);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Extract the new exponent by dropping the sign with a left shift, then shift right by 53.
+    // This gives the 11 exponent bits of y = x - 2^52.
+    // If they equal 0x7FF, the reference masks to 0; otherwise it returns y.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t ne = (y << 1) >> 53;
+    return (ne == 0x7FF) ? (uint64_t)0 : y;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // For e in 0..2047, (0 - e) >> 31 as uint32 is 1 iff e != 0.
+    // That bit becomes a full 64-bit mask via negation.
+    // A nonzero original exponent means the reference keeps x - 2^52; zero means it returns 0.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t nz = ((uint32_t)0 - e) >> 31;
+    uint64_t m = (uint64_t)0 - (uint64_t)nz;
+    return (x - ((uint64_t)1 << 52)) & m;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Rebuild the result from its fields: sign, exponent minus 1, mantissa.
+    // When e >= 1 there is no borrow, so this equals x - 2^52 bit for bit.
+    // When e == 0 the reference returns 0, so handle that case first.
+    uint64_t e = (x >> 52) & 0x7FF;
+    if (e == 0) {
+        return 0;
+    }
+    return (x & ((uint64_t)1 << 63)) | ((e - 1) << 52) | (x & (((uint64_t)1 << 52) - 1));
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Compute y = x - 2^52, then XOR its exponent with 0x7FF: the result is 0 iff the reference's t is 1.
+    // For d in 0..0x7FF, (d + 0x7FF) >> 11 is 1 iff d is nonzero.
+    // Negating that bit gives a mask equal to the reference's (uint64_t)t - 1.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint32_t d = ((uint32_t)(y >> 52) & 0x7FF) ^ 0x7FF;
+    uint32_t k = (d + 0x7FF) >> 11;
+    return y & ((uint64_t)0 - (uint64_t)k);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Isolate the exponent bits E = x & 0x7FF0..0 and add 0x7FF0..0.
+    // The sum stays below 2^64 (max 0xFFE0..0), and bit 63 is set iff E >= 2^52, i.e. E != 0.
+    // Use that bit as the keep flag for x - 2^52, matching the reference's zero handling.
+    uint64_t E = x & (uint64_t)0x7FF0000000000000;
+    uint64_t keep = (E + (uint64_t)0x7FF0000000000000) >> 63;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)0 - keep);
+}

@@ -1,0 +1,10 @@
+static int mix(int c0, int c1)
+{
+    // Approach: divide in double precision, then truncate with an int cast.
+    // All sums have magnitude below 2^23, so x / 3.0 never rounds across an integer boundary.
+    // The cast truncates toward zero, matching C integer division, including for negative red.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (int)(red / 3.0) * 1024 + (int)(green / 3.0) * 32 + (int)(blue / 3.0);
+}

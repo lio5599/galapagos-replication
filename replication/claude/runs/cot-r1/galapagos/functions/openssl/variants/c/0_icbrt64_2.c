@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Integer Newton iteration y' = (2y + x / y^2) / 3, starting at 2642246.
+    // That start exceeds floor(cbrt(x)) for every 64-bit x, and by AM-GM y' never drops below it.
+    // The iterates strictly decrease until y' >= y, at which point y = floor(cbrt(x)).
+    // x = 0 is handled first because y would otherwise reach 0 and divide by zero.
+    // y^2 <= 2642246^2 fits easily in 64 bits. The result is shifted left by 12 as in the reference.
+    uint64_t y, y1;
+    if (x == 0)
+        return 0;
+    y = 2642246;
+    for (;;) {
+        y1 = (2 * y + x / (y * y)) / 3;
+        if (y1 >= y)
+            break;
+        y = y1;
+    }
+    return y << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

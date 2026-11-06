@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Uses unsigned division by 256 and modulo 256 instead of >> 8 and & 0xFF.
+    // For unsigned values, v / 256 equals v >> 8 and v % 256 equals v & 0xFF.
+    // Each mask is therefore identical to the reference, for all inputs.
+    // The OR of the five masked terms is unchanged.
+    unsigned int m26 = ((x - 26U) / 256U) % 256U;
+    unsigned int m52 = ((x - 52U) / 256U) % 256U;
+    unsigned int m62 = ((x - 62U) / 256U) % 256U;
+    unsigned int e62 = (((0U - (x ^ 62U)) / 256U) % 256U) ^ 0xFFU;
+    unsigned int e63 = (((0U - (x ^ 63U)) / 256U) % 256U) ^ 0xFFU;
+    return (int) ((m26 & (x + 65U)) | ((m26 ^ 0xFFU) & m52 & (x + 71U)) |
+                  ((m52 ^ 0xFFU) & m62 & (x - 4U)) | (e62 & 45U) | (e63 & 95U));
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

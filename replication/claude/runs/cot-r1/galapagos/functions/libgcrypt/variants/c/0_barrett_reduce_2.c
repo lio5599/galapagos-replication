@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Splits the rounding shift: floor((x + 2^25)/2^26) == (floor(x/2^25) + 1) >> 1.
+  // This holds because floor((floor(y) + 1)/2) == floor((y + 1)/2) for real y = x/2^25.
+  // Here x = 20159*a, and |x| < 2^30 for every int16 input, so nothing overflows.
+  // The quotient t matches the reference, and so does the final exact difference.
+  int32_t x = (int32_t)20159 * a;
+  int32_t t = ((x >> 25) + 1) >> 1;
+  return (int16_t)(a - t * 3329);
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

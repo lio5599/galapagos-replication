@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we copy the value byte by byte through a union.
+    // The bytes are copied in order into a second union, which preserves the object representation.
+    // Reading the uint64_t member back therefore yields the original value for any input.
+    union U { uint64_t v; unsigned char b[8]; } src, dst;
+    int i;
+    src.v = Ai;
+    for (i = 0; i < 8; i++)
+        dst.b[i] = src.b[i];
+    return dst.v;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

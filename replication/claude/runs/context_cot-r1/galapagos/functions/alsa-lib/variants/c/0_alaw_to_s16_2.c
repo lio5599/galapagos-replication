@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Uses a switch on the segment, with an explicit shift for each segment.
+	// Each case computes ((m<<4)+0x108)<<(seg-1) using a constant shift 0..6.
+	// Case 0 is the linear segment: (m<<4)+8.
+	// The sign handling is the same as the reference: bit 7 set gives a positive result.
+	int v = (a_val ^ 0x55) & 0xff;
+	int m = v & 0x0f;
+	int base = (m << 4) + 0x108;
+	int t;
+	switch ((v >> 4) & 7) {
+	case 0: t = (m << 4) + 8; break;
+	case 1: t = base; break;
+	case 2: t = base << 1; break;
+	case 3: t = base << 2; break;
+	case 4: t = base << 3; break;
+	case 5: t = base << 4; break;
+	case 6: t = base << 5; break;
+	default: t = base << 6; break;
+	}
+	return (v & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

@@ -1,0 +1,9 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: divide the uint16_t value by 0x8000 instead of shifting by 15.
+  // Values range from 0 to 0xFFFF, so the quotient is 1 iff the value is >= 0x8000.
+  // Modular conversion makes that true exactly when x < 0.
+  // Negating the quotient gives -1 or 0. Edge case: 0xFFFF / 0x8000 = 1, giving -1.
+  uint16_t u = (uint16_t)x;
+  return -(int)(u / 0x8000u);
+}

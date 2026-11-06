@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Unsigned modulo by 2^31 equals masking with 0x7FFFFFFF, so it is used for m.
+    // The 64-bit sum and shift are identical to the reference.
+    // The correction uses a ternary on the top bit of d.
+    // It selects d+p when bit 31 is set and d otherwise, with the same 32-bit wrap.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) % (uint64_t)0x80000000) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d = (d >> 31) ? d + p : d;
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

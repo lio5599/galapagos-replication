@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Symmetric form of the reference: compare b against max - a.
+	// b >= max - a is equivalent to a + b >= max mathematically, which is
+	// the same condition as a >= max - b, so results match for all inputs.
+	if (b >= 4294967295u - a)
+		return 4294967295u;
+	return a + b;
+}
+
+
+int main(){
+    add(0,0);
+}

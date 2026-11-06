@@ -1,0 +1,169 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decodes one 8-bit A-law sample into a signed 16-bit linear PCM value.
+	// Same as the reference, but with separate mantissa and exponent variables.
+	// XOR 0x55 undoes the A-law bit inversion; bit 7 is the sign (1 = positive).
+	// Segment 0 gives (m<<4)+8. Segments 1..7 give ((m<<4)+0x108)<<(seg-1).
+	// The shift count seg-1 is always 0..6, so it is never negative.
+	unsigned int v = (unsigned int)(a_val ^ 0x55) & 0xffu;
+	int mag = (int)(v & 0x7f);
+	int exp = (mag >> 4) & 0x07;
+	int mant = mag & 0x0f;
+	int t;
+	if (exp == 0)
+		t = (mant << 4) + 8;
+	else
+		t = ((mant << 4) + 0x108) << (exp - 1);
+	return (v & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Uses one factored formula: (16m+264)<<(s-1) equals (2m+33)<<(s+2).
+	// Segment 0 is (2m+1)<<3, which equals 16m+8.
+	// The shift counts 3..9 are always valid, and the results match the reference exactly.
+	// The sign comes from bit 7 after XOR 0x55. Since 0x55 does not touch bit 7, it is the original bit 7.
+	int v = (a_val ^ 0x55) & 0xff;
+	int s = (v >> 4) & 7;
+	int m = v & 15;
+	int t;
+	if (s == 0)
+		t = ((m << 1) + 1) << 3;
+	else
+		t = ((m << 1) + 33) << (s + 2);
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Uses a switch on the segment, with an explicit shift for each segment.
+	// Each case computes ((m<<4)+0x108)<<(seg-1) using a constant shift 0..6.
+	// Case 0 is the linear segment: (m<<4)+8.
+	// The sign handling is the same as the reference: bit 7 set gives a positive result.
+	int v = (a_val ^ 0x55) & 0xff;
+	int m = v & 0x0f;
+	int base = (m << 4) + 0x108;
+	int t;
+	switch ((v >> 4) & 7) {
+	case 0: t = (m << 4) + 8; break;
+	case 1: t = base; break;
+	case 2: t = base << 1; break;
+	case 3: t = base << 2; break;
+	case 4: t = base << 3; break;
+	case 5: t = base << 4; break;
+	case 6: t = base << 5; break;
+	default: t = base << 6; break;
+	}
+	return (v & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Replaces the shift with multiplication by a power of two, (1<<(seg-1)).
+	// The values stay below 2^15, so the multiplication cannot overflow and equals the shift.
+	// Segment 0 is handled separately as t*16+8, the same as (t<<4)+8.
+	// The sign is applied by multiplying by +1 or -1, derived from bit 7.
+	int v = (a_val ^ 0x55) & 0xff;
+	int t = v & 0x7f;
+	int seg = t >> 4;
+	int sgn = ((v >> 7) & 1) * 2 - 1;
+	if (seg == 0)
+		t = t * 16 + 8;
+	else
+		t = ((t & 0x0f) * 16 + 264) * (1 << (seg - 1));
+	return t * sgn;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Shifts with a bounded loop, doubling the value seg-1 times.
+	// For seg 1..7 the loop runs 0..6 times, which is the same as t <<= seg-1.
+	// For seg 0 the loop is skipped and (t<<4)+8 is used, as in the reference.
+	// Negation happens only when bit 7 of the XORed byte is clear.
+	int v = (a_val ^ 0x55) & 0xff;
+	int t = v & 0x7f;
+	int seg = (t >> 4) & 7;
+	int i;
+	if (seg == 0) {
+		t = (t << 4) + 8;
+	} else {
+		t = ((t & 0x0f) << 4) + 0x108;
+		for (i = 1; i < seg; i++)
+			t = t + t;
+	}
+	if (!(v & 0x80))
+		t = -t;
+	return t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Uses tables: value = base[seg] + m*step[seg].
+	// For seg>=1: (264+16m)<<(s-1) = (264<<(s-1)) + m*(16<<(s-1)).
+	// For seg 0: base 8 and step 16 give 16m+8.
+	// Bases: 8,264,528,1056,2112,4224,8448,16896. Steps: 16,16,32,...,1024.
+	static const int base[8] = { 8, 264, 528, 1056, 2112, 4224, 8448, 16896 };
+	static const int step[8] = { 16, 16, 32, 64, 128, 256, 512, 1024 };
+	int v = (a_val ^ 0x55) & 0xff;
+	int seg = (v >> 4) & 7;
+	int t = base[seg] + (v & 0x0f) * step[seg];
+	return (v & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Applies the sign without branching: (t ^ mask) - mask, with mask = 0 or -1.
+	// With mask = -1, (~t)+1 equals -t in two's complement. With mask = 0, t is unchanged.
+	// The mask is -1 when bit 7 is clear. Since 0x55 leaves bit 7 alone, the original bit 7 is used.
+	// The magnitude is computed exactly as in the reference.
+	int v = (a_val ^ 0x55) & 0xff;
+	int t = v & 0x7f;
+	int mask = ((v >> 7) & 1) - 1;
+	if (t < 16) {
+		t = (t << 4) + 8;
+	} else {
+		int seg = (t >> 4) & 0x07;
+		t = (((t & 0x0f) << 4) + 0x108) << (seg - 1);
+	}
+	return (t ^ mask) - mask;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Builds the mantissa with OR: (m<<4) | 8 | (seg ? 0x100 : 0).
+	// The bit positions do not overlap (bits 4-7, bit 3, bit 8), so OR equals the reference's addition.
+	// The shift is seg-1 for seg>=1 and 0 for seg 0. Seg 0 then gives 16m+8.
+	// The sign is taken from bit 7 of the XORed value, as in the reference.
+	unsigned int v = ((unsigned int)a_val ^ 0x55u) & 0xffu;
+	unsigned int seg = (v >> 4) & 7u;
+	unsigned int mant = ((v & 0x0fu) << 4) | 8u | (seg ? 0x100u : 0u);
+	unsigned int sh = seg ? seg - 1u : 0u;
+	int t = (int)(mant << sh);
+	return (v & 0x80u) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Computes in unsigned arithmetic and negates via 0u - mag, cast back to int.
+	// The magnitude is at most 32256, so the conversion to int is exact.
+	// Segments 1..7 add the implicit leading 1 (0x100) and then shift by seg-1.
+	// Segment 0 has no implicit bit and no shift: (m<<4)+8.
+	unsigned int v = (unsigned int)(unsigned char)(a_val ^ 0x55);
+	unsigned int m = v & 0x0fu;
+	unsigned int seg = (v >> 4) & 0x07u;
+	unsigned int mag;
+	if (seg)
+		mag = ((m << 4) + 0x108u) << (seg - 1u);
+	else
+		mag = (m << 4) + 8u;
+	if (v & 0x80u)
+		return (int)mag;
+	return -(int)mag;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Splits the sign first, then decodes the 7-bit magnitude code.
+	// Bit 7 of (a_val ^ 0x55) is bit 7 of a_val, because 0x55 has bit 7 clear.
+	// t < 16 means segment 0: (t<<4)+8. Otherwise ((t&15)<<4 + 0x108) << (seg-1).
+	// The shift is written as a left shift by seg, then a right shift by 1. No bits are lost.
+	int positive = (a_val & 0x80) != 0;
+	int t = (a_val ^ 0x55) & 0x7f;
+	int r;
+	if (t < 16)
+		r = (t << 4) + 8;
+	else
+		r = ((((t & 0x0f) << 4) + 0x108) << (t >> 4)) >> 1;
+	return positive ? r : -r;
+}

@@ -1,0 +1,9 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: XOR with a constant mask twice.
+    // (x ^ m) ^ m == x for any m, so the result equals Ai, matching the reference.
+    // XOR is defined for all unsigned values, so there are no edge cases.
+    const uint64_t m = 0xaaaaaaaa55555555ULL;
+    uint64_t x = Ai ^ m;
+    return x ^ m;
+}

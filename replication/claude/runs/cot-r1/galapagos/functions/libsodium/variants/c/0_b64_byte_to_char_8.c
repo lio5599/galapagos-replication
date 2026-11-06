@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: merge the first two terms with the bitwise select identity
+    // (m & p) | (~m & s) == s ^ (m & (s ^ p)), applied to the 8 bits of mask a.
+    // Here s = b & (x+71) already fits in 8 bits, so no stray high bits appear.
+    // The other terms are ORed in as in the reference, so every unsigned input gives the same result.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int s = b & (x + 71U);
+    unsigned int first = s ^ (a & (s ^ (x + 65U)));
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int) (first | ((b ^ 0xFFU) & c & (x - 4U)) | (d & '+') | (e & '/'));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

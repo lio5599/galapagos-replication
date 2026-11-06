@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Reference: returns the parity (XOR) of bits 4..30 of data.
+	// Mask bits 4..30 with 0x7FFFFFF0, then XOR-fold halves down to bit 0.
+	// Each fold keeps bit 0 equal to the XOR of all bits still in range.
+	// Bits 0..3 and bit 31 are excluded by the mask, as in the reference.
+	unsigned int x = data & 0x7FFFFFF0u;
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	x ^= x >> 2;
+	x ^= x >> 1;
+	return x & 1u;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

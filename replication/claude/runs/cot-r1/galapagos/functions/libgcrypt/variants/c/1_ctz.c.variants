@@ -1,0 +1,128 @@
+static int ctz(uint64_t in)
+{
+ // Reference: returns the number of trailing zero bits of in, or 64 if in is 0.
+ // Approach: scan upward from bit 0 and stop at the first set bit.
+ // r counts the zero bits passed, which is the trailing zero count.
+ // The r < 64 test runs first, so the shift amount never reaches 64.
+ // If in == 0, the loop runs to r == 64, matching the reference.
+ int r = 0;
+ while (r < 64 && !((in >> r) & 1))
+  r++;
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Approach: binary search over halves of 32, 16, 8, 4, 2 and 1 bits.
+ // If the low half is all zero, add its width to r and shift it out.
+ // When the steps finish, the lowest set bit sits at position r.
+ // That gives the same count as the bitwise scan in the reference.
+ // in == 0 is handled first and returns 64, as the reference does.
+ int r = 0;
+ if (in == 0) return 64;
+ if ((in & 0xFFFFFFFFULL) == 0) { r += 32; in >>= 32; }
+ if ((in & 0xFFFFULL) == 0) { r += 16; in >>= 16; }
+ if ((in & 0xFFULL) == 0) { r += 8; in >>= 8; }
+ if ((in & 0xFULL) == 0) { r += 4; in >>= 4; }
+ if ((in & 0x3ULL) == 0) { r += 2; in >>= 2; }
+ if ((in & 0x1ULL) == 0) { r += 1; }
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Approach: isolate the lowest set bit with in & -in, then subtract 1.
+ // The result is a mask of exactly the trailing zero positions.
+ // Kernighan's loop then counts the set bits in that mask.
+ // If in == 0, the isolated bit is 0 and 0 - 1 is all ones.
+ // That mask has 64 bits set, so the result is 64, matching the reference.
+ uint64_t m = (in & (0 - in)) - 1;
+ int r = 0;
+ while (m) { m &= m - 1; r++; }
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Approach: ~in & (in - 1) keeps only the bits below the lowest set bit.
+ // A SWAR popcount of that mask gives the trailing zero count.
+ // If in == 0, the mask is all ones, so the popcount is 64.
+ // The largest possible sum is 64, which fits in the top byte of the multiply.
+ uint64_t x = ~in & (in - 1);
+ x = x - ((x >> 1) & 0x5555555555555555ULL);
+ x = (x & 0x3333333333333333ULL) + ((x >> 2) & 0x3333333333333333ULL);
+ x = (x + (x >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+ return (int)((x * 0x0101010101010101ULL) >> 56);
+}
+static int ctz(uint64_t in)
+{
+ // Approach: 2 is a primitive root mod 67.
+ // So 2^0 to 2^63 all leave distinct remainders mod 67.
+ // A table built once maps each remainder back to its exponent.
+ // The isolated lowest set bit is looked up in that table.
+ // in == 0 is checked first and returns 64, matching the reference.
+ static signed char t[67];
+ static int init = 0;
+ int i;
+ if (!init) { for (i = 0; i < 64; i++) t[(1ULL << i) % 67] = (signed char)i; init = 1; }
+ if (in == 0) return 64;
+ return t[(in & (0 - in)) % 67];
+}
+static int ctz(uint64_t in)
+{
+ // Approach: de Bruijn multiply of the isolated lowest set bit.
+ // The top 6 bits of the product are unique for each bit position.
+ // A table built once maps those 6 bits back to the bit index.
+ // in == 0 is checked first and returns 64, matching the reference.
+ static unsigned char t[64];
+ static int init = 0;
+ int i;
+ if (!init) { for (i = 0; i < 64; i++) t[((1ULL << i) * 0x03f79d71b4cb0a89ULL) >> 58] = (unsigned char)i; init = 1; }
+ if (in == 0) return 64;
+ return t[((in & (0 - in)) * 0x03f79d71b4cb0a89ULL) >> 58];
+}
+static int ctz(uint64_t in)
+{
+ // Approach: skip whole zero bytes first, then skip single zero bits.
+ // Each shift adds the number of zeros removed to r.
+ // Both loops stop at the lowest set bit, so r is the trailing zero count.
+ // in == 0 returns 64 first, which also keeps the loops from running forever.
+ int r = 0;
+ if (in == 0) return 64;
+ while ((in & 0xFF) == 0) { in >>= 8; r += 8; }
+ while ((in & 1) == 0) { in >>= 1; r++; }
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Approach: scan from bit 63 down to bit 0.
+ // Each time a set bit is found, store its index in r.
+ // The last value stored is the lowest set bit index, which is the zero count.
+ // If no bit is set, r keeps its start value of 64, matching the reference.
+ int i, r = 64;
+ for (i = 63; i >= 0; i--)
+  if ((in >> i) & 1) r = i;
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Approach: smear the lowest set bit k upward with shift-or steps.
+ // After smearing, bits k through 63 are set, which is 64 - k bits.
+ // Starting from 64 and subtracting one per set bit leaves k.
+ // If in == 0, nothing is set, so the result stays 64 as in the reference.
+ int r = 64;
+ in |= in << 1; in |= in << 2; in |= in << 4;
+ in |= in << 8; in |= in << 16; in |= in << 32;
+ while (in) { in &= in - 1; r--; }
+ return r;
+}
+static int ctz(uint64_t in)
+{
+ // Approach: isolate the lowest set bit, giving the value 2^k.
+ // Then take log2 by counting right shifts until the value becomes 0.
+ // The number of shifts after the first is k, the trailing zero count.
+ // in == 0 is checked first and returns 64, matching the reference.
+ uint64_t x;
+ int r = 0;
+ if (in == 0) return 64;
+ x = in & (0 - in);
+ while (x >>= 1) r++;
+ return r;
+}

@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Red division handles the sign explicitly: for negative red use -((-red)/3).
+    // This matches C truncation toward zero. -red cannot overflow because
+    // red >= -3*2^21. Nonnegative red is divided directly.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int rq = red < 0 ? -((-red) / 3) : red / 3;
+    return rq * 1024 + green / 3 * 32 + blue / 3;
+}
+
+
+int main(){
+    mix(0,0);
+}

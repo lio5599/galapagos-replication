@@ -1,0 +1,13 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: the reference's mask-and-OR structure, with full-width masks.
+    // Each mask is 0u minus a 0/1 comparison, so it is all ones or zero.
+    // The ranges are disjoint, so exactly one mask is set for 0..63.
+    // For 64..255 no mask is set and the OR is 0, as in the reference.
+    unsigned int m1 = 0U - (unsigned int) (x < 26);
+    unsigned int m2 = 0U - (unsigned int) (x - 26 < 26);
+    unsigned int m3 = 0U - (unsigned int) (x - 52 < 10);
+    unsigned int m4 = 0U - (unsigned int) (x == 62);
+    unsigned int m5 = 0U - (unsigned int) (x == 63);
+    return (int) ((m1 & (x + 'A')) | (m2 & (x + 71)) | (m3 & (x - 4)) | (m4 & 45U) | (m5 & 95U));
+}

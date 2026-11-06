@@ -1,0 +1,101 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reference: saturating 32-bit unsigned add, returns min(a + b, 4294967295).
+	// Approach: do the wrapping add and detect overflow by checking sum < a.
+	// Unsigned addition wraps modulo 2^32, so the sum is smaller than a exactly on overflow.
+	// If a + b == 4294967295 exactly, there is no wrap and the sum is already the max.
+	// That matches the reference, which also returns 4294967295 in that case.
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 4294967295u;
+	return sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: add in 64-bit unsigned arithmetic, where the true sum cannot overflow.
+	// Then clamp the result to 4294967295 if it exceeds the 32-bit range.
+	// The maximum true sum is 2*4294967295, which fits in unsigned long long.
+	// The equality case a + b == max gives max either way, as in the reference.
+	unsigned long long s = (unsigned long long)a + (unsigned long long)b;
+	if (s > 4294967295ull)
+		return 4294967295u;
+	return (unsigned int)s;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: compare b against the headroom 4294967295 - a, which never underflows.
+	// If b exceeds the headroom, the true sum exceeds max, so saturate.
+	// Otherwise a + b <= max and the plain sum is exact.
+	// Boundary b == headroom gives a + b == max, the same value the reference returns.
+	if (b > 4294967295u - a)
+		return 4294967295u;
+	return a + b;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: branchless; the comparison sum < a is 1 on overflow, else 0.
+	// Negating it gives all-ones on overflow or zero otherwise, used as an OR mask.
+	// OR with all-ones yields 4294967295; OR with zero leaves the exact sum.
+	// No overflow, including a + b == max, returns the true sum like the reference.
+	unsigned int sum = a + b;
+	sum |= 0u - (unsigned int)(sum < a);
+	return sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: use the GCC/Clang builtin that reports unsigned overflow directly.
+	// It stores the wrapped sum and returns true only when the true sum exceeds max.
+	// On overflow we saturate; otherwise the stored sum is exact.
+	// A sum of exactly max does not overflow and is returned as max, as in the reference.
+	unsigned int sum;
+	if (__builtin_add_overflow(a, b, &sum))
+		return 4294967295u;
+	return sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: for 32-bit unsigned, ~b equals 4294967295 - b, the headroom for a.
+	// If a > ~b, the true sum exceeds max, so saturate.
+	// If a <= ~b, the sum fits, and a == ~b gives exactly max, matching the reference.
+	if (a > ~b)
+		return 4294967295u;
+	return a + b;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: 64-bit sum; bit 32 is the carry and is 1 only if the sum exceeds max.
+	// Negating that carry gives all-ones or zero, ORed into the sum as a mask.
+	// Truncation to 32 bits gives 4294967295 on overflow, else the exact sum.
+	// When there is no carry, including sum == max, the low 32 bits are returned unchanged.
+	unsigned long long s = (unsigned long long)a + b;
+	s |= 0ull - (s >> 32);
+	return (unsigned int)s;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: a wrapped sum is smaller than either operand exactly on overflow.
+	// This version tests against b instead of a, which is equally valid.
+	// Without overflow, the sum is at least b, so the exact sum is returned.
+	// That includes a + b == max, which matches the reference result.
+	return (a + b < b) ? 4294967295u : a + b;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: clamp b to the headroom room = 4294967295 - a, then add it to a.
+	// If b <= room, the result is a + b exactly and fits in 32 bits.
+	// If b > room, the result is a + room = 4294967295, the saturated value.
+	// For b == room both branches give max, consistent with the reference.
+	unsigned int room = 4294967295u - a;
+	return a + (b < room ? b : room);
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: compute the carry out of bit 31 from the operands and the wrapped sum.
+	// The full-adder carry is (a AND b) OR ((a OR b) AND NOT sum), taken at bit 31.
+	// The carry is 1 exactly when the true sum exceeds 4294967295.
+	// Then 0 - carry is an all-ones or zero mask, ORed in to saturate.
+	// With no carry, including sum == max, the exact sum is returned as in the reference.
+	unsigned int sum = a + b;
+	unsigned int carry = ((a & b) | ((a | b) & ~sum)) >> 31;
+	return sum | (0u - carry);
+}

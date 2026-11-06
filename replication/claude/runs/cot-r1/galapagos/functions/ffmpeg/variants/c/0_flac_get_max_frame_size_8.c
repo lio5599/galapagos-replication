@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Approach: use a stereo flag to select the per-slot bit width arithmetically.
+    // is2 is 1 when ch==2, else 0; width picks 2*bps+1 or ch*bps via multiplication.
+    // Exactly one of the two products is nonzero-weighted, so width equals the branch value.
+    // The rest of the sum is unchanged from the reference.
+    int is2 = (ch == 2);
+    int width = is2 * (2 * bps + 1) + (1 - is2) * (ch * bps);
+    int count = 16 + ch * ((7 + bps + 7) / 8);
+    count += (width * blocksize + 7) / 8;
+    return count + 2;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

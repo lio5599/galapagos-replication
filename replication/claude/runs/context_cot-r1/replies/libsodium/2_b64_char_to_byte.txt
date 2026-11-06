@@ -1,0 +1,173 @@
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    // Reference: decodes a Base64 char (A-Z,a-z,0-9,+,/) to 0..63 via branchless byte masks.
+    // Each mask ((t>>8)&0xFF)^0xFF equals (~t>>8)&0xFF, so it is rewritten with bitwise not.
+    // c - k is computed in unsigned arithmetic, which matches the low byte wherever the
+    // reference is defined. Only bits 0..15 matter, so odd inputs are reproduced exactly.
+    // x is at most 0xFF. The final term is applied only when x is 0, giving 0xFF unless
+    // the byte of -(c^'A') says otherwise, exactly as in the reference.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((~(u - 65u) >> 8) & (~(90u - u) >> 8) & (u - 65u) & 0xFFu) |
+        ((~(u - 97u) >> 8) & (~(122u - u) >> 8) & (u - 71u) & 0xFFu) |
+        ((~(u - 48u) >> 8) & (~(57u - u) >> 8) & (u + 4u) & 0xFFu) |
+        ((~(0u - (u ^ 43u)) >> 8) & 62u) |
+        ((~(0u - (u ^ 47u)) >> 8) & 63u);
+
+    return x | ((~(0u - x) >> 8) & ((0u - (u ^ 65u)) >> 8) & 0xFFu);
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Uses the identity ~(a-b) == b-a-1 mod 2^32, so each mask becomes ((b-a-1)>>8)&0xFF.
+    // For example, ~(u-65) is 64-u and ~(90-u) is u-91. This is exact for all u.
+    // The equality masks use ~(0-d) == d-1, giving ((d-1)>>8)&0xFF.
+    // Range offsets use unsigned arithmetic, and only the low byte survives the masks.
+    // The final term is identical to the reference, since x is at most 0xFF.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        (((64u - u) >> 8) & ((u - 91u) >> 8) & (u - 65u) & 0xFFu) |
+        (((96u - u) >> 8) & ((u - 123u) >> 8) & (u - 71u) & 0xFFu) |
+        (((47u - u) >> 8) & ((u - 58u) >> 8) & (u + 4u) & 0xFFu) |
+        ((((u ^ 43u) - 1u) >> 8) & 62u) |
+        ((((u ^ 47u) - 1u) >> 8) & 63u);
+
+    return x | (((x - 1u) >> 8) & ((0u - (u ^ 65u)) >> 8) & 0xFFu);
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // The two range masks are merged by De Morgan: (~p>>8)&(~q>>8) == ~(p|q)>>8.
+    // This gives the same per-bit AND of bits 8..15 as the reference's two masks.
+    // The offset is then ANDed and the result truncated to a byte as in the reference.
+    // The '+' and '/' checks keep the reference's 0-(c^k) form with the xor 0xFF.
+    // x is at most 0xFF, so x is returned when nonzero; otherwise the reference's byte.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((~((u - 65u) | (90u - u)) >> 8) & (u - 65u) & 0xFFu) |
+        ((~((u - 97u) | (122u - u)) >> 8) & (u - 71u) & 0xFFu) |
+        ((~((u - 48u) | (57u - u)) >> 8) & (u + 4u) & 0xFFu) |
+        (((((0u - (u ^ 43u)) >> 8) & 0xFFu) ^ 0xFFu) & 62u) |
+        (((((0u - (u ^ 47u)) >> 8) & 0xFFu) ^ 0xFFu) & 63u);
+
+    if (x != 0u) {
+        return x;
+    }
+    return ((0u - (u ^ 65u)) >> 8) & 0xFFu;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // For a byte b, b ^ 0xFF == 0xFF - b, so every mask is written as a subtraction.
+    // Each mask stays a byte and is bit-identical to the reference's mask.
+    // Offsets c-65, c-71 and c+4 use unsigned math, which has the same low byte.
+    // Equality masks for '+', '/' and for x==0 use the same byte subtraction.
+    // Because x is at most 0xFF, (0xFF - byte(-x)) is 0xFF only when x is 0.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int a = (0xFFu - (((u - 65u) >> 8) & 0xFFu)) & (0xFFu - (((90u - u) >> 8) & 0xFFu)) & (u - 65u);
+    const unsigned int l = (0xFFu - (((u - 97u) >> 8) & 0xFFu)) & (0xFFu - (((122u - u) >> 8) & 0xFFu)) & (u - 71u);
+    const unsigned int d = (0xFFu - (((u - 48u) >> 8) & 0xFFu)) & (0xFFu - (((57u - u) >> 8) & 0xFFu)) & (u + 4u);
+    const unsigned int p = (0xFFu - (((0u - (u ^ 43u)) >> 8) & 0xFFu)) & 62u;
+    const unsigned int s = (0xFFu - (((0u - (u ^ 47u)) >> 8) & 0xFFu)) & 63u;
+    const unsigned int x = a | l | d | p | s;
+    return x | ((0xFFu - (((0u - x) >> 8) & 0xFFu)) & (((0u - (u ^ 65u)) >> 8) & 0xFFu));
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Each mask is formed as (~t & 0xFF00) >> 8, which equals ((t >> 8) & 0xFF) ^ 0xFF.
+    // Both forms select inverted bits 8..15 of t, so the masks are identical.
+    // The offsets are ANDed with 0xFF to match the byte-limited reference terms.
+    // The last step uses the same mask form for x==0 and the reference's raw byte for c=='A'.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        (((~(u - 65u) & 0xFF00u) >> 8) & ((~(90u - u) & 0xFF00u) >> 8) & (u - 65u)) |
+        (((~(u - 97u) & 0xFF00u) >> 8) & ((~(122u - u) & 0xFF00u) >> 8) & (u - 71u)) |
+        (((~(u - 48u) & 0xFF00u) >> 8) & ((~(57u - u) & 0xFF00u) >> 8) & (u + 4u)) |
+        (((~(0u - (u ^ 43u)) & 0xFF00u) >> 8) & 62u) |
+        (((~(0u - (u ^ 47u)) & 0xFF00u) >> 8) & 63u);
+
+    return x | (((~(0u - x) & 0xFF00u) >> 8) & (((0u - (u ^ 65u)) & 0xFF00u) >> 8));
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // The result is accumulated term by term in a variable, using reference-style masks.
+    // Each term is a byte: inverted bits 8..15 of both bounds, ANDed with the offset.
+    // Unsigned offsets avoid signed overflow and match the reference where it is defined.
+    // At the end, a nonzero x is returned unchanged (the reference's OR adds 0).
+    // A zero x yields bits 8..15 of -(c^'A'), which is the reference's final term.
+    const unsigned int u = (unsigned int) c;
+    unsigned int x = 0u;
+    x |= ((((u - 65u) >> 8) & 0xFFu) ^ 0xFFu) & ((((90u - u) >> 8) & 0xFFu) ^ 0xFFu) & (u - 65u);
+    x |= ((((u - 97u) >> 8) & 0xFFu) ^ 0xFFu) & ((((122u - u) >> 8) & 0xFFu) ^ 0xFFu) & (u - 71u);
+    x |= ((((u - 48u) >> 8) & 0xFFu) ^ 0xFFu) & ((((57u - u) >> 8) & 0xFFu) ^ 0xFFu) & (u + 4u);
+    x |= ((((0u - (u ^ 43u)) >> 8) & 0xFFu) ^ 0xFFu) & 62u;
+    x |= ((((0u - (u ^ 47u)) >> 8) & 0xFFu) ^ 0xFFu) & 63u;
+    return (x == 0u) ? (((0u - (u ^ 65u)) >> 8) & 0xFFu) : x;
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Uses the identity ((A>>8)&0xFF) & (B&0xFF) == ((A & (B<<8)) >> 8) & 0xFF.
+    // The offset is shifted into bits 8..15 next to the inverted bounds, ANDed there,
+    // and the combined result is shifted back down. Bit-for-bit this equals the reference.
+    // The '+' and '/' constants are shifted the same way. The final x==0 test uses
+    // ~(0-x), which has bits 8..15 all set only for x==0, because x is at most 0xFF.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        (((~(u - 65u) & ~(90u - u) & ((u - 65u) << 8)) >> 8) & 0xFFu) |
+        (((~(u - 97u) & ~(122u - u) & ((u - 71u) << 8)) >> 8) & 0xFFu) |
+        (((~(u - 48u) & ~(57u - u) & ((u + 4u) << 8)) >> 8) & 0xFFu) |
+        (((~(0u - (u ^ 43u)) & (62u << 8)) >> 8) & 0xFFu) |
+        (((~(0u - (u ^ 47u)) & (63u << 8)) >> 8) & 0xFFu);
+
+    return x | (((~(0u - x) & (0u - (u ^ 65u))) >> 8) & 0xFFu);
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Combines the b-a-1 form for range masks with the merged-OR form:
+    // ~(u-65) & ~(90-u) == (64-u) & (u-91), so one AND is shifted and masked.
+    // The equality masks use ~(0-d) == d-1, and the x==0 mask uses x-1.
+    // For x at most 0xFF, x-1 has bits 8..15 all set only when x is 0.
+    // The low byte of the offsets matches the reference's signed results where defined.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int x =
+        ((((64u - u) & (u - 91u)) >> 8) & (u - 65u) & 0xFFu) |
+        ((((96u - u) & (u - 123u)) >> 8) & (u - 71u) & 0xFFu) |
+        ((((47u - u) & (u - 58u)) >> 8) & (u + 4u) & 0xFFu) |
+        ((((u ^ 43u) - 1u) >> 8) & 62u) |
+        ((((u ^ 47u) - 1u) >> 8) & 63u);
+
+    return x | ((((x - 1u) & (0u - (u ^ 65u))) >> 8) & 0xFFu);
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Byte extraction uses unsigned char casts: (unsigned char)(t >> 8) == (t >> 8) & 0xFF.
+    // Each inverted mask is taken from ~t before the cast, so no int promotion issue arises.
+    // Offsets are cast to unsigned char, which keeps only the low byte as the masks do.
+    // All parts are unsigned int before combining, so x is in 0..255 as in the reference.
+    // A zero x yields the byte of -(c^'A'); otherwise x is returned unchanged.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int ra = (unsigned int) (unsigned char) (~(u - 65u) >> 8) & (unsigned int) (unsigned char) (~(90u - u) >> 8) & (unsigned int) (unsigned char) (u - 65u);
+    const unsigned int rl = (unsigned int) (unsigned char) (~(u - 97u) >> 8) & (unsigned int) (unsigned char) (~(122u - u) >> 8) & (unsigned int) (unsigned char) (u - 71u);
+    const unsigned int rd = (unsigned int) (unsigned char) (~(u - 48u) >> 8) & (unsigned int) (unsigned char) (~(57u - u) >> 8) & (unsigned int) (unsigned char) (u + 4u);
+    const unsigned int rp = (unsigned int) (unsigned char) (~(0u - (u ^ 43u)) >> 8) & 62u;
+    const unsigned int rs = (unsigned int) (unsigned char) (~(0u - (u ^ 47u)) >> 8) & 63u;
+    const unsigned int x = ra | rl | rd | rp | rs;
+    return x ? x : (unsigned int) (unsigned char) ((0u - (u ^ 65u)) >> 8);
+}
+static unsigned int b64_char_to_byte(int c)
+{
+    // Factors a shared byte-mask step: each term is ((~lo & ~hi) >> 8) & off & 0xFF.
+    // Here lo and hi are the reference's two differences, so the result is bit-identical.
+    // Every differences is precomputed in unsigned form, and only the low 16 bits matter.
+    // The '+' and '/' masks use the d-1 identity for ~(0-d).
+    // The final step ORs the reference's guarded term, with eq(x,0) written as (x-1)>>8.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int a0 = u - 65u, a1 = 90u - u;
+    const unsigned int l0 = u - 97u, l1 = 122u - u;
+    const unsigned int d0 = u - 48u, d1 = 57u - u;
+    const unsigned int x =
+        (((~a0 & ~a1) >> 8) & a0 & 0xFFu) |
+        (((~l0 & ~l1) >> 8) & (u - 71u) & 0xFFu) |
+        (((~d0 & ~d1) >> 8) & (u + 4u) & 0xFFu) |
+        ((((u ^ 43u) - 1u) >> 8) & 62u) | ((((u ^ 47u) - 1u) >> 8) & 63u);
+    return x | (((x - 1u) >> 8) & ((0u - (u ^ 65u)) >> 8) & 0xFFu);
+}
+```

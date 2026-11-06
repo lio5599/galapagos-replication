@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Truncating to unsigned char keeps the low 8 bits, so (unsigned char)(v >> 8) == (v >> 8) & 0xFF.
+    // For any m in 0..255, 255 - m equals m ^ 0xFF, so the complement masks are preserved.
+    // The combination is unchanged, so the result equals the reference even for large x.
+    unsigned int a = (unsigned char) ((x - 26U) >> 8);
+    unsigned int b = (unsigned char) ((x - 52U) >> 8);
+    unsigned int c = (unsigned char) ((x - 62U) >> 8);
+    unsigned int d = 255U - (unsigned char) ((0U - (x ^ 62U)) >> 8);
+    unsigned int e = 255U - (unsigned char) ((0U - (x ^ 63U)) >> 8);
+    return (int) ((a & (x + 65U)) | ((255U - a) & b & (x + 71U)) |
+                  ((255U - b) & c & (x - 4U)) | (d & 43U) | (e & 47U));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

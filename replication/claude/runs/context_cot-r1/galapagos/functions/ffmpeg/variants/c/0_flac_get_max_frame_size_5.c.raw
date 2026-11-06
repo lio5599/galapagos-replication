@@ -1,0 +1,10 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // The arithmetic is done in long long and then truncated back to int.
+    // Where the int reference has no overflow, the wider math gives the same exact values.
+    // long long division also truncates toward zero, so negative inputs behave the same.
+    long long b = bps, n = ch, bs = blocksize;
+    long long bits = (ch == 2) ? (2 * b + 1) : (n * b);
+    long long count = 16 + n * ((7 + b + 7) / 8) + (bits * bs + 7) / 8 + 2;
+    return (int)count;
+}

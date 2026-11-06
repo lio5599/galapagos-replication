@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: explicit branching on the sign of x.
+  // A non-negative x, including 0 and 32767, returns 0.
+  // Otherwise x is negative (down to -32768) and the function returns -1.
+  // This is the same mapping as the reference's -(u >> 15).
+  if (x >= 0)
+    return 0;
+  return -1;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

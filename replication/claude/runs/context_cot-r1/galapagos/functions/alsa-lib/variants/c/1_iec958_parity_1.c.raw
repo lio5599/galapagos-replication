@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Shift left by 1 to drop bit 31, then right by 5 to drop bits 0..3.
+	// What remains is original bits 4..30 in positions 0..26.
+	// Count the set bits until the value is zero, then return the count's low bit.
+	// This counts the same 27 bits as the reference loop.
+	unsigned int x = (data << 1) >> 5;
+	unsigned int count = 0;
+	while (x != 0) {
+		count += x & 1u;
+		x >>= 1;
+	}
+	return count & 1u;
+}

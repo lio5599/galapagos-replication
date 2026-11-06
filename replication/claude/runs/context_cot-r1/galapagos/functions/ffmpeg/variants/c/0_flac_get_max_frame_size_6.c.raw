@@ -1,0 +1,11 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // The payload and header byte counts are computed first, then summed in reference order.
+    // The multiplication operands are commuted (bps*ch, blocksize*bits). This changes neither values nor overflow.
+    int bits = (ch == 2) ? (bps * 2 + 1) : (bps * ch);
+    int payload = (blocksize * bits + 7) / 8;
+    int header = ((7 + bps + 7) / 8) * ch;
+    int count = 16 + header;
+    count = count + payload;
+    return count + 2;
+}

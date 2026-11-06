@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: pull out the 8 bytes into an array, then rebuild the value from them.
+    // Byte i is taken from bits 8i..8i+7 and put back at the same shift, so the result is Ai.
+    // Shifts range over 0..56, so they are always valid on uint64_t.
+    unsigned char b[8];
+    uint64_t r = 0;
+    int i;
+    for (i = 0; i < 8; i++)
+        b[i] = (unsigned char)(Ai >> (8 * i));
+    for (i = 0; i < 8; i++)
+        r |= (uint64_t)b[i] << (8 * i);
+    return r;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

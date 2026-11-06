@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Computes the constant v at run time with the reference formula: (2^26 + 1664) / 3329 = 20159.
+  // The rounding offset 2^25 is applied by adding half of 2^26, and the floor uses an
+  // arithmetic shift, exactly as in the reference.
+  // Then t*3329 is subtracted from a in int32, which is exact.
+  // The result is in int16 range, so the cast returns the same value as the reference.
+  int32_t v = ((int32_t)67108864 + 3329 / 2) / 3329;
+  int32_t t = (v * (int32_t)a + 67108864 / 2) >> 26;
+  return (int16_t)((int32_t)a - 3329 * t);
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

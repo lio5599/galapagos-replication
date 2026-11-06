@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: use multiplication instead of shifts.
+	// value = (m*16 + 8 + 256*(seg!=0)) * 2^(seg-1), using a factor of 1 for seg 0.
+	// For seg 0 this is m*16+8, and for seg>=1 it is ((m<<4)+0x108)<<(seg-1).
+	// The result is then multiplied by +1 or -1 according to bit 7 of the input.
+	int x = (a_val ^ 0x55) & 0x7f;
+	int seg = x >> 4;
+	int m = x & 0x0f;
+	int scale = seg ? (1 << (seg - 1)) : 1;
+	int t = (m * 16 + 8 + (seg ? 256 : 0)) * scale;
+	int sign = (a_val & 0x80) ? 1 : -1;
+	return sign * t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

@@ -1,0 +1,161 @@
+int vp5_adjust(int v, int t)
+{
+    // Reference: with a=|v|, a becomes 0 if a>=2t; then r=t-|a-t|, and r gets v's sign.
+    // Approach: plain branches. t-|a-t| equals a if a<t, else 2t-a.
+    // If a was zeroed: t>0 gives 0, and t<=0 gives 2t, which is the same formula with a=0.
+    // INT_MIN for v, or 2t overflowing, is UB in the reference, so it is not a concern.
+    // Negating r overflows only for INT_MIN, where the reference's v+s1 is also UB.
+    int a = v < 0 ? -v : v;
+    int two = 2 * t;
+    if (a >= two)
+        a = 0;
+    int r = a < t ? a : two - a;
+    return v < 0 ? -r : r;
+}
+int vp5_adjust(int v, int t)
+{
+    // Same steps as the reference, but done in unsigned arithmetic.
+    // Wraparound gives the exact value whenever the reference has no signed overflow.
+    // The sign masks come from arithmetic shifts, as in the reference.
+    // (r+s1)^s1 with s1=-1 gives -r, and with s1=0 gives r.
+    unsigned s1 = (unsigned)(v >> 31);
+    int a = (int)(((unsigned)v ^ s1) - s1);
+    if (!(a < 2 * t))
+        a = 0;
+    unsigned d = (unsigned)a - (unsigned)t;
+    unsigned s2 = (unsigned)((int)d >> 31);
+    d = (d ^ s2) - s2;
+    unsigned r = (unsigned)t - d;
+    return (int)((r + s1) ^ s1);
+}
+int vp5_adjust(int v, int t)
+{
+    // Uses a ternary abs for |v| and for |a-t|, and a select for the 2t cutoff.
+    // a*(a<2t) in the reference is exactly a if a<2t, else 0.
+    // The final ternary negates when v<0, which equals (x+s1)^s1 with s1=-1.
+    // Each signed operation here also appears in the reference, so no new UB is added.
+    int a = v < 0 ? -v : v;
+    a = a < 2 * t ? a : 0;
+    int d = a - t;
+    d = d < 0 ? -d : d;
+    int r = t - d;
+    return v < 0 ? -r : r;
+}
+int vp5_adjust(int v, int t)
+{
+    // Branchless masks: m=-(a<2t) is all ones or zero, so a&m keeps a or clears it.
+    // r is then chosen with a mask: a if a<t, else 2t-a, which equals t-|a-t|.
+    // The sign is applied as (r^s)-s, which equals -r when s=-1 and r when s=0.
+    // Unsigned arithmetic avoids any intermediate UB.
+    unsigned s = (unsigned)-(v < 0);
+    int a = (int)(((unsigned)v ^ s) - s);
+    int two = 2 * t;
+    a &= -(a < two);
+    unsigned k = (unsigned)-(a < t);
+    unsigned r = ((unsigned)a & k) | (((unsigned)two - (unsigned)a) & ~k);
+    return (int)((r ^ s) - s);
+}
+int vp5_adjust(int v, int t)
+{
+    // The sign is applied by multiplying with sg, which is -1 or 1.
+    // r*-1 overflows only if r==INT_MIN, where the reference is also UB.
+    // The piecewise form min-like a<t ? a : 2t-a equals t-|a-t| for any a.
+    // a is zeroed when a>=2t, matching the reference's multiply by the comparison.
+    int sg = v < 0 ? -1 : 1;
+    int a = v * sg;
+    int two = 2 * t;
+    a = (a < two) * a;
+    int r = a < t ? a : two - a;
+    return sg * r;
+}
+int vp5_adjust(int v, int t)
+{
+    // Explicit case split.
+    // If a<2t: r=a when a<t, otherwise r=2t-a.
+    // If a>=2t: a becomes 0, so r=t-|t|, which is 0 for t>0 and 2t for t<=0.
+    // The result is negated if v was negative, as in the reference's final step.
+    int a = v < 0 ? -v : v;
+    int two = 2 * t;
+    int r;
+    if (a < two) {
+        if (a < t)
+            r = a;
+        else
+            r = two - a;
+    } else {
+        r = t > 0 ? 0 : two;
+    }
+    if (v < 0)
+        r = -r;
+    return r;
+}
+int vp5_adjust(int v, int t)
+{
+    // Uses 64-bit arithmetic, so no intermediate can overflow.
+    // Where the reference is defined, 2t and every step fit in int.
+    // So the 64-bit values equal the reference's values exactly.
+    // The final result is in range there, and the cast back to int is exact.
+    long long a = v < 0 ? -(long long)v : (long long)v;
+    long long two = 2LL * t;
+    if (a >= two)
+        a = 0;
+    long long d = a - t;
+    if (d < 0)
+        d = -d;
+    long long r = t - d;
+    if (v < 0)
+        r = -r;
+    return (int)r;
+}
+int vp5_adjust(int v, int t)
+{
+    // Computes the magnitude with unsigned values, then restores the sign by branching.
+    // Unsigned wrap equals the exact integer result whenever the reference has no overflow.
+    // The comparisons a<2t and a<t are signed, as in the reference.
+    // r = a<t ? a : 2t-a reproduces t-|a-t|.
+    // For v<0 the result is 0u-r, which is -r, the same as the reference's (r-1)^-1.
+    int a = (int)(v < 0 ? 0u - (unsigned)v : (unsigned)v);
+    int two = 2 * t;
+    if (!(a < two))
+        a = 0;
+    unsigned r = a < t ? (unsigned)a : (unsigned)two - (unsigned)a;
+    if (v < 0)
+        return (int)(0u - r);
+    return (int)r;
+}
+int vp5_adjust(int v, int t)
+{
+    // Keeps the reference's xor/sub structure for |v|, but chooses the sign of a-t with a branch.
+    // |a-t| subtracted from t is written as t-(a-t) for a>=t, and t-(t-a) otherwise.
+    // The final conditional negation uses ~(r-1), which equals -r, in unsigned form.
+    // That is identical to the reference's (r+s1)^s1 when s1=-1.
+    unsigned s1 = (unsigned)(v >> 31);
+    int a = (int)(((unsigned)v ^ s1) - s1);
+    a *= a < 2 * t;
+    unsigned ut = (unsigned)t, ua = (unsigned)a;
+    unsigned r = a >= t ? ut - (ua - ut) : ut - (ut - ua);
+    if (s1)
+        r = ~(r - 1u);
+    return (int)r;
+}
+int vp5_adjust(int v, int t)
+{
+    // Handles each sign of v on its own path, working on the positive magnitude in unsigned form.
+    // Within each path, the magnitude is cut to 0 if it is >=2t, then folded around t: a<t ? a : 2t-a.
+    // The negative path returns the negated fold, matching the reference's (r+s1)^s1.
+    // v=INT_MIN is UB in the reference, so its wrapped handling here is irrelevant.
+    unsigned ut = (unsigned)t;
+    int two = 2 * t;
+    if (v < 0) {
+        int a = (int)(0u - (unsigned)v);
+        if (a >= two)
+            a = 0;
+        unsigned r = a < t ? (unsigned)a : 2u * ut - (unsigned)a;
+        return (int)(0u - r);
+    }
+    int a = v;
+    if (a >= two)
+        a = 0;
+    unsigned r = a < t ? (unsigned)a : 2u * ut - (unsigned)a;
+    return (int)r;
+}

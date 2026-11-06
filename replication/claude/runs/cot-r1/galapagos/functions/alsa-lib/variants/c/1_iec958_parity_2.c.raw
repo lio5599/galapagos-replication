@@ -1,0 +1,8 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: GCC/Clang builtin parity applied to bits 4..30 only.
+	// __builtin_parity returns 1 if an odd number of bits are set, otherwise 0.
+	// Masking with 0x7FFFFFF0 excludes bits 0-3 and bit 31, exactly like the reference loop.
+	// A zero masked value yields 0, as in the reference.
+	return (unsigned int)__builtin_parity(data & 0x7FFFFFF0U);
+}

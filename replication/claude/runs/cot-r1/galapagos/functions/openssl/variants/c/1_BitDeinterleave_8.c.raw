@@ -1,0 +1,17 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: reverse all 64 bits twice with mask-and-shift swap stages.
+    // Bit reversal undoes itself, so doing it twice gives back Ai, matching the reference.
+    // Every step uses unsigned masks and shifts, so all inputs are handled correctly.
+    int k;
+    uint64_t x = Ai;
+    for (k = 0; k < 2; k++) {
+        x = ((x >> 1) & 0x5555555555555555ULL) | ((x & 0x5555555555555555ULL) << 1);
+        x = ((x >> 2) & 0x3333333333333333ULL) | ((x & 0x3333333333333333ULL) << 2);
+        x = ((x >> 4) & 0x0f0f0f0f0f0f0f0fULL) | ((x & 0x0f0f0f0f0f0f0f0fULL) << 4);
+        x = ((x >> 8) & 0x00ff00ff00ff00ffULL) | ((x & 0x00ff00ff00ff00ffULL) << 8);
+        x = ((x >> 16) & 0x0000ffff0000ffffULL) | ((x & 0x0000ffff0000ffffULL) << 16);
+        x = (x >> 32) | (x << 32);
+    }
+    return x;
+}

@@ -1,0 +1,18 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Factors a shared byte-mask step: each term is ((~lo & ~hi) >> 8) & off & 0xFF.
+    // Here lo and hi are the reference's two differences, so the result is bit-identical.
+    // Every differences is precomputed in unsigned form, and only the low 16 bits matter.
+    // The '+' and '/' masks use the d-1 identity for ~(0-d).
+    // The final step ORs the reference's guarded term, with eq(x,0) written as (x-1)>>8.
+    const unsigned int u = (unsigned int) c;
+    const unsigned int a0 = u - 65u, a1 = 90u - u;
+    const unsigned int l0 = u - 97u, l1 = 122u - u;
+    const unsigned int d0 = u - 48u, d1 = 57u - u;
+    const unsigned int x =
+        (((~a0 & ~a1) >> 8) & a0 & 0xFFu) |
+        (((~l0 & ~l1) >> 8) & (u - 71u) & 0xFFu) |
+        (((~d0 & ~d1) >> 8) & (u + 4u) & 0xFFu) |
+        ((((u ^ 43u) - 1u) >> 8) & 62u) | ((((u ^ 47u) - 1u) >> 8) & 63u);
+    return x | (((x - 1u) >> 8) & ((0u - (u ^ 65u)) >> 8) & 0xFFu);
+}

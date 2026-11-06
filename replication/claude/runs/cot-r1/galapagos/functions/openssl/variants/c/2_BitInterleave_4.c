@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we apply bitwise complement twice.
+    // ~~x == x because NOT flips every bit and a second NOT flips each bit back.
+    // On uint64_t this holds for every value with no promotion issues.
+    uint64_t t = ~Ai;
+    return ~t;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Scales the Barrett constant to 2^32: (64*v*a + 2^31) >> 32 == (v*a + 2^25) >> 26.
+  // Multiplying both numerator and denominator by 64 leaves the floor unchanged.
+  // In int64 the values stay well below 2^63, so the computation is exact.
+  // a - 3329*t equals the reference's wrapped int16 result, because the true value fits in int16.
+  int64_t t = ((int64_t)(20159 * 64) * a + ((int64_t)1 << 31)) >> 32;
+  return (int16_t)(a - t * 3329);
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

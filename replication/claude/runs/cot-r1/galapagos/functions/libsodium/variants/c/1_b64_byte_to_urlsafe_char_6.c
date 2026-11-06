@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Approach: switch on x/26 to choose the block, then refine within it.
+    // Block 0 is 0..25, uppercase. Block 1 is 26..51, lowercase.
+    // Block 2 covers 52..77: digits up to 61, then '-' at 62 and '_' at 63.
+    // Higher blocks and 64..77 return 0, matching the reference.
+    switch (x / 26) {
+    case 0: return (int) (x + 'A');
+    case 1: return (int) (x + ('a' - 26));
+    case 2:
+        if (x < 62) return (int) (x + ('0' - 52));
+        if (x == 62) return '-';
+        if (x == 63) return '_';
+        return 0;
+    default: return 0;
+    }
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

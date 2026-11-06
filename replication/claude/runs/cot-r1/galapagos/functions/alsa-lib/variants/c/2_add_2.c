@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Approach: compare b against the headroom 4294967295 - a, which never underflows.
+	// If b exceeds the headroom, the true sum exceeds max, so saturate.
+	// Otherwise a + b <= max and the plain sum is exact.
+	// Boundary b == headroom gives a + b == max, the same value the reference returns.
+	if (b > 4294967295u - a)
+		return 4294967295u;
+	return a + b;
+}
+
+
+int main(){
+    add(0,0);
+}

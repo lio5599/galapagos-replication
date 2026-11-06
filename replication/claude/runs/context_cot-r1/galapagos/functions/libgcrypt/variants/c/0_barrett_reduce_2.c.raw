@@ -1,0 +1,8 @@
+int16_t barrett_reduce(int16_t a) {
+  // Bias the numerator by 10*2^26 so it is always nonnegative: min is -660570112+33554432+671088640 > 0.
+  // The max is 694104385+671088640 < 2^31. Unsigned division by 2^26 is floor, then subtract 10.
+  // This equals the reference's arithmetic shift. The remainder is computed exactly and fits in int16.
+  uint32_t x = (uint32_t)(20159 * (int32_t)a + 33554432 + 671088640);
+  int32_t t = (int32_t)(x / 67108864u) - 10;
+  return (int16_t)(a - t * 3329);
+}

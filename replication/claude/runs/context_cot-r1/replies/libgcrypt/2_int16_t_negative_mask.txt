@@ -1,0 +1,85 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Reference computes -1 if x is negative, else 0 (an all-ones mask for negatives).
+  // Approach: a direct ternary on the sign of x.
+  // x < 0 holds exactly when the top bit of the uint16_t view is set,
+  // which is when the reference's u >> 15 equals 1 and it returns -1.
+  // Edge cases: x = -32768 gives -1, and x = 0 gives 0.
+  return x < 0 ? -1 : 0;
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: the comparison x < 0 yields an int that is 1 or 0.
+  // Negating it gives -1 for negative x and 0 otherwise.
+  // This matches the reference, whose u >> 15 is 1 exactly when x < 0.
+  // There is no overflow, because only 0 or 1 is negated.
+  return -(x < 0);
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: x is promoted to int in [-32768, 32767], then shifted right by 15.
+  // Clang (LLVM ashr) does an arithmetic shift, so the sign bit is copied.
+  // A negative value yields -1, since every value >= -32768 shifted by 15 gives -1.
+  // A non-negative value yields 0, since 32767 >> 15 is 0.
+  // This matches the reference for every input.
+  return (int)x >> 15;
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: widen the 16-bit two's complement pattern of x to 32 bits unsigned.
+  // Bit 15 of that pattern is the sign bit, so u >> 15 is 0 or 1.
+  // Negating it as an int gives 0 or -1, exactly as the reference does.
+  // The upper bits are zero, so no other bits reach the result.
+  uint32_t u = (uint16_t)x;
+  return -(int)(u >> 15);
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: promote x to a 32-bit int and arithmetic-shift right by 31.
+  // The sign is preserved in the promotion, so bit 31 is set iff x < 0.
+  // An arithmetic shift by 31 then yields -1 for negatives and 0 otherwise.
+  // This is identical to the reference's -(u >> 15) for all int16_t values.
+  return (int)x >> 31;
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: test bit 15 of the uint16_t bit pattern with a mask.
+  // (uint16_t)x & 0x8000 is nonzero exactly when x is negative.
+  // The != 0 test gives 1 or 0, and negating it gives -1 or 0.
+  // This is the same as the reference's u >> 15 followed by negation.
+  return -(int)(((uint16_t)x & 0x8000u) != 0);
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: multiply the 0 or 1 result of x < 0 by -1.
+  // A negative x gives 1 * -1 = -1, and a non-negative x gives 0 * -1 = 0.
+  // This matches the reference, whose u >> 15 is 1 iff x < 0.
+  // There is no overflow, because the operands are tiny.
+  return (x < 0) * -1;
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: divide the uint16_t pattern by 32768 to extract the top bit.
+  // Values 0..32767 give 0, and values 32768..65535 (negative x) give 1.
+  // Negating that 0 or 1 as an int gives 0 or -1, as in the reference.
+  // Edge case: x = -1 maps to 65535, and 65535 / 32768 = 1, giving -1.
+  return -(int)((uint16_t)x / 32768u);
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: explicit branching on the sign of x.
+  // A non-negative x, including 0 and 32767, returns 0.
+  // Otherwise x is negative (down to -32768) and the function returns -1.
+  // This is the same mapping as the reference's -(u >> 15).
+  if (x >= 0)
+    return 0;
+  return -1;
+}
+static int int16_t_negative_mask (int16_t x)
+{
+  // Approach: x >= 0 yields 1 or 0, and subtracting 1 gives 0 or -1.
+  // A non-negative x gives 1 - 1 = 0, and a negative x gives 0 - 1 = -1.
+  // This matches the reference exactly, including x = 0 and x = -32768.
+  // The arithmetic is plain int subtraction with no overflow.
+  return (x >= 0) - 1;
+}

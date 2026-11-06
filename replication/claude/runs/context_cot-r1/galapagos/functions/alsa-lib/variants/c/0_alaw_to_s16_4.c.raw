@@ -1,0 +1,21 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Shifts with a bounded loop, doubling the value seg-1 times.
+	// For seg 1..7 the loop runs 0..6 times, which is the same as t <<= seg-1.
+	// For seg 0 the loop is skipped and (t<<4)+8 is used, as in the reference.
+	// Negation happens only when bit 7 of the XORed byte is clear.
+	int v = (a_val ^ 0x55) & 0xff;
+	int t = v & 0x7f;
+	int seg = (t >> 4) & 7;
+	int i;
+	if (seg == 0) {
+		t = (t << 4) + 8;
+	} else {
+		t = ((t & 0x0f) << 4) + 0x108;
+		for (i = 1; i < seg; i++)
+			t = t + t;
+	}
+	if (!(v & 0x80))
+		t = -t;
+	return t;
+}

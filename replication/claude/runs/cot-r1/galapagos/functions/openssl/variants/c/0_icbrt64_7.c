@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Newton iteration starting from 2^ceil(n/3), where n is the bit length of x.
+    // Since x < 2^n, the start is at least cbrt(x), and at most 2^22, so y*y fits.
+    // y' = (2y + x / y^2) / 3 stays >= floor(cbrt(x)) by AM-GM, with floors applied safely.
+    // Stopping when y' >= y leaves y = floor(cbrt(x)). x = 0 returns 0 right away.
+    // The result is shifted left by 12 as in the reference.
+    uint64_t t = x, y, y1;
+    int n = 0;
+    if (x == 0)
+        return 0;
+    while (t) {
+        n++;
+        t >>= 1;
+    }
+    y = (uint64_t)1 << ((n + 2) / 3);
+    for (;;) {
+        y1 = (2 * y + x / (y * y)) / 3;
+        if (y1 >= y)
+            break;
+        y = y1;
+    }
+    return y << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

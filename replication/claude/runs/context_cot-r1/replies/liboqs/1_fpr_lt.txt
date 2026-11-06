@@ -1,0 +1,115 @@
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Reference computes [x < y] for raw IEEE-754 doubles held as uint64_t (no NaN handling).
+    // If both are negative, the signed order is reversed, so the result is sx > sy.
+    // Otherwise sx < sy is correct for two non-negative values.
+    // When signs differ, sx < sy holds exactly when x is negative, matching the reference.
+    // -0 vs +0 gives 1 because x is negative. Equal negative inputs give 0, as in the reference.
+    int64_t sx = (int64_t)x;
+    int64_t sy = (int64_t)y;
+    if ((x & y) >> 63) {
+        return sx > sy;
+    }
+    return sx < sy;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Uses three explicit cases with unsigned compares only.
+    // If the signs differ, the result is x's sign bit, since a negative value is smaller.
+    // If both are negative, a larger raw value means a larger magnitude, so the result is y < x.
+    // If both are non-negative, the raw unsigned order equals the numeric order.
+    // Equal inputs give 0 in every case, matching the reference.
+    if ((x ^ y) >> 63) {
+        return (int)(x >> 63);
+    }
+    if (x >> 63) {
+        return y < x;
+    }
+    return x < y;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Maps each value to an unsigned key whose natural order matches the reference order.
+    // A negative value maps to ~x, giving top bit 0 and reversing the order among negatives.
+    // A non-negative value maps to x with the top bit flipped, giving top bit 1.
+    // -0 maps to 0x7FF..F and +0 maps to 0x800..0, so -0 < +0 gives 1 as in the reference.
+    // Equal inputs give equal keys, so the result is 0.
+    uint64_t kx = x ^ ((0 - (x >> 63)) | 0x8000000000000000ULL);
+    uint64_t ky = y ^ ((0 - (y >> 63)) | 0x8000000000000000ULL);
+    return kx < ky;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Branchless select between lt = [sx<sy] and gt = [sx>sy], driven by the both-negative bit.
+    // This mirrors the reference formula cc0 ^ ((cc0 ^ cc1) & n), with n = sign of x AND y.
+    // For mixed signs, n is 0 and lt equals the sign of x, which is the reference result.
+    // For both non-negative, the result is lt. For both negative, it is gt.
+    // Equal inputs make lt = gt = 0.
+    int64_t sx = (int64_t)x;
+    int64_t sy = (int64_t)y;
+    int lt = sx < sy;
+    int gt = sx > sy;
+    int n = (int)((x & y) >> 63);
+    return lt ^ ((lt ^ gt) & n);
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Signed key transform: flip the 63 magnitude bits of a negative value.
+    // This makes larger-magnitude negatives smaller, while keeping them negative.
+    // Non-negative values are unchanged, so a signed compare of the keys gives the reference order.
+    // -0 becomes -1, which is less than 0, so -0 < +0 gives 1.
+    // Equal inputs give equal keys, so the result is 0.
+    uint64_t mx = (uint64_t)((int64_t)x >> 63) >> 1;
+    uint64_t my = (uint64_t)((int64_t)y >> 63) >> 1;
+    int64_t kx = (int64_t)(x ^ mx);
+    int64_t ky = (int64_t)(y ^ my);
+    return kx < ky;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Reproduces the reference subtraction scheme using unsigned arithmetic, which cannot overflow.
+    // sy is cleared when the signs differ, so cc0 becomes the sign of x, which is the answer.
+    // With equal signs, the true difference fits in 63 bits, so the wrapped sign bit is exact.
+    // cc0 = [sx<sy] and cc1 = [sy<sx]. The result picks cc1 only when both inputs are negative.
+    uint64_t m = 0 - ((x ^ y) >> 63);
+    uint64_t yy = y & ~m;
+    int cc0 = (int)((x - yy) >> 63);
+    int cc1 = (int)((yy - x) >> 63);
+    return cc0 ^ ((cc0 ^ cc1) & (int)((x & y) >> 63));
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Swaps the operands when both are negative, then does one signed compare.
+    // Both negative: the reference gives sy < sx, which is what the swap produces.
+    // Otherwise sx < sy, which is correct for non-negatives and gives x's sign for mixed signs.
+    // Equal inputs give 0 either way.
+    uint64_t n = 0 - ((x & y) >> 63);
+    uint64_t a = (x & ~n) | (y & n);
+    uint64_t b = (y & ~n) | (x & n);
+    return (int64_t)a < (int64_t)b;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Starts from the signed compare lt = [sx<sy] and flips it when both are negative and x != y.
+    // Both negative and unequal: the reference wants sx > sy, which equals !lt.
+    // Both negative and equal: lt is 0 and no flip occurs, giving 0 as in the reference.
+    // In all other cases, lt is already the reference result.
+    int lt = (int64_t)x < (int64_t)y;
+    int n = (int)((x & y) >> 63);
+    return lt ^ (n & (x != y));
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Flipping the sign bit turns a signed comparison into an unsigned one.
+    // For non-negative or mixed signs, the result is [(x^S) < (y^S)], which equals [sx < sy].
+    // For both negative, the order is reversed, so the result is [y < x] unsigned.
+    // Within the same sign, the unsigned and signed orders agree. Equal inputs give 0.
+    uint64_t s = 0x8000000000000000ULL;
+    if ((x & y) & s) {
+        return y < x;
+    }
+    return (x ^ s) < (y ^ s);
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Computes the result arithmetically from the sign bits and unsigned compares.
+    // d = signs differ. In that case the answer is x's sign bit.
+    // Same sign: the answer is [x<y] when non-negative and [y<x] when negative.
+    // The terms are combined with masks, so exactly one case contributes. Equal inputs give 0.
+    int sx = (int)(x >> 63);
+    int d = (int)((x ^ y) >> 63);
+    int same = (sx ? (y < x) : (x < y));
+    return (d & sx) | ((d ^ 1) & same);
+}
+```

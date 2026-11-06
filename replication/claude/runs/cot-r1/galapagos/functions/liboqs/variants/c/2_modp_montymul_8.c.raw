@@ -1,0 +1,14 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The correction adds p * (d >> 31) instead of a masked p.
+    // d >> 31 is 0 or 1, so the product is 0 or p.
+    // This is the same value as p & -(d >> 31), with 32-bit wraparound as in the reference.
+    // The reduction step is unchanged.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p * (d >> 31);
+    return d;
+}

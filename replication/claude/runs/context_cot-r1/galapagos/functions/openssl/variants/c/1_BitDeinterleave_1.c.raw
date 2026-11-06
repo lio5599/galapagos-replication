@@ -1,0 +1,9 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: XOR with a constant twice; (x ^ k) ^ k == x for any k.
+    // This is the identity, matching the reference for all 64-bit values.
+    // XOR on unsigned integers is well defined, so no input is an edge case.
+    uint64_t k = 0x5555555555555555ULL;
+    uint64_t t = Ai ^ k;
+    return t ^ k;
+}

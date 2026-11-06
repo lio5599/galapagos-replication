@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decodes one 8-bit A-law sample into a signed 16-bit linear PCM value.
+	// Same as the reference, but with separate mantissa and exponent variables.
+	// XOR 0x55 undoes the A-law bit inversion; bit 7 is the sign (1 = positive).
+	// Segment 0 gives (m<<4)+8. Segments 1..7 give ((m<<4)+0x108)<<(seg-1).
+	// The shift count seg-1 is always 0..6, so it is never negative.
+	unsigned int v = (unsigned int)(a_val ^ 0x55) & 0xffu;
+	int mag = (int)(v & 0x7f);
+	int exp = (mag >> 4) & 0x07;
+	int mant = mag & 0x0f;
+	int t;
+	if (exp == 0)
+		t = (mant << 4) + 8;
+	else
+		t = ((mant << 4) + 0x108) << (exp - 1);
+	return (v & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

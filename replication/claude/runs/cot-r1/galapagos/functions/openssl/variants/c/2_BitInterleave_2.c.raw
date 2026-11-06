@@ -1,0 +1,9 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we split the value into 32-bit halves and rebuild it.
+    // The high half is shifted back to bits 32..63 and ORed with the low half.
+    // The two halves do not overlap, so OR loses no bits and the original value is recovered for every input.
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}

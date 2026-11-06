@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Approach: unsigned negation twice: 0 - (0 - x) == x modulo 2^64.
+    // Unsigned wraparound is defined, so this also holds for x == 0 and the top bit set.
+    uint64_t n = (uint64_t)0 - Ai;
+    return (uint64_t)0 - n;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

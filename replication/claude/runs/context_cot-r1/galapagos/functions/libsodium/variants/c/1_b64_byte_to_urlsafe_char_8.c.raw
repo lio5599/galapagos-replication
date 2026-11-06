@@ -1,0 +1,13 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Extracts bits 8..15 as (v << 16) >> 24 instead of (v >> 8) & 0xFF.
+    // For 32-bit unsigned v, the left shift drops bits 16..31 and the right shift keeps bits 8..15.
+    // The result equals (v >> 8) & 0xFF, so each mask matches the reference.
+    unsigned int m26 = ((x - 26U) << 16) >> 24;
+    unsigned int m52 = ((x - 52U) << 16) >> 24;
+    unsigned int m62 = ((x - 62U) << 16) >> 24;
+    unsigned int e62 = (((0U - (x ^ 62U)) << 16) >> 24) ^ 0xFFU;
+    unsigned int e63 = (((0U - (x ^ 63U)) << 16) >> 24) ^ 0xFFU;
+    return (int) ((m26 & (x + 65U)) | ((m26 ^ 0xFFU) & m52 & (x + 71U)) |
+                  ((m52 ^ 0xFFU) & m62 & (x - 4U)) | (e62 & 45U) | (e63 & 95U));
+}

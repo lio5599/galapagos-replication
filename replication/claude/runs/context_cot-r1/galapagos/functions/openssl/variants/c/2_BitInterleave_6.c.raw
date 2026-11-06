@@ -1,0 +1,7 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Approach: partition the bits with a mask m and merge (Ai & m) | (Ai & ~m).
+    // The masks are complementary, so each bit of Ai comes from exactly one part.
+    const uint64_t m = 0xaaaaaaaaaaaaaaaaULL;
+    return (Ai & m) | (Ai & ~m);
+}

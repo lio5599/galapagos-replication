@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Approach: loop over the two low channels at bit offsets 0 and 5.
+    // (c >> s) & 31 extracts the same 5 bits as the reference masks, even for negative c.
+    // Each quotient is at most 31, so shifting it left by s is exact and nonnegative.
+    // Red is handled as in the reference with exact signed division.
+    int low = 0;
+    for (int s = 0; s < 10; s += 5)
+    {
+        int v = 2 * ((c0 >> s) & 31) + ((c1 >> s) & 31);
+        low += (v / 3) << s;
+    }
+    return (2 * (c0 >> 10) + (c1 >> 10)) / 3 * 1024 + low;
+}
+
+
+int main(){
+    mix(0,0);
+}

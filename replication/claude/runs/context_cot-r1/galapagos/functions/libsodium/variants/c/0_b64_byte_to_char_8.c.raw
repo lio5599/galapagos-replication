@@ -1,0 +1,13 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Store each mask in an unsigned char, which truncates to bits 8..15 like & 0xFF.
+    // The complement (unsigned char) ~m keeps only the low byte of ~m, which equals m ^ 0xFF.
+    // The masks are widened back to unsigned before ANDing, so every term equals the reference.
+    unsigned char a = (unsigned char) ((x - 26U) >> 8);
+    unsigned char b = (unsigned char) ((x - 52U) >> 8);
+    unsigned char c = (unsigned char) ((x - 62U) >> 8);
+    unsigned char d = (unsigned char) ~(unsigned char) ((0U - (x ^ 62U)) >> 8);
+    unsigned char e = (unsigned char) ~(unsigned char) ((0U - (x ^ 63U)) >> 8);
+    return (int) (((unsigned int) a & (x + 65U)) | ((unsigned int) (unsigned char) ~a & (unsigned int) b & (x + 71U)) |
+                  ((unsigned int) (unsigned char) ~b & (unsigned int) c & (x - 4U)) | ((unsigned int) d & 43U) | ((unsigned int) e & 47U));
+}

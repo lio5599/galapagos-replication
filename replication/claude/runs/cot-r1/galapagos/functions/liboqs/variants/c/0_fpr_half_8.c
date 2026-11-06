@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: multiply the decremented value by a 0/1 flag instead of masking.
+    // The flag is 1 when the exponent is nonzero, giving x - 2^52 as the reference does.
+    // It is 0 when the exponent is 0, giving +0 for zeros and subnormals of either sign.
+    uint64_t f = (uint64_t)(((x >> 52) & 0x7FF) != 0);
+    return (x - ((uint64_t)1 << 52)) * f;
+}
+
+
+int main(){
+    fpr_half(0);
+}

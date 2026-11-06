@@ -1,0 +1,17 @@
+int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit with in & -in (two's complement via ~in + 1).
+ // Its index is built bit by bit by testing it against fixed bit-position masks.
+ // A zero input has no set bit and returns 64, as in the reference.
+ uint64_t b = in & (~in + 1);
+ int r = 0;
+ if (b == 0)
+  return 64;
+ if (b & 0xFFFFFFFF00000000ULL) r += 32;
+ if (b & 0xFFFF0000FFFF0000ULL) r += 16;
+ if (b & 0xFF00FF00FF00FF00ULL) r += 8;
+ if (b & 0xF0F0F0F0F0F0F0F0ULL) r += 4;
+ if (b & 0xCCCCCCCCCCCCCCCCULL) r += 2;
+ if (b & 0xAAAAAAAAAAAAAAAAULL) r += 1;
+ return r;
+}

@@ -1,0 +1,24 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Dispatches on the high byte of w (the low 16 bits of c): 0 means a normal char, 0xFF is the quirk region.
+    // In the quirk region the reference's '+' and '/' masks fire, giving 63, or 62 if the low byte is '/'.
+    // Any other high byte returns 0xFF.
+    // For a plain byte, '+' and '/' are handled by a switch and letters/digits by ordered threshold tests.
+    // The gaps between 'Z'/'a', '9'/'A' and below '0' fall through to 0xFF.
+    const unsigned int w = (unsigned int) c & 0xFFFFU;
+    const unsigned int b = w & 0xFFU;
+    switch (w >> 8) {
+    case 0: break;
+    case 0xFF: return b == '/' ? 62U : 63U;
+    default: return 0xFFU;
+    }
+    switch (b) {
+    case '+': return 62U;
+    case '/': return 63U;
+    default: break;
+    }
+    if (b >= 'a') return b <= 'z' ? b - 71U : 0xFFU;
+    if (b >= 'A') return b <= 'Z' ? b - 65U : 0xFFU;
+    if (b >= '0') return b <= '9' ? b + 4U : 0xFFU;
+    return 0xFFU;
+}

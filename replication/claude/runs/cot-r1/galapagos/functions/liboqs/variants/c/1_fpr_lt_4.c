@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Compute unsigned x<y and y<x as borrow-out bits of the 64-bit subtractions.
+    // borrow(a,b) = top bit of (~a & b) OR (~(a^b) & (a-b)), which equals [a < b].
+    // If either sign bit is set, use [y < x]: for mixed signs this is x's sign,
+    // and for both negative it is the reversed order. Otherwise use [x < y].
+    // Equal inputs give no borrow in either direction, so the result is 0.
+    uint64_t d1 = x - y, d2 = y - x;
+    uint64_t lt = ((~x & y) | (~(x ^ y) & d1)) >> 63;
+    uint64_t gt = ((~y & x) | (~(x ^ y) & d2)) >> 63;
+    uint64_t neg = (uint64_t)0 - ((x | y) >> 63);
+    return (int)((lt & ~neg) | (gt & neg));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

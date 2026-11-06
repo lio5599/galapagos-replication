@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // First skip whole zero bytes from the bottom, adding 8 for each one.
+ // Then step bit by bit within the first nonzero byte up to its lowest set bit.
+ // If all 8 bytes are zero, r reaches 64 and is returned, as in the reference.
+ int r = 0;
+ while (r < 64 && ((in >> r) & 0xFFULL) == 0)
+  r += 8;
+ if (r == 64)
+  return 64;
+ while (((in >> r) & 1) == 0)
+  r++;
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

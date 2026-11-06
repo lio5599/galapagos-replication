@@ -1,0 +1,15 @@
+static int vp5_adjust(int v, int t)
+{
+    // Reference: returns sign(v) * (t - |c - t|), c = |v| if |v| < 2t else 0 (sign(0) = +).
+    // Plain branching version of the same steps: abs, clamp to 0, distance from t, restore sign.
+    // v < 0 replaces the (v >> 31) mask. Negating twice equals the xor/add trick.
+    // Negative t gives c = 0 and t - |t| = 2t, as in the reference. Zero t gives 0.
+    // Inputs that are UB in the reference (v == INT_MIN, overflowing 2*t) are not covered.
+    int a = v < 0 ? -v : v;
+    int c = a < 2 * t ? a : 0;
+    int d = c - t;
+    if (d < 0)
+        d = -d;
+    int r = t - d;
+    return v < 0 ? -r : r;
+}

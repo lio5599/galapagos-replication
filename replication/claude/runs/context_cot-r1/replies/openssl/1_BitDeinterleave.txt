@@ -1,0 +1,91 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Summary: the reference returns Ai unchanged, because its if ((0)) body is dead code.
+    // Approach: return the argument directly with no transformation.
+    // The disabled block never runs, so this is the identity for every 64-bit input.
+    // Edge cases such as 0 and all ones pass through unchanged.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: XOR with a constant twice; (x ^ k) ^ k == x for any k.
+    // This is the identity, matching the reference for all 64-bit values.
+    // XOR on unsigned integers is well defined, so no input is an edge case.
+    uint64_t k = 0x5555555555555555ULL;
+    uint64_t t = Ai ^ k;
+    return t ^ k;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: split into 32-bit halves and rebuild the 64-bit value.
+    // (hi << 32) | lo restores every original bit position exactly.
+    // This is the identity, as in the reference, including 0 and all ones.
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: rotate by 32 bits twice, which totals 64 bits.
+    // A 64-bit rotation leaves the value unchanged, giving the identity.
+    // Both shift amounts are 32, so neither shift is undefined.
+    uint64_t r = (Ai << 32) | (Ai >> 32);
+    r = (r << 32) | (r >> 32);
+    return r;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: apply bitwise NOT twice; ~~x == x for unsigned integers.
+    // This matches the reference identity for every input.
+    // No overflow or undefined behavior is possible.
+    uint64_t n = ~Ai;
+    return ~n;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: negate twice with modular unsigned arithmetic: 0 - (0 - x) == x.
+    // Unsigned wraparound is well defined, so 0 and 2^63 are handled correctly.
+    // The result is the identity, as in the reference.
+    uint64_t neg = (uint64_t)0 - Ai;
+    return (uint64_t)0 - neg;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: split the bits with complementary masks and merge them with OR.
+    // (x & m) | (x & ~m) == x because m and ~m together cover all 64 bits.
+    // This is the identity, as in the reference, for every input value.
+    uint64_t m = 0xAAAAAAAAAAAAAAAAULL;
+    return (Ai & m) | (Ai & ~m);
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: add a constant and then subtract it, using modular arithmetic.
+    // (x + k) - k == x modulo 2^64, even when the addition wraps.
+    // This is the identity, as in the reference, including near UINT64_MAX.
+    uint64_t k = 0x0123456789ABCDEFULL;
+    uint64_t t = Ai + k;
+    return t - k;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: extract the four 16-bit lanes and reassemble them in place.
+    // Each lane is shifted back to its original position, then OR-combined.
+    // The lanes are disjoint and cover all 64 bits, so the result equals Ai.
+    uint64_t a = Ai & 0xFFFFULL;
+    uint64_t b = (Ai >> 16) & 0xFFFFULL;
+    uint64_t c = (Ai >> 32) & 0xFFFFULL;
+    uint64_t d = (Ai >> 48) & 0xFFFFULL;
+    return a | (b << 16) | (c << 32) | (d << 48);
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Approach: mirror the reference structure with a dead branch on a zero flag.
+    // The flag is always 0, so the branch never runs and Ai is returned as is.
+    // This is the identity for all inputs, matching the reference.
+    int enabled = 0;
+    uint64_t r = Ai;
+    if (enabled) {
+        r = (r >> 32) | (r << 32);
+    }
+    return r;
+}

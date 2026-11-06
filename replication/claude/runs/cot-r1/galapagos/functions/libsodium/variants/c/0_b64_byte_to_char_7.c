@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Approach: keep the full-width shifted values and apply the & 0xFF once at the end.
+    // Because AND distributes over OR, masking every term by 0xFF equals masking the total.
+    // ~t & 0xFF equals ((t & 0xFF) ^ 0xFF), so the per-term logic is bit-identical in the low byte.
+    // The result is the same as the reference for every unsigned x.
+    unsigned int t26 = (x - 26U) >> 8;
+    unsigned int t52 = (x - 52U) >> 8;
+    unsigned int t62 = (x - 62U) >> 8;
+    unsigned int n62 = (0U - (x ^ 62U)) >> 8;
+    unsigned int n63 = (0U - (x ^ 63U)) >> 8;
+    return (int) (((t26 & (x + 65U)) | (~t26 & t52 & (x + 71U)) | (~t52 & t62 & (x - 4U)) |
+                   (~n62 & 43U) | (~n63 & 47U)) & 0xFFU);
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

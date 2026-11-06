@@ -1,0 +1,12 @@
+static int mix(int c0, int c1)
+{
+    // Approach: unsigned multiply by 0xAAAB, then shift right 17, gives floor(x/3) for small x.
+    // 43691/131072 exceeds 1/3 by about x/393216, which is far below 1/3 for x <= 93.
+    // The products stay well within 32-bit unsigned range. Red uses exact signed division.
+    unsigned blue = 2u * (unsigned)(c0 & 0x1F) + (unsigned)(c1 & 0x1F);
+    unsigned green = 2u * (unsigned)((c0 >> 5) & 0x1F) + (unsigned)((c1 >> 5) & 0x1F);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int qb = (int)((blue * 0xAAABu) >> 17);
+    int qg = (int)((green * 0xAAABu) >> 17);
+    return red / 3 * 1024 + qg * 32 + qb;
+}

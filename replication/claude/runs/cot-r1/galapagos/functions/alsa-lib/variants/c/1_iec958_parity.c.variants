@@ -1,0 +1,124 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Reference: returns the parity (XOR) of bits 4..30 of data, ignoring bits 0-3 and 31.
+	// Approach: mask bits 4..30 with 0x7FFFFFF0, then XOR-fold the word in halves
+	// until bit 0 holds the XOR of all remaining bits.
+	// Bits outside the mask cannot affect the result, matching the reference's 27-bit loop.
+	// data == 0 or only excluded bits set gives 0, as in the reference.
+	unsigned int x = data & 0x7FFFFFF0U;
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	x ^= x >> 2;
+	x ^= x >> 1;
+	return x & 1U;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: Kernighan's trick clears the lowest set bit each iteration.
+	// Toggling parity once per cleared bit gives the set-bit count mod 2.
+	// Masking with 0x7FFFFFF0 keeps only bits 4..30, the bits the reference counts.
+	// No bits set means no iterations, so the result is 0, matching the reference.
+	unsigned int x = data & 0x7FFFFFF0U;
+	unsigned int parity = 0;
+	while (x) {
+		x &= x - 1U;
+		parity ^= 1U;
+	}
+	return parity;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: GCC/Clang builtin parity applied to bits 4..30 only.
+	// __builtin_parity returns 1 if an odd number of bits are set, otherwise 0.
+	// Masking with 0x7FFFFFF0 excludes bits 0-3 and bit 31, exactly like the reference loop.
+	// A zero masked value yields 0, as in the reference.
+	return (unsigned int)__builtin_parity(data & 0x7FFFFFF0U);
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: count the set bits in 4..30 with the popcount builtin and keep the low bit.
+	// The low bit of the count is the parity, the same value as parity & 1 in the reference.
+	// The mask 0x7FFFFFF0 restricts counting to the reference's bit range.
+	// All-zero or excluded-only inputs give count 0 and so return 0.
+	return (unsigned int)__builtin_popcount(data & 0x7FFFFFF0U) & 1U;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: fold the masked value to 4 bits, then use 0x6996 as a 16-entry parity table.
+	// Folding by XOR preserves the overall parity of bits 4..30.
+	// Bit n of 0x6996 is the parity of the 4-bit value n.
+	// The mask removes bits 0-3 and 31, so the result equals the reference for every input.
+	unsigned int x = data & 0x7FFFFFF0U;
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	return (0x6996U >> (x & 0xFU)) & 1U;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: test each bit position 4..30 in place, without shifting data itself.
+	// XOR-accumulating each bit gives the same result as counting and taking & 1.
+	// The loop bounds are the same as the reference's, so bits 0-3 and 31 are never examined.
+	// data == 0 gives 0.
+	unsigned int parity = 0;
+	int bit;
+	for (bit = 4; bit <= 30; bit++)
+		parity ^= (data >> bit) & 1U;
+	return parity;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: fold pairs and nibbles, then sum the nibble parities with one multiply.
+	// After two XOR folds, bit 0 of each nibble holds that nibble's parity.
+	// Multiplying by 0x11111111 sums those 8 bits into bits 28..31, and the sum is at most 8, so it never carries.
+	// Bit 28 is the low bit of the sum, which is the parity of the masked bits 4..30.
+	unsigned int x = data & 0x7FFFFFF0U;
+	x ^= x >> 1;
+	x ^= x >> 2;
+	x = (x & 0x11111111U) * 0x11111111U;
+	return (x >> 28) & 1U;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: shift away bits 0-3, mask to 27 bits, then loop while bits remain.
+	// After >> 4 and & 0x07FFFFFF, only the original bits 4..30 are left.
+	// Stopping early once data is 0 does not change the parity.
+	// Each remaining bit is XORed into parity; zero input skips the loop and returns 0.
+	unsigned int parity = 0;
+	data = (data >> 4) & 0x07FFFFFFU;
+	while (data) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+	return parity;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: look up the parity of each nibble in a 16-entry table and XOR the results.
+	// The mask 0x7FFFFFF0 keeps only bits 4..30, so the nibbles cover exactly those bits.
+	// The XOR of the nibble parities is the parity of the whole masked word.
+	// A zero word gives all-zero lookups and returns 0, as in the reference.
+	static const unsigned char nib[16] = { 0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0 };
+	unsigned int x = data & 0x7FFFFFF0U;
+	unsigned int parity = 0;
+	while (x) {
+		parity ^= nib[x & 0xFU];
+		x >>= 4;
+	}
+	return parity;
+}
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Approach: SWAR population count of bits 4..30, then take the low bit.
+	// Pairwise, nibble, and byte partial sums produce the total count in the low byte.
+	// The maximum count is 27, so no field overflows, and count & 1 is the parity.
+	// The mask excludes bits 0-3 and 31 to match the reference; zero input returns 0.
+	unsigned int x = data & 0x7FFFFFF0U;
+	x = x - ((x >> 1) & 0x55555555U);
+	x = (x & 0x33333333U) + ((x >> 2) & 0x33333333U);
+	x = (x + (x >> 4)) & 0x0F0F0F0FU;
+	x = x + (x >> 8);
+	x = x + (x >> 16);
+	return x & 1U;
+}

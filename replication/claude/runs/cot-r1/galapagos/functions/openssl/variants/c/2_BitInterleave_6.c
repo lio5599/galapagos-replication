@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference is the identity, so we rotate left by 32 twice, for 64 bits in total.
+    // A full 64-bit rotation returns every bit to its original position.
+    // The shift counts are exactly 32, so there is no undefined shift-by-64.
+    uint64_t t = (Ai << 32) | (Ai >> 32);
+    return (t << 32) | (t >> 32);
+}
+
+
+int main(){
+    BitInterleave(0);
+}
