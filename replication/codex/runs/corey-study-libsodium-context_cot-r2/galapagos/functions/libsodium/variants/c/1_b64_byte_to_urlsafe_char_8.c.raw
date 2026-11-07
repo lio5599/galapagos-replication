@@ -1,0 +1,21 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Combine byte-sized terms using u OR v = u + v - (u AND v).
+    // Each addition is at most 510 and each combined result remains at most 255.
+    // This handles overlapping and partial masks without restricting the input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int term = (255U - a) & b & (x + ('a' - 26));
+    result = result + term - (result & term);
+    term = (255U - b) & c & (x + ('0' - 52));
+    result = result + term - (result & term);
+    term = (255U - d) & '-';
+    result = result + term - (result & term);
+    term = (255U - e) & '_';
+    result = result + term - (result & term);
+    return (int)result;
+}

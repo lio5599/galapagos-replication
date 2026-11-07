@@ -1,0 +1,22 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Expand each segment explicitly, replacing shifts with multiplication.
+	// Segment zero retains its distinct bias; segments one through seven
+	// multiply the reference's biased mantissa by the same powers of two.
+	// Every byte selects one case, including both extreme magnitudes.
+	int u = a_val ^ 0x55;
+	int mant = u & 15;
+	int t = mant * 16 + 264;
+
+	switch ((u >> 4) & 7) {
+	case 0: t = mant * 16 + 8; break;
+	case 1: break;
+	case 2: t *= 2; break;
+	case 3: t *= 4; break;
+	case 4: t *= 8; break;
+	case 5: t *= 16; break;
+	case 6: t *= 32; break;
+	case 7: t *= 64; break;
+	}
+	return (u & 128) ? t : -t;
+}

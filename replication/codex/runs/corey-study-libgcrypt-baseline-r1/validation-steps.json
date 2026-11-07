@@ -1,0 +1,32 @@
+[
+  {
+    "step": "libgcrypt-split_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "split_variants.py",
+      "c",
+      "libgcrypt"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "libgcrypt-template_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "template_variants.py",
+      "c",
+      "libgcrypt"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "libgcrypt-compile_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "compile_variants.py",
+      "c",
+      "libgcrypt"
+    ],
+    "exit_code": 0
+  }
+]

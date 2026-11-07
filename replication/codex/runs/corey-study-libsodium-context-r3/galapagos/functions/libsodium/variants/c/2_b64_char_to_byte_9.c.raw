@@ -1,0 +1,20 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        ~((((u - 'A') | ('Z' - u)) >> 8) | ~(u - 'A'));
+    const unsigned int lower =
+        ~((((u - 'a') | ('z' - u)) >> 8) | ~(u - ('a' - 26)));
+    const unsigned int digit =
+        ~((((u - '0') | ('9' - u)) >> 8) | ~(u - ('0' - 52)));
+    const unsigned int plus =
+        ~(((0U - (u ^ '+')) >> 8) | ~62U);
+    const unsigned int slash =
+        ~(((0U - (u ^ '/')) >> 8) | ~63U);
+    const unsigned int x =
+        (upper | lower | digit | plus | slash) & 255U;
+    const unsigned int fallback =
+        ~(((0U - x) >> 8) | ~((0U - (u ^ 'A')) >> 8)) & 255U;
+
+    return x | fallback;
+}

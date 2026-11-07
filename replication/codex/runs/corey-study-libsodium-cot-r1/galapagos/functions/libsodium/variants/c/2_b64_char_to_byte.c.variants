@@ -1,0 +1,220 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Decodes ASCII Base64 bytes to 0..63, returning 255 for invalid bytes.
+    // Explicit masks also preserve the reference's behavior for wider inputs.
+    // Unsigned candidate arithmetic matches the reference wherever it is defined.
+    // The final mask distinguishes zero-valued 'A' from invalid input.
+    unsigned int u = (unsigned int)c;
+    unsigned int a = (255U ^ (((u - 'A') >> 8) & 255U))
+                   & (255U ^ ((('Z' - u) >> 8) & 255U));
+    unsigned int b = (255U ^ (((u - 'a') >> 8) & 255U))
+                   & (255U ^ ((('z' - u) >> 8) & 255U));
+    unsigned int d = (255U ^ (((u - '0') >> 8) & 255U))
+                   & (255U ^ ((('9' - u) >> 8) & 255U));
+    unsigned int p = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    unsigned int q = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    unsigned int x = (a & (u - 'A'))
+                   | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U))
+                   | (p & 62U) | (q & 63U);
+    unsigned int zero = 255U ^ (((0U - x) >> 8) & 255U);
+    unsigned int not_a = ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x | (zero & not_a);
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // De Morgan's law merges each pair of range masks before extraction.
+    // Every extracted mask retains exactly the reference's eight relevant bits.
+    // This preserves wider-input quirks as well as 'A' and invalid-byte cases.
+    unsigned int u = (unsigned int)c;
+    unsigned int a = 255U ^ ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    unsigned int b = 255U ^ ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    unsigned int d = 255U ^ ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    unsigned int p = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    unsigned int q = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    unsigned int x = (a & (u - 'A')) | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U)) | (p & 62U) | (q & 63U);
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Subtracting an eight-bit value from 255 complements its eight bits.
+    // This replaces mask XORs without changing any range or equality mask.
+    // The original zero correction is retained, including for wider inputs.
+    unsigned int u = (unsigned int)c;
+    unsigned int a = 255U - ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    unsigned int b = 255U - ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    unsigned int d = 255U - ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    unsigned int p = 255U - (((0U - (u ^ '+')) >> 8) & 255U);
+    unsigned int q = 255U - (((0U - (u ^ '/')) >> 8) & 255U);
+    unsigned int x = (a & (u - 'A')) | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U)) | (p & 62U) | (q & 63U);
+    unsigned int zero = 255U - (((0U - x) >> 8) & 255U);
+    return x | (zero & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Accumulate complements of contributions using AND, then complement back.
+    // De Morgan's law makes this exactly the reference's contribution OR.
+    // Eight-bit clipping and the final correction preserve all defined cases.
+    unsigned int u = (unsigned int)c;
+    unsigned int inverse = ~0U;
+    unsigned int mask;
+    unsigned int x;
+    mask = 255U ^ ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    inverse &= ~(mask & (u - 'A'));
+    mask = 255U ^ ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    inverse &= ~(mask & (u - 'a' + 26U));
+    mask = 255U ^ ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    inverse &= ~(mask & (u - '0' + 52U));
+    mask = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    inverse &= ~(mask & 62U);
+    mask = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    inverse &= ~(mask & 63U);
+    x = (~inverse) & 255U;
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Store rejection expressions and candidate values in parallel arrays.
+    // The loop forms and ORs the same five masked contributions.
+    // Masks are not Booleanized, preserving partial masks for wider inputs.
+    // The final correction handles zero-valued 'A' and invalid input exactly.
+    unsigned int u = (unsigned int)c;
+    unsigned int reject[5] = {
+        (u - 'A') | ('Z' - u),
+        (u - 'a') | ('z' - u),
+        (u - '0') | ('9' - u),
+        0U - (u ^ '+'),
+        0U - (u ^ '/')
+    };
+    unsigned int value[5] = {
+        u - 'A', u - 'a' + 26U, u - '0' + 52U, 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i)
+        x |= (255U ^ ((reject[i] >> 8) & 255U)) & value[i];
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Transform all nine input-dependent differences into masks in one loop.
+    // Combining those masks reproduces the reference's original grouping.
+    // Keeping every mask bit preserves invalid-byte and wider-input behavior.
+    unsigned int u = (unsigned int)c;
+    unsigned int m[9] = {
+        u - 'A', 'Z' - u, u - 'a', 'z' - u,
+        u - '0', '9' - u, 0U - (u ^ '+'),
+        0U - (u ^ '/'), 0U - (u ^ 'A')
+    };
+    unsigned int i;
+    unsigned int x;
+    for (i = 0U; i < 9U; ++i)
+        m[i] = 255U ^ ((m[i] >> 8) & 255U);
+    x = (m[0] & m[1] & (u - 'A'))
+      | (m[2] & m[3] & (u - 'a' + 26U))
+      | (m[4] & m[5] & (u - '0' + 52U))
+      | (m[6] & 62U) | (m[7] & 63U);
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (m[8] ^ 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Construct the result one bit at a time from the five candidates.
+    // A candidate contributes a bit exactly when its rejection bit is clear.
+    // This is bitwise AND and OR expanded, so partial wider-input masks survive.
+    // The unchanged correction distinguishes 'A' from other zero results.
+    unsigned int u = (unsigned int)c;
+    unsigned int reject[5] = {
+        ((u - 'A') | ('Z' - u)) >> 8,
+        ((u - 'a') | ('z' - u)) >> 8,
+        ((u - '0') | ('9' - u)) >> 8,
+        (0U - (u ^ '+')) >> 8,
+        (0U - (u ^ '/')) >> 8
+    };
+    unsigned int value[5] = {
+        u - 'A', u - 'a' + 26U, u - '0' + 52U, 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int bit;
+    unsigned int i;
+    for (bit = 1U; bit < 256U; bit <<= 1)
+        for (i = 0U; i < 5U; ++i)
+            if ((value[i] & bit) != 0U && (reject[i] & bit) == 0U)
+                x |= bit;
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Unsigned division and remainder extract bits eight through fifteen.
+    // Division by 256 matches shifting eight places; remainder matches AND 255.
+    // Thus all masks and the zero correction match, even for wider inputs.
+    unsigned int u = (unsigned int)c;
+    unsigned int a = 255U - (((u - 'A') | ('Z' - u)) / 256U % 256U);
+    unsigned int b = 255U - (((u - 'a') | ('z' - u)) / 256U % 256U);
+    unsigned int d = 255U - (((u - '0') | ('9' - u)) / 256U % 256U);
+    unsigned int p = 255U - ((0U - (u ^ '+')) / 256U % 256U);
+    unsigned int q = 255U - ((0U - (u ^ '/')) / 256U % 256U);
+    unsigned int x = (a & (u - 'A')) | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U)) | (p & 62U) | (q & 63U);
+    return x | ((255U - ((0U - x) / 256U % 256U))
+              & ((0U - (u ^ 'A')) / 256U % 256U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Merge each contribution by adding only bits absent from the accumulator.
+    // Disjoint-bit addition equals OR and cannot introduce carries.
+    // Exact rejection masks retain overlapping and partial-mask edge cases.
+    // The reference's zero correction is applied after all five contributions.
+    unsigned int u = (unsigned int)c;
+    unsigned int reject[5] = {
+        (u - 'A') | ('Z' - u),
+        (u - 'a') | ('z' - u),
+        (u - '0') | ('9' - u),
+        0U - (u ^ '+'),
+        0U - (u ^ '/')
+    };
+    unsigned int value[5] = {
+        u - 'A', u - 'a' + 26U, u - '0' + 52U, 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i) {
+        unsigned int term = value[i] & (255U ^ ((reject[i] >> 8) & 255U));
+        x += term & ~x;
+    }
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Only the input's low sixteen bits can affect the reference's masks.
+    // Normalize to those bits before computing the same five contributions.
+    // Since x is eight-bit, its zero mask is 255 exactly when x is zero.
+    // Branching on x preserves 'A', invalid bytes, and wider-input partial masks.
+    unsigned int u = (unsigned int)c & 65535U;
+    unsigned int a = 255U ^ ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    unsigned int b = 255U ^ ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    unsigned int d = 255U ^ ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    unsigned int p = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    unsigned int q = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    unsigned int x = (a & (u - 'A')) | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U)) | (p & 62U) | (q & 63U);
+    if (x != 0U)
+        return x;
+    return ((0U - (u ^ 'A')) >> 8) & 255U;
+}

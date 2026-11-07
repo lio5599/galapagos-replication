@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The reference computes the XOR of original data bits 4 through 30.
+	// Shift past bits 0 through 3 and XOR exactly 27 bits.
+	// Bits above bit 30 are never examined; zero input returns zero.
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= data & 1u;
+		data >>= 1;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

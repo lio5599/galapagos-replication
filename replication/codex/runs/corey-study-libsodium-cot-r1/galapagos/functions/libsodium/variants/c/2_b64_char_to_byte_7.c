@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Unsigned division and remainder extract bits eight through fifteen.
+    // Division by 256 matches shifting eight places; remainder matches AND 255.
+    // Thus all masks and the zero correction match, even for wider inputs.
+    unsigned int u = (unsigned int)c;
+    unsigned int a = 255U - (((u - 'A') | ('Z' - u)) / 256U % 256U);
+    unsigned int b = 255U - (((u - 'a') | ('z' - u)) / 256U % 256U);
+    unsigned int d = 255U - (((u - '0') | ('9' - u)) / 256U % 256U);
+    unsigned int p = 255U - ((0U - (u ^ '+')) / 256U % 256U);
+    unsigned int q = 255U - ((0U - (u ^ '/')) / 256U % 256U);
+    unsigned int x = (a & (u - 'A')) | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U)) | (p & 62U) | (q & 63U);
+    return x | ((255U - ((0U - x) / 256U % 256U))
+              & ((0U - (u ^ 'A')) / 256U % 256U));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

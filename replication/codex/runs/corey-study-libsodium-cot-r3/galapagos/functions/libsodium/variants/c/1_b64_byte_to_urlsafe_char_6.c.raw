@@ -1,0 +1,19 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Combine byte-sized contributions using the identity OR equals sum minus AND.
+    // Each intermediate result remains a byte, so the sums cannot overflow.
+    // Overlapping and partial masks are preserved, including for out-of-range inputs.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int term = (255U ^ a) & b & (x + ('a' - 26));
+
+    result = result + term - (result & term);
+    term = (255U ^ b) & (((x - 62U) >> 8) & 255U) & (x + ('0' - 52));
+    result = result + term - (result & term);
+    term = (255U ^ (((0U - (x ^ 62U)) >> 8) & 255U)) & '-';
+    result = result + term - (result & term);
+    term = (255U ^ (((0U - (x ^ 63U)) >> 8) & 255U)) & '_';
+    result = result + term - (result & term);
+    return (int)result;
+}

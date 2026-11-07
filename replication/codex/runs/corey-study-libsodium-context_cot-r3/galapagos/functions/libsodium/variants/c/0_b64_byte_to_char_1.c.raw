@@ -1,0 +1,15 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Complementing a byte mask is equivalent to XOR with 255 within that byte.
+    // The neighboring byte masks discard all higher complement bits.
+    // Unsigned subtraction and addition retain the reference's behavior for every x.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ~((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ~((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int upper = a & (x + 'A');
+    unsigned int lower = ~a & b & (x + ('a' - 26));
+    unsigned int digit = ~b & c & (x + ('0' - 52));
+    return upper | lower | digit | (d & '+') | (e & '/');
+}

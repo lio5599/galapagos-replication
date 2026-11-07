@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Factor the first two terms using a bitwise selection identity.
+    // Selecting between the first value and the second masked value matches their OR.
+    // The remaining terms stay unchanged, preserving partial masks for every input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int first = (x + 'A') & 255U;
+    unsigned int second = b & (x + ('a' - 26));
+    unsigned int result = second ^ ((first ^ second) & a);
+
+    result |= (255U ^ b) & (((x - 62U) >> 8) & 255U) & (x + ('0' - 52));
+    result |= (255U ^ (((0U - (x ^ 62U)) >> 8) & 255U)) & '-';
+    result |= (255U ^ (((0U - (x ^ 63U)) >> 8) & 255U)) & '_';
+    return (int)result;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

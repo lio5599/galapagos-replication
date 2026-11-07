@@ -1,0 +1,14 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Select an increment instead of selecting the final result.
+	// Normally add b; on saturation add the unsigned difference limit minus a.
+	// Unsigned arithmetic makes that latter sum equal to the converted limit.
+	// The unchanged comparison preserves the reference's boundary decisions.
+	unsigned int limit = 4294967295;
+	unsigned int increment;
+	if (a >= 4294967295 - b)
+		increment = limit - a;
+	else
+		increment = b;
+	return a + increment;
+}

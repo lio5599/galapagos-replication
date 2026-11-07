@@ -1,0 +1,93 @@
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	return a >= 4294967295 - b ? 4294967295 : a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a < 4294967295 - b)
+		return a + b;
+	return 4294967295;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int result = 4294967295;
+	if (a < 4294967295 - b)
+		result = a + b;
+	return result;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int result = a + b;
+	if (a >= 4294967295 - b)
+		result = 4294967295;
+	return result;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	switch (a >= 4294967295 - b) {
+	case 0:
+		return a + b;
+	default:
+		return 4294967295;
+	}
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a >= 4294967295 - b)
+		goto saturated;
+	return a + b;
+
+saturated:
+	return 4294967295;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return ((a + b) & ~mask) | ((unsigned int)4294967295 & mask);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int saturated = (a >= 4294967295 - b);
+	return (a + b) * (1u - saturated)
+	     + (unsigned int)4294967295 * saturated;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int results[2] = { a + b, 4294967295 };
+	return results[a >= 4294967295 - b];
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int result = a + b;
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return result ^ ((result ^ (unsigned int)4294967295) & mask);
+}
+```

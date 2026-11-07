@@ -1,0 +1,15 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Isolate bits 4 through 30 and toggle parity for each set bit.
+	// Stopping when the remaining value is zero skips only zero bits.
+	// An empty field therefore returns zero without entering the loop.
+	unsigned int value = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+
+	while (value != 0) {
+		if (value & 1U)
+			parity = !parity;
+		value >>= 1;
+	}
+	return parity;
+}

@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// For nonzero segments, factor the reference base into 8 times
+	// twice the mantissa plus 33, then combine the powers of two.
+	// Segment zero retains its separate linear rule.
+	// All shifted values are positive and no larger than 32256.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int n = x & 15;
+	int t;
+
+	if (seg != 0)
+		t = (2 * n + 33) << (seg + 2);
+	else
+		t = (2 * n + 1) * 8;
+
+	if (!(x & 128))
+		t = -t;
+	return t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

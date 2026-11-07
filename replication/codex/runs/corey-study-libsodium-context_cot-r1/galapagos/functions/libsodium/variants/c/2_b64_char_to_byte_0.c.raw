@@ -1,0 +1,22 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // The reference maps Base64 characters to sextets and computes masked results for other integers.
+    // Unsigned arithmetic preserves every defined reference computation, including unusual inputs.
+    // Complementing each extracted byte is identical to XOR with 255.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (~((u - (unsigned int)'A') >> 8) & 255U) &
+                           (~(((unsigned int)'Z' - u) >> 8) & 255U);
+    const unsigned int b = (~((u - (unsigned int)'a') >> 8) & 255U) &
+                           (~(((unsigned int)'z' - u) >> 8) & 255U);
+    const unsigned int d = (~((u - (unsigned int)'0') >> 8) & 255U) &
+                           (~(((unsigned int)'9' - u) >> 8) & 255U);
+    const unsigned int p = ~((0U - (u ^ (unsigned int)'+')) >> 8) & 255U;
+    const unsigned int s = ~((0U - (u ^ (unsigned int)'/')) >> 8) & 255U;
+    const unsigned int x = (a & (u - (unsigned int)'A')) |
+                           (b & (u - (unsigned int)'a' + 26U)) |
+                           (d & (u - (unsigned int)'0' + 52U)) |
+                           (p & 62U) | (s & 63U);
+    const unsigned int z = ~((0U - x) >> 8) & 255U;
+    const unsigned int n = ((0U - (u ^ (unsigned int)'A')) >> 8) & 255U;
+    return x | (z & n);
+}

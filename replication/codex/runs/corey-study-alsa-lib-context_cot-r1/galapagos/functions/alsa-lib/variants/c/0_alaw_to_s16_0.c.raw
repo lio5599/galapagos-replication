@@ -1,0 +1,18 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into its signed 16-bit PCM sample value.
+	// Undo the alternating-bit mask and separate segment and mantissa.
+	// Segment zero uses its special bias; all other segments scale 264.
+	// Magnitudes range from 8 to 32256, so all arithmetic fits in int.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (mant * 16 + 264) << (seg - 1);
+
+	return (x & 128) ? t : -t;
+}

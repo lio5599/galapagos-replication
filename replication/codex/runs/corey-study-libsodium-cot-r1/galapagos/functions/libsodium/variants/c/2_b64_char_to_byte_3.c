@@ -1,0 +1,31 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Accumulate complements of contributions using AND, then complement back.
+    // De Morgan's law makes this exactly the reference's contribution OR.
+    // Eight-bit clipping and the final correction preserve all defined cases.
+    unsigned int u = (unsigned int)c;
+    unsigned int inverse = ~0U;
+    unsigned int mask;
+    unsigned int x;
+    mask = 255U ^ ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    inverse &= ~(mask & (u - 'A'));
+    mask = 255U ^ ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    inverse &= ~(mask & (u - 'a' + 26U));
+    mask = 255U ^ ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    inverse &= ~(mask & (u - '0' + 52U));
+    mask = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    inverse &= ~(mask & 62U);
+    mask = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    inverse &= ~(mask & 63U);
+    x = (~inverse) & 255U;
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

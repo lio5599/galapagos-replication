@@ -1,0 +1,17 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+    unsigned int complement;
+
+    complement = ~(a & (x + 'A'));
+    complement &= ~(~a & b & (x + ('a' - 26)));
+    complement &= ~(~b & c & (x + ('0' - 52)));
+    complement &= ~(~d & '+');
+    complement &= ~(~e & '/');
+
+    return (int)(~complement & 255U);
+}

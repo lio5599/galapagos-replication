@@ -1,0 +1,14 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int sign = (x & 128) ? 1 : -1;
+	int t = sign * ((int)(x & 15) * 16 + 8);
+
+	if (seg) {
+		t += sign * 256;
+		t *= 1 << (seg - 1);
+	}
+
+	return t;
+}

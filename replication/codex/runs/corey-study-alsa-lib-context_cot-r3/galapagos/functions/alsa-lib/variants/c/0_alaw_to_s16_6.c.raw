@@ -1,0 +1,26 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Each crossed boundary above segment one contributes one doubling.
+	// Codes below 16 use the small-segment bias and cross no boundaries.
+	// Segment seven crosses six boundaries, yielding the maximum scale of 64.
+	int x = a_val ^ 0x55;
+	int code = x & 127;
+	int t = (code & 15) * 16 + 8;
+
+	if (code >= 16)
+		t += 256;
+	if (code >= 32)
+		t += t;
+	if (code >= 48)
+		t += t;
+	if (code >= 64)
+		t += t;
+	if (code >= 80)
+		t += t;
+	if (code >= 96)
+		t += t;
+	if (code >= 112)
+		t += t;
+
+	return (x & 128) ? t : -t;
+}

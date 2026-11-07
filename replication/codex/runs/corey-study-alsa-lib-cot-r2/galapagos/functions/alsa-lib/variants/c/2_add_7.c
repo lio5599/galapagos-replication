@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Dispatch on the exact reference comparison, which is zero or one.
+	// Zero returns the sum; one includes equality and returns saturation.
+	switch (a >= 4294967295 - b) {
+	case 0:
+		return a + b;
+	default:
+		return 4294967295;
+	}
+}
+
+
+int main(){
+    add(0,0);
+}

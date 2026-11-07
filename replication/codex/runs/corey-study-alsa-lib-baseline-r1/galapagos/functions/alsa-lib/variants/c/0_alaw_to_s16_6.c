@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+    unsigned int decoded = a_val ^ 0x55u;
+    unsigned int segment = (decoded >> 4) & 7u;
+    unsigned int nonzero = segment != 0u;
+    unsigned int magnitude =
+        (((decoded & 15u) << 4) + 8u + 256u * nonzero)
+        << (segment - nonzero);
+    int sign = 2 * (int)((decoded >> 7) & 1u) - 1;
+
+    return sign * (int)magnitude;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

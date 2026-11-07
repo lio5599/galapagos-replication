@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Start with the limit and replace it only when saturation is unnecessary.
+	// The replacement condition is the exact complement of the reference test.
+	// Equality retains the limit, and zero inputs follow the same comparison.
+	unsigned int result = 4294967295;
+	if (a < 4294967295 - b)
+		result = a + b;
+	return result;
+}
+
+
+int main(){
+    add(0,0);
+}

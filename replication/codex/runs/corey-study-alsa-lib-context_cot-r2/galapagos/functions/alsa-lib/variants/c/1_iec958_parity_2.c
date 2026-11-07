@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Keep only original bits 4 through 30, then XOR-fold them.
+	// Each fold combines disjoint groups until bit zero holds their parity.
+	// Masking excludes all other bits, including for all-zero input.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+
+	value ^= value >> 16;
+	value ^= value >> 8;
+	value ^= value >> 4;
+	value ^= value >> 2;
+	value ^= value >> 1;
+	return value & 1U;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

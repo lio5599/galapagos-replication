@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Express the result as the constant minus the remaining deficit.
+	// Below the threshold, subtracting that deficit gives a plus b.
+	// At or above the threshold, the deficit is zero.
+	return 4294967295
+	     - (a < 4294967295 - b ? (4294967295 - b) - a : 0);
+}
+
+
+int main(){
+    add(0,0);
+}

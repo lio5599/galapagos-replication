@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Compute the reference terms separately and combine them using De Morgan's law.
+    // Complementing the intersection of complements equals their bitwise union.
+    // No range assumptions are made, so partially populated masks remain intact.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int p = a & (x + 'A');
+    unsigned int q = (a ^ 255U) & b & (x + ('a' - 26));
+    unsigned int r = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int s = (d ^ 255U) & '-';
+    unsigned int t = (e ^ 255U) & '_';
+    return (int)~(~p & ~q & ~r & ~s & ~t);
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

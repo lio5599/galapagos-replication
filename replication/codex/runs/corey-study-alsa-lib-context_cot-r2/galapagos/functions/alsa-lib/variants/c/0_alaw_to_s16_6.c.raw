@@ -1,0 +1,14 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Undo the XOR independently in the mantissa and segment fields.
+	// XOR with 0x55 does not change the sign bit, so use it directly.
+	// The zero-segment special case prevents a negative shift count.
+	int n = (a_val & 15) ^ 5;
+	int seg = ((a_val >> 4) & 7) ^ 5;
+	int t = n * 16 + 8;
+
+	if (seg > 0)
+		t = (t + 256) << (seg - 1);
+
+	return (a_val & 128) ? t : -t;
+}

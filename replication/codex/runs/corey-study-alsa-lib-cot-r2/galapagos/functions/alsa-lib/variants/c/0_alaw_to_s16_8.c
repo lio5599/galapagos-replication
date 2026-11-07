@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A scale table replaces exponent calculation, including both scale-one cases.
+	// Add the extra bias only outside segment zero, then scale the whole value.
+	// The polarity table maps the unchanged sign bit to minus one or plus one.
+	// All table indices are bounded, and the maximum magnitude is 32256.
+	static const int scale[8] = { 1, 1, 2, 4, 8, 16, 32, 64 };
+	static const int polarity[2] = { -1, 1 };
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int t = ((u & 15) * 16 + 8 + (seg != 0) * 256)
+		* scale[seg];
+
+	return polarity[u >> 7] * t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

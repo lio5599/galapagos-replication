@@ -1,0 +1,176 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Maps 0..63 to URL-safe Base64 characters; other inputs follow byte-mask arithmetic.
+    // Names the original masks without changing any unsigned operations.
+    // Retains the reference's behavior for every unsigned input, not just 0..63.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (a & (x + 'A')) |
+           ((a ^ 0xFFU) & b & (x + ('a' - 26))) |
+           ((b ^ 0xFFU) & c & (x + ('0' - 52))) |
+           (d & '-') | (e & '_');
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Defers all low-byte truncation until the final result.
+    // Bitwise operations cannot move higher bits into the low byte.
+    // Full complements therefore give identical low bits for every input.
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+    unsigned int r = (a & (x + 'A')) |
+                     (~a & b & (x + ('a' - 26))) |
+                     (~b & c & (x + ('0' - 52))) |
+                     (~d & '-') | (~e & '_');
+    return r & 0xFFU;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Uses subtraction from 255 to complement each eight-bit mask.
+    // For masks in 0..255, this equals XOR with 255 exactly.
+    // The original unsigned wraparound remains intact at all input values.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    return (a & (x + 'A')) |
+           ((255U - a) & b & (x + ('a' - 26))) |
+           ((255U - b) & c & (x + ('0' - 52))) |
+           ((255U - d) & '-') |
+           ((255U - e) & '_');
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Forms the five original terms, then combines them using De Morgan's law.
+    // Complementing the intersection of complements equals their union.
+    // Each term preserves the reference's masks even outside the Base64 range.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int p = a & (x + 'A');
+    unsigned int q = (~a & b) & (x + ('a' - 26));
+    unsigned int r = (~b & c) & (x + ('0' - 52));
+    unsigned int s = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '-';
+    unsigned int t = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '_';
+    return ~(~p & ~q & ~r & ~s & ~t);
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Accumulates terms with the identity u OR v equals u XOR v XOR (u AND v).
+    // This identity allows overlapping masks and does not assume a valid sextet.
+    // Every term uses the same unsigned arithmetic as the reference.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int r = a & (x + 'A');
+    unsigned int t = (~a & b) & (x + ('a' - 26));
+    r = r ^ t ^ (r & t);
+    t = (~b & c) & (x + ('0' - 52));
+    r = r ^ t ^ (r & t);
+    t = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '-';
+    r = r ^ t ^ (r & t);
+    t = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '_';
+    return r ^ t ^ (r & t);
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Reduces only the character arithmetic's input to its low byte.
+    // Each character expression is selected through an eight-bit mask.
+    // Unsigned addition has the same low byte before and after this reduction.
+    // Mask calculations still use the complete input, preserving all edge cases.
+    unsigned int y = x & 255U;
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    return (a & (y + 'A')) |
+           (~a & b & (y + ('a' - 26))) |
+           (~b & c & (y + ('0' - 52))) |
+           (d & '-') | (e & '_');
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Replaces the first two terms with a bitwise selection identity.
+    // q XOR ((p XOR q) AND a) equals (p AND a) OR (q AND NOT a).
+    // A final byte mask discards only bits the reference always discards.
+    // No range assumption is made about the input or the masks.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int p = x + 'A';
+    unsigned int q = b & (x + ('a' - 26));
+    unsigned int r = q ^ ((p ^ q) & a);
+    r |= ~b & c & (x + ('0' - 52));
+    r |= ~((0U - (x ^ 62U)) >> 8) & '-';
+    r |= ~((0U - (x ^ 63U)) >> 8) & '_';
+    return r & 255U;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Clears excluded bits using v XOR (v AND mask) instead of AND NOT mask.
+    // The cleared terms equal the original complemented-mask terms bit for bit.
+    // All masks retain their full-input arithmetic, including unsigned wrapping.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int q = b & (x + ('a' - 26));
+    unsigned int r = c & (x + ('0' - 52));
+    unsigned int s = ((unsigned int) '-') & 255U;
+    unsigned int t = ((unsigned int) '_') & 255U;
+    return (a & (x + 'A')) |
+           (q ^ (q & a)) |
+           (r ^ (r & b)) |
+           (s ^ (s & d)) |
+           (t ^ (t & e));
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Extracts bits 8..15 by masking before shifting rather than afterward.
+    // For unsigned values, (v >> 8) AND 255 equals (v AND 65280) >> 8.
+    // This leaves every reference mask unchanged for every possible input.
+    unsigned int a = ((x - 26U) & 65280U) >> 8;
+    unsigned int b = ((x - 52U) & 65280U) >> 8;
+    unsigned int c = ((x - 62U) & 65280U) >> 8;
+    unsigned int d = (((0U - (x ^ 62U)) & 65280U) >> 8) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) & 65280U) >> 8) ^ 255U;
+    return (a & (x + 'A')) |
+           ((a ^ 255U) & b & (x + ('a' - 26))) |
+           ((b ^ 255U) & c & (x + ('0' - 52))) |
+           (d & '-') | (e & '_');
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Accumulates the original terms using u OR v equals u + v - (u AND v).
+    // Every term and accumulated union fits in eight bits, so the sums fit.
+    // The identity handles overlapping masks for inputs outside 0..63 as well.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int r = a & (x + 'A');
+    unsigned int t = (~a & b) & (x + ('a' - 26));
+    r = r + t - (r & t);
+    t = (~b & c) & (x + ('0' - 52));
+    r = r + t - (r & t);
+    t = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '-';
+    r = r + t - (r & t);
+    t = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '_';
+    return r + t - (r & t);
+}

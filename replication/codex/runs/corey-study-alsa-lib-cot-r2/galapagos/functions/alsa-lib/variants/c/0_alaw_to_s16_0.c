@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into its signed 16-bit linear PCM sample value.
+	// Undo the alternating-bit mask and separate exponent and mantissa.
+	// Segment zero uses the special bias; all others use the scaled bias.
+	// Magnitudes range from 8 to 32256, and the sign bit selects polarity.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int mant = u & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (mant * 16 + 264) << (seg - 1);
+	return (u & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

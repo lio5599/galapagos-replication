@@ -1,0 +1,31 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decompose the required shift into contributions of one, two, and four.
+	// Segment zero retains its own bias and uses no scaling.
+	// Shift counts range from zero to six, and intermediate values stay bounded.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int shift = 0;
+	int t = (x & 15) * 16 + 8;
+
+	if (seg != 0) {
+		t += 256;
+		shift = seg - 1;
+	}
+	if (shift & 1)
+		t <<= 1;
+	if (shift & 2)
+		t <<= 2;
+	if (shift & 4)
+		t <<= 4;
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

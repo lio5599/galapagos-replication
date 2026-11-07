@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Fold the selected field into four bits without changing parity.
+	// Bit n of 0x6996 is the parity of the four-bit value n.
+	// The lookup shift is at most 15 and zero selects a zero bit.
+	data = (data >> 4) & 0x07ffffffU;
+	data ^= (data >> 8) >> 8;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	return (0x6996U >> (data & 15U)) & 1U;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

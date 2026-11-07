@@ -1,0 +1,17 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Merge the uppercase and lowercase terms with a bitwise selection identity.
+    // For each bit, q XOR (a AND (p XOR q)) selects p when a is set and q otherwise.
+    // The byte masks preserve this identity even for inputs outside the Base64 range.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int q = b & (x + ('a' - 26));
+    unsigned int letters = q ^ (a & ((x + 'A') ^ q));
+    return (int)(letters |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 ((d ^ 255U) & '-') |
+                 ((e ^ 255U) & '_'));
+}

@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// XOR the isolated bits instead of counting them.
+	// XOR is addition modulo two, matching the reference's final mask.
+	// Leading zeros need no iterations; zero input returns zero.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+
+	while (x != 0) {
+		parity ^= (unsigned int)(x & 1UL);
+		x >>= 1;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

@@ -1,0 +1,21 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Store the five original contributions and OR them in a loop.
+    // Each contribution uses the reference's exact unsigned masks.
+    // No input-range assumption is made, including at unsigned wraparound.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int terms[5] = {
+        a & (x + 'A'),
+        (a ^ 0xFFU) & b & (x + ('a' - 26)),
+        (b ^ 0xFFU) & (((x - 62U) >> 8) & 0xFFU) &
+            (x + ('0' - 52)),
+        ((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & '+',
+        ((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & '/'
+    };
+    unsigned int result = 0U;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i)
+        result |= terms[i];
+    return (int)result;
+}

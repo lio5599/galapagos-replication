@@ -1,0 +1,245 @@
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        (~((u - 'A') >> 8) & ~(('Z' - u) >> 8) & (u - 'A')) & 0xFFU;
+    const unsigned int lower =
+        (~((u - 'a') >> 8) & ~(('z' - u) >> 8) &
+         (u - ('a' - 26))) & 0xFFU;
+    const unsigned int digit =
+        (~((u - '0') >> 8) & ~(('9' - u) >> 8) &
+         (u - ('0' - 52))) & 0xFFU;
+    const unsigned int plus = ~((0U - (u ^ '+')) >> 8) & 62U;
+    const unsigned int slash = ~((0U - (u ^ '/')) >> 8) & 63U;
+    const unsigned int x = upper | lower | digit | plus | slash;
+
+    return x | (~((0U - x) >> 8) &
+                ((0U - (u ^ 'A')) >> 8) & 0xFFU);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x;
+
+    x = (u - 'A') &
+        ~(((u - 'A') >> 8) | (('Z' - u) >> 8)) & 0xFFU;
+    x |= (u - ('a' - 26)) &
+         ~(((u - 'a') >> 8) | (('z' - u) >> 8)) & 0xFFU;
+    x |= (u - ('0' - 52)) &
+         ~(((u - '0') >> 8) | (('9' - u) >> 8)) & 0xFFU;
+    x |= 62U & ~((0U - (u ^ '+')) >> 8);
+    x |= 63U & ~((0U - (u ^ '/')) >> 8);
+
+    return x | (0xFFU & ~((0U - x) >> 8) &
+                ((0U - (u ^ 'A')) >> 8));
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = u - 'A';
+    const unsigned int b = u - 'a';
+    const unsigned int d = u - '0';
+    const unsigned int ma = 0xFFU ^ (((a | ('Z' - u)) >> 8) & 0xFFU);
+    const unsigned int mb = 0xFFU ^ (((b | ('z' - u)) >> 8) & 0xFFU);
+    const unsigned int md = 0xFFU ^ (((d | ('9' - u)) >> 8) & 0xFFU);
+    const unsigned int mp =
+        0xFFU ^ (((0U - (u ^ '+')) >> 8) & 0xFFU);
+    const unsigned int ms =
+        0xFFU ^ (((0U - (u ^ '/')) >> 8) & 0xFFU);
+    const unsigned int x =
+        (ma & a) | (mb & (b + 26U)) | (md & (d + 52U)) |
+        (mp & 62U) | (ms & 63U);
+    const unsigned int zero =
+        0xFFU ^ (((0U - x) >> 8) & 0xFFU);
+    const unsigned int not_a = ((0U - (u ^ 'A')) >> 8) & 0xFFU;
+
+    return x | (zero & not_a);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper_bad = ((u - 'A') | ('Z' - u)) >> 8;
+    const unsigned int lower_bad = ((u - 'a') | ('z' - u)) >> 8;
+    const unsigned int digit_bad = ((u - '0') | ('9' - u)) >> 8;
+    const unsigned int plus_bad = (0U - (u ^ '+')) >> 8;
+    const unsigned int slash_bad = (0U - (u ^ '/')) >> 8;
+    unsigned int x =
+        ((u - 'A') & ~upper_bad) |
+        ((u - ('a' - 26)) & ~lower_bad) |
+        ((u - ('0' - 52)) & ~digit_bad);
+
+    x = (x & 0xFFU) | (62U & ~plus_bad) | (63U & ~slash_bad);
+    return x | (0xFFU & (((0U - (u ^ 'A')) >> 8) &
+                         ~((0U - x) >> 8)));
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int ua = u - 'A';
+    const unsigned int la = u - 'a';
+    const unsigned int da = u - '0';
+    unsigned int upper = ua & 0xFFU;
+    unsigned int lower = (la + 26U) & 0xFFU;
+    unsigned int digit = (da + 52U) & 0xFFU;
+    unsigned int x;
+    unsigned int correction;
+
+    upper &= ~(ua >> 8);
+    upper &= ~(('Z' - u) >> 8);
+    lower &= ~(la >> 8);
+    lower &= ~(('z' - u) >> 8);
+    digit &= ~(da >> 8);
+    digit &= ~(('9' - u) >> 8);
+
+    x = upper | lower | digit;
+    x |= ~((0U - (u ^ '+')) >> 8) & 62U;
+    x |= ~((0U - (u ^ '/')) >> 8) & 63U;
+
+    correction = ((0U - (u ^ 'A')) >> 8) & 0xFFU;
+    correction &= ~((0U - x) >> 8);
+    return x | correction;
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int masks[5] = {
+        ~(((u - 'A') | ('Z' - u)) >> 8) & 0xFFU,
+        ~(((u - 'a') | ('z' - u)) >> 8) & 0xFFU,
+        ~(((u - '0') | ('9' - u)) >> 8) & 0xFFU,
+        ~((0U - (u ^ '+')) >> 8) & 0xFFU,
+        ~((0U - (u ^ '/')) >> 8) & 0xFFU
+    };
+    const unsigned int values[5] = {
+        u - 'A',
+        u - ('a' - 26),
+        u - ('0' - 52),
+        62U,
+        63U
+    };
+    const unsigned int x =
+        (masks[0] & values[0]) |
+        (masks[1] & values[1]) |
+        (masks[2] & values[2]) |
+        (masks[3] & values[3]) |
+        (masks[4] & values[4]);
+
+    return x | (~((0U - x) >> 8) &
+                ((0U - (u ^ 'A')) >> 8) & 0xFFU);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        ((u - 'A') & 0xFFU) ^
+        ((u - 'A') & (((u - 'A') | ('Z' - u)) >> 8) & 0xFFU);
+    const unsigned int lower =
+        ((u - ('a' - 26)) & 0xFFU) ^
+        ((u - ('a' - 26)) &
+         (((u - 'a') | ('z' - u)) >> 8) & 0xFFU);
+    const unsigned int digit =
+        ((u - ('0' - 52)) & 0xFFU) ^
+        ((u - ('0' - 52)) &
+         (((u - '0') | ('9' - u)) >> 8) & 0xFFU);
+    const unsigned int plus =
+        62U ^ (62U & ((0U - (u ^ '+')) >> 8));
+    const unsigned int slash =
+        63U ^ (63U & ((0U - (u ^ '/')) >> 8));
+    const unsigned int x = upper | lower | digit | plus | slash;
+    const unsigned int not_a = ((0U - (u ^ 'A')) >> 8) & 0xFFU;
+    const unsigned int correction =
+        not_a ^ (not_a & ((0U - x) >> 8));
+
+    return x | correction;
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper_mask =
+        255U - ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    const unsigned int lower_mask =
+        255U - ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    const unsigned int digit_mask =
+        255U - ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    const unsigned int plus_mask =
+        255U - (((0U - (u ^ '+')) >> 8) & 255U);
+    const unsigned int slash_mask =
+        255U - (((0U - (u ^ '/')) >> 8) & 255U);
+    const unsigned int x =
+        (upper_mask & (u - 'A')) |
+        (lower_mask & (u - ('a' - 26))) |
+        (digit_mask & (u - ('0' - 52))) |
+        (plus_mask & 62U) |
+        (slash_mask & 63U);
+    const unsigned int zero_mask =
+        255U - (((0U - x) >> 8) & 255U);
+
+    return x | (zero_mask & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int rejected = ~0U;
+    unsigned int x;
+    unsigned int correction;
+
+    rejected &= ~((u - 'A') &
+                  ~(((u - 'A') | ('Z' - u)) >> 8) & 0xFFU);
+    rejected &= ~((u - ('a' - 26)) &
+                  ~(((u - 'a') | ('z' - u)) >> 8) & 0xFFU);
+    rejected &= ~((u - ('0' - 52)) &
+                  ~(((u - '0') | ('9' - u)) >> 8) & 0xFFU);
+    rejected &= ~(62U & ~((0U - (u ^ '+')) >> 8));
+    rejected &= ~(63U & ~((0U - (u ^ '/')) >> 8));
+
+    x = ~rejected;
+    correction = ~((0U - x) >> 8) &
+                 ((0U - (u ^ 'A')) >> 8) & 0xFFU;
+    return ~(rejected & ~correction);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        ((~((u - 'A') | ('Z' - u))) >> 8) & (u - 'A') & 0xFFU;
+    const unsigned int lower =
+        ((~((u - 'a') | ('z' - u))) >> 8) &
+        (u - ('a' - 26)) & 0xFFU;
+    const unsigned int digit =
+        ((~((u - '0') | ('9' - u))) >> 8) &
+        (u - ('0' - 52)) & 0xFFU;
+    const unsigned int plus = ((~(0U - (u ^ '+'))) >> 8) & 62U;
+    const unsigned int slash = ((~(0U - (u ^ '/'))) >> 8) & 63U;
+    const unsigned int x = (upper | lower) | (digit | plus | slash);
+    const unsigned int correction =
+        ((~(0U - x) & (0U - (u ^ 'A'))) >> 8) & 0xFFU;
+
+    return x ^ (correction & ~x);
+}

@@ -1,0 +1,186 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into its signed 16-bit linear PCM sample value.
+	// Undo the alternating-bit mask and separate exponent and mantissa.
+	// Segment zero uses the special bias; all others use the scaled bias.
+	// Magnitudes range from 8 to 32256, and the sign bit selects polarity.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int mant = u & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (mant * 16 + 264) << (seg - 1);
+	return (u & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Expand each segment explicitly, replacing shifts with multiplication.
+	// Segment zero retains its distinct bias; segments one through seven
+	// multiply the reference's biased mantissa by the same powers of two.
+	// Every byte selects one case, including both extreme magnitudes.
+	int u = a_val ^ 0x55;
+	int mant = u & 15;
+	int t = mant * 16 + 264;
+
+	switch ((u >> 4) & 7) {
+	case 0: t = mant * 16 + 8; break;
+	case 1: break;
+	case 2: t *= 2; break;
+	case 3: t *= 4; break;
+	case 4: t *= 8; break;
+	case 5: t *= 16; break;
+	case 6: t *= 32; break;
+	case 7: t *= 64; break;
+	}
+	return (u & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Each segment is an arithmetic progression indexed by the mantissa.
+	// The tables contain the reference's scaled bias and mantissa step.
+	// Entry zero captures its special case, and all indices stay in range.
+	// The original sign selection also covers the smallest and largest codes.
+	static const int base[8] = {
+		8, 264, 528, 1056, 2112, 4224, 8448, 16896
+	};
+	static const int step[8] = {
+		16, 16, 32, 64, 128, 256, 512, 1024
+	};
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int t = base[seg] + (u & 15) * step[seg];
+
+	return (u & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Factor the magnitude into an odd coefficient and a power of two.
+	// Segment zero is eight times twice the mantissa plus one.
+	// Other segments use twice the mantissa plus 33, scaled by seg plus two.
+	// These are exact algebraic factorizations, including segment boundaries.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int mant = u & 15;
+	int t;
+
+	if (seg == 0)
+		t = (2 * mant + 1) * 8;
+	else
+		t = (2 * mant + 33) * (1 << (seg + 2));
+	return (u & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Replace the variable left shift with repeated doubling.
+	// Segment zero uses its own bias; segment one requires no doubling.
+	// Larger segments perform exactly seg minus one doublings.
+	// Intermediate magnitudes never exceed the final maximum of 32256.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int t = (u & 15) * 16 + 8;
+
+	if (seg != 0) {
+		t += 256;
+		while (seg > 1) {
+			t += t;
+			--seg;
+		}
+	}
+	return (u & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Use the unmasked byte's fields to avoid XORing the whole byte.
+	// XOR with 0x55 flips the low nibble by five and the segment by five.
+	// It does not change the sign bit, so the original byte supplies polarity.
+	// The decoded zero segment still receives the reference's special bias.
+	int mant = (a_val & 15) ^ 5;
+	int seg = ((a_val >> 4) & 7) ^ 5;
+	int t = mant * 16 + 8;
+
+	if (seg != 0)
+		t = (t + 256) << (seg - 1);
+	return (a_val & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Build the magnitude from the four mantissa bits and their weights.
+	// Scaling the bias and each weight separately distributes the same shift.
+	// Segment zero uses scale one and bias eight, avoiding a negative shift.
+	// The integer sign multiplier is exactly minus one or plus one.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int scale = (seg == 0) ? 1 : (1 << (seg - 1));
+	int t = ((seg == 0) ? 8 : 264) * scale;
+
+	if (u & 1)
+		t += 16 * scale;
+	if (u & 2)
+		t += 32 * scale;
+	if (u & 4)
+		t += 64 * scale;
+	if (u & 8)
+		t += 128 * scale;
+	return t * (2 * (u >> 7) - 1);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Start every segment with the larger bias and a nonnegative shift.
+	// For segment zero, subtract 256 afterward to change bias 264 into eight.
+	// All other segments retain exactly the reference's biased shift.
+	// The temporary and final magnitudes fit even when int is 16 bits.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int shift = (seg > 0) ? seg - 1 : 0;
+	int t = ((u & 15) * 16 + 264) << shift;
+
+	t -= (seg == 0) * 256;
+	return (u & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A scale table replaces exponent calculation, including both scale-one cases.
+	// Add the extra bias only outside segment zero, then scale the whole value.
+	// The polarity table maps the unchanged sign bit to minus one or plus one.
+	// All table indices are bounded, and the maximum magnitude is 32256.
+	static const int scale[8] = { 1, 1, 2, 4, 8, 16, 32, 64 };
+	static const int polarity[2] = { -1, 1 };
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int t = ((u & 15) * 16 + 8 + (seg != 0) * 256)
+		* scale[seg];
+
+	return polarity[u >> 7] * t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Compute the magnitude first in units of eight.
+	// Segment zero uses twice the mantissa plus one; other segments add 32.
+	// Conditional factors two, four, and sixteen implement the exponent bits.
+	// Their product equals the reference shift, with all results within range.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int exponent = (seg == 0) ? 0 : seg - 1;
+	int t = 2 * (u & 15) + 1 + (seg != 0) * 32;
+
+	if (exponent & 1)
+		t *= 2;
+	if (exponent & 2)
+		t *= 4;
+	if (exponent & 4)
+		t *= 16;
+	t *= 8;
+	return (u & 128) ? t : -t;
+}

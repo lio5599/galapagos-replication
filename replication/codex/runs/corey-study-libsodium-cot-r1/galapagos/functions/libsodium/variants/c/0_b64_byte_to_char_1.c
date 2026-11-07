@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Compute subtraction masks using the high byte and a low-byte borrow.
+    // Each threshold is below 256, so this reproduces subtraction's next byte.
+    // Masking preserves wraparound even at zero and the unsigned maximum.
+    // Keep the original equality-like masks, including their partial values.
+    unsigned int lo = x & 255U;
+    unsigned int hi = x >> 8;
+    unsigned int a = (hi - (unsigned int)(lo < 26U)) & 255U;
+    unsigned int b = (hi - (unsigned int)(lo < 52U)) & 255U;
+    unsigned int c = (hi - (unsigned int)(lo < 62U)) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) |
+                 (~a & b & (x + ('a' - 26))) |
+                 (~b & c & (x + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

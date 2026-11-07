@@ -1,0 +1,24 @@
+{
+  "path": "/home/cbh/galapagos-corey-runs/corey-pilot-baseline",
+  "selection": {
+    "alsa-lib": [
+      "alaw_to_s16"
+    ]
+  },
+  "original_indices": {
+    "alsa-lib": [
+      0
+    ]
+  },
+  "patches": [
+    "split_variants.py: skip unselected reference indices; preserve original indices",
+    "template_variants.py: skip unselected reference indices; preserve original indices",
+    "compile_variants.py: skip unselected reference indices; preserve original indices",
+    "case.py: per-run build-copy directory; prevents stale builds across conditions",
+    "tests/usecase.py: bound existing variant concurrency to 2; checks unchanged"
+  ],
+  "base": "/home/cbh/galapagos-replication",
+  "source_run": "/mnt/c/COMS6650/FinalProject/replication/codex/runs/corey-pilot-baseline",
+  "concurrency": 2,
+  "note": "No generated body edits; no automatic repair or regeneration"
+}

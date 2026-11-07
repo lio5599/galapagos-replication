@@ -1,0 +1,16 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Clearing selected bits uses v XOR (v AND mask), equal to v AND NOT mask.
+    // Each initial contribution is byte-limited exactly as in the reference.
+    // This identity holds for partial masks as well as ordinary Base64 inputs.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int lower = b & (x + ('a' - 26));
+    unsigned int digit = c & (x + ('0' - 52));
+    lower ^= lower & a;
+    digit ^= digit & b;
+    return (a & (x + 'A')) | lower | digit | (d & '+') | (e & '/');
+}

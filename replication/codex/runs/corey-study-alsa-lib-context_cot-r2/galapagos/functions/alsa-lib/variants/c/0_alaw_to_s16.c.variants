@@ -1,0 +1,200 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into its signed 16-bit PCM sample value.
+	// Segment zero uses the midpoint offset 8; other segments use 264.
+	// The nonzero-segment branch keeps every shift count nonnegative.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mantissa = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mantissa * 16 + 8;
+	else
+		t = (mantissa * 16 + 264) << (seg - 1);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Extract the segment and mantissa after undoing the alternating bits.
+	// For positive segments, 264 shifted by seg minus one equals
+	// a base of 132 shifted by seg; the mantissa scales identically.
+	// Segment zero is handled separately, including its minimum value 8.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int n = x & 15;
+	int t = seg ? ((n * 8 + 132) << seg) : (n * 16 + 8);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// For nonzero segments, factor the reference base into 8 times
+	// twice the mantissa plus 33, then combine the powers of two.
+	// Segment zero retains its separate linear rule.
+	// All shifted values are positive and no larger than 32256.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int n = x & 15;
+	int t;
+
+	if (seg != 0)
+		t = (2 * n + 33) << (seg + 2);
+	else
+		t = (2 * n + 1) * 8;
+
+	if (!(x & 128))
+		t = -t;
+	return t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Expand the eight segment formulas into constant multipliers.
+	// Each nonzero segment doubles the preceding segment's scale.
+	// The default covers segment seven because seg is masked to three bits.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int n = x & 15;
+	int t;
+
+	switch (seg) {
+	case 0: t = n * 16 + 8; break;
+	case 1: t = n * 16 + 264; break;
+	case 2: t = n * 32 + 528; break;
+	case 3: t = n * 64 + 1056; break;
+	case 4: t = n * 128 + 2112; break;
+	case 5: t = n * 256 + 4224; break;
+	case 6: t = n * 512 + 8448; break;
+	default: t = n * 1024 + 16896; break;
+	}
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Classify the decoded seven-bit magnitude by segment boundaries.
+	// Each interval applies exactly the reference's corresponding scale.
+	// The first interval preserves the special segment-zero offset.
+	int x = a_val ^ 0x55;
+	int code = x & 127;
+	int base = (code & 15) * 16 + 264;
+	int t;
+
+	if (code < 16)
+		t = code * 16 + 8;
+	else if (code < 32)
+		t = base;
+	else if (code < 48)
+		t = base * 2;
+	else if (code < 64)
+		t = base * 4;
+	else if (code < 80)
+		t = base * 8;
+	else if (code < 96)
+		t = base * 16;
+	else if (code < 112)
+		t = base * 32;
+	else
+		t = base * 64;
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Use a zero-or-one flag to select the segment-dependent offset.
+	// Subtracting that flag from seg gives zero for segments zero and one,
+	// and seg minus one otherwise, so every shift count is valid.
+	// Multiplication by the decoded sign preserves both polarities.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int nonzero = seg != 0;
+	int t = ((x & 15) * 16 + 8 + 256 * nonzero)
+		<< (seg - nonzero);
+	int sign = 2 * ((x >> 7) & 1) - 1;
+
+	return sign * t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Undo the XOR independently in the mantissa and segment fields.
+	// XOR with 0x55 does not change the sign bit, so use it directly.
+	// The zero-segment special case prevents a negative shift count.
+	int n = (a_val & 15) ^ 5;
+	int seg = ((a_val >> 4) & 7) ^ 5;
+	int t = n * 16 + 8;
+
+	if (seg > 0)
+		t = (t + 256) << (seg - 1);
+
+	return (a_val & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Form the segment scale separately as a power of two.
+	// For nonzero segments, halving the base and doubling the scale
+	// leaves the reference magnitude unchanged, without rounding.
+	// Segment zero keeps its original offset and all products fit.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int scale = 1 << seg;
+	int t;
+
+	if (seg == 0)
+		t = (x & 15) * 16 + 8;
+	else
+		t = ((x & 15) * 8 + 132) * scale;
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Compute the smallest segment first and return it directly.
+	// Higher segments restore the implicit mantissa bit before scaling:
+	// adding 16 before multiplying by 16 supplies the offset 256.
+	// The remaining offset 8 and sign exactly match the reference.
+	int x = a_val ^ 0x55;
+	int code = x & 127;
+	int t;
+
+	if (code < 16) {
+		t = code * 16 + 8;
+		return (x & 128) ? t : -t;
+	}
+
+	t = (((code & 15) | 16) * 16 + 8)
+		<< ((code >> 4) - 1);
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decompose the nonzero segment's scale into factors 2, 4, and 16.
+	// These factors implement the three bits of the exponent seg minus one.
+	// Segment zero bypasses scaling, and intermediate magnitudes never
+	// exceed the final magnitude, whose maximum is 32256.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = (x & 15) * 16 + 8;
+
+	if (seg != 0) {
+		int exponent = seg - 1;
+		t += 256;
+		if (exponent & 1)
+			t *= 2;
+		if (exponent & 2)
+			t *= 4;
+		if (exponent & 4)
+			t *= 16;
+	}
+
+	return (x & 128) ? t : -t;
+}

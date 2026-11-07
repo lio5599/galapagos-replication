@@ -1,0 +1,18 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Combine the first two terms with a bitwise selection identity.
+    // v XOR (a AND (u XOR v)) selects u where a is set and v elsewhere.
+    // Since v and a are byte-sized, this works for every unsigned input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int u = x + 'A';
+    unsigned int v = b & (x + ('a' - 26));
+    unsigned int first = v ^ (a & (u ^ v));
+    return (int)(first |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '+') |
+                 (e & '/'));
+}

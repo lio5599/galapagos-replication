@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((x ^ 62U) - 1U) >> 8) & 0xFFU;
+    unsigned int e = (((x ^ 63U) - 1U) >> 8) & 0xFFU;
+    unsigned int lower = b ^ (a & b);
+    unsigned int digit = c ^ (b & c);
+
+    return (a & (x + 'A')) |
+           (lower & (x + ('a' - 26))) |
+           (digit & (x + ('0' - 52))) |
+           (d & '-') | (e & '_');
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

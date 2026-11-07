@@ -1,0 +1,16 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // De Morgan's law replaces the final OR with complemented AND operations.
+    // Each contribution uses exactly the reference's unsigned byte masks.
+    // The identity holds bitwise for every input, without range assumptions.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int u = a & (x + 'A');
+    unsigned int v = (a ^ 255U) & b & (x + ('a' - 26));
+    unsigned int w = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int y = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '+';
+    unsigned int z = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '/';
+
+    return (int)(~((~u) & (~v) & (~w) & (~y) & (~z)) & 255U);
+}

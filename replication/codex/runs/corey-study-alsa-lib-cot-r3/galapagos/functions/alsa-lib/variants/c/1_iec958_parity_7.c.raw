@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Keep only original bits 4 through 30 and explicitly merge adjacent groups.
+	// Each masked XOR leaves one parity bit per successively larger group.
+	// The final single bit includes all selected bits, including zero-valued groups.
+	unsigned long x = (unsigned long)data & 0x7FFFFFF0UL;
+
+	x = (x & 0x55555555UL) ^ ((x >> 1) & 0x55555555UL);
+	x = (x & 0x33333333UL) ^ ((x >> 2) & 0x33333333UL);
+	x = (x & 0x0F0F0F0FUL) ^ ((x >> 4) & 0x0F0F0F0FUL);
+	x = (x & 0x00FF00FFUL) ^ ((x >> 8) & 0x00FF00FFUL);
+	x = (x & 0x0000FFFFUL) ^ ((x >> 16) & 0x0000FFFFUL);
+	return (unsigned int)x;
+}

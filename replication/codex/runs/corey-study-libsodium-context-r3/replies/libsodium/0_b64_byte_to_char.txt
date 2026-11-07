@@ -1,0 +1,182 @@
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (a & (x + 'A')) |
+           ((a ^ 255U) & b & (x + ('a' - 26))) |
+           ((b ^ 255U) & c & (x + ('0' - 52))) |
+           (d & '+') | (e & '/');
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int r = a & (x + 'A');
+
+    r |= (~a & b) & (x + ('a' - 26));
+    r |= (~b & c) & (x + ('0' - 52));
+    r |= (255U & ~d) & '+';
+    r |= (255U & ~e) & '/';
+    return r;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+
+    return (a & (x + 'A')) |
+           ((255U - a) & b & (x + ('a' - 26))) |
+           ((255U - b) & c & (x + ('0' - 52))) |
+           ((255U - d) & '+') |
+           ((255U - e) & '/');
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int p = a & (x + 'A');
+    unsigned int q = (a ^ 255U) & b & (x + ('a' - 26));
+    unsigned int r = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int s = d & '+';
+    unsigned int t = e & '/';
+
+    return ~(~p & ~q & ~r & ~s & ~t);
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int r = a & (x + 'A');
+    unsigned int t = (a ^ 255U) & b & (x + ('a' - 26));
+
+    r ^= t & ~r;
+    t = (b ^ 255U) & c & (x + ('0' - 52));
+    r ^= t & ~r;
+    t = d & '+';
+    r ^= t & ~r;
+    t = e & '/';
+    r ^= t & ~r;
+    return r;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int r = a & (x + 'A');
+    unsigned int t = (a ^ 255U) & b & (x + ('a' - 26));
+
+    r = r + t - (r & t);
+    t = (b ^ 255U) & c & (x + ('0' - 52));
+    r = r + t - (r & t);
+    t = d & '+';
+    r = r + t - (r & t);
+    t = e & '/';
+    r = r + t - (r & t);
+    return r;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) / 256U) % 256U;
+    unsigned int b = ((x - 52U) / 256U) % 256U;
+    unsigned int c = ((x - 62U) / 256U) % 256U;
+    unsigned int d = ((0U - (x ^ 62U)) / 256U) % 256U;
+    unsigned int e = ((0U - (x ^ 63U)) / 256U) % 256U;
+
+    return (a & (x + 'A')) |
+           ((a ^ 255U) & b & (x + ('a' - 26))) |
+           ((b ^ 255U) & c & (x + ('0' - 52))) |
+           ((d ^ 255U) & '+') |
+           ((e ^ 255U) & '/');
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+
+    return 255U & ((a & (x + 'A')) |
+                   (~a & b & (x + ('a' - 26))) |
+                   (~b & c & (x + ('0' - 52))) |
+                   (~d & '+') |
+                   (~e & '/'));
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) & 0xFF00U) >> 8;
+    unsigned int b = ((x - 52U) & 0xFF00U) >> 8;
+    unsigned int c = ((x - 62U) & 0xFF00U) >> 8;
+    unsigned int d = ((0U - (x ^ 62U)) & 0xFF00U) >> 8;
+    unsigned int e = ((0U - (x ^ 63U)) & 0xFF00U) >> 8;
+    unsigned int letters = (a & (x + 'A')) |
+                           ((a ^ 255U) & b & (x + ('a' - 26)));
+    unsigned int digits = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int symbols = ((d ^ 255U) & '+') |
+                           ((e ^ 255U) & '/');
+
+    return letters | digits | symbols;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int p = ~(~a | ~(x + 'A'));
+    unsigned int q = ~(a | ~b | ~(x + ('a' - 26)));
+    unsigned int r = ~(b | ~c | ~(x + ('0' - 52)));
+    unsigned int s = ~(d | ~(unsigned int) '+');
+    unsigned int t = ~(e | ~(unsigned int) '/');
+
+    return (p | q | r | s | t) & 255U;
+}
+```

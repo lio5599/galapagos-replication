@@ -1,0 +1,142 @@
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 4; bit <= 30; bit++)
+		parity ^= (data >> bit) & 1U;
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int remaining = 27;
+
+	data >>= 4;
+	while (remaining--) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+
+	data = (data >> 4) & 0x07ffffffU;
+	while (data) {
+		parity ^= 1U;
+		data &= data - 1U;
+	}
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	data = (data >> 4) & 0x07ffffffU;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data ^= data >> 2;
+	data ^= data >> 1;
+
+	return data & 1U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	data = (data >> 4) & 0x07ffffffU;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+
+	return (0x6996U >> (data & 15U)) & 1U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+
+	data = (data >> 4) & 0x07ffffffU;
+	while (data) {
+		parity ^= (0x6996U >> (data & 15U)) & 1U;
+		data >>= 4;
+	}
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	data = (data >> 4) & 0x07ffffffU;
+	data -= (data >> 1) & 0x55555555U;
+	data = (data & 0x33333333U)
+	     + ((data >> 2) & 0x33333333U);
+	data = (data + (data >> 4)) & 0x0f0f0f0fU;
+	data += data >> 8;
+	data += data >> 16;
+
+	return data & 1U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 30; bit >= 4; bit--)
+		parity = (parity + ((data >> bit) & 1U)) & 1U;
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int group;
+
+	data >>= 4;
+	for (group = 0; group < 9; group++) {
+		parity ^= data ^ (data >> 1) ^ (data >> 2);
+		data >>= 3;
+	}
+
+	return parity & 1U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	return ((data >> 4)  ^ (data >> 5)  ^ (data >> 6)
+	      ^ (data >> 7)  ^ (data >> 8)  ^ (data >> 9)
+	      ^ (data >> 10) ^ (data >> 11) ^ (data >> 12)
+	      ^ (data >> 13) ^ (data >> 14) ^ (data >> 15)
+	      ^ (data >> 16) ^ (data >> 17) ^ (data >> 18)
+	      ^ (data >> 19) ^ (data >> 20) ^ (data >> 21)
+	      ^ (data >> 22) ^ (data >> 23) ^ (data >> 24)
+	      ^ (data >> 25) ^ (data >> 26) ^ (data >> 27)
+	      ^ (data >> 28) ^ (data >> 29) ^ (data >> 30)) & 1U;
+}

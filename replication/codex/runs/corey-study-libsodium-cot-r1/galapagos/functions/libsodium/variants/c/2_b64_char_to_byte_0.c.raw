@@ -1,0 +1,23 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Decodes ASCII Base64 bytes to 0..63, returning 255 for invalid bytes.
+    // Explicit masks also preserve the reference's behavior for wider inputs.
+    // Unsigned candidate arithmetic matches the reference wherever it is defined.
+    // The final mask distinguishes zero-valued 'A' from invalid input.
+    unsigned int u = (unsigned int)c;
+    unsigned int a = (255U ^ (((u - 'A') >> 8) & 255U))
+                   & (255U ^ ((('Z' - u) >> 8) & 255U));
+    unsigned int b = (255U ^ (((u - 'a') >> 8) & 255U))
+                   & (255U ^ ((('z' - u) >> 8) & 255U));
+    unsigned int d = (255U ^ (((u - '0') >> 8) & 255U))
+                   & (255U ^ ((('9' - u) >> 8) & 255U));
+    unsigned int p = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    unsigned int q = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    unsigned int x = (a & (u - 'A'))
+                   | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U))
+                   | (p & 62U) | (q & 63U);
+    unsigned int zero = 255U ^ (((0U - x) >> 8) & 255U);
+    unsigned int not_a = ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x | (zero & not_a);
+}

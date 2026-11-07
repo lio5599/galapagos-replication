@@ -1,0 +1,7 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int saturated = (a >= 4294967295 - b);
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	return sum * (1u - saturated) + limit * saturated;
+}

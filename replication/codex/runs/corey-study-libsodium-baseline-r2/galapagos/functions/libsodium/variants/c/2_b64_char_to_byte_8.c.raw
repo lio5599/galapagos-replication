@@ -1,0 +1,18 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (u - 'A') & 255U;
+    const unsigned int b = (u - ('a' - 26)) & 255U;
+    const unsigned int d = (u - ('0' - 52)) & 255U;
+    unsigned int x;
+
+    x = (a ^ (a & (((u - 'A') | ('Z' - u)) >> 8)))
+      | (b ^ (b & (((u - 'a') | ('z' - u)) >> 8)))
+      | (d ^ (d & (((u - '0') | ('9' - u)) >> 8)))
+      | (62U ^ (62U & ((0U - (u ^ '+')) >> 8)))
+      | (63U ^ (63U & ((0U - (u ^ '/')) >> 8)));
+
+    if (!x)
+        return ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x;
+}

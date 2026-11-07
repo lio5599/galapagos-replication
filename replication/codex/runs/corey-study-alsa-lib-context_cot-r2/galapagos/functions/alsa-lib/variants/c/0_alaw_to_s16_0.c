@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into its signed 16-bit PCM sample value.
+	// Segment zero uses the midpoint offset 8; other segments use 264.
+	// The nonzero-segment branch keeps every shift count nonnegative.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mantissa = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mantissa * 16 + 8;
+	else
+		t = (mantissa * 16 + 264) << (seg - 1);
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

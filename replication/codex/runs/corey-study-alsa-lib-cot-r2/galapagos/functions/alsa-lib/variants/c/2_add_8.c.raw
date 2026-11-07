@@ -1,0 +1,9 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Saturate only strictly above the threshold.
+	// At equality, a plus b converts to the same unsigned saturation value.
+	// Thus returning the sum at equality also matches the reference.
+	if (a > 4294967295 - b)
+		return 4294967295;
+	return a + b;
+}

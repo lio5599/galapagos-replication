@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Count the isolated set bits using parallel two-bit and nibble sums.
+	// Combine those counts into the low byte, then retain its parity.
+	// The count is at most 27; zero and all-set ranges need no special case.
+	// Masks keep the calculation valid even when unsigned long is wider.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+
+	x = x - ((x >> 1) & 0x55555555UL);
+	x = (x & 0x33333333UL) + ((x >> 2) & 0x33333333UL);
+	x = (x + (x >> 4)) & 0x0f0f0f0fUL;
+	x += x >> 8;
+	x += x >> 16;
+	return (unsigned int)(x & 1UL);
+}
+
+
+int main(){
+    iec958_parity(0);
+}

@@ -1,0 +1,153 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The reference returns the parity of original bits 4 through 30.
+	// XOR accumulates those 27 bits, ignoring all other bits.
+	// Zero and every even population return zero; odd populations return one.
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask away every bit outside the reference's 27-bit range.
+	// Repeated division extracts each bit, and addition counts the ones.
+	// The final remainder handles zero and both population parities.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int count = 0;
+
+	while (value != 0U) {
+		count += value % 2U;
+		value /= 2U;
+	}
+	return count % 2U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Keep only original bits 4 through 30, then XOR-fold them.
+	// Each fold combines disjoint groups until bit zero holds their parity.
+	// Masking excludes all other bits, including for all-zero input.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+
+	value ^= value >> 16;
+	value ^= value >> 8;
+	value ^= value >> 4;
+	value ^= value >> 2;
+	value ^= value >> 1;
+	return value & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Process the selected range as seven zero-padded nibbles.
+	// Bit n of 0x6996 is the parity of the four-bit number n.
+	// XOR combines nibble parities; the masked padding contributes zero.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int parity = 0;
+	int group;
+
+	for (group = 0; group < 7; group++) {
+		parity ^= (0x6996U >> (value & 15U)) & 1U;
+		value >>= 4;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask to the selected 27 bits, then count ones in parallel.
+	// Pair, nibble, byte, and half-word sums accumulate the population.
+	// Its low bit is the reference parity, including when no bits are set.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+
+	value -= (value >> 1) & 0x55555555U;
+	value = (value & 0x33333333U) + ((value >> 2) & 0x33333333U);
+	value = (value + (value >> 4)) & 0x0f0f0f0fU;
+	value += value >> 8;
+	value += value >> 16;
+	return value & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Only bits in the reference's range survive the initial mask.
+	// Clearing the lowest set bit once per iteration toggles parity once.
+	// Zero takes no iterations, and unsigned subtraction is well-defined.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int parity = 0;
+
+	while (value != 0U) {
+		value &= value - 1U;
+		parity ^= 1U;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Visit original bits 4 through 30 using a moving unsigned mask.
+	// Each selected one toggles the result, matching the count modulo two.
+	// Unselected bits never affect the result, and zero leaves it zero.
+	unsigned int mask = 0x10U;
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= (data & mask) != 0U;
+		mask <<= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Split the selected 27 bits into nine groups of three.
+	// Bit n of 0x96 is the parity of the three-bit number n.
+	// XOR combines exactly those groups, including zero-valued groups.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int parity = 0;
+	int group;
+
+	for (group = 0; group < 9; group++) {
+		parity ^= (0x96U >> (value & 7U)) & 1U;
+		value >>= 3;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask to the reference's range and XOR its seven nibbles together.
+	// The low nibble then has the same parity as all 27 selected bits.
+	// The lookup returns that parity; masked padding and zero add nothing.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int folded;
+
+	folded = value ^ (value >> 4) ^ (value >> 8)
+	       ^ (value >> 12) ^ (value >> 16)
+	       ^ (value >> 20) ^ (value >> 24);
+	return (0x6996U >> (folded & 15U)) & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Process 26 selected bits in pairs, then include the remaining bit.
+	// Each pair contributes its XOR, equivalent to its count modulo two.
+	// Masking excludes other bits, and zero yields zero throughout.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int parity = 0;
+	int pair;
+
+	for (pair = 0; pair < 13; pair++) {
+		parity ^= (value ^ (value >> 1)) & 1U;
+		value >>= 2;
+	}
+	return parity ^ (value & 1U);
+}

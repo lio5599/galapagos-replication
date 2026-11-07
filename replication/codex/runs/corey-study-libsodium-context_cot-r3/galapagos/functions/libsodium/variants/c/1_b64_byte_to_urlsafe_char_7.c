@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Clears excluded bits using v XOR (v AND mask) instead of AND NOT mask.
+    // The cleared terms equal the original complemented-mask terms bit for bit.
+    // All masks retain their full-input arithmetic, including unsigned wrapping.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int q = b & (x + ('a' - 26));
+    unsigned int r = c & (x + ('0' - 52));
+    unsigned int s = ((unsigned int) '-') & 255U;
+    unsigned int t = ((unsigned int) '_') & 255U;
+    return (a & (x + 'A')) |
+           (q ^ (q & a)) |
+           (r ^ (r & b)) |
+           (s ^ (s & d)) |
+           (t ^ (t & e));
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

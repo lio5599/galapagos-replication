@@ -1,0 +1,173 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into its signed 16-bit PCM sample value.
+	// Undo the alternating-bit mask and separate segment and mantissa.
+	// Segment zero uses its special bias; all other segments scale 264.
+	// Magnitudes range from 8 to 32256, so all arithmetic fits in int.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (mant * 16 + 264) << (seg - 1);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Start with the segment-zero magnitude.
+	// For nonzero segments, adding 256 produces the reference bias.
+	// The guarded shift is always between zero and six.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = ((x & 15) << 4) + 8;
+
+	if (seg != 0) {
+		t += 256;
+		t <<= seg - 1;
+	}
+
+	if ((x & 128) == 0)
+		return -t;
+	return t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Use the nonzero-segment bias for every segment initially.
+	// Segment zero shifts by zero and then removes the extra 256.
+	// All shifts have nonnegative counts and preserve the exact magnitude.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int shift = (seg == 0) ? 0 : seg - 1;
+	int t = (((x & 15) << 4) + 264) << shift;
+
+	t -= (seg == 0) ? 256 : 0;
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Enumerate the eight segment scaling factors explicitly.
+	// Segment zero subtracts 256 from the common biased mantissa.
+	// Segments one through seven multiply by the reference powers of two.
+	int x = a_val ^ 0x55;
+	int t = (x & 15) * 16 + 264;
+
+	switch ((x >> 4) & 7) {
+	case 0: t -= 256; break;
+	case 1: break;
+	case 2: t *= 2; break;
+	case 3: t *= 4; break;
+	case 4: t *= 8; break;
+	case 5: t *= 16; break;
+	case 6: t *= 32; break;
+	case 7: t *= 64; break;
+	}
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Factor eight out of the mantissa and bias.
+	// Nonzero segments use 16*m + 264 = 8*(2*m + 33).
+	// Segment zero instead uses 8*(2*m + 1), including both endpoints.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = (2 * mant + 1) * 8;
+	else
+		t = (2 * mant + 33) << (seg + 2);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Split each nonzero-segment magnitude into its mantissa and bias.
+	// The two terms sum to (16*m + 264) times the segment scale.
+	// Segment zero is handled separately; every shifted value stays positive.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg != 0)
+		t = ((mant + 16) << (seg + 3)) + (1 << (seg + 2));
+	else
+		t = (mant << 4) + 8;
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode the mantissa and segment directly from the encoded byte.
+	// XOR with 0x55 toggles each low nibble by five and leaves the sign.
+	// The same special zero-segment bias and bounded scaling are retained.
+	int mant = (a_val & 15) ^ 5;
+	int seg = ((a_val >> 4) & 7) ^ 5;
+	int t;
+
+	if (seg == 0)
+		t = 16 * mant + 8;
+	else
+		t = (16 * mant + 264) * (1 << (seg - 1));
+
+	return (a_val & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Merge segments zero and one into one linear expression.
+	// For decoded values 16 through 31, 16*n + 8 includes the 256 bias.
+	// Larger segments retain the reference mantissa and scaling exactly.
+	int x = a_val ^ 0x55;
+	int n = x & 127;
+	int t;
+
+	if (n < 32)
+		t = n * 16 + 8;
+	else
+		t = ((n & 15) * 16 + 264) << ((n >> 4) - 1);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Apply the sign before multiplying by the segment scale.
+	// Multiplication, unlike left-shifting a negative value, is defined here.
+	// Every signed result remains between -32256 and 32256.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = (x & 15) * 16 + ((seg == 0) ? 8 : 264);
+	int scale = (seg == 0) ? 1 : (1 << (seg - 1));
+
+	if ((x & 128) == 0)
+		t = -t;
+
+	return t * scale;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Encode the segment-zero exception using zero-or-one comparisons.
+	// Zero uses base 2*m + 1 and shift three; others use base 2*m + 33.
+	// Nonzero segments shift by seg + 2, exactly matching the reference.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int base = 2 * (x & 15) + 1 + 32 * (seg != 0);
+	int shift = seg + 2 + (seg == 0);
+	int t = base << shift;
+
+	return (x & 128) ? t : -t;
+}

@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask away every bit outside the reference's 27-bit range.
+	// Repeated division extracts each bit, and addition counts the ones.
+	// The final remainder handles zero and both population parities.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int count = 0;
+
+	while (value != 0U) {
+		count += value % 2U;
+		value /= 2U;
+	}
+	return count % 2U;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

@@ -1,0 +1,15 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Process the isolated range two bits at a time.
+	// A pair contributes odd parity exactly when its two bits differ.
+	// Fourteen pairs cover 27 bits plus one zero, preserving edge cases.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+	int pair;
+
+	for (pair = 0; pair < 14; ++pair) {
+		parity ^= (unsigned int)((x ^ (x >> 1)) & 1UL);
+		x >>= 2;
+	}
+	return parity;
+}

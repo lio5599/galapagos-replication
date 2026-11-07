@@ -1,0 +1,986 @@
+{
+  "baseline-r1": {
+    "subset_counts": [
+      {
+        "project": "alsa-lib",
+        "function": "alaw_to_s16",
+        "comp_isol": 10,
+        "comp_proj": 9,
+        "test": 9,
+        "verif": 9,
+        "result_files": 10
+      },
+      {
+        "project": "alsa-lib",
+        "function": "iec958_parity",
+        "comp_isol": 10,
+        "comp_proj": 8,
+        "test": 8,
+        "verif": 8,
+        "result_files": 10
+      },
+      {
+        "project": "alsa-lib",
+        "function": "add",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "ffmpeg",
+        "function": "flac_get_max_frame_size",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 1,
+        "result_files": 10
+      },
+      {
+        "project": "ffmpeg",
+        "function": "mix",
+        "comp_isol": 10,
+        "comp_proj": 9,
+        "test": 9,
+        "verif": 9,
+        "result_files": 10
+      },
+      {
+        "project": "ffmpeg",
+        "function": "vp5_adjust",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 1,
+        "result_files": 10
+      },
+      {
+        "project": "libgcrypt",
+        "function": "barrett_reduce",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libgcrypt",
+        "function": "ctz",
+        "comp_isol": 10,
+        "comp_proj": 9,
+        "test": 9,
+        "verif": 9,
+        "result_files": 10
+      },
+      {
+        "project": "libgcrypt",
+        "function": "int16_t_negative_mask",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_half",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_lt",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 9,
+        "result_files": 10
+      },
+      {
+        "project": "liboqs",
+        "function": "modp_montymul",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_char",
+        "comp_isol": 10,
+        "comp_proj": 9,
+        "test": 9,
+        "verif": 9,
+        "result_files": 10
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_urlsafe_char",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_char_to_byte",
+        "comp_isol": 10,
+        "comp_proj": 9,
+        "test": 9,
+        "verif": 9,
+        "result_files": 10
+      },
+      {
+        "project": "openssl",
+        "function": "icbrt64",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 8,
+        "result_files": 10
+      },
+      {
+        "project": "openssl",
+        "function": "BitDeinterleave",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "openssl",
+        "function": "BitInterleave",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      }
+    ],
+    "settings": {
+      "tool": "Claude Code non-interactive mode (claude -p)",
+      "claude_code_version": "2.1.312 (Claude Code)",
+      "auth_method": "claude.ai",
+      "condition": "baseline",
+      "model_requested": "opus",
+      "effort": "medium",
+      "system_prompt": "You are a helpful assistant.",
+      "prompt_template_sha256": "85fcca4a6a54dc8605e8e8e4cc91c462c89cc92b11c77bfa3fed57cd1e48ecf3",
+      "flags": [
+        "-p",
+        "<prompt>",
+        "--system-prompt",
+        "You are a helpful assistant.",
+        "--tools",
+        "",
+        "--disallowedTools",
+        "mcp__*",
+        "--strict-mcp-config",
+        "--safe-mode",
+        "--no-session-persistence",
+        "--max-turns",
+        "1",
+        "--permission-prompts",
+        "none",
+        "--model",
+        "opus",
+        "--output-format",
+        "json",
+        "--effort",
+        "medium"
+      ],
+      "n_variants": 10,
+      "max_attempts": 1,
+      "galapagos": "/home/liolsen/galapagos-replication",
+      "started_at": "2026-10-29T23:00:21.533317+00:00"
+    },
+    "manifest_matches_current_template": true
+  },
+  "context-r1": {
+    "subset_counts": [
+      {
+        "project": "alsa-lib",
+        "function": "alaw_to_s16",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "alsa-lib",
+        "function": "iec958_parity",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "alsa-lib",
+        "function": "add",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "ffmpeg",
+        "function": "flac_get_max_frame_size",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 3,
+        "result_files": 10
+      },
+      {
+        "project": "ffmpeg",
+        "function": "mix",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "ffmpeg",
+        "function": "vp5_adjust",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 0,
+        "result_files": 10
+      },
+      {
+        "project": "libgcrypt",
+        "function": "barrett_reduce",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libgcrypt",
+        "function": "ctz",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libgcrypt",
+        "function": "int16_t_negative_mask",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_half",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_lt",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 9,
+        "result_files": 10
+      },
+      {
+        "project": "liboqs",
+        "function": "modp_montymul",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_char",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_urlsafe_char",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_char_to_byte",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "openssl",
+        "function": "icbrt64",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 8,
+        "result_files": 10
+      },
+      {
+        "project": "openssl",
+        "function": "BitDeinterleave",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      },
+      {
+        "project": "openssl",
+        "function": "BitInterleave",
+        "comp_isol": 10,
+        "comp_proj": 10,
+        "test": 10,
+        "verif": 10,
+        "result_files": 10
+      }
+    ],
+    "settings": {
+      "tool": "Claude Code non-interactive mode (claude -p)",
+      "claude_code_version": "2.1.312 (Claude Code)",
+      "auth_method": "claude.ai",
+      "condition": "context",
+      "model_requested": "opus",
+      "effort": "medium",
+      "system_prompt": "You are a helpful assistant.",
+      "prompt_template_sha256": "303416cec7ca06cfa2aac344cbfff1e8ff83570e6741427aef853bc3e776091e",
+      "flags": [
+        "-p",
+        "<prompt>",
+        "--system-prompt",
+        "You are a helpful assistant.",
+        "--tools",
+        "",
+        "--disallowedTools",
+        "mcp__*",
+        "--strict-mcp-config",
+        "--safe-mode",
+        "--no-session-persistence",
+        "--max-turns",
+        "1",
+        "--permission-prompts",
+        "none",
+        "--model",
+        "opus",
+        "--output-format",
+        "json",
+        "--effort",
+        "medium"
+      ],
+      "n_variants": 10,
+      "max_attempts": 1,
+      "galapagos": "/home/liolsen/galapagos-replication",
+      "started_at": "2026-11-01T21:00:39.648131+00:00"
+    },
+    "manifest_matches_current_template": true
+  },
+  "cot-r1": {
+    "subset_counts": [
+      {
+        "project": "alsa-lib",
+        "function": "alaw_to_s16",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "alsa-lib",
+        "function": "iec958_parity",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "alsa-lib",
+        "function": "add",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "flac_get_max_frame_size",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "mix",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "vp5_adjust",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "barrett_reduce",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "ctz",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "int16_t_negative_mask",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_half",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_lt",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "modp_montymul",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_char",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_urlsafe_char",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_char_to_byte",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "icbrt64",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "BitDeinterleave",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "BitInterleave",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      }
+    ],
+    "settings": {
+      "tool": "Claude Code non-interactive mode (claude -p)",
+      "claude_code_version": "2.1.312 (Claude Code)",
+      "auth_method": "claude.ai",
+      "condition": "cot",
+      "model_requested": "opus",
+      "effort": "medium",
+      "system_prompt": "You are a helpful assistant.",
+      "prompt_template_sha256": "9bcfa2b2387422c82063334d9fd3ccfe1e1f49de174b357110a335bc20c7aa83",
+      "flags": [
+        "-p",
+        "<prompt>",
+        "--system-prompt",
+        "You are a helpful assistant.",
+        "--tools",
+        "",
+        "--disallowedTools",
+        "mcp__*",
+        "--strict-mcp-config",
+        "--safe-mode",
+        "--no-session-persistence",
+        "--max-turns",
+        "1",
+        "--permission-prompts",
+        "none",
+        "--model",
+        "opus",
+        "--output-format",
+        "json",
+        "--effort",
+        "medium"
+      ],
+      "n_variants": 10,
+      "max_attempts": 1,
+      "galapagos": "/home/liolsen/galapagos-replication",
+      "started_at": "2026-11-02T21:05:01.065757+00:00"
+    },
+    "manifest_matches_current_template": true
+  },
+  "pilot": {
+    "subset_counts": [
+      {
+        "project": "alsa-lib",
+        "function": "alaw_to_s16",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "alsa-lib",
+        "function": "iec958_parity",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "alsa-lib",
+        "function": "add",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "flac_get_max_frame_size",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "mix",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "vp5_adjust",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "barrett_reduce",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "ctz",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "int16_t_negative_mask",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_half",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_lt",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "modp_montymul",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_char",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_urlsafe_char",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_char_to_byte",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "icbrt64",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "BitDeinterleave",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "BitInterleave",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      }
+    ],
+    "settings": {
+      "tool": "Claude Code non-interactive mode (claude -p)",
+      "claude_code_version": "2.1.312 (Claude Code)",
+      "auth_method": "claude.ai",
+      "condition": "baseline",
+      "model_requested": "opus",
+      "effort": "medium",
+      "system_prompt": "You are a helpful assistant.",
+      "prompt_template_sha256": "85fcca4a6a54dc8605e8e8e4cc91c462c89cc92b11c77bfa3fed57cd1e48ecf3",
+      "flags": [
+        "-p",
+        "<prompt>",
+        "--system-prompt",
+        "You are a helpful assistant.",
+        "--tools",
+        "",
+        "--disallowedTools",
+        "mcp__*",
+        "--strict-mcp-config",
+        "--safe-mode",
+        "--no-session-persistence",
+        "--max-turns",
+        "1",
+        "--permission-prompts",
+        "none",
+        "--model",
+        "opus",
+        "--output-format",
+        "json",
+        "--effort",
+        "medium"
+      ],
+      "n_variants": 10,
+      "max_attempts": 1,
+      "galapagos": "/home/liolsen/galapagos-replication",
+      "started_at": "2026-10-29T21:40:40.224675+00:00"
+    },
+    "manifest_matches_current_template": true
+  },
+  "pilot-context": {
+    "subset_counts": [
+      {
+        "project": "alsa-lib",
+        "function": "alaw_to_s16",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "alsa-lib",
+        "function": "iec958_parity",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "alsa-lib",
+        "function": "add",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "flac_get_max_frame_size",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "mix",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "ffmpeg",
+        "function": "vp5_adjust",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "barrett_reduce",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "ctz",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libgcrypt",
+        "function": "int16_t_negative_mask",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_half",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "fpr_lt",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "liboqs",
+        "function": "modp_montymul",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_char",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_byte_to_urlsafe_char",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "libsodium",
+        "function": "b64_char_to_byte",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "icbrt64",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "BitDeinterleave",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      },
+      {
+        "project": "openssl",
+        "function": "BitInterleave",
+        "comp_isol": 0,
+        "comp_proj": 0,
+        "test": 0,
+        "verif": 0,
+        "result_files": 0
+      }
+    ],
+    "settings": {},
+    "manifest_matches_current_template": true
+  }
+}

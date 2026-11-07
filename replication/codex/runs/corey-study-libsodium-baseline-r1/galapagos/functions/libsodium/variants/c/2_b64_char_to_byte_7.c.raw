@@ -1,0 +1,38 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    unsigned int i = 0U;
+
+    do {
+        unsigned int rejected;
+        unsigned int value;
+
+        switch (i) {
+        case 0U:
+            rejected = ((u - 'A') | ('Z' - u)) >> 8;
+            value = u - 'A';
+            break;
+        case 1U:
+            rejected = ((u - 'a') | ('z' - u)) >> 8;
+            value = u - 'a' + 26U;
+            break;
+        case 2U:
+            rejected = ((u - '0') | ('9' - u)) >> 8;
+            value = u - '0' + 52U;
+            break;
+        case 3U:
+            rejected = (0U - (u ^ '+')) >> 8;
+            value = 62U;
+            break;
+        default:
+            rejected = (0U - (u ^ '/')) >> 8;
+            value = 63U;
+            break;
+        }
+
+        x |= value & ~rejected & 255U;
+    } while (++i < 5U);
+
+    return x ? x : ((0U - (u ^ 'A')) >> 8) & 255U;
+}

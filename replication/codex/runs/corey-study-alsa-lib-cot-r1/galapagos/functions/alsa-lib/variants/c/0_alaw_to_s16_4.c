@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A scale table replaces exponentiation with multiplication.
+	// Its first two entries are both one, matching segments zero and one.
+	// The conditional bias preserves the lowest segment's special rule.
+	static const int scale[8] = { 1, 1, 2, 4, 8, 16, 32, 64 };
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = ((x & 15) * 16 + (seg ? 264 : 8)) * scale[seg];
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

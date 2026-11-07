@@ -1,0 +1,100 @@
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a < 4294967295 - b)
+		return a + b;
+	return 4294967295;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	return a >= 4294967295 - b ? 4294967295 : a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int result = a + b;
+	if (a >= 4294967295 - b)
+		result = 4294967295;
+	return result;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int result = 4294967295;
+	if (a < 4294967295 - b)
+		result = a + b;
+	return result;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a > 4294967295 - b)
+		return 4294967295;
+	if (a == 4294967295 - b)
+		return 4294967295;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a != 4294967295 - b) {
+		if (a < 4294967295 - b)
+			return a + b;
+	}
+	return 4294967295;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int saturated = (a >= 4294967295 - b);
+	unsigned int mask = 0u - saturated;
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	return (sum & ~mask) | (limit & mask);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int saturated = (a >= 4294967295 - b);
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	return sum * (1u - saturated) + limit * saturated;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	return sum ^ ((sum ^ limit) & mask);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	unsigned int adjustment = 0u;
+	if (a >= 4294967295 - b)
+		adjustment = limit - sum;
+	return sum + adjustment;
+}
+```

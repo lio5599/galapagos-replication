@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Normalize the selected 27 bits and process them four at a time.
+	// Bit n of 0x6996 is the parity of the four-bit value n.
+	// XOR combines group parities; leading zeros and zero input add nothing.
+	unsigned long x = ((unsigned long)data >> 4) & 0x07FFFFFFUL;
+	unsigned int parity = 0;
+
+	while (x != 0) {
+		parity ^= (unsigned int)((0x6996UL >> (x & 15UL)) & 1UL);
+		x >>= 4;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

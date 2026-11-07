@@ -1,0 +1,91 @@
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	return a >= 4294967295U - b ? 4294967295U : a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int remaining = 4294967295U - b;
+	if (a < remaining)
+		return a + b;
+	return 4294967295U;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int result = 4294967295U;
+	if (a < 4294967295U - b)
+		result = a + b;
+	return result;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a >= 4294967295U - b)
+		a = 4294967295U - b;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int remaining = 4294967295U - b;
+	return b + (a < remaining ? a : remaining);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int remaining = 4294967295U - b;
+	if (a >= remaining)
+		return 4294967295U;
+	return 4294967295U - (remaining - a);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int saturated = (a >= 4294967295U - b);
+	unsigned int mask = 0U - saturated;
+	return ((a + b) & ~mask) | (4294967295U & mask);
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int saturated = (a >= 4294967295U - b);
+	return (a + b) * (1U - saturated) + 4294967295U * saturated;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	switch (a >= 4294967295U - b) {
+	case 0:
+		return a + b;
+	default:
+		return 4294967295U;
+	}
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int remaining = 4294967295U - b;
+	unsigned int deficit = remaining > a ? remaining - a : 0U;
+	return 4294967295U - deficit;
+}
+```

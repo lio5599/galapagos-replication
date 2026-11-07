@@ -1,0 +1,215 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Maps 0 through 63 to Base64 characters; other inputs follow byte-mask arithmetic.
+    // These are the reference's five masks, with repeated expressions factored out.
+    // Unsigned subtraction and all mask overlaps are preserved for every input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 255U) & b & (x + ('a' - 26))) |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Only the low sixteen input bits can affect the reference's result.
+    // Truncating first preserves subtraction, negation, and candidate low bytes.
+    // Extracting masks with 0xFF00 therefore also preserves out-of-range inputs.
+    unsigned int y = x & 65535U;
+    unsigned int a = ((y - 26U) & 65280U) >> 8;
+    unsigned int b = ((y - 52U) & 65280U) >> 8;
+    unsigned int c = ((y - 62U) & 65280U) >> 8;
+    unsigned int d = ((~(0U - (y ^ 62U))) & 65280U) >> 8;
+    unsigned int e = ((~(0U - (y ^ 63U))) & 65280U) >> 8;
+
+    return (int)((a & (y + 'A')) |
+                 ((255U ^ a) & b & (y + ('a' - 26))) |
+                 ((255U ^ b) & c & (y + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Complemented threshold masks express the same five selection terms.
+    // The final byte mask discards high bits introduced by full-width complements.
+    // Each remaining bit matches the reference even when masks are not Boolean.
+    unsigned int p = (~(x - 26U)) >> 8;
+    unsigned int q = (~(x - 52U)) >> 8;
+    unsigned int r = (~(x - 62U)) >> 8;
+    unsigned int s = (0U - (x ^ 62U)) >> 8;
+    unsigned int t = (0U - (x ^ 63U)) >> 8;
+    unsigned int result = ((~p) & (x + 'A')) |
+                          (p & (~q) & (x + ('a' - 26))) |
+                          (q & (~r) & (x + ('0' - 52))) |
+                          ((~s) & '+') |
+                          ((~t) & '/');
+
+    return (int)(result & 255U);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Store the five original masks and candidates, then OR their contributions.
+    // No assumption of mutually exclusive masks is made.
+    // Thus arbitrary unsigned inputs retain the reference's overlapping-mask behavior.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int masks[5];
+    unsigned int values[5];
+    unsigned int result = 0U;
+    unsigned int i;
+
+    masks[0] = a;
+    masks[1] = (a ^ 255U) & b;
+    masks[2] = (b ^ 255U) & (((x - 62U) >> 8) & 255U);
+    masks[3] = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    masks[4] = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    values[0] = x + 'A';
+    values[1] = x + ('a' - 26);
+    values[2] = x + ('0' - 52);
+    values[3] = '+';
+    values[4] = '/';
+
+    for (i = 0U; i < 5U; ++i)
+        result |= masks[i] & values[i];
+
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Compute each output bit independently from the reference's mask bits.
+    // All shifts range from zero through fifteen, valid for unsigned int.
+    // Bitwise evaluation preserves partial masks and every out-of-range case.
+    unsigned int result = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 8U; ++i) {
+        unsigned int a = ((x - 26U) >> (8U + i)) & 1U;
+        unsigned int b = ((x - 52U) >> (8U + i)) & 1U;
+        unsigned int c = ((x - 62U) >> (8U + i)) & 1U;
+        unsigned int d = (((0U - (x ^ 62U)) >> (8U + i)) & 1U) ^ 1U;
+        unsigned int e = (((0U - (x ^ 63U)) >> (8U + i)) & 1U) ^ 1U;
+        unsigned int bit = (a & ((x + 'A') >> i)) |
+                           ((a ^ 1U) & b & ((x + ('a' - 26)) >> i)) |
+                           ((b ^ 1U) & c & ((x + ('0' - 52)) >> i)) |
+                           (d & ((unsigned int)'+' >> i)) |
+                           (e & ((unsigned int)'/' >> i));
+        result |= bit << i;
+    }
+
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Replace each mask AND candidate with the identity u AND v = (u+v-(u XOR v))/2.
+    // Both operands are truncated to bytes, so the arithmetic cannot overflow.
+    // The masks are unchanged, preserving all inputs including overlapping cases.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int masks[5];
+    unsigned int values[5];
+    unsigned int result = 0U;
+    unsigned int i;
+
+    masks[0] = a;
+    masks[1] = (255U ^ a) & b;
+    masks[2] = (255U ^ b) & (((x - 62U) >> 8) & 255U);
+    masks[3] = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    masks[4] = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    values[0] = (x + 'A') & 255U;
+    values[1] = (x + ('a' - 26)) & 255U;
+    values[2] = (x + ('0' - 52)) & 255U;
+    values[3] = (unsigned int)'+' & 255U;
+    values[4] = (unsigned int)'/' & 255U;
+
+    for (i = 0U; i < 5U; ++i)
+        result |= (masks[i] + values[i] - (masks[i] ^ values[i])) / 2U;
+
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // De Morgan's law replaces the final OR with complemented AND operations.
+    // Each contribution uses exactly the reference's unsigned byte masks.
+    // The identity holds bitwise for every input, without range assumptions.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int u = a & (x + 'A');
+    unsigned int v = (a ^ 255U) & b & (x + ('a' - 26));
+    unsigned int w = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int y = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '+';
+    unsigned int z = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '/';
+
+    return (int)(~((~u) & (~v) & (~w) & (~y) & (~z)) & 255U);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Accumulate contributions using r OR t = r XOR (t AND NOT r).
+    // Previously set bits stay set even when several masks select the same bit.
+    // Original unsigned mask calculations preserve behavior outside zero through 63.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int t;
+
+    t = (a ^ 255U) & b & (x + ('a' - 26));
+    result ^= t & ~result;
+    t = (b ^ 255U) & c & (x + ('0' - 52));
+    result ^= t & ~result;
+    t = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '+';
+    result ^= t & ~result;
+    t = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '/';
+    result ^= t & ~result;
+
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Perform all selection in bits eight through fifteen, then shift down.
+    // Candidate low bytes are shifted into that lane without overflow.
+    // Lane complements and unsigned arithmetic reproduce every original mask bit.
+    unsigned int a = (x - 26U) & 65280U;
+    unsigned int b = (x - 52U) & 65280U;
+    unsigned int c = (x - 62U) & 65280U;
+    unsigned int d = (~(0U - (x ^ 62U))) & 65280U;
+    unsigned int e = (~(0U - (x ^ 63U))) & 65280U;
+    unsigned int result =
+        (a & (((x + 'A') & 255U) << 8)) |
+        ((a ^ 65280U) & b & (((x + ('a' - 26)) & 255U) << 8)) |
+        ((b ^ 65280U) & c & (((x + ('0' - 52)) & 255U) << 8)) |
+        (d & (((unsigned int)'+' & 255U) << 8)) |
+        (e & (((unsigned int)'/' & 255U) << 8));
+
+    return (int)(result >> 8);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Derive subtraction's second byte from the high part and low-byte borrow.
+    // Negation similarly subtracts the high part and a nonzero-low-byte borrow.
+    // Reducing to bytes preserves unsigned wraparound and all out-of-range inputs.
+    unsigned int lo = x & 255U;
+    unsigned int hi = x >> 8;
+    unsigned int a = (hi - (unsigned int)(lo < 26U)) & 255U;
+    unsigned int b = (hi - (unsigned int)(lo < 52U)) & 255U;
+    unsigned int c = (hi - (unsigned int)(lo < 62U)) & 255U;
+    unsigned int d = ((0U - hi - (unsigned int)((lo ^ 62U) != 0U)) & 255U) ^ 255U;
+    unsigned int e = ((0U - hi - (unsigned int)((lo ^ 63U) != 0U)) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 255U) & b & (x + ('a' - 26))) |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}

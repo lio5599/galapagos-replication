@@ -1,0 +1,158 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The reference computes the XOR of original data bits 4 through 30.
+	// Shift past bits 0 through 3 and XOR exactly 27 bits.
+	// Bits above bit 30 are never examined; zero input returns zero.
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= data & 1u;
+		data >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Count the set bits at original positions 4 through 30.
+	// Taking the low bit of the count gives the reference parity.
+	// The count cannot exceed 27, and all other input bits are ignored.
+	unsigned int count = 0;
+	int remaining = 27;
+
+	data >>= 4;
+	while (remaining != 0) {
+		count += data & 1u;
+		data >>= 1;
+		remaining--;
+	}
+	return count & 1u;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Retain only original bits 4 through 30, then consume them.
+	// XOR with each low bit accumulates parity.
+	// Stopping at zero only skips zero bits, including for zero input.
+	unsigned int parity = 0;
+
+	data = (data >> 4) & 0x07ffffffu;
+	while (data != 0) {
+		parity ^= data & 1u;
+		data >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask to the 27 bits examined by the reference.
+	// Each subtraction-and-mask step removes exactly one set bit.
+	// Toggling once per removed bit gives parity; zero needs no steps.
+	unsigned int parity = 0;
+
+	data = (data >> 4) & 0x07ffffffu;
+	while (data != 0) {
+		data &= data - 1u;
+		parity ^= 1u;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Isolate original bits 4 through 30 and fold them with XOR.
+	// Successive folds collect every retained bit into the low bit.
+	// Masked-out bits cannot contribute, and zero remains zero.
+	data = (data >> 4) & 0x07ffffffu;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data ^= data >> 2;
+	data ^= data >> 1;
+	return data & 1u;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The bits of 0x6996 encode parity for all four-bit values.
+	// XOR seven nibble parities to cover the 27 retained bits.
+	// The extra bit in the last nibble is masked to zero.
+	unsigned int parity = 0;
+	int group;
+
+	data = (data >> 4) & 0x07ffffffu;
+	for (group = 0; group < 7; group++) {
+		parity ^= (0x6996u >> (data & 15u)) & 1u;
+		data >>= 4;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The bits of 0x96 encode parity for all three-bit values.
+	// Nine groups cover exactly original bits 4 through 30.
+	// Each lookup shift is at most seven, and zero groups add nothing.
+	unsigned int parity = 0;
+	int group;
+
+	data >>= 4;
+	for (group = 0; group < 9; group++) {
+		parity ^= (0x96u >> (data & 7u)) & 1u;
+		data >>= 3;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask to the reference's bit range, then count bits in parallel.
+	// Pair, nibble, and byte sums combine into the total set-bit count.
+	// Its low bit is parity; excluded bits and zero input contribute zero.
+	data = (data >> 4) & 0x07ffffffu;
+	data = data - ((data >> 1) & 0x55555555u);
+	data = (data & 0x33333333u) + ((data >> 2) & 0x33333333u);
+	data = (data + (data >> 4)) & 0x0f0f0f0fu;
+	data += data >> 8;
+	data += data >> 16;
+	return data & 1u;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// XOR thirteen pairs of bits, then the final twenty-seventh bit.
+	// These are exactly original positions 4 through 30.
+	// The final mask excludes all higher bits, including original bit 31.
+	unsigned int parity = 0;
+	int pair;
+
+	data >>= 4;
+	for (pair = 0; pair < 13; pair++) {
+		parity ^= (data ^ (data >> 1)) & 1u;
+		data >>= 2;
+	}
+	return parity ^ (data & 1u);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Accumulate alternating retained positions in separate XOR sums.
+	// Thirteen pairs and one last bit cover original bits 4 through 30.
+	// Combining the sums gives parity and ignores every excluded bit.
+	unsigned int even = 0;
+	unsigned int odd = 0;
+	int pair;
+
+	data >>= 4;
+	for (pair = 0; pair < 13; pair++) {
+		even ^= data & 1u;
+		data >>= 1;
+		odd ^= data & 1u;
+		data >>= 1;
+	}
+	even ^= data & 1u;
+	return even ^ odd;
+}

@@ -1,0 +1,7 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The reference adds a and b, saturating at 4294967295 for 32-bit unsigned inputs.
+	// Use the exact reference condition to select the cap or the sum.
+	// Equality selects the cap, including when b equals the cap.
+	return (a >= 4294967295 - b) ? 4294967295 : a + b;
+}

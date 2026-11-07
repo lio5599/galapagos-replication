@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	int seg, t;
+
+	a_val ^= 0x55;
+	seg = (a_val >> 4) & 7;
+	t = ((a_val & 15) << 4) + 8;
+	if (seg != 0)
+		t = (t + 256) << (seg - 1);
+
+	return (a_val & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

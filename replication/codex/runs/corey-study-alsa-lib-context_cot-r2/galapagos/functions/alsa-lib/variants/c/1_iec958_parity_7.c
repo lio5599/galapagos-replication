@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Split the selected 27 bits into nine groups of three.
+	// Bit n of 0x96 is the parity of the three-bit number n.
+	// XOR combines exactly those groups, including zero-valued groups.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int parity = 0;
+	int group;
+
+	for (group = 0; group < 9; group++) {
+		parity ^= (0x96U >> (value & 7U)) & 1U;
+		value >>= 3;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

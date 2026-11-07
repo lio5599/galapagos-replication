@@ -1,0 +1,15 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Combine the first two contributions using a bitwise selection identity.
+    // At each bit, a selects the uppercase value or the masked lowercase value.
+    // This identity holds for partial masks, so arbitrary inputs still match.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int lower = b & (x + ('a' - 26));
+    unsigned int result = lower ^ (a & (lower ^ (x + 'A')));
+    result |= (b ^ 0xFFU) & c & (x + ('0' - 52));
+    result |= ((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & '+';
+    result |= ((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & '/';
+    return (int)result;
+}

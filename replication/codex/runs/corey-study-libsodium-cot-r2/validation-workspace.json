@@ -1,0 +1,33 @@
+{
+  "path": "/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r2",
+  "selection": {
+    "libsodium": [
+      "b64_byte_to_char",
+      "b64_byte_to_urlsafe_char",
+      "b64_char_to_byte"
+    ]
+  },
+  "original_indices": {
+    "libsodium": [
+      0,
+      1,
+      2
+    ]
+  },
+  "patches": [
+    "split_variants.py: skip unselected reference indices; preserve original indices",
+    "template_variants.py: skip unselected reference indices; preserve original indices",
+    "compile_variants.py: skip unselected reference indices; preserve original indices",
+    "case.py: per-run build-copy directory; prevents stale builds across conditions",
+    "tests/usecase.py: flushed progress events before build/test/verification; same check calls",
+    "tests/usecase.py: bound existing variant concurrency to 2; checks unchanged"
+  ],
+  "base": "/home/cbh/galapagos-replication",
+  "source_run": "/mnt/c/COMS6650/FinalProject/replication/codex/runs/corey-study-libsodium-cot-r2",
+  "concurrency": 2,
+  "source_revision": "1188d2708a3a1bf36e956bc4891372223bbe02f2",
+  "metadata_sha256": {
+    "libsodium": "a17f57f55cc59340a84dbcf619d87a5bdd17c7ad27dd6d93546033c49e90969c"
+  },
+  "note": "No generated body edits; no automatic repair or regeneration"
+}

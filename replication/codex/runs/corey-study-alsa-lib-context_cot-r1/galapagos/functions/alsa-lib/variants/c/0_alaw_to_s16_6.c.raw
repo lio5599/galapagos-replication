@@ -1,0 +1,16 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode the mantissa and segment directly from the encoded byte.
+	// XOR with 0x55 toggles each low nibble by five and leaves the sign.
+	// The same special zero-segment bias and bounded scaling are retained.
+	int mant = (a_val & 15) ^ 5;
+	int seg = ((a_val >> 4) & 7) ^ 5;
+	int t;
+
+	if (seg == 0)
+		t = 16 * mant + 8;
+	else
+		t = (16 * mant + 264) * (1 << (seg - 1));
+
+	return (a_val & 128) ? t : -t;
+}

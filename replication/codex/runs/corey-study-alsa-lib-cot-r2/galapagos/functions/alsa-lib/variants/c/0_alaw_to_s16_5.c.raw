@@ -1,0 +1,14 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Use the unmasked byte's fields to avoid XORing the whole byte.
+	// XOR with 0x55 flips the low nibble by five and the segment by five.
+	// It does not change the sign bit, so the original byte supplies polarity.
+	// The decoded zero segment still receives the reference's special bias.
+	int mant = (a_val & 15) ^ 5;
+	int seg = ((a_val >> 4) & 7) ^ 5;
+	int t = mant * 16 + 8;
+
+	if (seg != 0)
+		t = (t + 256) << (seg - 1);
+	return (a_val & 128) ? t : -t;
+}

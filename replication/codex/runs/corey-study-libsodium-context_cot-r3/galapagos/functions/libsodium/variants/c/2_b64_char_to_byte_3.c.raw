@@ -1,0 +1,21 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Accumulate the five original contributions using associative bitwise OR.
+    // Each range combines the two subtractions before shifting and complementing.
+    // Exact byte masks retain the reference's behavior for arbitrary int inputs.
+    const unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    unsigned int m;
+    m = ~(((u - 'A') | ('Z' - u)) >> 8) & 0xFFU;
+    x |= m & (u - 'A');
+    m = ~(((u - 'a') | ('z' - u)) >> 8) & 0xFFU;
+    x |= m & (u - ('a' - 26));
+    m = ~(((u - '0') | ('9' - u)) >> 8) & 0xFFU;
+    x |= m & (u - ('0' - 52));
+    m = ~((0U - (u ^ '+')) >> 8) & 0xFFU;
+    x |= m & 62U;
+    m = ~((0U - (u ^ '/')) >> 8) & 0xFFU;
+    x |= m & 63U;
+    m = ~((0U - x) >> 8) & 0xFFU;
+    return x | (m & ((0U - (u ^ 'A')) >> 8));
+}

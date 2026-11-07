@@ -1,0 +1,24 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Compute each output bit independently from the reference's mask bits.
+    // All shifts range from zero through fifteen, valid for unsigned int.
+    // Bitwise evaluation preserves partial masks and every out-of-range case.
+    unsigned int result = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 8U; ++i) {
+        unsigned int a = ((x - 26U) >> (8U + i)) & 1U;
+        unsigned int b = ((x - 52U) >> (8U + i)) & 1U;
+        unsigned int c = ((x - 62U) >> (8U + i)) & 1U;
+        unsigned int d = (((0U - (x ^ 62U)) >> (8U + i)) & 1U) ^ 1U;
+        unsigned int e = (((0U - (x ^ 63U)) >> (8U + i)) & 1U) ^ 1U;
+        unsigned int bit = (a & ((x + 'A') >> i)) |
+                           ((a ^ 1U) & b & ((x + ('a' - 26)) >> i)) |
+                           ((b ^ 1U) & c & ((x + ('0' - 52)) >> i)) |
+                           (d & ((unsigned int)'+' >> i)) |
+                           (e & ((unsigned int)'/' >> i));
+        result |= bit << i;
+    }
+
+    return (int)result;
+}

@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    x |= ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A');
+    x |= ((~((u - 'a') | ('z' - u)) >> 8) & 255U) & (u - ('a' - 26));
+    x |= ((~((u - '0') | ('9' - u)) >> 8) & 255U) & (u - ('0' - 52));
+    x |= (~(0U - (u ^ '+')) >> 8) & 62U;
+    x |= (~(0U - (u ^ '/')) >> 8) & 63U;
+    return x | ((~(0U - x) >> 8) &
+                ((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

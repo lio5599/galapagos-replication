@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Expand each segment into its linear bias and mantissa step.
+	// The eight cases cover every segment, including the unscaled
+	// lowest two; the largest result is 16896 plus 15 times 1024.
+	int x = a_val ^ 0x55;
+	int mant = x & 15;
+	int t;
+
+	switch ((x >> 4) & 7) {
+	case 0: t = 8 + mant * 16; break;
+	case 1: t = 264 + mant * 16; break;
+	case 2: t = 528 + mant * 32; break;
+	case 3: t = 1056 + mant * 64; break;
+	case 4: t = 2112 + mant * 128; break;
+	case 5: t = 4224 + mant * 256; break;
+	case 6: t = 8448 + mant * 512; break;
+	default: t = 16896 + mant * 1024; break;
+	}
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

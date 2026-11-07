@@ -1,0 +1,190 @@
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    int magnitude, segment;
+
+    a_val ^= 0x55;
+    segment = (a_val >> 4) & 7;
+    magnitude = (a_val & 15) << 4;
+    magnitude += segment ? 264 : 8;
+    if (segment > 1)
+        magnitude <<= segment - 1;
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    int magnitude;
+
+    a_val ^= 0x55;
+    magnitude = (a_val & 15) * 16;
+
+    switch ((a_val >> 4) & 7) {
+    case 0: magnitude += 8; break;
+    case 1: magnitude += 264; break;
+    case 2: magnitude = (magnitude + 264) * 2; break;
+    case 3: magnitude = (magnitude + 264) * 4; break;
+    case 4: magnitude = (magnitude + 264) * 8; break;
+    case 5: magnitude = (magnitude + 264) * 16; break;
+    case 6: magnitude = (magnitude + 264) * 32; break;
+    default: magnitude = (magnitude + 264) * 64; break;
+    }
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    static const int base[8] = {
+        8, 264, 528, 1056, 2112, 4224, 8448, 16896
+    };
+    static const int step[8] = {
+        16, 16, 32, 64, 128, 256, 512, 1024
+    };
+    int segment, magnitude;
+
+    a_val ^= 0x55;
+    segment = (a_val >> 4) & 7;
+    magnitude = base[segment] + (a_val & 15) * step[segment];
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    static const int scale[8] = { 1, 1, 2, 4, 8, 16, 32, 64 };
+    int segment, magnitude;
+
+    a_val ^= 0x55;
+    segment = (a_val >> 4) & 7;
+    magnitude = ((a_val & 15) * 16 + 8
+                 + 256 * (segment != 0)) * scale[segment];
+
+    return magnitude * (2 * (int)(a_val >> 7) - 1);
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    int segment, magnitude;
+
+    a_val ^= 0x55;
+    segment = (a_val >> 4) & 7;
+    magnitude = (a_val & 15) * 16 + 8;
+
+    if (segment != 0) {
+        magnitude += 256;
+        while (segment > 1) {
+            magnitude *= 2;
+            --segment;
+        }
+    }
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    int segment, mantissa, magnitude;
+
+    segment = ((a_val >> 4) ^ 5) & 7;
+    mantissa = (a_val ^ 5) & 15;
+
+    if (segment == 0)
+        magnitude = mantissa * 16 + 8;
+    else
+        magnitude = (mantissa * 2 + 33) << (segment + 2);
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    int segment, nonzero, magnitude;
+
+    a_val ^= 0x55;
+    segment = (a_val >> 4) & 7;
+    nonzero = (segment != 0);
+    magnitude = ((a_val & 15) << 4) + 8 + (nonzero << 8);
+    magnitude <<= segment - nonzero;
+
+    return magnitude - 2 * magnitude * (int)((a_val >> 7) ^ 1);
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    unsigned int decoded, segment, magnitude;
+
+    decoded = (unsigned int)a_val ^ 0x55u;
+    segment = (decoded >> 4) & 7u;
+    magnitude = (decoded & 15u) * 16u + 8u;
+
+    if (segment != 0u)
+        magnitude = ((magnitude + 256u) << segment) >> 1;
+
+    return (decoded & 128u) ? (int)magnitude : -(int)magnitude;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    int segment, magnitude, shift;
+
+    a_val ^= 0x55;
+    segment = (a_val >> 4) & 7;
+    shift = segment > 1 ? segment - 1 : 0;
+    magnitude = segment ? (264 << shift) : 8;
+
+    if (a_val & 1)
+        magnitude += 16 << shift;
+    if (a_val & 2)
+        magnitude += 32 << shift;
+    if (a_val & 4)
+        magnitude += 64 << shift;
+    if (a_val & 8)
+        magnitude += 128 << shift;
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+    int code, segment, magnitude;
+
+    code = (a_val ^ 0x55) & 127;
+    segment = code / 16;
+    magnitude = (code % 16) * 16 + 8;
+
+    if (segment != 0) {
+        magnitude += 256;
+        switch (segment) {
+        case 7: magnitude *= 2; /* fall through */
+        case 6: magnitude *= 2; /* fall through */
+        case 5: magnitude *= 2; /* fall through */
+        case 4: magnitude *= 2; /* fall through */
+        case 3: magnitude *= 2; /* fall through */
+        case 2: magnitude *= 2; /* fall through */
+        default: break;
+        }
+    }
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+```

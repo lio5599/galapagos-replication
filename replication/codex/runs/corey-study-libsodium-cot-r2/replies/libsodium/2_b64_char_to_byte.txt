@@ -1,0 +1,278 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // The reference maps Base64 characters to sextets using byte-sliced masks.
+    // For ASCII byte inputs, other characters produce 255, including padding.
+    // Keep the original masks for non-byte inputs rather than range-testing c.
+    // Unsigned differences match every input where the reference is defined.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        (255U ^ (((u - 'A') >> 8) & 255U)) &
+        (255U ^ ((('Z' - u) >> 8) & 255U));
+    const unsigned int lower =
+        (255U ^ (((u - 'a') >> 8) & 255U)) &
+        (255U ^ ((('z' - u) >> 8) & 255U));
+    const unsigned int digit =
+        (255U ^ (((u - '0') >> 8) & 255U)) &
+        (255U ^ ((('9' - u) >> 8) & 255U));
+    const unsigned int plus =
+        255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    const unsigned int slash =
+        255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    const unsigned int x =
+        (upper & (u - 'A')) |
+        (lower & (u - 'a' + 26U)) |
+        (digit & (u - '0' + 52U)) |
+        (plus & 62U) | (slash & 63U);
+    const unsigned int zero =
+        255U ^ (((0U - x) >> 8) & 255U);
+    const unsigned int not_a =
+        ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x | (zero & not_a);
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Iterate over the three alphabet ranges, then handle the two symbols.
+    // Each iteration contributes exactly one original masked term.
+    // The final masks preserve zero for A and the original invalid-input value.
+    // Non-byte inputs retain the same masks on every reference-defined input.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int first[3] = { 'A', 'a', '0' };
+    const unsigned int last[3] = { 'Z', 'z', '9' };
+    const unsigned int base[3] = { 0U, 26U, 52U };
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 3U; ++i) {
+        const unsigned int lo =
+            255U ^ (((u - first[i]) >> 8) & 255U);
+        const unsigned int hi =
+            255U ^ (((last[i] - u) >> 8) & 255U);
+        x |= lo & hi & (u - first[i] + base[i]);
+    }
+    x |= (255U ^ (((0U - (u ^ '+')) >> 8) & 255U)) & 62U;
+    x |= (255U ^ (((0U - (u ^ '/')) >> 8) & 255U)) & 63U;
+    return x |
+        ((255U ^ (((0U - x) >> 8) & 255U)) &
+         (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Store the five masks and candidates separately and OR their intersections.
+    // This is the reference expression evaluated as a small dot product of bits.
+    // Original masks, including the A exception, preserve non-byte edge cases.
+    // Unsigned candidate arithmetic agrees wherever the reference is defined.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int mask[5] = {
+        (255U ^ (((u - 'A') >> 8) & 255U)) &
+        (255U ^ ((('Z' - u) >> 8) & 255U)),
+        (255U ^ (((u - 'a') >> 8) & 255U)) &
+        (255U ^ ((('z' - u) >> 8) & 255U)),
+        (255U ^ (((u - '0') >> 8) & 255U)) &
+        (255U ^ ((('9' - u) >> 8) & 255U)),
+        255U ^ (((0U - (u ^ '+')) >> 8) & 255U),
+        255U ^ (((0U - (u ^ '/')) >> 8) & 255U)
+    };
+    const unsigned int value[5] = {
+        u - 'A', u - 'a' + 26U, u - '0' + 52U, 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i)
+        x |= mask[i] & value[i];
+    return x |
+        ((255U ^ (((0U - x) >> 8) & 255U)) &
+         (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // De Morgan's law combines each pair of range masks before shifting.
+    // Every contribution is confined to eight bits, so x is at most 255.
+    // The reference zero mask is therefore 255 exactly when x is zero.
+    // Retaining the A mask preserves even non-byte reference-defined inputs.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        (~((u - 'A') | ('Z' - u)) >> 8) & 255U;
+    const unsigned int lower =
+        (~((u - 'a') | ('z' - u)) >> 8) & 255U;
+    const unsigned int digit =
+        (~((u - '0') | ('9' - u)) >> 8) & 255U;
+    const unsigned int plus =
+        (~(0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int slash =
+        (~(0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x =
+        (upper & (u - 'A')) |
+        (lower & (u - 'a' + 26U)) |
+        (digit & (u - '0' + 52U)) |
+        (plus & 62U) | (slash & 63U);
+    if (x != 0U)
+        return x;
+    return ((0U - (u ^ 'A')) >> 8) & 255U;
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Compute the original five terms, then assemble their union bit by bit.
+    // No term has bits above bit seven, so eight iterations recover the exact x.
+    // The unchanged final correction handles A, invalid bytes, and non-byte c.
+    // Unsigned differences preserve every reference-defined result.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int term[5] = {
+        ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A'),
+        ((~((u - 'a') | ('z' - u)) >> 8) & 255U) &
+            (u - 'a' + 26U),
+        ((~((u - '0') | ('9' - u)) >> 8) & 255U) &
+            (u - '0' + 52U),
+        ((~(0U - (u ^ '+')) >> 8) & 255U) & 62U,
+        ((~(0U - (u ^ '/')) >> 8) & 255U) & 63U
+    };
+    unsigned int x = 0U;
+    unsigned int bit;
+    unsigned int i;
+    for (bit = 0U; bit < 8U; ++bit) {
+        for (i = 0U; i < 5U; ++i) {
+            if ((term[i] & (1U << bit)) != 0U) {
+                x |= 1U << bit;
+                break;
+            }
+        }
+    }
+    return x |
+        ((255U ^ (((0U - x) >> 8) & 255U)) &
+         (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Accumulate the complement of the result with AND instead of using OR.
+    // De Morgan's law makes its final complement the original five-term union.
+    // All terms remain byte-masked, including for unusual non-byte inputs.
+    // The original correction and unsigned differences preserve defined results.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int term[5] = {
+        ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A'),
+        ((~((u - 'a') | ('z' - u)) >> 8) & 255U) &
+            (u - 'a' + 26U),
+        ((~((u - '0') | ('9' - u)) >> 8) & 255U) &
+            (u - '0' + 52U),
+        ((~(0U - (u ^ '+')) >> 8) & 255U) & 62U,
+        ((~(0U - (u ^ '/')) >> 8) & 255U) & 63U
+    };
+    unsigned int absent = ~0U;
+    unsigned int x;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i)
+        absent &= ~term[i];
+    x = ~absent;
+    return x |
+        ((255U ^ (((0U - x) >> 8) & 255U)) &
+         (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // A five-step loop selects range parameters or a punctuation character.
+    // Range masks and equality masks are the original byte-sliced operations.
+    // Since x is a byte, only zero needs the original A-dependent correction.
+    // This preserves all edge cases for which the reference has defined behavior.
+    const unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i) {
+        unsigned int first = 0U;
+        unsigned int last = 0U;
+        unsigned int base = 0U;
+        unsigned int symbol = 0U;
+        switch (i) {
+        case 0U: first = 'A'; last = 'Z'; base = 0U; break;
+        case 1U: first = 'a'; last = 'z'; base = 26U; break;
+        case 2U: first = '0'; last = '9'; base = 52U; break;
+        case 3U: symbol = '+'; base = 62U; break;
+        default: symbol = '/'; base = 63U; break;
+        }
+        if (i < 3U)
+            x |= ((~((u - first) | (last - u)) >> 8) & 255U) &
+                 (u - first + base);
+        else
+            x |= ((~(0U - (u ^ symbol)) >> 8) & 255U) & base;
+    }
+    return x != 0U ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Use separate table-driven passes for alphabet ranges and punctuation.
+    // Reversing evaluation order is harmless because bitwise OR is associative.
+    // The exact masks are retained rather than assuming c is an ASCII byte.
+    // The zero correction preserves A and all other reference-defined edge cases.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int range[3][3] = {
+        { 'A', 'Z', 0U }, { 'a', 'z', 26U }, { '0', '9', 52U }
+    };
+    const unsigned int symbol[2][2] = {
+        { '+', 62U }, { '/', 63U }
+    };
+    unsigned int x = 0U;
+    unsigned int i = 2U;
+    while (i != 0U) {
+        --i;
+        x |= ((~(0U - (u ^ symbol[i][0])) >> 8) & 255U) &
+             symbol[i][1];
+    }
+    i = 3U;
+    while (i != 0U) {
+        --i;
+        x |= ((~((u - range[i][0]) | (range[i][1] - u)) >> 8) &
+              255U) & (u - range[i][0] + range[i][2]);
+    }
+    return x |
+        ((255U ^ (((0U - x) >> 8) & 255U)) &
+         (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Factor out a final byte mask after combining the five contributions.
+    // Masking distributes over OR, so the resulting x is exactly the original.
+    // For x from zero through 255, the shifted x-minus-one detects only zero.
+    // The retained A mask preserves non-byte cases wherever the reference is defined.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int x = (
+        ((~((u - 'A') | ('Z' - u)) >> 8) & (u - 'A')) |
+        ((~((u - 'a') | ('z' - u)) >> 8) & (u - 'a' + 26U)) |
+        ((~((u - '0') | ('9' - u)) >> 8) & (u - '0' + 52U)) |
+        ((~(0U - (u ^ '+')) >> 8) & 62U) |
+        ((~(0U - (u ^ '/')) >> 8) & 63U)
+    ) & 255U;
+    const unsigned int zero = ((x - 1U) >> 8) & 255U;
+    const unsigned int not_a =
+        ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x | (zero & not_a);
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Fold the five masked terms using a XOR b XOR their intersection.
+    // That identity equals bitwise OR even when non-byte inputs overlap terms.
+    // Thus x and the original final correction are unchanged, including for A.
+    // Unsigned candidate differences match every reference-defined input.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int term[5] = {
+        ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A'),
+        ((~((u - 'a') | ('z' - u)) >> 8) & 255U) &
+            (u - 'a' + 26U),
+        ((~((u - '0') | ('9' - u)) >> 8) & 255U) &
+            (u - '0' + 52U),
+        ((~(0U - (u ^ '+')) >> 8) & 255U) & 62U,
+        ((~(0U - (u ^ '/')) >> 8) & 255U) & 63U
+    };
+    unsigned int x = term[0];
+    unsigned int i;
+    for (i = 1U; i < 5U; ++i)
+        x = x ^ term[i] ^ (x & term[i]);
+    return x |
+        ((255U ^ (((0U - x) >> 8) & 255U)) &
+         (((0U - (u ^ 'A')) >> 8) & 255U));
+}

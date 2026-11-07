@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Start nonzero segments at segment seven's magnitude, then shift down.
+	// That magnitude is divisible by every required power of two, so no
+	// rounding occurs; segment zero retains its separate bias-8 formula.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (16896 + mant * 1024) >> (7 - seg);
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

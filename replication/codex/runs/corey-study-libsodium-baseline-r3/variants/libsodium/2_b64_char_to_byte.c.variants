@@ -1,0 +1,272 @@
+#if !defined(B64_VARIANT) || B64_VARIANT == 1
+
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int u = (unsigned int)c;
+    unsigned int x =
+        ((255U ^ (((u - 'A') >> 8) & 255U)) &
+         (255U ^ ((('Z' - u) >> 8) & 255U)) & (u - 'A')) |
+        ((255U ^ (((u - 'a') >> 8) & 255U)) &
+         (255U ^ ((('z' - u) >> 8) & 255U)) & (u - ('a' - 26))) |
+        ((255U ^ (((u - '0') >> 8) & 255U)) &
+         (255U ^ ((('9' - u) >> 8) & 255U)) & (u - ('0' - 52))) |
+        ((255U ^ (((0U - (u ^ '+')) >> 8) & 255U)) & 62U) |
+        ((255U ^ (((0U - (u ^ '/')) >> 8) & 255U)) & 63U);
+
+    return x ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+#elif B64_VARIANT == 2
+
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int u = (unsigned int)c;
+    unsigned int a = u - 'A';
+    unsigned int b = u - 'a';
+    unsigned int d = u - '0';
+    unsigned int x = 0U;
+
+    x |= a & ~((a | ('Z' - u)) >> 8) & 255U;
+    x |= (b + 26U) & ~((b | ('z' - u)) >> 8) & 255U;
+    x |= (d + 52U) & ~((d | ('9' - u)) >> 8) & 255U;
+    x |= 62U & ~((0U - (u ^ '+')) >> 8);
+    x |= 63U & ~((0U - (u ^ '/')) >> 8);
+
+    if (x != 0U)
+        return x;
+    return ((0U - (u ^ 'A')) >> 8) & 255U;
+}
+
+#elif B64_VARIANT == 3
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        (u - 'A') & ~(((u - 'A') | ('Z' - u)) >> 8);
+    const unsigned int lower =
+        (u - ('a' - 26)) & ~(((u - 'a') | ('z' - u)) >> 8);
+    const unsigned int digit =
+        (u - ('0' - 52)) & ~(((u - '0') | ('9' - u)) >> 8);
+    const unsigned int plus =
+        62U & ~((0U - (u ^ '+')) >> 8);
+    const unsigned int slash =
+        63U & ~((0U - (u ^ '/')) >> 8);
+    const unsigned int x = (upper | lower | digit | plus | slash) & 255U;
+    const unsigned int invalid = ((0U - (u ^ 'A')) >> 8) & 255U;
+
+    return x | ((0U - (unsigned int)(x == 0U)) & invalid);
+}
+
+#elif B64_VARIANT == 4
+
+static unsigned int b64_char_to_byte(int c)
+{
+    static const unsigned int bounds[3][3] = {
+        {'A', 'Z', 0U},
+        {'a', 'z', 26U},
+        {'0', '9', 52U}
+    };
+    unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 3U; ++i) {
+        unsigned int delta = u - bounds[i][0];
+        unsigned int mask =
+            ~((delta | (bounds[i][1] - u)) >> 8) & 255U;
+        x |= mask & (delta + bounds[i][2]);
+    }
+
+    x |= 62U & ~((0U - (u ^ '+')) >> 8);
+    x |= 63U & ~((0U - (u ^ '/')) >> 8);
+
+    return x != 0U ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+#elif B64_VARIANT == 5
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int values[5] = {
+        u - 'A', u - ('a' - 26), u - ('0' - 52), 62U, 63U
+    };
+    const unsigned int rejected[5] = {
+        ((u - 'A') | ('Z' - u)) >> 8,
+        ((u - 'a') | ('z' - u)) >> 8,
+        ((u - '0') | ('9' - u)) >> 8,
+        (0U - (u ^ '+')) >> 8,
+        (0U - (u ^ '/')) >> 8
+    };
+    unsigned int x = 0U;
+    unsigned int i = 5U;
+
+    while (i != 0U) {
+        --i;
+        x |= values[i] & ~rejected[i];
+    }
+
+    x &= 255U;
+    return x | ((unsigned int)(x == 0U) *
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+#elif B64_VARIANT == 6
+
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int u = (unsigned int)c;
+    unsigned int terms[5];
+    unsigned int x;
+
+    terms[0] = (u - 'A') &
+               ~(((u - 'A') | ('Z' - u)) >> 8);
+    terms[1] = (u - ('a' - 26)) &
+               ~(((u - 'a') | ('z' - u)) >> 8);
+    terms[2] = (u - ('0' - 52)) &
+               ~(((u - '0') | ('9' - u)) >> 8);
+    terms[3] = 62U & ~((0U - (u ^ '+')) >> 8);
+    terms[4] = 63U & ~((0U - (u ^ '/')) >> 8);
+
+    x = ((terms[0] | terms[1]) |
+         (terms[2] | terms[3]) | terms[4]) & 255U;
+
+    switch (x) {
+    case 0U:
+        return ((0U - (u ^ 'A')) >> 8) & 255U;
+    default:
+        return x;
+    }
+}
+
+#elif B64_VARIANT == 7
+
+static unsigned int b64_char_to_byte(int c)
+{
+    static const unsigned int first[3] = {'A', 'a', '0'};
+    static const unsigned int last[3] = {'Z', 'z', '9'};
+    static const unsigned int offset[3] = {0U, 26U, 52U};
+    unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    unsigned int i = 0U;
+
+    do {
+        unsigned int lo = (u - first[i]) >> 8;
+        unsigned int hi = (last[i] - u) >> 8;
+        unsigned int value = u - first[i] + offset[i];
+        x |= value & (255U ^ ((lo | hi) & 255U));
+        ++i;
+    } while (i < 3U);
+
+    x |= (255U ^ (((0U - (u ^ '+')) >> 8) & 255U)) & 62U;
+    x |= (255U ^ (((0U - (u ^ '/')) >> 8) & 255U)) & 63U;
+
+    return x | ((255U ^ (((0U - x) >> 8) & 255U)) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+#elif B64_VARIANT == 8
+
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i) {
+        unsigned int value;
+        unsigned int reject;
+
+        switch (i) {
+        case 0U:
+            value = u - 'A';
+            reject = (u - 'A') | ('Z' - u);
+            break;
+        case 1U:
+            value = u - ('a' - 26);
+            reject = (u - 'a') | ('z' - u);
+            break;
+        case 2U:
+            value = u - ('0' - 52);
+            reject = (u - '0') | ('9' - u);
+            break;
+        case 3U:
+            value = 62U;
+            reject = 0U - (u ^ '+');
+            break;
+        default:
+            value = 63U;
+            reject = 0U - (u ^ '/');
+            break;
+        }
+
+        x |= value & ~(reject >> 8) & 255U;
+    }
+
+    if (x == 0U)
+        x = ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x;
+}
+
+#elif B64_VARIANT == 9
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int candidates[5] = {
+        u - 'A',
+        u - ('a' - 26),
+        u - ('0' - 52),
+        62U,
+        63U
+    };
+    const unsigned int masks[5] = {
+        ~(((u - 'A') | ('Z' - u)) >> 8),
+        ~(((u - 'a') | ('z' - u)) >> 8),
+        ~(((u - '0') | ('9' - u)) >> 8),
+        ~((0U - (u ^ '+')) >> 8),
+        ~((0U - (u ^ '/')) >> 8)
+    };
+    unsigned int complement = 255U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i)
+        complement &= ~(candidates[i] & masks[i]);
+
+    {
+        unsigned int x = complement ^ 255U;
+        unsigned int fallback = ((0U - (u ^ 'A')) >> 8) & 255U;
+        unsigned int select = 0U - (unsigned int)(x == 0U);
+        return (x & ~select) | (fallback & select);
+    }
+}
+
+#elif B64_VARIANT == 10
+
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int u = (unsigned int)c;
+    unsigned int x;
+    unsigned int mask;
+
+    mask = ((u - 'A') >> 8) | (('Z' - u) >> 8);
+    x = (u - 'A') & (255U - (mask & 255U));
+
+    mask = ((u - 'a') >> 8) | (('z' - u) >> 8);
+    x |= (u - ('a' - 26)) & (255U - (mask & 255U));
+
+    mask = ((u - '0') >> 8) | (('9' - u) >> 8);
+    x |= (u - ('0' - 52)) & (255U - (mask & 255U));
+
+    mask = ((0U - (u ^ '+')) >> 8) & 255U;
+    x |= 62U & (255U - mask);
+
+    mask = ((0U - (u ^ '/')) >> 8) & 255U;
+    x |= 63U & (255U - mask);
+
+    mask = 255U - (((0U - x) >> 8) & 255U);
+    return x | (mask & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+#endif

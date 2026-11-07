@@ -1,0 +1,33 @@
+{
+  "path": "/home/cbh/galapagos-corey-runs/corey-study-alsa-lib-cot-r3",
+  "selection": {
+    "alsa-lib": [
+      "alaw_to_s16",
+      "iec958_parity",
+      "add"
+    ]
+  },
+  "original_indices": {
+    "alsa-lib": [
+      0,
+      1,
+      2
+    ]
+  },
+  "patches": [
+    "split_variants.py: skip unselected reference indices; preserve original indices",
+    "template_variants.py: skip unselected reference indices; preserve original indices",
+    "compile_variants.py: skip unselected reference indices; preserve original indices",
+    "case.py: per-run build-copy directory; prevents stale builds across conditions",
+    "tests/usecase.py: flushed progress events before build/test/verification; same check calls",
+    "tests/usecase.py: bound existing variant concurrency to 2; checks unchanged"
+  ],
+  "base": "/home/cbh/galapagos-replication",
+  "source_run": "/mnt/c/COMS6650/FinalProject/replication/codex/runs/corey-study-alsa-lib-cot-r3",
+  "concurrency": 2,
+  "source_revision": "1188d2708a3a1bf36e956bc4891372223bbe02f2",
+  "metadata_sha256": {
+    "alsa-lib": "aa78f7c328bd2d8421ff2b53ac8d9181e2af091077fdcbcdcf0aec50369df380"
+  },
+  "note": "No generated body edits; no automatic repair or regeneration"
+}

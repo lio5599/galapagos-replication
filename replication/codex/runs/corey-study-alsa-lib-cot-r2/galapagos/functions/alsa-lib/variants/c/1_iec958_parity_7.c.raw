@@ -1,0 +1,15 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Process the masked field in pairs, XORing the two bits of each pair.
+	// Fourteen pairs cover all 27 relevant bits plus one zero padding bit.
+	// Padding and excluded input bits do not affect parity, including at zero.
+	unsigned int value = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+	int pair;
+
+	for (pair = 0; pair < 14; pair++) {
+		parity ^= (value ^ (value >> 1)) & 1U;
+		value >>= 2;
+	}
+	return parity;
+}

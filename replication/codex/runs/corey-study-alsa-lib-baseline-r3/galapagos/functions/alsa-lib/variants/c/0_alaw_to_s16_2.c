@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	static const int base[8] = {
+		8, 264, 528, 1056, 2112, 4224, 8448, 16896
+	};
+	static const int step[8] = {
+		16, 16, 32, 64, 128, 256, 512, 1024
+	};
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int t = base[seg] + (int)(x & 15) * step[seg];
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

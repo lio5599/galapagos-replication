@@ -1,0 +1,97 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The reference returns 4294967295 at its saturation threshold, otherwise a + b.
+	// Using the identical condition preserves all cases, including equality.
+	return a >= 4294967295 - b ? 4294967295 : a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Test the complementary condition and return the sum first.
+	// Equality and all larger values take the same saturation path.
+	if (a < 4294967295 - b)
+		return a + b;
+	return 4294967295;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Start with the saturation result and overwrite it only below the threshold.
+	// The strict comparison leaves equality saturated, just like the reference.
+	unsigned int result = 4294967295;
+	if (a < 4294967295 - b)
+		result = a + b;
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Compute the unsigned sum, then replace it when saturation is required.
+	// Unsigned wraparound is defined and cannot affect the threshold test.
+	unsigned int result = a + b;
+	if (a >= 4294967295 - b)
+		result = 4294967295;
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Dispatch on the original comparison, whose value is either zero or one.
+	// The default path includes threshold equality and returns the same cap.
+	switch (a >= 4294967295 - b) {
+	case 0:
+		return a + b;
+	default:
+		return 4294967295;
+	}
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Short-circuit evaluation assigns the sum only below the threshold.
+	// Otherwise the initialized cap remains, including at exact equality.
+	unsigned int result = 4294967295;
+	(void)((a < 4294967295 - b) && (result = a + b));
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Turn the saturation condition into an all-zero or all-one unsigned mask.
+	// Select either the unsigned sum or the converted cap bit by bit.
+	// Any wrapped sum is discarded when the original condition requires the cap.
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	unsigned int cap = 4294967295;
+	return ((a + b) & ~mask) | (cap & mask);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// An all-one mask toggles exactly the bits that differ from the cap.
+	// An all-zero mask leaves the sum unchanged.
+	// The original comparison selects the cap at equality and beyond.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return sum ^ ((sum ^ cap) & mask);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Complementary zero-or-one weights select the sum or the cap.
+	// Exactly one term survives, so equality and overflow cases follow the reference.
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	unsigned int cap = 4294967295;
+	return (a + b) * (1u - saturated) + cap * saturated;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Add a correction only when the original saturation condition holds.
+	// Unsigned modular arithmetic makes sum plus cap minus sum equal the cap.
+	// With no saturation the correction is zero, including when both inputs are zero.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	return sum + saturated * (cap - sum);
+}

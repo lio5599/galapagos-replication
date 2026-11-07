@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask to the reference's range and XOR its seven nibbles together.
+	// The low nibble then has the same parity as all 27 selected bits.
+	// The lookup returns that parity; masked padding and zero add nothing.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int folded;
+
+	folded = value ^ (value >> 4) ^ (value >> 8)
+	       ^ (value >> 12) ^ (value >> 16)
+	       ^ (value >> 20) ^ (value >> 24);
+	return (0x6996U >> (folded & 15U)) & 1U;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

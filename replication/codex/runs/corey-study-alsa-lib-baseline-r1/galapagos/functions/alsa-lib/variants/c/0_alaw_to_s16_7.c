@@ -1,0 +1,33 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+    int decoded = a_val ^ 0x55;
+    int code = decoded & 127;
+    int magnitude;
+
+    if (code < 16)
+        magnitude = code * 16 + 8;
+    else if (code < 32)
+        magnitude = code * 16 + 8;
+    else if (code < 48)
+        magnitude = (code - 32) * 32 + 528;
+    else if (code < 64)
+        magnitude = (code - 48) * 64 + 1056;
+    else if (code < 80)
+        magnitude = (code - 64) * 128 + 2112;
+    else if (code < 96)
+        magnitude = (code - 80) * 256 + 4224;
+    else if (code < 112)
+        magnitude = (code - 96) * 512 + 8448;
+    else
+        magnitude = (code - 112) * 1024 + 16896;
+
+    return (decoded & 128) ? magnitude : -magnitude;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

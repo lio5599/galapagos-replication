@@ -1,0 +1,27 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Construct the result one bit at a time from the five candidates.
+    // A candidate contributes a bit exactly when its rejection bit is clear.
+    // This is bitwise AND and OR expanded, so partial wider-input masks survive.
+    // The unchanged correction distinguishes 'A' from other zero results.
+    unsigned int u = (unsigned int)c;
+    unsigned int reject[5] = {
+        ((u - 'A') | ('Z' - u)) >> 8,
+        ((u - 'a') | ('z' - u)) >> 8,
+        ((u - '0') | ('9' - u)) >> 8,
+        (0U - (u ^ '+')) >> 8,
+        (0U - (u ^ '/')) >> 8
+    };
+    unsigned int value[5] = {
+        u - 'A', u - 'a' + 26U, u - '0' + 52U, 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int bit;
+    unsigned int i;
+    for (bit = 1U; bit < 256U; bit <<= 1)
+        for (i = 0U; i < 5U; ++i)
+            if ((value[i] & bit) != 0U && (reject[i] & bit) == 0U)
+                x |= bit;
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}

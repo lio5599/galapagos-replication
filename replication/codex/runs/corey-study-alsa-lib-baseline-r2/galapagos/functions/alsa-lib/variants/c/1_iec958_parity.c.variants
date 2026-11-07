@@ -1,0 +1,139 @@
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 4; bit <= 30; ++bit)
+		parity ^= (data >> bit) & 1U;
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int count = 27;
+
+	data >>= 4;
+	while (count--) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+
+	data &= 0x7FFFFFF0U;
+	while (data) {
+		data &= data - 1U;
+		parity ^= 1U;
+	}
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	data = (data >> 4) & 0x07FFFFFFU;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data ^= data >> 2;
+	data ^= data >> 1;
+
+	return data & 1U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	data = (data >> 4) & 0x07FFFFFFU;
+	data ^= data >> 16;
+	data ^= data >> 8;
+	data ^= data >> 4;
+
+	return (0x6996U >> (data & 0xFU)) & 1U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	unsigned int mask;
+
+	for (mask = 0x10U; mask != 0x80000000U; mask <<= 1)
+		parity ^= (data & mask) != 0U;
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int count = 0;
+
+	data = (data >> 4) & 0x07FFFFFFU;
+	while (data) {
+		count += data % 2U;
+		data /= 2U;
+	}
+
+	return count % 2U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+
+	data = (data >> 4) & 0x07FFFFFFU;
+	do {
+		parity ^= (0x6996U >> (data & 0xFU)) & 1U;
+		data >>= 4;
+	} while (data);
+
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	data &= 0x7FFFFFF0U;
+	data -= (data >> 1) & 0x55555555U;
+	data = (data & 0x33333333U) + ((data >> 2) & 0x33333333U);
+	data = (data + (data >> 4)) & 0x0F0F0F0FU;
+	data += data >> 8;
+	data += data >> 16;
+
+	return data & 1U;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit = 30;
+
+	do {
+		parity = (parity + ((data >> bit) & 1U)) & 1U;
+	} while (--bit >= 4);
+
+	return parity;
+}

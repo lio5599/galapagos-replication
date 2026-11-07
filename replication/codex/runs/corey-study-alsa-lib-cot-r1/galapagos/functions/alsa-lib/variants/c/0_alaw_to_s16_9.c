@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Accumulate the four mantissa bits using their scaled positional weights.
+	// The initial magnitude supplies the segment's scaled bias.
+	// Every addition is nonnegative and the total never exceeds 32256.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int exponent = seg ? seg - 1 : 0;
+	int step = 16 << exponent;
+	int t = (seg ? 264 : 8) << exponent;
+
+	if (x & 1)
+		t += step;
+	if (x & 2)
+		t += step * 2;
+	if (x & 4)
+		t += step * 4;
+	if (x & 8)
+		t += step * 8;
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

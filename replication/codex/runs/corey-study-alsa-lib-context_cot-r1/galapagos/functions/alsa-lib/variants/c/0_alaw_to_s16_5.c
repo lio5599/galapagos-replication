@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Split each nonzero-segment magnitude into its mantissa and bias.
+	// The two terms sum to (16*m + 264) times the segment scale.
+	// Segment zero is handled separately; every shifted value stays positive.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg != 0)
+		t = ((mant + 16) << (seg + 3)) + (1 << (seg + 2));
+	else
+		t = (mant << 4) + 8;
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

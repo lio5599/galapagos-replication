@@ -1,0 +1,182 @@
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    int magnitude;
+    int exponent;
+
+    a_val ^= 0x55;
+    exponent = (a_val >> 4) & 7;
+    magnitude = ((a_val & 15) << 4) + 8;
+
+    if (exponent != 0)
+        magnitude = (magnitude + 256) << (exponent - 1);
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    int magnitude;
+
+    a_val ^= 0x55;
+    magnitude = (a_val & 15) * 16;
+
+    switch ((a_val >> 4) & 7) {
+    case 0: magnitude += 8; break;
+    case 1: magnitude += 264; break;
+    case 2: magnitude = (magnitude + 264) * 2; break;
+    case 3: magnitude = (magnitude + 264) * 4; break;
+    case 4: magnitude = (magnitude + 264) * 8; break;
+    case 5: magnitude = (magnitude + 264) * 16; break;
+    case 6: magnitude = (magnitude + 264) * 32; break;
+    default: magnitude = (magnitude + 264) * 64; break;
+    }
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    static const int base[8] = {
+        8, 264, 528, 1056, 2112, 4224, 8448, 16896
+    };
+    static const int step[8] = {
+        16, 16, 32, 64, 128, 256, 512, 1024
+    };
+    int decoded = a_val ^ 0x55;
+    int segment = (decoded >> 4) & 7;
+    int magnitude = base[segment] + (decoded & 15) * step[segment];
+
+    return (decoded & 128) ? magnitude : -magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    int decoded = a_val ^ 0x55;
+    int segment = (decoded >> 4) & 7;
+    int magnitude = (decoded & 15) * 16 + 8;
+
+    if (segment > 0) {
+        magnitude += 256;
+        while (--segment > 0)
+            magnitude *= 2;
+    }
+
+    return (decoded & 128) ? magnitude : -magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    unsigned int decoded = (unsigned int)a_val ^ 0x55u;
+    unsigned int exponent = (decoded >> 4) & 7u;
+    unsigned int nonzero = exponent != 0;
+    unsigned int magnitude =
+        (((decoded & 15u) << 4) + 8u + (nonzero << 8))
+        << (exponent - nonzero);
+
+    return (2 * (int)(decoded >> 7) - 1) * (int)magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    int decoded = a_val ^ 0x55;
+    int exponent = (decoded >> 4) & 7;
+    int magnitude;
+
+    if (exponent == 0)
+        magnitude = ((decoded & 15) * 2 + 1) * 8;
+    else
+        magnitude = ((decoded & 15) * 2 + 33) << (exponent + 2);
+
+    if (!(decoded & 128))
+        magnitude = -magnitude;
+
+    return magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    static const int scale[8] = { 1, 1, 2, 4, 8, 16, 32, 64 };
+    int decoded = a_val ^ 0x55;
+    int code = decoded & 127;
+    int magnitude = ((code & 15) * 16 + (code < 16 ? 8 : 264))
+                    * scale[code >> 4];
+
+    return (decoded >> 7) ? magnitude : -magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    int decoded = a_val ^ 0x55;
+    int code = decoded & 127;
+    int magnitude = (code & 15) * 16 + 8;
+
+    if (code >= 16)
+        magnitude += 256;
+    if (code >= 32)
+        magnitude *= 2;
+    if (code >= 48)
+        magnitude *= 2;
+    if (code >= 64)
+        magnitude *= 2;
+    if (code >= 80)
+        magnitude *= 2;
+    if (code >= 96)
+        magnitude *= 2;
+    if (code >= 112)
+        magnitude *= 2;
+
+    return (decoded & 128) ? magnitude : -magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    static const int mantissa[16] = {
+        8, 24, 40, 56, 72, 88, 104, 120,
+        136, 152, 168, 184, 200, 216, 232, 248
+    };
+    int decoded = a_val ^ 0x55;
+    int exponent = (decoded >> 4) & 7;
+    int magnitude = mantissa[decoded & 15];
+
+    if (exponent)
+        magnitude = ((magnitude + 256) << exponent) / 2;
+
+    return (decoded & 128) ? magnitude : -magnitude;
+}
+
+
+
+static int alaw_to_s16(unsigned char a_val)
+{
+    int exponent = ((a_val >> 4) ^ 5) & 7;
+    int mantissa = (a_val ^ 5) & 15;
+    int magnitude;
+
+    if (!exponent) {
+        magnitude = mantissa * 16 + 8;
+    } else {
+        int shift = exponent + 3;
+        magnitude = (1 << (exponent + 7))
+                  + (1 << (exponent + 2))
+                  + (mantissa << shift);
+    }
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}

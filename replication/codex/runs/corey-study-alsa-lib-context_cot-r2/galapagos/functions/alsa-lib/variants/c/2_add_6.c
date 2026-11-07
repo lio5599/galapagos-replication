@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Expand the original condition into an all-zero or all-one mask.
+	// Select the sum below the threshold and the cap otherwise.
+	// Equality sets the mask, and any wrapped sum is masked away.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return (sum & ~mask) | (cap & mask);
+}
+
+
+int main(){
+    add(0,0);
+}

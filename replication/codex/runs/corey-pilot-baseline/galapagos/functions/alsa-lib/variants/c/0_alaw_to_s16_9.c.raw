@@ -1,0 +1,17 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+    int exponent = ((a_val >> 4) ^ 5) & 7;
+    int mantissa = (a_val ^ 5) & 15;
+    int magnitude;
+
+    if (!exponent) {
+        magnitude = mantissa * 16 + 8;
+    } else {
+        int shift = exponent + 3;
+        magnitude = (1 << (exponent + 7))
+                  + (1 << (exponent + 2))
+                  + (mantissa << shift);
+    }
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}

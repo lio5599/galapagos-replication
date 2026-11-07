@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Accumulate contributions using r OR t = r XOR (t AND NOT r).
+    // Previously set bits stay set even when several masks select the same bit.
+    // Original unsigned mask calculations preserve behavior outside zero through 63.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int t;
+
+    t = (a ^ 255U) & b & (x + ('a' - 26));
+    result ^= t & ~result;
+    t = (b ^ 255U) & c & (x + ('0' - 52));
+    result ^= t & ~result;
+    t = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '+';
+    result ^= t & ~result;
+    t = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '/';
+    result ^= t & ~result;
+
+    return (int)result;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

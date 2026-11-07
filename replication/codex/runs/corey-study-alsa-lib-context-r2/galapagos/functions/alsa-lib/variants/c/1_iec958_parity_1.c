@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int remaining = 27;
+
+	data >>= 4;
+	while (remaining--) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

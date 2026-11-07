@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Combine 13 pairs of selected bits, then the final selected bit.
+	// XOR is associative, so grouping preserves the reference parity.
+	// Masking excludes unrelated bits; zero contributes no toggles.
+	unsigned int parity = 0;
+	int pair;
+
+	data = (data >> 4) & 0x07ffffffU;
+	for (pair = 0; pair < 13; pair++) {
+		parity ^= (data ^ (data >> 1)) & 1U;
+		data >>= 2;
+	}
+	return parity ^ (data & 1U);
+}
+
+
+int main(){
+    iec958_parity(0);
+}

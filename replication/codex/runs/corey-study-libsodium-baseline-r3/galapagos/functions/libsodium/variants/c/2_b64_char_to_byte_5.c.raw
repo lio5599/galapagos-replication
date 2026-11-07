@@ -1,0 +1,25 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int u = (unsigned int)c;
+    unsigned int terms[5];
+    unsigned int x;
+
+    terms[0] = (u - 'A') &
+               ~(((u - 'A') | ('Z' - u)) >> 8);
+    terms[1] = (u - ('a' - 26)) &
+               ~(((u - 'a') | ('z' - u)) >> 8);
+    terms[2] = (u - ('0' - 52)) &
+               ~(((u - '0') | ('9' - u)) >> 8);
+    terms[3] = 62U & ~((0U - (u ^ '+')) >> 8);
+    terms[4] = 63U & ~((0U - (u ^ '/')) >> 8);
+
+    x = ((terms[0] | terms[1]) |
+         (terms[2] | terms[3]) | terms[4]) & 255U;
+
+    switch (x) {
+    case 0U:
+        return ((0U - (u ^ 'A')) >> 8) & 255U;
+    default:
+        return x;
+    }
+}

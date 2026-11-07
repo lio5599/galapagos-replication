@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Extract the relevant eight bits before complementing the combined masks.
+    // Masking the complement makes this identical to the original XOR with 255.
+    // The conditional replaces only the zero test on the bounded intermediate x.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ~(((u - 'A') >> 8) | (('Z' - u) >> 8)) & 255U;
+    const unsigned int b = ~(((u - 'a') >> 8) | (('z' - u) >> 8)) & 255U;
+    const unsigned int d = ~(((u - '0') >> 8) | (('9' - u) >> 8)) & 255U;
+    const unsigned int p = ~((0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int q = ~((0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - 'a' + 26U)) |
+                           (d & (u - '0' + 52U)) |
+                           (p & 62U) | (q & 63U);
+    return x != 0U ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

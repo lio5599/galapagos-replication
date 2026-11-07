@@ -1,0 +1,19 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = ((x ^ 62U) - 1U) >> 8;
+    unsigned int e = ((x ^ 63U) - 1U) >> 8;
+    unsigned int upper = (x + 'A') & 0xFFU;
+    unsigned int lower = (x + ('a' - 26)) & 0xFFU;
+    unsigned int digit = (x + ('0' - 52)) & 0xFFU;
+    unsigned int dash = (unsigned int) '-' & 0xFFU;
+    unsigned int underscore = (unsigned int) '_' & 0xFFU;
+
+    return (upper & a) |
+           (lower & b & ~a) |
+           (digit & c & ~b) |
+           (dash & d) |
+           (underscore & e);
+}

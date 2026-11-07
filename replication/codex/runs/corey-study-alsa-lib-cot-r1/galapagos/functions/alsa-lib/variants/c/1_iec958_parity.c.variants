@@ -1,0 +1,156 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The reference returns the parity of original data bits 4 through 30.
+	// Isolate those 27 bits, then XOR-fold them into the lowest bit.
+	// Bits outside the range are ignored; an all-zero range returns zero.
+	// unsigned long provides at least 32 bits for the folding shifts.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+
+	x ^= x >> 16;
+	x ^= x >> 8;
+	x ^= x >> 4;
+	x ^= x >> 2;
+	x ^= x >> 1;
+	return (unsigned int)(x & 1UL);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Isolate bits 4 through 30 and remove one set bit per iteration.
+	// Toggling once per removed bit gives the set-bit count modulo two.
+	// An empty range skips the loop and returns zero.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+
+	while (x != 0) {
+		x &= x - 1UL;
+		parity ^= 1U;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// XOR the isolated bits instead of counting them.
+	// XOR is addition modulo two, matching the reference's final mask.
+	// Leading zeros need no iterations; zero input returns zero.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+
+	while (x != 0) {
+		parity ^= (unsigned int)(x & 1UL);
+		x >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Test each original bit from 4 through 30 using a moving mask.
+	// Toggle parity for each set bit, ignoring every other position.
+	// The unsigned long mask safely advances past bit 30 without wrapping.
+	unsigned long mask;
+	unsigned int parity = 0;
+
+	for (mask = 0x10UL; mask <= 0x40000000UL; mask <<= 1) {
+		if (((unsigned long)data & mask) != 0)
+			parity ^= 1U;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Each bit of 0x6996 stores the parity of its four-bit index.
+	// XOR the table results for the isolated range's seven nibbles.
+	// The top nibble is zero-padded, so excluded bits cannot contribute.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+	int group;
+
+	for (group = 0; group < 7; ++group) {
+		parity ^= (unsigned int)((0x6996UL >> (x & 15UL)) & 1UL);
+		x >>= 4;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Count the isolated set bits using parallel two-bit and nibble sums.
+	// Combine those counts into the low byte, then retain its parity.
+	// The count is at most 27; zero and all-set ranges need no special case.
+	// Masks keep the calculation valid even when unsigned long is wider.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+
+	x = x - ((x >> 1) & 0x55555555UL);
+	x = (x & 0x33333333UL) + ((x >> 2) & 0x33333333UL);
+	x = (x + (x >> 4)) & 0x0f0f0f0fUL;
+	x += x >> 8;
+	x += x >> 16;
+	return (unsigned int)(x & 1UL);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Process the isolated range two bits at a time.
+	// A pair contributes odd parity exactly when its two bits differ.
+	// Fourteen pairs cover 27 bits plus one zero, preserving edge cases.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+	int pair;
+
+	for (pair = 0; pair < 14; ++pair) {
+		parity ^= (unsigned int)((x ^ (x >> 1)) & 1UL);
+		x >>= 2;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Extract the isolated range's binary digits using division.
+	// Summing remainders counts precisely original bits 4 through 30.
+	// Modulo two produces parity, including zero for an empty range.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int count = 0;
+
+	while (x != 0) {
+		count += (unsigned int)(x % 2UL);
+		x /= 2UL;
+	}
+	return count % 2U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Bit n of 0x96696996 stores the parity of the five-bit value n.
+	// XOR six table results to cover the isolated 27-bit range.
+	// The last group has three zero padding bits, which add no parity.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+	int group;
+
+	for (group = 0; group < 6; ++group) {
+		parity ^= (unsigned int)((0x96696996UL >> (x & 31UL)) & 1UL);
+		x >>= 5;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Treat the isolated range as nine three-bit groups.
+	// Bit n of 0x96 is the parity of n, so XOR combines group parities.
+	// All 27 selected bits are covered exactly; excluded bits are masked.
+	// Zero groups contribute zero, including when the entire range is zero.
+	unsigned long x = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+	int group;
+
+	for (group = 0; group < 9; ++group) {
+		parity ^= (unsigned int)((0x96UL >> (x & 7UL)) & 1UL);
+		x >>= 3;
+	}
+	return parity;
+}

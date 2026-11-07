@@ -1,0 +1,38 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int candidates[5] = {
+        u - 'A',
+        u - ('a' - 26),
+        u - ('0' - 52),
+        62U,
+        63U
+    };
+    const unsigned int masks[5] = {
+        ~(((u - 'A') | ('Z' - u)) >> 8),
+        ~(((u - 'a') | ('z' - u)) >> 8),
+        ~(((u - '0') | ('9' - u)) >> 8),
+        ~((0U - (u ^ '+')) >> 8),
+        ~((0U - (u ^ '/')) >> 8)
+    };
+    unsigned int complement = 255U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i)
+        complement &= ~(candidates[i] & masks[i]);
+
+    {
+        unsigned int x = complement ^ 255U;
+        unsigned int fallback = ((0U - (u ^ 'A')) >> 8) & 255U;
+        unsigned int select = 0U - (unsigned int)(x == 0U);
+        return (x & ~select) | (fallback & select);
+    }
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

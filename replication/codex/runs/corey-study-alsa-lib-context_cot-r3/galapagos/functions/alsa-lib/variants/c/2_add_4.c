@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Turn the original condition into an all-ones or all-zero unsigned mask.
+	// Select the constant when the condition holds and the sum otherwise.
+	// Equality sets the mask; unsigned wrap in the unused sum is harmless.
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return ((unsigned int)4294967295 & mask) | ((a + b) & ~mask);
+}
+
+
+int main(){
+    add(0,0);
+}

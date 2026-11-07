@@ -1,0 +1,13 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int mask = 0U - (unsigned int)(a < 4294967295U - b);
+	return 4294967295U ^ (((a + b) ^ 4294967295U) & mask);
+}
+
+
+int main(){
+    add(0,0);
+}

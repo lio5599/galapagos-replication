@@ -1,0 +1,188 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Maps 0..63 to Base64 characters and other inputs to the reference's masked result.
+    // Name each byte mask without assuming that x is in the Base64 range.
+    // Unsigned subtraction and all five masked terms retain the original semantics.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int t0 = a & (x + 'A');
+    unsigned int t1 = (a ^ 0xFFU) & b & (x + ('a' - 26));
+    unsigned int t2 = (b ^ 0xFFU) & c & (x + ('0' - 52));
+    unsigned int t3 = d & '+';
+    unsigned int t4 = e & '/';
+    return (int)(t0 | t1 | t2 | t3 | t4);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Keep full shifted masks and truncate the combined result to one byte.
+    // Complementing a full mask matches bytewise inversion in its low eight bits.
+    // High bits cannot influence low bits through these bitwise operations.
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+    unsigned int result =
+        (a & (x + 'A')) |
+        (~a & b & (x + ('a' - 26))) |
+        (~b & c & (x + ('0' - 52))) |
+        (~d & (unsigned int)'+') |
+        (~e & (unsigned int)'/');
+    return (int)(result & 0xFFU);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Use De Morgan's law to express each masked term using complement and OR.
+    // Full-width inversions are harmless because the final result is byte-masked.
+    // The unsigned shifts and wraparound remain unchanged for every input.
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+    unsigned int t0 = ~(~a | ~(x + 'A'));
+    unsigned int t1 = ~(a | ~b | ~(x + ('a' - 26)));
+    unsigned int t2 = ~(b | ~c | ~(x + ('0' - 52)));
+    unsigned int t3 = ~(d | ~(unsigned int)'+');
+    unsigned int t4 = ~(e | ~(unsigned int)'/');
+    return (int)((t0 | t1 | t2 | t3 | t4) & 0xFFU);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // For any byte m, 255 minus m equals its eight-bit complement.
+    // Apply that identity to all inverted masks, including non-Boolean masks.
+    // Thus out-of-range inputs retain exactly the reference's behavior.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    return (int)((a & (x + 'A')) |
+                 ((255U - a) & b & (x + ('a' - 26))) |
+                 ((255U - b) & c & (x + ('0' - 52))) |
+                 ((255U - d) & (unsigned int)'+') |
+                 ((255U - e) & (unsigned int)'/'));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Remove selected bits using v XOR (v AND mask) instead of an inverted mask.
+    // Each v is already byte-sized, so this equals the reference's byte masking.
+    // The identity holds for arbitrary masks, not just zero and 255.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int v = b & (x + ('a' - 26));
+    unsigned int w = c & (x + ('0' - 52));
+    return (int)((a & (x + 'A')) |
+                 (v ^ (v & a)) |
+                 (w ^ (w & b)) |
+                 (d & '+') |
+                 (e & '/'));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Combine the first two terms with a bitwise selection identity.
+    // v XOR (a AND (u XOR v)) selects u where a is set and v elsewhere.
+    // Since v and a are byte-sized, this works for every unsigned input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int u = x + 'A';
+    unsigned int v = b & (x + ('a' - 26));
+    unsigned int first = v ^ (a & (u ^ v));
+    return (int)(first |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '+') |
+                 (e & '/'));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Combine terms arithmetically using u OR v = u + v - (u AND v).
+    // All terms and accumulated unions are at most 255, so sums cannot overflow.
+    // No assumption about the input range or disjointness of terms is needed.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int term = (a ^ 255U) & b & (x + ('a' - 26));
+    result = result + term - (result & term);
+    term = (b ^ 255U) & c & (x + ('0' - 52));
+    result = result + term - (result & term);
+    term = d & '+';
+    result = result + term - (result & term);
+    term = e & '/';
+    result = result + term - (result & term);
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Compute the union as the bytewise complement of intersected complements.
+    // Every term is byte-sized, so XOR with 255 is its exact byte complement.
+    // De Morgan's law preserves overlaps and partial masks for all inputs.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int t0 = a & (x + 'A');
+    unsigned int t1 = (a ^ 255U) & b & (x + ('a' - 26));
+    unsigned int t2 = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int t3 = d & '+';
+    unsigned int t4 = e & '/';
+    return (int)(255U ^ ((255U ^ t0) &
+                         (255U ^ t1) &
+                         (255U ^ t2) &
+                         (255U ^ t3) &
+                         (255U ^ t4)));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Express unsigned subtraction through complemented constants and addition.
+    // Modulo unsigned arithmetic gives x - n = x + complement(n - 1).
+    // Likewise, unsigned negation is complement plus one, including at zero.
+    unsigned int a = ((x + ~25U) >> 8) & 255U;
+    unsigned int b = ((x + ~51U) >> 8) & 255U;
+    unsigned int c = ((x + ~61U) >> 8) & 255U;
+    unsigned int d = (((~(x ^ 62U) + 1U) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((~(x ^ 63U) + 1U) >> 8) & 255U) ^ 255U;
+    unsigned int result = a & (x + 'A');
+    result |= (a ^ 255U) & b & (x + ('a' - 26));
+    result |= (b ^ 255U) & c & (x + ('0' - 52));
+    result |= d & '+';
+    result |= e & '/';
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    // Unsigned division by 256 equals a right shift by eight.
+    // Remainder modulo 256 extracts exactly the low eight bits.
+    // Subtractions still wrap before division, preserving all edge cases.
+    unsigned int a = ((x - 26U) / 256U) % 256U;
+    unsigned int b = ((x - 52U) / 256U) % 256U;
+    unsigned int c = ((x - 62U) / 256U) % 256U;
+    unsigned int d = (((0U - (x ^ 62U)) / 256U) % 256U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) / 256U) % 256U) ^ 255U;
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 255U) & b & (x + ('a' - 26))) |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '+') |
+                 (e & '/'));
+}

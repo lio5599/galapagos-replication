@@ -1,0 +1,37 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int masks[5] = {
+        ~(((u - 'A') | ('Z' - u)) >> 8),
+        ~(((u - 'a') | ('z' - u)) >> 8),
+        ~(((u - '0') | ('9' - u)) >> 8),
+        ~((0U - (u ^ '+')) >> 8),
+        ~((0U - (u ^ '/')) >> 8)
+    };
+    const unsigned int values[5] = {
+        u - 'A', u - ('a' - 26), u - ('0' - 52), 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int bit;
+    unsigned int i;
+
+    for (bit = 1U; bit < 256U; bit <<= 1) {
+        for (i = 0U; i < 5U; ++i) {
+            if ((masks[i] & values[i] & bit) != 0U) {
+                x |= bit;
+                break;
+            }
+        }
+    }
+
+    return x | ((~((0U - x) >> 8) & 255U)
+              & ((0U - (u ^ 'A')) >> 8));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

@@ -1,0 +1,24 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Reconstruct the result one bit at a time from the reference predicates.
+    // Each condition tests the corresponding bit of a masked contribution.
+    // This handles partial masks and overlapping contributions outside 0..63 exactly.
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+    unsigned int result = 0U;
+    unsigned int bit;
+
+    for (bit = 1U; bit < 256U; bit <<= 1) {
+        if (((a & bit) && ((x + 'A') & bit)) ||
+            ((~a & bit) && (b & bit) && ((x + ('a' - 26)) & bit)) ||
+            ((~b & bit) && (c & bit) && ((x + ('0' - 52)) & bit)) ||
+            ((~d & bit) && ('-' & bit)) ||
+            ((~e & bit) && ('_' & bit))) {
+            result |= bit;
+        }
+    }
+    return (int)result;
+}

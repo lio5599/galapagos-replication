@@ -1,0 +1,181 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 0xFFU;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 0xFFU;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 0xFFU) & b & (x + ('a' - 26))) |
+                 ((b ^ 0xFFU) & c & (x + ('0' - 52))) |
+                 ((d ^ 0xFFU) & '+') |
+                 ((e ^ 0xFFU) & '/'));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int result = a & (x + 'A');
+
+    result |= (~a & b) & (x + ('a' - 26));
+    result |= (~b & c) & (x + ('0' - 52));
+    result |= (~((0U - (x ^ 62U)) >> 8) & 255U) & '+';
+    result |= (~((0U - (x ^ 63U)) >> 8) & 255U) & '/';
+
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+
+    return (int)(((a & (x + 'A')) |
+                  (~a & b & (x + ('a' - 26))) |
+                  (~b & c & (x + ('0' - 52))) |
+                  (~d & '+') |
+                  (~e & '/')) & 255U);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int masks[5] = {
+        a,
+        ~a & b,
+        ~b & ((x - 62U) >> 8),
+        ~((0U - (x ^ 62U)) >> 8),
+        ~((0U - (x ^ 63U)) >> 8)
+    };
+    unsigned int values[5] = {
+        x + 'A', x + ('a' - 26), x + ('0' - 52), '+', '/'
+    };
+    unsigned int result = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i)
+        result |= masks[i] & values[i];
+
+    return (int)(result & 255U);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int terms[5] = {
+        a & (x + 'A'),
+        ~a & b & (x + ('a' - 26)),
+        ~b & ((x - 62U) >> 8) & (x + ('0' - 52)),
+        ~((0U - (x ^ 62U)) >> 8) & '+',
+        ~((0U - (x ^ 63U)) >> 8) & '/'
+    };
+    unsigned int result = 0U;
+    unsigned int i = 5U;
+
+    while (i != 0U)
+        result |= terms[--i];
+
+    return (int)(result & 255U);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+    unsigned int complement;
+
+    complement = ~(a & (x + 'A'));
+    complement &= ~(~a & b & (x + ('a' - 26)));
+    complement &= ~(~b & c & (x + ('0' - 52)));
+    complement &= ~(~d & '+');
+    complement &= ~(~e & '/');
+
+    return (int)(~complement & 255U);
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) / 256U) % 256U;
+    unsigned int b = ((x - 52U) / 256U) % 256U;
+    unsigned int c = ((x - 62U) / 256U) % 256U;
+    unsigned int d = ((0U - (x ^ 62U)) / 256U) % 256U;
+    unsigned int e = ((0U - (x ^ 63U)) / 256U) % 256U;
+
+    return (int)((a & (x + 'A')) |
+                 ((255U - a) & b & (x + ('a' - 26))) |
+                 ((255U - b) & c & (x + ('0' - 52))) |
+                 ((255U - d) & '+') |
+                 ((255U - e) & '/'));
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int boundaries[3] = {26U, 52U, 62U};
+    unsigned int masks[3];
+    unsigned int result;
+    unsigned int i;
+
+    for (i = 0U; i < 3U; ++i)
+        masks[i] = ((x - boundaries[i]) >> 8) & 255U;
+
+    result = masks[0] & (x + 'A');
+    result |= (255U ^ masks[0]) & masks[1] & (x + ('a' - 26));
+    result |= (255U ^ masks[1]) & masks[2] & (x + ('0' - 52));
+
+    for (i = 0U; i < 2U; ++i) {
+        unsigned int mask = ((0U - (x ^ (62U + i))) >> 8) & 255U;
+        unsigned int value = i == 0U ? '+' : '/';
+        result |= (255U ^ mask) & value;
+    }
+
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+    unsigned int result = 0U;
+    unsigned int bit;
+
+    for (bit = 1U; bit < 256U; bit <<= 1) {
+        if ((a & (x + 'A') & bit) ||
+            (~a & b & (x + ('a' - 26)) & bit) ||
+            (~b & c & (x + ('0' - 52)) & bit) ||
+            (~d & '+' & bit) ||
+            (~e & '/' & bit))
+            result |= bit;
+    }
+
+    return (int)result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int upper = x + 'A';
+    unsigned int lower = b & (x + ('a' - 26));
+    unsigned int digits = ~b & c & (x + ('0' - 52));
+    unsigned int symbols =
+        (~((0U - (x ^ 62U)) >> 8) & '+') |
+        (~((0U - (x ^ 63U)) >> 8) & '/');
+    unsigned int letters = lower ^ ((upper ^ lower) & a);
+
+    return (int)((letters | digits | symbols) & 255U);
+}

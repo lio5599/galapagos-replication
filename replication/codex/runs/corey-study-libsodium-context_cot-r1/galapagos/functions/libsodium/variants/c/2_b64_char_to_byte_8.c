@@ -1,0 +1,34 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Form unions using the unsigned identity a OR b equals a plus b minus a AND b.
+    // The identity remains valid with modular arithmetic and overlapping mask bits.
+    // Keeping all original mask bits preserves results for arbitrary defined inputs.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a =
+        (~(((u - (unsigned int)'A') | ((unsigned int)'Z' - u)) >> 8) & 255U) &
+        (u - (unsigned int)'A');
+    const unsigned int b =
+        (~(((u - (unsigned int)'a') | ((unsigned int)'z' - u)) >> 8) & 255U) &
+        (u - (unsigned int)'a' + 26U);
+    const unsigned int d =
+        (~(((u - (unsigned int)'0') | ((unsigned int)'9' - u)) >> 8) & 255U) &
+        (u - (unsigned int)'0' + 52U);
+    const unsigned int p = ~((0U - (u ^ (unsigned int)'+')) >> 8) & 62U;
+    const unsigned int s = ~((0U - (u ^ (unsigned int)'/')) >> 8) & 63U;
+    unsigned int x = a + b - (a & b);
+    unsigned int correction;
+    x = x + d - (x & d);
+    x = x + p - (x & p);
+    x = x + s - (x & s);
+    correction = ~((0U - x) >> 8) &
+                 ((0U - (u ^ (unsigned int)'A')) >> 8) & 255U;
+    return x + correction - (x & correction);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

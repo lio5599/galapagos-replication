@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	switch (a >= 4294967295U - b) {
+	case 0:
+		return a + b;
+	default:
+		return 4294967295U;
+	}
+}
+
+
+int main(){
+    add(0,0);
+}

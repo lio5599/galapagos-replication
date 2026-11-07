@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The original comparison produces a selector equal to zero or one.
+	// Exactly one term contributes: the constant or the ordinary sum.
+	// Equality selects the constant, and unsigned arithmetic stays defined.
+	unsigned int saturated = (a >= 4294967295 - b);
+	return saturated * (unsigned int)4294967295
+	     + (1u - saturated) * (a + b);
+}
+
+
+int main(){
+    add(0,0);
+}

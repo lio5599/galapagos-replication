@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Complemented threshold masks express the same five selection terms.
+    // The final byte mask discards high bits introduced by full-width complements.
+    // Each remaining bit matches the reference even when masks are not Boolean.
+    unsigned int p = (~(x - 26U)) >> 8;
+    unsigned int q = (~(x - 52U)) >> 8;
+    unsigned int r = (~(x - 62U)) >> 8;
+    unsigned int s = (0U - (x ^ 62U)) >> 8;
+    unsigned int t = (0U - (x ^ 63U)) >> 8;
+    unsigned int result = ((~p) & (x + 'A')) |
+                          (p & (~q) & (x + ('a' - 26))) |
+                          (q & (~r) & (x + ('0' - 52))) |
+                          ((~s) & '+') |
+                          ((~t) & '/');
+
+    return (int)(result & 255U);
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

@@ -1,0 +1,41 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Reconstruct x one bit at a time from the five original contributions.
+    // A payload bit survives exactly when its corresponding source-mask bit is zero.
+    // Testing bits separately preserves overlapping masks for non-byte inputs.
+    // A zero x receives the same correction as in the reference.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int source[5] = {
+        (u - (unsigned int)'A') | ((unsigned int)'Z' - u),
+        (u - (unsigned int)'a') | ((unsigned int)'z' - u),
+        (u - (unsigned int)'0') | ((unsigned int)'9' - u),
+        0U - (u ^ (unsigned int)'+'),
+        0U - (u ^ (unsigned int)'/')
+    };
+    const unsigned int value[5] = {
+        u - (unsigned int)'A',
+        u - ((unsigned int)'a' - 26U),
+        u - ((unsigned int)'0' - 52U),
+        62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int bit;
+    unsigned int i;
+
+    for (bit = 0U; bit < 8U; ++bit) {
+        for (i = 0U; i < 5U; ++i) {
+            if (((value[i] >> bit) & 1U) != 0U &&
+                ((source[i] >> (bit + 8U)) & 1U) == 0U)
+                x |= 1U << bit;
+        }
+    }
+    return x ? x : (((0U - (u ^ (unsigned int)'A')) >> 8) & 255U);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

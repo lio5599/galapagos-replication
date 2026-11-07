@@ -1,0 +1,265 @@
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x;
+
+    x = (~((u - 'A') >> 8) & ~(('Z' - u) >> 8) & (u - 'A') & 255U)
+      | (~((u - 'a') >> 8) & ~(('z' - u) >> 8) & (u - ('a' - 26)) & 255U)
+      | (~((u - '0') >> 8) & ~(('9' - u) >> 8) & (u - ('0' - 52)) & 255U)
+      | (~((0U - (u ^ '+')) >> 8) & 62U)
+      | (~((0U - (u ^ '/')) >> 8) & 63U);
+
+    return x ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int low[3] = { 'A', 'a', '0' };
+    const unsigned int high[3] = { 'Z', 'z', '9' };
+    const unsigned int offset[3] = { 0U, 26U, 52U };
+    unsigned int x = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 3U; ++i) {
+        unsigned int mask = ~(((u - low[i]) >> 8)
+                           | ((high[i] - u) >> 8)) & 255U;
+        x |= mask & (u - low[i] + offset[i]);
+    }
+
+    x |= ~((0U - (u ^ '+')) >> 8) & 62U;
+    x |= ~((0U - (u ^ '/')) >> 8) & 63U;
+
+    return x | ((~((0U - x) >> 8) & 255U)
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int a = ((u - 'A') >> 8) | (('Z' - u) >> 8);
+    unsigned int b = ((u - 'a') >> 8) | (('z' - u) >> 8);
+    unsigned int d = ((u - '0') >> 8) | (('9' - u) >> 8);
+    unsigned int p = (0U - (u ^ '+')) >> 8;
+    unsigned int s = (0U - (u ^ '/')) >> 8;
+    unsigned int x = (~a & (u - 'A'))
+                   | (~b & (u - ('a' - 26)))
+                   | (~d & (u - ('0' - 52)))
+                   | (~p & 62U)
+                   | (~s & 63U);
+
+    x &= 255U;
+    if (x == 0U)
+        x = ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x;
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int terms[5];
+    unsigned int x = 0U;
+    unsigned int i;
+
+    terms[0] = (255U ^ (((u - 'A') >> 8) & 255U))
+             & (255U ^ ((('Z' - u) >> 8) & 255U))
+             & (u - 'A');
+    terms[1] = (255U ^ (((u - 'a') >> 8) & 255U))
+             & (255U ^ ((('z' - u) >> 8) & 255U))
+             & (u - ('a' - 26));
+    terms[2] = (255U ^ (((u - '0') >> 8) & 255U))
+             & (255U ^ ((('9' - u) >> 8) & 255U))
+             & (u - ('0' - 52));
+    terms[3] = (255U ^ (((0U - (u ^ '+')) >> 8) & 255U)) & 62U;
+    terms[4] = (255U ^ (((0U - (u ^ '/')) >> 8) & 255U)) & 63U;
+
+    for (i = 0U; i < 5U; ++i)
+        x |= terms[i];
+
+    return x != 0U ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x;
+    unsigned int mask;
+
+    mask = ~(((u - 'A') | ('Z' - u)) >> 8) & 255U;
+    x = mask & (u - 'A');
+
+    mask = ~(((u - 'a') | ('z' - u)) >> 8) & 255U;
+    x |= mask & (u - ('a' - 26));
+
+    mask = ~(((u - '0') | ('9' - u)) >> 8) & 255U;
+    x |= mask & (u - ('0' - 52));
+
+    mask = ~((0U - (u ^ '+')) >> 8);
+    x |= mask & 62U;
+
+    mask = ~((0U - (u ^ '/')) >> 8);
+    x |= mask & 63U;
+
+    return x | ((0U - (unsigned int)(x == 0U))
+              & ((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i) {
+        unsigned int mask;
+        unsigned int value;
+
+        switch (i) {
+        case 0U:
+            mask = ~(((u - 'A') | ('Z' - u)) >> 8);
+            value = u - 'A';
+            break;
+        case 1U:
+            mask = ~(((u - 'a') | ('z' - u)) >> 8);
+            value = u - ('a' - 26);
+            break;
+        case 2U:
+            mask = ~(((u - '0') | ('9' - u)) >> 8);
+            value = u - ('0' - 52);
+            break;
+        case 3U:
+            mask = ~((0U - (u ^ '+')) >> 8);
+            value = 62U;
+            break;
+        default:
+            mask = ~((0U - (u ^ '/')) >> 8);
+            value = 63U;
+            break;
+        }
+
+        x |= mask & value & 255U;
+    }
+
+    if (x != 0U)
+        return x;
+    return ((0U - (u ^ 'A')) >> 8) & 255U;
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int ranges[3][3] = {
+        { '0', '9', 52U },
+        { 'a', 'z', 26U },
+        { 'A', 'Z', 0U }
+    };
+    unsigned int x = (~((0U - (u ^ '/')) >> 8) & 63U)
+                   | (~((0U - (u ^ '+')) >> 8) & 62U);
+    unsigned int i = 3U;
+
+    while (i != 0U) {
+        unsigned int lower;
+        unsigned int upper;
+
+        --i;
+        lower = u - ranges[i][0];
+        upper = ranges[i][1] - u;
+        x |= (~((lower | upper) >> 8) & 255U)
+           & (lower + ranges[i][2]);
+    }
+
+    return x + (unsigned int)(x == 0U)
+             * (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int values[5] = {
+        u - 'A', u - ('a' - 26), u - ('0' - 52), 62U, 63U
+    };
+    const unsigned int rejected[5] = {
+        ((u - 'A') | ('Z' - u)) >> 8,
+        ((u - 'a') | ('z' - u)) >> 8,
+        ((u - '0') | ('9' - u)) >> 8,
+        (0U - (u ^ '+')) >> 8,
+        (0U - (u ^ '/')) >> 8
+    };
+    unsigned int x = 0U;
+    unsigned int i = 0U;
+
+    do {
+        x |= (values[i] & 255U) & ~rejected[i];
+        ++i;
+    } while (i < 5U);
+
+    return x ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (u - 'A') & 255U;
+    const unsigned int b = (u - ('a' - 26)) & 255U;
+    const unsigned int d = (u - ('0' - 52)) & 255U;
+    unsigned int x;
+
+    x = (a ^ (a & (((u - 'A') | ('Z' - u)) >> 8)))
+      | (b ^ (b & (((u - 'a') | ('z' - u)) >> 8)))
+      | (d ^ (d & (((u - '0') | ('9' - u)) >> 8)))
+      | (62U ^ (62U & ((0U - (u ^ '+')) >> 8)))
+      | (63U ^ (63U & ((0U - (u ^ '/')) >> 8)));
+
+    if (!x)
+        return ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x;
+}
+
+
+
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int masks[5] = {
+        ~(((u - 'A') | ('Z' - u)) >> 8),
+        ~(((u - 'a') | ('z' - u)) >> 8),
+        ~(((u - '0') | ('9' - u)) >> 8),
+        ~((0U - (u ^ '+')) >> 8),
+        ~((0U - (u ^ '/')) >> 8)
+    };
+    const unsigned int values[5] = {
+        u - 'A', u - ('a' - 26), u - ('0' - 52), 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int bit;
+    unsigned int i;
+
+    for (bit = 1U; bit < 256U; bit <<= 1) {
+        for (i = 0U; i < 5U; ++i) {
+            if ((masks[i] & values[i] & bit) != 0U) {
+                x |= bit;
+                break;
+            }
+        }
+    }
+
+    return x | ((~((0U - x) >> 8) & 255U)
+              & ((0U - (u ^ 'A')) >> 8));
+}

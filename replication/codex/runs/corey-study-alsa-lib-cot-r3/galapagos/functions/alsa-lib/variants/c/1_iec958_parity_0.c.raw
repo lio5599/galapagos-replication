@@ -1,0 +1,13 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The reference computes the parity of original bits 4 through 30.
+	// Test those positions directly and toggle the result for each set bit.
+	// Unsigned long supports every mask; absent bits and other bits contribute zero.
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 4; bit <= 30; bit++)
+		if ((unsigned long)data & (1UL << bit))
+			parity ^= 1U;
+	return parity;
+}

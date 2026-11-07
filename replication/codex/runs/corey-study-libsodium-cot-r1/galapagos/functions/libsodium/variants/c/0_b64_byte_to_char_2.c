@@ -1,0 +1,39 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Evaluate the five terms one output bit at a time.
+    // Mask bit i comes from subtraction bit i+8, with the same inversions.
+    // All arithmetic remains unsigned; no assumption that x is below 64 is made.
+    unsigned int a = x - 26U;
+    unsigned int b = x - 52U;
+    unsigned int c = x - 62U;
+    unsigned int d = 0U - (x ^ 62U);
+    unsigned int e = 0U - (x ^ 63U);
+    unsigned int va = x + 'A';
+    unsigned int vb = x + ('a' - 26);
+    unsigned int vc = x + ('0' - 52);
+    unsigned int result = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 8U; ++i) {
+        unsigned int ma = (a >> (i + 8U)) & 1U;
+        unsigned int mb = (b >> (i + 8U)) & 1U;
+        unsigned int mc = (c >> (i + 8U)) & 1U;
+        unsigned int md = ((d >> (i + 8U)) & 1U) ^ 1U;
+        unsigned int me = ((e >> (i + 8U)) & 1U) ^ 1U;
+        unsigned int bit = (ma & (va >> i)) |
+                           ((ma ^ 1U) & mb & (vb >> i)) |
+                           ((mb ^ 1U) & mc & (vc >> i)) |
+                           (md & ((unsigned int)'+' >> i)) |
+                           (me & ((unsigned int)'/' >> i));
+        result |= bit << i;
+    }
+    return (int)result;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

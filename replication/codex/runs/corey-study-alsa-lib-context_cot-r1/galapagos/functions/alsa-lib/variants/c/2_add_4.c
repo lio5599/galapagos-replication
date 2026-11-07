@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Start with the cap and use short-circuit evaluation to assign the sum.
+	// The assignment executes only when the reference would return a plus b.
+	// Equality leaves the cap unchanged, and a zero sum is retained correctly.
+	unsigned int result = 4294967295;
+	(void)((a < 4294967295 - b) && ((result = a + b), 1));
+	return result;
+}
+
+
+int main(){
+    add(0,0);
+}

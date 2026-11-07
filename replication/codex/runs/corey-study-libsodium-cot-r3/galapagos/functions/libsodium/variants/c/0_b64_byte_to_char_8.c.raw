@@ -1,0 +1,19 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Perform all selection in bits eight through fifteen, then shift down.
+    // Candidate low bytes are shifted into that lane without overflow.
+    // Lane complements and unsigned arithmetic reproduce every original mask bit.
+    unsigned int a = (x - 26U) & 65280U;
+    unsigned int b = (x - 52U) & 65280U;
+    unsigned int c = (x - 62U) & 65280U;
+    unsigned int d = (~(0U - (x ^ 62U))) & 65280U;
+    unsigned int e = (~(0U - (x ^ 63U))) & 65280U;
+    unsigned int result =
+        (a & (((x + 'A') & 255U) << 8)) |
+        ((a ^ 65280U) & b & (((x + ('a' - 26)) & 255U) << 8)) |
+        ((b ^ 65280U) & c & (((x + ('0' - 52)) & 255U) << 8)) |
+        (d & (((unsigned int)'+' & 255U) << 8)) |
+        (e & (((unsigned int)'/' & 255U) << 8));
+
+    return (int)(result >> 8);
+}

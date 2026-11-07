@@ -1,0 +1,2657 @@
+DEBUG:asyncio:Using selector: EpollSelector
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+INFO:root:No change provided
+INFO:root:Setting up autogen
+INFO:root:Running ./gitcompile
+DEBUG:root:configure.ac:30: installing './compile'
+configure.ac:15: installing './config.guess'
+configure.ac:15: installing './config.sub'
+configure.ac:16: installing './install-sh'
+configure.ac:16: installing './missing'
+alsalisp/Makefile.am: installing './depcomp'
+parallel-tests: installing './test-driver'
+configure.ac:36: warning: The macro `AC_LIBTOOL_DLOPEN' is obsolete.
+configure.ac:36: You should run autoupdate.
+m4/ltoptions.m4:113: AC_LIBTOOL_DLOPEN is expanded from...
+configure.ac:36: the top level
+configure.ac:36: warning: AC_LIBTOOL_DLOPEN: Remove this warning and the call to _LT_SET_OPTION when you
+configure.ac:36: put the 'dlopen' option into LT_INIT's first parameter.
+./lib/autoconf/general.m4:2434: AC_DIAGNOSE is expanded from...
+m4/ltoptions.m4:113: AC_LIBTOOL_DLOPEN is expanded from...
+configure.ac:36: the top level
+configure.ac:37: warning: The macro `AM_PROG_LIBTOOL' is obsolete.
+configure.ac:37: You should run autoupdate.
+m4/libtool.m4:101: AM_PROG_LIBTOOL is expanded from...
+configure.ac:37: the top level
+configure.ac:42: warning: The macro `AC_HEADER_STDC' is obsolete.
+configure.ac:42: You should run autoupdate.
+./lib/autoconf/headers.m4:704: AC_HEADER_STDC is expanded from...
+configure.ac:42: the top level
+configure.ac:48: warning: The macro `AC_HEADER_TIME' is obsolete.
+configure.ac:48: You should run autoupdate.
+./lib/autoconf/headers.m4:743: AC_HEADER_TIME is expanded from...
+configure.ac:48: the top level
+configure.ac:244: warning: The macro `AC_TRY_LINK' is obsolete.
+configure.ac:244: You should run autoupdate.
+./lib/autoconf/general.m4:2920: AC_TRY_LINK is expanded from...
+configure.ac:244: the top level
+configure.ac:351: warning: The macro `AC_ERROR' is obsolete.
+configure.ac:351: You should run autoupdate.
+./lib/autoconf/oldnames.m4:34: AC_ERROR is expanded from...
+configure.ac:351: the top level
+configure.ac:526: warning: The macro `AC_TRY_LINK' is obsolete.
+configure.ac:526: You should run autoupdate.
+./lib/autoconf/general.m4:2920: AC_TRY_LINK is expanded from...
+configure.ac:526: the top level
+configure.ac:538: warning: The macro `AC_TRY_LINK' is obsolete.
+configure.ac:538: You should run autoupdate.
+./lib/autoconf/general.m4:2920: AC_TRY_LINK is expanded from...
+configure.ac:538: the top level
+configure.ac:725: warning: The macro `AC_ERROR' is obsolete.
+configure.ac:725: You should run autoupdate.
+./lib/autoconf/oldnames.m4:34: AC_ERROR is expanded from...
+configure.ac:725: the top level
+configure.ac:727: warning: The macro `AC_ERROR' is obsolete.
+configure.ac:727: You should run autoupdate.
+./lib/autoconf/oldnames.m4:34: AC_ERROR is expanded from...
+configure.ac:727: the top level
+CFLAGS= -O0 -Wall -W -Wunused-const-variable=0 -save-temps -DInline= -pipe -g 
+./configure --disable-aload --prefix=/usr --libdir=/usr/lib64 --with-plugindir=/usr/lib64/alsa-lib --with-pkgconfdir=/usr/lib64/pkgconfig
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a race-free mkdir -p... /usr/bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... yes
+checking whether make supports nested variables... (cached) yes
+checking for gcc... clang
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether the compiler supports GNU C... yes
+checking whether clang accepts -g... yes
+checking for clang option to enable C11 features... none needed
+checking whether clang understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of clang... gcc3
+checking how to run the C preprocessor... clang -E
+checking for stdio.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for strings.h... yes
+checking for sys/stat.h... yes
+checking for sys/types.h... yes
+checking for unistd.h... yes
+checking for wchar.h... yes
+checking for minix/config.h... no
+checking for sys/time.h... yes
+checking whether it is safe to define __EXTENSIONS__... yes
+checking whether _XOPEN_SOURCE should be defined... no
+checking whether ln -s works... yes
+checking how to print strings... printf
+checking for a sed that does not truncate output... /usr/bin/sed
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for fgrep... /usr/bin/grep -F
+checking for ld used by clang... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/bin/ld option to reload object files... -r
+checking for file... file
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for ar... ar
+checking for archiver @FILE support... @
+checking for strip... strip
+checking for ranlib... ranlib
+checking command to parse /usr/bin/nm -B output from clang object... ok
+checking for sysroot... no
+checking for a working dd... /usr/bin/dd
+checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if clang supports -fno-rtti -fno-exceptions... yes
+checking for clang option to produce PIC... -fPIC -DPIC
+checking if clang PIC flag -fPIC -DPIC works... yes
+checking if clang static flag -static works... yes
+checking if clang supports -c -o file.o... yes
+checking if clang supports -c -o file.o... (cached) yes
+checking whether the clang linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking for shl_load... no
+checking for shl_load in -ldld... no
+checking for dlopen... yes
+checking whether a program can dlopen itself... yes
+checking whether a statically linked program can dlopen itself... no
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... no
+checking if clang supports -Wl,--no-undefined flag... yes
+checking if clang supports -Wl,-z,defs flag... yes
+checking for egrep... (cached) /usr/bin/grep -E
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking whether clang needs -traditional... no
+checking for uselocale... yes
+checking for eaccess... yes
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for library version... major 1 minor 2 subminor 11 extrastr  extraver 1000000
+checking for versioned symbols... yes
+checking for symbolic-functions... no
+checking for custom symbol prefixes... 
+checking for debug... yes
+checking for debug assert... no
+checking for tmpdir... /tmp
+checking for softfloat... no
+checking for LFS calls... yes
+checking for libdl... checking for library containing dlsym... none required
+checking for pthread... checking for pthread_join in -lpthread... yes
+checking for clang options needed to detect all undeclared functions... none needed
+checking whether PTHREAD_MUTEX_RECURSIVE is declared... yes
+checking for __thread... yes
+checking for librt... checking for clock_gettime in -lrt... yes
+checking for use of wordexp... no
+checking for endian.h... yes
+checking for sys/endian.h... no
+checking for sys/shm.h... yes
+checking for malloc.h... yes
+checking for resmgr support... no
+checking for aload* support... no
+checking for ALSA device file directory... /dev/snd/
+checking for aload* device file directory... /dev/
+checking whether GCC supports builtin atomic intrinsics... yes
+checking for default lockless dmix... no
+checking for max number of cards... 32
+checking for thread-safe API functions... yes
+Making a symlink include/alsa
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating doc/pictures/Makefile
+config.status: creating doc/doxygen.cfg
+config.status: creating include/Makefile
+config.status: creating include/sound/Makefile
+config.status: creating include/sound/uapi/Makefile
+config.status: creating src/Versions.in
+config.status: creating src/Makefile
+config.status: creating src/control/Makefile
+config.status: creating src/mixer/Makefile
+config.status: creating src/pcm/Makefile
+config.status: creating src/pcm/scopes/Makefile
+config.status: creating src/rawmidi/Makefile
+config.status: creating src/timer/Makefile
+config.status: creating src/hwdep/Makefile
+config.status: creating src/seq/Makefile
+config.status: creating src/ucm/Makefile
+config.status: creating src/alisp/Makefile
+config.status: creating src/topology/Makefile
+config.status: creating src/conf/Makefile
+config.status: creating src/conf/cards/Makefile
+config.status: creating src/conf/ctl/Makefile
+config.status: creating src/conf/pcm/Makefile
+config.status: creating modules/Makefile
+config.status: creating modules/mixer/Makefile
+config.status: creating modules/mixer/simple/Makefile
+config.status: creating alsalisp/Makefile
+config.status: creating aserver/Makefile
+config.status: creating test/Makefile
+config.status: creating test/lsb/Makefile
+config.status: creating utils/Makefile
+config.status: creating utils/alsa-lib.spec
+config.status: creating utils/alsa.pc
+config.status: creating utils/alsa-topology.pc
+config.status: creating include/config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+Creating asoundlib.h...
+Making all in doc
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/doc'
+Making all in pictures
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/doc/pictures'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/doc/pictures'
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/doc'
+make[2]: Nothing to be done for 'all-am'.
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/doc'
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/doc'
+Making all in include
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include'
+make  all-recursive
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include'
+Making all in sound
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include/sound'
+Making all in uapi
+make[4]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include/sound/uapi'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include/sound/uapi'
+make[4]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include/sound'
+make[4]: Nothing to be done for 'all-am'.
+make[4]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include/sound'
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include/sound'
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include'
+Updating version.h
+if ! test -r alsa/local.h; then \
+	ln -s ../include alsa; \
+fi
+for f in asoundlib.h version.h; do \
+	if ! test -r ../include/$f; then \
+		ln -s /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include/$f ../include/$f; \
+	fi; \
+done
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include'
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include'
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/include'
+Making all in src
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src'
+clang -DHAVE_CONFIG_H -I. -I../include  -I../include   -O0 -Wall -W -Wunused-const-variable=0 -save-temps -DInline= -pipe -g  -E -DHAVE_PCM_SYMS -DHAVE_TIMER_SYMS  -x assembler-with-cpp -o ../src/Versions ../src/Versions.in
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+make  all-recursive
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src'
+Making all in control
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/control'
+  CC       cards.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+cards.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "cards.c"
+        ^
+  CC       tlv.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+tlv.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "tlv.c"
+        ^
+  CC       eld.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+eld.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "eld.c"
+        ^
+  CC       namehint.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+namehint.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "namehint.c"
+        ^
+  CC       hcontrol.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+hcontrol.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "hcontrol.c"
+        ^
+  CC       control.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+control.c:2741:105: warning: unused variable '__evoke_link_warning_snd_ctl_elem_info_is_indirect' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_ctl_elem_info_is_indirect" "\n\t.previous"); static const char __evoke_link_warning_snd_ctl_elem_info_is_indirect[] __attribute__ ((section (".gnu.warning." "" "snd_ctl_elem_info_is_indirect" "\n\t#"))) = "Warning: snd_ctl_elem_info_is_indirect is deprecated, do not use it";;
+                                                                                                        ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+control.s:12:2: warning: inconsistent use of MD5 checksums
+        .file   1 "control.c"
+        ^
+  CC       control_hw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+control_hw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "control_hw.c"
+        ^
+  CC       control_empty.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+control_empty.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "control_empty.c"
+        ^
+  CC       setup.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+setup.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "setup.c"
+        ^
+  CC       ctlparse.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ctlparse.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ctlparse.c"
+        ^
+  CC       control_plugin.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CC       control_symbols.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CC       control_remap.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+control_remap.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "control_remap.c"
+        ^
+  CC       control_shm.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from control_shm.c:36:
+In file included from ../../include/aserver.h:21:
+../../include/../src/pcm/pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+control_shm.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "control_shm.c"
+        ^
+  CC       control_ext.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+control_ext.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "control_ext.c"
+        ^
+  CCLD     libcontrol.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/control'
+Making all in mixer
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/mixer'
+  CC       bag.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+bag.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "bag.c"
+        ^
+  CC       mixer.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+mixer.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "mixer.c"
+        ^
+  CC       simple.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+simple.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "simple.c"
+        ^
+  CC       simple_none.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+simple_none.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "simple_none.c"
+        ^
+  CC       simple_abst.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+simple_abst.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "simple_abst.c"
+        ^
+  CCLD     libmixer.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/mixer'
+Making all in pcm
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm'
+make[4]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm'
+make[4]: Nothing to be done for 'all-am'.
+make[4]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm'
+  CC       mask.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from mask.c:28:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CC       interval.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from interval.c:25:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+interval.c:53:28: warning: unused function 'div_up' [-Wunused-function]
+static inline unsigned int div_up(unsigned int a, unsigned int b)
+                           ^
+3 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+interval.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "interval.c"
+        ^
+  CC       pcm.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+pcm.c:2692:22: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+     (*pcmp)->compat = 1;
+                     ^ ~
+pcm.c:2697:21: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+    (*pcmp)->compat = 1;
+                    ^ ~
+In file included from pcm.c:671:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+pcm.c:2260:99: warning: unused variable '__evoke_link_warning_snd_pcm_start_mode_name' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_pcm_start_mode_name" "\n\t.previous"); static const char __evoke_link_warning_snd_pcm_start_mode_name[] __attribute__ ((section (".gnu.warning." "" "snd_pcm_start_mode_name" "\n\t#"))) = "Warning: start_mode is deprecated, consider to use start_threshold";;
+                                                                                                  ^
+pcm.c:2276:98: warning: unused variable '__evoke_link_warning_snd_pcm_xrun_mode_name' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_pcm_xrun_mode_name" "\n\t.previous"); static const char __evoke_link_warning_snd_pcm_xrun_mode_name[] __attribute__ ((section (".gnu.warning." "" "snd_pcm_xrun_mode_name" "\n\t#"))) = "Warning: xrun_mode is deprecated, consider to use stop_threshold";;
+                                                                                                 ^
+pcm.c:6479:108: warning: unused variable '__evoke_link_warning_snd_pcm_sw_params_set_start_mode' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_pcm_sw_params_set_start_mode" "\n\t.previous"); static const char __evoke_link_warning_snd_pcm_sw_params_set_start_mode[] __attribute__ ((section (".gnu.warning." "" "snd_pcm_sw_params_set_start_mode" "\n\t#"))) = "Warning: start_mode is deprecated, consider to use start_threshold";;
+                                                                                                           ^
+pcm.c:6495:108: warning: unused variable '__evoke_link_warning_snd_pcm_sw_params_get_start_mode' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_pcm_sw_params_get_start_mode" "\n\t.previous"); static const char __evoke_link_warning_snd_pcm_sw_params_get_start_mode[] __attribute__ ((section (".gnu.warning." "" "snd_pcm_sw_params_get_start_mode" "\n\t#"))) = "Warning: start_mode is deprecated, consider to use start_threshold";;
+                                                                                                           ^
+pcm.c:6527:107: warning: unused variable '__evoke_link_warning_snd_pcm_sw_params_set_xrun_mode' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_pcm_sw_params_set_xrun_mode" "\n\t.previous"); static const char __evoke_link_warning_snd_pcm_sw_params_set_xrun_mode[] __attribute__ ((section (".gnu.warning." "" "snd_pcm_sw_params_set_xrun_mode" "\n\t#"))) = "Warning: xrun_mode is deprecated, consider to use stop_threshold";;
+                                                                                                          ^
+pcm.c:6543:107: warning: unused variable '__evoke_link_warning_snd_pcm_sw_params_get_xrun_mode' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_pcm_sw_params_get_xrun_mode" "\n\t.previous"); static const char __evoke_link_warning_snd_pcm_sw_params_get_xrun_mode[] __attribute__ ((section (".gnu.warning." "" "snd_pcm_sw_params_get_xrun_mode" "\n\t#"))) = "Warning: xrun_mode is deprecated, consider to use stop_threshold";;
+                                                                                                          ^
+pcm.c:7765:96: warning: unused variable '__evoke_link_warning__snd_pcm_mmap_hw_ptr' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "_snd_pcm_mmap_hw_ptr" "\n\t.previous"); static const char __evoke_link_warning__snd_pcm_mmap_hw_ptr[] __attribute__ ((section (".gnu.warning." "" "_snd_pcm_mmap_hw_ptr" "\n\t#"))) = "Warning: _snd_pcm_mmap_hw_ptr() is deprecated, consider to not use this function";;
+                                                                                               ^
+pcm.c:7766:93: warning: unused variable '__evoke_link_warning__snd_pcm_boundary' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "_snd_pcm_boundary" "\n\t.previous"); static const char __evoke_link_warning__snd_pcm_boundary[] __attribute__ ((section (".gnu.warning." "" "_snd_pcm_boundary" "\n\t#"))) = "Warning: _snd_pcm_boundary() is deprecated, consider to use snd_pcm_sw_params_current()";;
+                                                                                            ^
+12 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm.s:165:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm.c"
+        ^
+  CC       pcm_params.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+pcm_params.c:2416:13: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+ pcm->setup = 1;
+            ^ ~
+In file included from pcm_params.c:22:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+3 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_params.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_params.c"
+        ^
+  CC       pcm_simple.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_simple.c:26:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_simple.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_simple.c"
+        ^
+  CC       pcm_hw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_hw.c:30:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_hw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_hw.c"
+        ^
+  CC       pcm_misc.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_misc.c:22:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_misc.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_misc.c"
+        ^
+  CC       pcm_mmap.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_mmap.c:21:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_mmap.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_mmap.c"
+        ^
+  CC       pcm_symbols.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CC       pcm_generic.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_generic.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_generic.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "../../include" "pcm.h"
+        ^
+  CC       pcm_plugin.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_plugin.c:85:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_plugin.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "." "pcm_local.h"
+        ^
+  CC       pcm_copy.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_copy.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_copy.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_copy.c"
+        ^
+  CC       pcm_linear.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_linear.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_linear.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "." "plugin_ops.h"
+        ^
+  CC       pcm_route.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+pcm_route.c:377:22: warning: implicit conversion from 'int64_t' (aka 'long') to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
+  if (sum.as_float > (int64_t)0x7fffffff)
+                   ~ ^~~~~~~~~~~~~~~~~~~
+pcm_route.c:956:32: warning: variable 't' set but not used [-Wunused-but-set-variable]
+  snd_pcm_route_ttable_entry_t t = 0;
+                               ^
+In file included from pcm_route.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+4 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_route.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_route.c"
+        ^
+  CC       pcm_mulaw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_mulaw.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_mulaw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "." "plugin_ops.h"
+        ^
+  CC       pcm_alaw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_alaw.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_alaw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "." "plugin_ops.h"
+        ^
+  CC       pcm_adpcm.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_adpcm.c:59:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_adpcm.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "." "plugin_ops.h"
+        ^
+  CC       pcm_rate.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_rate.c:30:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_rate.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_rate.c"
+        ^
+  CC       pcm_rate_linear.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_rate_linear.c:23:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_rate_linear.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "../../include" "pcm_rate.h"
+        ^
+  CC       pcm_plug.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_plug.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_plug.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_plug.c"
+        ^
+  CC       pcm_multi.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_multi.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_multi.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_multi.c"
+        ^
+  CC       pcm_shm.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_shm.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_shm.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_shm.c"
+        ^
+  CC       pcm_file.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+pcm_file.c:398:7: warning: explicitly assigning value of variable of type 'int' to itself [-Wself-assign]
+  len = (len);
+  ~~~ ^  ~~~
+pcm_file.c:407:7: warning: explicitly assigning value of variable of type 'int' to itself [-Wself-assign]
+  len = (len);
+  ~~~ ^  ~~~
+In file included from pcm_file.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+4 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_file.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_file.c"
+        ^
+  CC       pcm_null.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_null.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_null.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_null.c"
+        ^
+  CC       pcm_empty.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_empty.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_empty.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_empty.c"
+        ^
+  CC       pcm_share.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_share.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_share.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_share.c"
+        ^
+  CC       pcm_meter.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_meter.c:30:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_meter.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_meter.c"
+        ^
+  CC       pcm_hooks.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_hooks.c:30:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_hooks.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_hooks.c"
+        ^
+  CC       pcm_lfloat.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_lfloat.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_lfloat.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "." "plugin_ops.h"
+        ^
+  CC       pcm_ladspa.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_ladspa.c:35:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_ladspa.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_ladspa.c"
+        ^
+  CC       pcm_dmix.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_dmix.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_dmix.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_dmix.c"
+        ^
+  CC       pcm_dshare.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_dshare.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_dshare.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_dshare.c"
+        ^
+  CC       pcm_dsnoop.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_dsnoop.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_dsnoop.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_dsnoop.c"
+        ^
+  CC       pcm_direct.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+pcm_direct.c:1476:14: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+ dmix->tread = 1;
+             ^ ~
+pcm_direct.c:1524:26: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+   dmix->timer_need_poll = 1;
+                         ^ ~
+pcm_direct.c:1609:14: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+ spcm->setup = 1;
+             ^ ~
+pcm_direct.c:1637:14: warning: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Wsingle-bit-bitfield-constant-conversion]
+ spcm->setup = 1;
+             ^ ~
+In file included from pcm_direct.c:22:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+6 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_direct.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_direct.c"
+        ^
+  CC       pcm_asym.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_asym.c:9:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_asym.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_asym.c"
+        ^
+  CC       pcm_iec958.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_iec958.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_iec958.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_iec958.c"
+        ^
+  CC       pcm_softvol.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_softvol.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_softvol.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_softvol.c"
+        ^
+  CC       pcm_extplug.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_extplug.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_extplug.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_extplug.c"
+        ^
+  CC       pcm_ioplug.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_ioplug.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_ioplug.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_ioplug.c"
+        ^
+  CC       pcm_mmap_emul.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from pcm_mmap_emul.c:29:
+./pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm_mmap_emul.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm_mmap_emul.c"
+        ^
+  CCLD     libpcm.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm'
+Making all in timer
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer'
+  CC       timer.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+timer.c:963:100: warning: unused variable '__evoke_link_warning_snd_timer_info_get_ticks' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_timer_info_get_ticks" "\n\t.previous"); static const char __evoke_link_warning_snd_timer_info_get_ticks[] __attribute__ ((section (".gnu.warning." "" "snd_timer_info_get_ticks" "\n\t#"))) = "Warning: snd_timer_info_get_ticks is deprecated";;
+                                                                                                   ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+timer.s:14:2: warning: inconsistent use of MD5 checksums
+        .file   1 "timer.c"
+        ^
+  CC       timer_hw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+timer_hw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "timer_hw.c"
+        ^
+  CC       timer_query.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+timer_query.s:10:2: warning: inconsistent use of MD5 checksums
+        .file   1 "timer_query.c"
+        ^
+  CC       timer_query_hw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+timer_query_hw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "timer_query_hw.c"
+        ^
+  CC       timer_symbols.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CCLD     libtimer.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer'
+Making all in rawmidi
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/rawmidi'
+  CC       rawmidi.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+rawmidi.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "rawmidi.c"
+        ^
+  CC       rawmidi_hw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+rawmidi_hw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "rawmidi_hw.c"
+        ^
+  CC       rawmidi_symbols.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CC       ump.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ump.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "../../include" "rawmidi.h"
+        ^
+  CC       rawmidi_virt.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+rawmidi_virt.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "rawmidi_virt.c"
+        ^
+  CCLD     librawmidi.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/rawmidi'
+Making all in hwdep
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/hwdep'
+  CC       hwdep.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+hwdep.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "hwdep.c"
+        ^
+  CC       hwdep_hw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+hwdep_hw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "hwdep_hw.c"
+        ^
+  CC       hwdep_symbols.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CCLD     libhwdep.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/hwdep'
+Making all in seq
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/seq'
+  CC       seq_hw.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+seq_hw.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "seq_hw.c"
+        ^
+  CC       seq.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+seq.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "seq.c"
+        ^
+  CC       seq_event.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+seq_event.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "seq_event.c"
+        ^
+  CC       seqmid.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+seqmid.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "seqmid.c"
+        ^
+  CC       seq_midi_event.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+seq_midi_event.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "seq_midi_event.c"
+        ^
+  CC       seq_symbols.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+  CC       seq_old.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+seq_old.s:9:2: warning: inconsistent use of MD5 checksums
+        .file   1 "seq_old.c"
+        ^
+  CCLD     libseq.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/seq'
+Making all in ucm
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/ucm'
+  CC       utils.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+utils.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "utils.c"
+        ^
+  CC       parser.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+parser.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "parser.c"
+        ^
+  CC       ucm_cond.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ucm_cond.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ucm_cond.c"
+        ^
+  CC       ucm_subs.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ucm_subs.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ucm_subs.c"
+        ^
+  CC       ucm_include.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ucm_include.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ucm_include.c"
+        ^
+  CC       ucm_regex.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ucm_regex.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ucm_regex.c"
+        ^
+  CC       ucm_exec.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ucm_exec.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ucm_exec.c"
+        ^
+  CC       main.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+main.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "main.c"
+        ^
+  CCLD     libucm.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/ucm'
+Making all in conf
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf'
+Making all in cards
+make[4]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf/cards'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf/cards'
+Making all in ctl
+make[4]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf/ctl'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf/ctl'
+Making all in pcm
+make[4]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf/pcm'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf/pcm'
+make[4]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf'
+make[4]: Nothing to be done for 'all-am'.
+make[4]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf'
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/conf'
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src'
+  CC       conf.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+conf.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "conf.c"
+        ^
+  CC       confeval.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+confeval.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "confeval.c"
+        ^
+  CC       confmisc.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+confmisc.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "confmisc.c"
+        ^
+  CC       input.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+input.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "input.c"
+        ^
+  CC       output.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+output.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "output.c"
+        ^
+  CC       async.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+In file included from async.c:27:
+./pcm/pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+async.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "async.c"
+        ^
+  CC       error.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+error.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "error.c"
+        ^
+  CC       dlmisc.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+dlmisc.s:9:2: warning: inconsistent use of MD5 checksums
+        .file   1 "dlmisc.c"
+        ^
+  CC       socket.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+socket.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "socket.c"
+        ^
+  CC       shmarea.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+shmarea.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "../include" "list.h"
+        ^
+  CC       userfile.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+userfile.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "userfile.c"
+        ^
+  CC       names.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+names.c:47:90: warning: unused variable '__evoke_link_warning_snd_names_list' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_names_list" "\n\t.previous"); static const char __evoke_link_warning_snd_names_list[] __attribute__ ((section (".gnu.warning." "" "snd_names_list" "\n\t#"))) = "Warning: snd_names_list is deprecated, use snd_device_name_hint";;
+                                                                                         ^
+names.c:56:95: warning: unused variable '__evoke_link_warning_snd_names_list_free' [-Wunused-const-variable]
+asm (".section " ".gnu.warning." "" "snd_names_list_free" "\n\t.previous"); static const char __evoke_link_warning_snd_names_list_free[] __attribute__ ((section (".gnu.warning." "" "snd_names_list_free" "\n\t#"))) = "Warning: snd_names_list_free is deprecated, use snd_device_name_free_hint";;
+                                                                                              ^
+3 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+names.s:18:2: warning: inconsistent use of MD5 checksums
+        .file   1 "names.c"
+        ^
+  CCLD     libasound.la
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src'
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src'
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src'
+Making all in src/topology
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology'
+  CC       parser.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+parser.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "parser.c"
+        ^
+  CC       builder.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+builder.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "builder.c"
+        ^
+  CC       ctl.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+ctl.c:263:4: warning: misleading indentation; statement is not part of the previous 'if' [-Wmisleading-indentation]
+   if (ref->type == SND_TPLG_TYPE_DATA) {
+   ^
+ctl.c:260:3: note: previous statement is here
+  if (ref->elem)
+  ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ctl.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ctl.c"
+        ^
+  CC       dapm.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+dapm.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "dapm.c"
+        ^
+  CC       pcm.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+pcm.c:359:6: warning: variable 'i' set but not used [-Wunused-but-set-variable]
+ int i = 0;
+     ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+pcm.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "pcm.c"
+        ^
+  CC       data.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+data.c:1886:11: warning: variable 'num_tuples' set but not used [-Wunused-but-set-variable]
+ int err, num_tuples = 0, block = 0;
+          ^
+2 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+data.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "data.c"
+        ^
+  CC       text.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+text.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "text.c"
+        ^
+  CC       channel.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+channel.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "channel.c"
+        ^
+  CC       ops.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+ops.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "ops.c"
+        ^
+  CC       elem.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+elem.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "elem.c"
+        ^
+  CC       save.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+save.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "save.c"
+        ^
+  CC       decoder.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+decoder.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "decoder.c"
+        ^
+  CC       log.lo
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+log.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "log.c"
+        ^
+  CCLD     libatopology.la
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology'
+Making all in modules
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules'
+Making all in mixer
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules/mixer'
+Making all in simple
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules/mixer/simple'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules/mixer/simple'
+make[3]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules/mixer'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules/mixer'
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules/mixer'
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules'
+make[2]: Nothing to be done for 'all-am'.
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules'
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/modules'
+Making all in aserver
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/aserver'
+  CC       aserver.o
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+aserver.c:469:7: warning: overflow converting case value to switch condition type (2149073202 to 18446744071563657522) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('A')) << (0 +8)) | (((0x32)) << 0) | ((((sizeof(struct snd_pcm_channel_info)))) << ((0 +8)+8))):
+      ^
+aserver.c:445:7: warning: overflow converting case value to switch condition type (2148024609 to 18446744071562608929) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('A')) << (0 +8)) | (((0x21)) << 0) | ((((sizeof(snd_pcm_sframes_t)))) << ((0 +8)+8))):
+      ^
+aserver.c:436:7: warning: overflow converting case value to switch condition type (2157461792 to 18446744071572046112) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('A')) << (0 +8)) | (((0x20)) << 0) | ((((sizeof(struct snd_pcm_status)))) << ((0 +8)+8))):
+      ^
+aserver.c:433:7: warning: overflow converting case value to switch condition type (3230155027 to 18446744072644739347) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('A')) << (0 +8)) | (((0x13)) << 0) | ((((sizeof(struct snd_pcm_sw_params)))) << ((0 +8)+8))):
+      ^
+aserver.c:427:7: warning: overflow converting case value to switch condition type (3261088017 to 18446744072675672337) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('A')) << (0 +8)) | (((0x11)) << 0) | ((((sizeof(struct snd_pcm_hw_params)))) << ((0 +8)+8))):
+      ^
+aserver.c:424:7: warning: overflow converting case value to switch condition type (3261088016 to 18446744072675672336) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('A')) << (0 +8)) | (((0x10)) << 0) | ((((sizeof(struct snd_pcm_hw_params)))) << ((0 +8)+8))):
+      ^
+aserver.c:421:7: warning: overflow converting case value to switch condition type (2166374657 to 18446744071580958977) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('A')) << (0 +8)) | (((0x01)) << 0) | ((((sizeof(struct snd_pcm_info)))) << ((0 +8)+8))):
+      ^
+aserver.c:703:7: warning: overflow converting case value to switch condition type (2152224241 to 18446744071566808561) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0xf1)) << 0) | ((((sizeof(snd_ctl_event_t)))) << ((0 +8)+8))):
+      ^
+aserver.c:700:7: warning: overflow converting case value to switch condition type (2147767761 to 18446744071562352081) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0xd1)) << 0) | ((((sizeof(int)))) << ((0 +8)+8))):
+      ^
+aserver.c:697:7: warning: overflow converting case value to switch condition type (3221509584 to 18446744072636093904) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0xd0)) << 0) | ((((sizeof(int)))) << ((0 +8)+8))):
+      ^
+aserver.c:691:7: warning: overflow converting case value to switch condition type (3238810945 to 18446744072653395265) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x41)) << 0) | ((((sizeof(struct snd_rawmidi_info)))) << ((0 +8)+8))):
+      ^
+aserver.c:688:7: warning: overflow converting case value to switch condition type (3221509440 to 18446744072636093760) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x40)) << 0) | ((((sizeof(int)))) << ((0 +8)+8))):
+      ^
+aserver.c:682:7: warning: overflow converting case value to switch condition type (3240121649 to 18446744072654705969) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x31)) << 0) | ((((sizeof(struct snd_pcm_info)))) << ((0 +8)+8))):
+      ^
+aserver.c:679:7: warning: overflow converting case value to switch condition type (2147767600 to 18446744071562351920) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x30)) << 0) | ((((sizeof(int)))) << ((0 +8)+8))):
+      ^
+aserver.c:676:7: warning: overflow converting case value to switch condition type (2161923361 to 18446744071576507681) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x21)) << 0) | ((((sizeof(struct snd_hwdep_info)))) << ((0 +8)+8))):
+      ^
+aserver.c:673:7: warning: overflow converting case value to switch condition type (3221509408 to 18446744072636093728) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x20)) << 0) | ((((sizeof(int)))) << ((0 +8)+8))):
+      ^
+aserver.c:664:7: warning: overflow converting case value to switch condition type (3301463315 to 18446744072716047635) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x13)) << 0) | ((((sizeof(struct snd_ctl_elem_value)))) << ((0 +8)+8))):
+      ^
+aserver.c:661:7: warning: overflow converting case value to switch condition type (3301463314 to 18446744072716047634) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x12)) << 0) | ((((sizeof(struct snd_ctl_elem_value)))) << ((0 +8)+8))):
+      ^
+aserver.c:658:7: warning: overflow converting case value to switch condition type (3239073041 to 18446744072653657361) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x11)) << 0) | ((((sizeof(struct snd_ctl_elem_info)))) << ((0 +8)+8))):
+      ^
+aserver.c:647:7: warning: overflow converting case value to switch condition type (3226490128 to 18446744072641074448) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x10)) << 0) | ((((sizeof(struct snd_ctl_elem_list)))) << ((0 +8)+8))):
+      ^
+aserver.c:644:7: warning: overflow converting case value to switch condition type (2172146945 to 18446744071586731265) [-Wswitch]
+ case (((2U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x01)) << 0) | ((((sizeof(struct snd_ctl_card_info)))) << ((0 +8)+8))):
+      ^
+aserver.c:641:7: warning: overflow converting case value to switch condition type (3221509398 to 18446744072636093718) [-Wswitch]
+ case (((2U|1U) << (((0 +8)+8)+14)) | ((('U')) << (0 +8)) | (((0x16)) << 0) | ((((sizeof(int)))) << ((0 +8)+8))):
+      ^
+In file included from aserver.c:21:
+In file included from ../include/aserver.h:21:
+../include/../src/pcm/pcm_local.h:691:12: warning: unused function 'muldiv_down' [-Wunused-function]
+static int muldiv_down(int a, int b, int c)
+           ^
+24 warnings generated.
+warning: unknown warning option '-Wunused-const-variable=0'; did you mean '-Wunused-const-variable'? [-Wunknown-warning-option]
+1 warning generated.
+aserver.s:4:2: warning: inconsistent use of MD5 checksums
+        .file   1 "aserver.c"
+        ^
+  CCLD     aserver
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/aserver'
+Making all in test
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/test'
+Making all in .
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/test'
+make[2]: Nothing to be done for 'all-am'.
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/test'
+Making all in lsb
+make[2]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/test/lsb'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/test/lsb'
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/test'
+Making all in utils
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/utils'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/utils'
+make[1]: Entering directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib'
+make[1]: Nothing to be done for 'all-am'.
+make[1]: Leaving directory '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib'
+
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Pipeline for variants of alaw_to_s16 /home/diogo/galapagos-clones/alsa-lib/src/pcm/pcm_alaw.c
+INFO:root:Pipeline for variants of iec958_parity /home/diogo/galapagos-clones/alsa-lib/src/pcm/pcm_iec958.c
+INFO:root:Pipeline for variants of add /home/diogo/galapagos-clones/alsa-lib/src/pcm/interval.c
+INFO:root:Pipeline for variants of ulaw_to_s16 /home/diogo/galapagos-clones/alsa-lib/src/pcm/pcm_mulaw.c
+INFO:root:Pipeline for variants of val_seg /home/diogo/galapagos-clones/alsa-lib/src/pcm/pcm_alaw.c
+INFO:root:Variants to check 10
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Modified files 9
+INFO:root:Bitcodes 2
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm_alaw.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm.bc
+INFO:root:Modified files 10
+INFO:root:Bitcodes 3
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm_alaw.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/timer/timer.bc
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c
+DEBUG:root:Creating debug folder
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm_alaw.bc
+DEBUG:root:Copying /tmp/tmpezqss0x2 and /tmp/tmpsnxylvt4 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp1uct8ine
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmahhw6u9
+INFO:root:Alive verifier for: /tmp/tmpezqss0x2 /tmp/tmpsnxylvt4
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm_alaw.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm_alaw.bccmp/Ok/pcm_alaw.bc.alive.txt
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmphxtohoj_ and /tmp/tmpr3m5qlee to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpujbco1xy
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpn25t897h
+INFO:root:Alive verifier for: /tmp/tmphxtohoj_ /tmp/tmpr3m5qlee
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpuwla6twf
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm_alaw.bc
+DEBUG:root:Copying /tmp/tmpe8rt4774 and /tmp/tmpc4r417u8 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpm8ofan9k
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmprzohgw03
+INFO:root:Alive verifier for: /tmp/tmpe8rt4774 /tmp/tmpc4r417u8
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm_alaw.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm_alaw.bccmp/Ok/pcm_alaw.bc.alive.txt
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmpbsie3o9n and /tmp/tmp2gxbxioc to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpx2h47ro4
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpabc6wibn
+INFO:root:Alive verifier for: /tmp/tmpbsie3o9n /tmp/tmp2gxbxioc
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmph6njzhe9
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmppjbme8hd and /tmp/tmpu9xbkh3_ to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6m8pto0w
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3u2kp_gv
+INFO:root:Alive verifier for: /tmp/tmppjbme8hd /tmp/tmpu9xbkh3_
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp35s8ayle
+WARNING:root:Using str_to_chmap as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmpnt20dicc and /tmp/tmpksplvay1 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6umxbcnk
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5nqyym6p
+INFO:root:Alive verifier for: /tmp/tmpnt20dicc /tmp/tmpksplvay1
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=str_to_chmap', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm.bccmp/Empty/pcm.bc.alive.txt
+WARNING:root:Using str_to_chmap as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmpvibkzfcp and /tmp/tmpmektcwc3 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpjjg79l1n
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpz212rlie
+INFO:root:Alive verifier for: /tmp/tmpvibkzfcp /tmp/tmpmektcwc3
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=str_to_chmap', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm.bccmp/Empty/pcm.bc.alive.txt
+WARNING:root:Using list_empty as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmpcnn91d88 and /tmp/tmpdvzbpq14 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmf6ar3n2
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpd9_klsdi
+INFO:root:Alive verifier for: /tmp/tmpcnn91d88 /tmp/tmpdvzbpq14
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=list_empty', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/timer.bccmp/Empty/timer.bc.alive.txt
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-8-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-8-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+llvm-as: /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-8-c/src/pcm/pcm_alaw.ll:810:54: error: use of undefined value '@alaw_to_s16.mantissa'
+  %arrayidx = getelementptr inbounds [16 x i32], ptr @alaw_to_s16.mantissa, i64 0, i64 %idxprom
+                                                     ^
+WARNING:root:Could not compile variant alsa-lib Command '['llvm-as', '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-8-c/src/pcm/pcm_alaw.ll', '-o', '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-8-c/src/pcm/pcm_alaw.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-2-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-2-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+llvm-as: /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-2-c/src/pcm/pcm_alaw.ll:809:53: error: use of undefined value '@alaw_to_s16.base'
+  %arrayidx = getelementptr inbounds [8 x i32], ptr @alaw_to_s16.base, i64 0, i64 %idxprom
+                                                    ^
+WARNING:root:Could not compile variant alsa-lib Command '['llvm-as', '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-2-c/src/pcm/pcm_alaw.ll', '-o', '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-2-c/src/pcm/pcm_alaw.bc']' returned non-zero exit status 1.
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+Results will be in /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/out/alsa-lib
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/tests/../../use_cases/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/tests/../../use_cases/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Compiled in 56.95s
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c
+Compiled in 2.05s
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c
+Compiled in 2.11s
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/.libs/libasound.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/.libs/libasound.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/.libs/libasound.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm_alaw.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/pcm.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/.libs/pcm_alaw.o /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/pcm/.libs/pcm_alaw.o
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/topology/.libs/libatopology.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/topology/.libs/libatopology.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-7-c/src/topology/.libs/libatopology.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/.libs/libasound.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/.libs/libasound.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/.libs/libasound.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm_alaw.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/pcm.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/.libs/pcm_alaw.o /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/pcm/.libs/pcm_alaw.o
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/topology/.libs/libatopology.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/topology/.libs/libatopology.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/topology/.libs/libatopology.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-1-c/src/timer/timer.bc
+Tested in 13.29s
+Tested in 12.77s
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c
+Compiled in 2.43s
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-8-c
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-2-c
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c
+Compiled in 2.20s
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/.libs/libasound.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/.libs/libasound.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/.libs/libasound.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm_alaw.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/.libs/pcm_alaw.o /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/.libs/pcm_alaw.o
+MismatchINFO:root:Modified files 10
+INFO:root:Bitcodes 3
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm_alaw.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/timer/timer.bc
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm_alaw.bc
+DEBUG:root:Copying /tmp/tmpqenufql6 and /tmp/tmp3_tuk6v9 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpwtchd7ki
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp03x20cqo
+INFO:root:Alive verifier for: /tmp/tmpqenufql6 /tmp/tmp3_tuk6v9
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm_alaw.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm_alaw.bccmp/Ok/pcm_alaw.bc.alive.txt
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmpj4dgtzn1 and /tmp/tmpe1ckmrp4 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmam398p4
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpyfdds29q
+INFO:root:Alive verifier for: /tmp/tmpj4dgtzn1 /tmp/tmpe1ckmrp4
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpsu9k90ab
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmp9ijlz81e and /tmp/tmpyq49a6cv to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpyuo6jagm
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6y07ccn1
+INFO:root:Alive verifier for: /tmp/tmp9ijlz81e /tmp/tmpyq49a6cv
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpir0jfck0
+INFO:root:Modified files 10
+INFO:root:Bitcodes 3
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm_alaw.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/timer/timer.bc
+WARNING:root:Using str_to_chmap as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmptm1yolyf and /tmp/tmp2ftjolot to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpqmo92k64
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpz7z_sjif
+INFO:root:Alive verifier for: /tmp/tmptm1yolyf /tmp/tmp2ftjolot
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=str_to_chmap', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm.bccmp/Empty/pcm.bc.alive.txt
+WARNING:root:Using list_empty as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmp3byiv9v3 and /tmp/tmp4ldct0du to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7qjn8w_z
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpc0dm_jmv
+INFO:root:Alive verifier for: /tmp/tmp3byiv9v3 /tmp/tmp4ldct0du
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=list_empty', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/timer.bccmp/Empty/timer.bc.alive.txt
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm_alaw.bc
+DEBUG:root:Copying /tmp/tmpfx1icb04 and /tmp/tmprcb43lr9 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp9nkhjf7m
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5j8jo96l
+INFO:root:Alive verifier for: /tmp/tmpfx1icb04 /tmp/tmprcb43lr9
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm_alaw.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm_alaw.bccmp/Ok/pcm_alaw.bc.alive.txt
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmpuxtjucy_ and /tmp/tmpv069cpan to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpamqv2gkb
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpszor3p6x
+INFO:root:Alive verifier for: /tmp/tmpuxtjucy_ /tmp/tmpv069cpan
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpxapcem6a
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmpssj5j0mo and /tmp/tmpnesuvowe to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpp72mqbex
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpawukgv78
+INFO:root:Alive verifier for: /tmp/tmpssj5j0mo /tmp/tmpnesuvowe
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpnjz39mie
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-6-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-6-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+llvm-as: /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-6-c/src/pcm/pcm_alaw.ll:817:53: error: use of undefined value '@alaw_to_s16.scale'
+  %arrayidx = getelementptr inbounds [8 x i32], ptr @alaw_to_s16.scale, i64 0, i64 %idxprom
+                                                    ^
+WARNING:root:Could not compile variant alsa-lib Command '['llvm-as', '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-6-c/src/pcm/pcm_alaw.ll', '-o', '/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-6-c/src/pcm/pcm_alaw.bc']' returned non-zero exit status 1.
+WARNING:root:Using str_to_chmap as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmp0y7h7ecl and /tmp/tmpmgv3d_di to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6cj2iat6
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp4i6qgzax
+INFO:root:Alive verifier for: /tmp/tmp0y7h7ecl /tmp/tmpmgv3d_di
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=str_to_chmap', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm.bccmp/Empty/pcm.bc.alive.txt
+WARNING:root:Using list_empty as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmp4poeh4ae and /tmp/tmpuvp_r4fl to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi5y0mas_
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpxyiy2km2
+INFO:root:Alive verifier for: /tmp/tmp4poeh4ae /tmp/tmpuvp_r4fl
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=list_empty', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/timer.bccmp/Empty/timer.bc.alive.txt
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Modified files 10
+INFO:root:Bitcodes 3
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm_alaw.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/timer/timer.bc
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm_alaw.bc
+DEBUG:root:Copying /tmp/tmph11lg2o1 and /tmp/tmp5umm_6p8 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp1rwdf38b
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6xi0qt6h
+INFO:root:Alive verifier for: /tmp/tmph11lg2o1 /tmp/tmp5umm_6p8
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm_alaw.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm_alaw.bccmp/Ok/pcm_alaw.bc.alive.txt
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmp_d6zxru5 and /tmp/tmpnt85oisy to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmptvey0rx1
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7v4eeqs8
+INFO:root:Alive verifier for: /tmp/tmp_d6zxru5 /tmp/tmpnt85oisy
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpnptj698o
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmpv9kigilm and /tmp/tmpluwbr5i6 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpnyn0u4cz
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpaeu1h64o
+INFO:root:Alive verifier for: /tmp/tmpv9kigilm /tmp/tmpluwbr5i6
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpb1e2bvrt
+ /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/topology/.libs/libatopology.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/topology/.libs/libatopology.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/topology/.libs/libatopology.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-3-c/src/timer/timer.bc
+Tested in 12.72s
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/.libs/libasound.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/.libs/libasound.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/.libs/libasound.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm_alaw.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/pcm.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/.libs/pcm_alaw.o /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/pcm/.libs/pcm_alaw.o
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/topology/.libs/libatopology.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/topology/.libs/libatopology.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/topology/.libs/libatopology.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-0-c/src/timer/timer.bc
+Tested in 13.16s
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-6-c
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c
+Compiled in 2.06s
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c
+Compiled in 2.28s
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/.libs/libasound.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/.libs/libasound.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/.libs/libasound.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm_alaw.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/.libs/pcm_alaw.o /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/.libs/pcm_alaw.o
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/topology/.libs/libatopology.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/topology/.libs/libatopology.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/topology/.libs/libatopology.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/timer/timer.bc
+Tested in 13.08s
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/.libs/libasound.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/.libs/libasound.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/.libs/libasound.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm_alaw.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/.libs/pcm_alaw.o /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/.libs/pcm_alaw.o
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/topology/.libs/libatopology.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.soINFO:root:Modified files 9
+INFO:root:Bitcodes 2
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm_alaw.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm.bc
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm_alaw.bc
+DEBUG:root:Copying /tmp/tmp_hwt2pjp and /tmp/tmph2j9zlct to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6l_6t66x
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpr30vyrqg
+INFO:root:Alive verifier for: /tmp/tmp_hwt2pjp /tmp/tmph2j9zlct
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm_alaw.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm_alaw.bccmp/Ok/pcm_alaw.bc.alive.txt
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmp7_vyns5n and /tmp/tmparvxgls1 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp8zfrga53
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3jaif_tv
+INFO:root:Alive verifier for: /tmp/tmp7_vyns5n /tmp/tmparvxgls1
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpx92ed96q
+WARNING:root:Using str_to_chmap as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmpko1zfiv2 and /tmp/tmpnanvhx4o to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpltf7so2q
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpp3mxo2nc
+INFO:root:Alive verifier for: /tmp/tmpko1zfiv2 /tmp/tmpnanvhx4o
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=str_to_chmap', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm.bccmp/Empty/pcm.bc.alive.txt
+WARNING:root:Using list_empty as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmppx9lfq4c and /tmp/tmpq76tob3t to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpo6azxvzz
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7tvldd62
+INFO:root:Alive verifier for: /tmp/tmppx9lfq4c /tmp/tmpq76tob3t
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-4-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=list_empty', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/timer.bccmp/Empty/timer.bc.alive.txt
+WARNING:root:Using str_to_chmap as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmpmixum8u4 and /tmp/tmpsy2l_ovb to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmptics7a0d
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmia0rj_h
+INFO:root:Alive verifier for: /tmp/tmpmixum8u4 /tmp/tmpsy2l_ovb
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=str_to_chmap', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm.bccmp/Empty/pcm.bc.alive.txt
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm_alaw.bc
+Parsing error original: 
+Parsing error variant: 
+i8 %0
+i8 %a_val
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+INFO:root:Modified files 10
+INFO:root:Bitcodes 3
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm_alaw.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm.bc
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/timer/timer.bc
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm_alaw.bc
+DEBUG:root:Copying /tmp/tmpdpyams0k and /tmp/tmp0nmb6hj4 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp1tbdgr6d
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmyelnv02
+INFO:root:Alive verifier for: /tmp/tmpdpyams0k /tmp/tmp0nmb6hj4
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm_alaw.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm_alaw.bccmp/Ok/pcm_alaw.bc.alive.txt
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmp112ceojj and /tmp/tmpp3cg93kw to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpqzyvn8nb
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpo0f1a9ua
+INFO:root:Alive verifier for: /tmp/tmp112ceojj /tmp/tmpp3cg93kw
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp85n26la7
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmppbjjfq_5 and /tmp/tmptki5a1ou to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpoezb1xb3
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpq028vbvd
+INFO:root:Alive verifier for: /tmp/tmppbjjfq_5 /tmp/tmptki5a1ou
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=alaw_to_s16', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpnvlxgsro
+WARNING:root:Using str_to_chmap as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm.bc
+DEBUG:root:Copying /tmp/tmp26zzswuc and /tmp/tmpqr23f0dk to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpkzs9sg6x
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpr2t1u28o
+INFO:root:Alive verifier for: /tmp/tmp26zzswuc /tmp/tmpqr23f0dk
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=str_to_chmap', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for pcm.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/pcm.bccmp/Empty/pcm.bc.alive.txt
+WARNING:root:Using list_empty as target function.
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/timer/timer.bc
+DEBUG:root:Copying /tmp/tmp57gw2tc6 and /tmp/tmp4vnu9grz to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpp56evz46
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpy66s6qwa
+INFO:root:Alive verifier for: /tmp/tmp57gw2tc6 /tmp/tmp4vnu9grz
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc and /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/timer/timer.bc
+INFO:root:Alive flags ['--func=alaw_to_s16', '--src-fn=alaw_to_s16', '--tgt-fn=list_empty', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+WARNING:root:Verify the entrypoint 'alaw_to_s16' for timer.bc. Alive did not find any transformation
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/scripts/verifier/debug/timer.bccmp/Empty/timer.bc.alive.txt
+ /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/topology/.libs/libatopology.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-9-c/src/topology/.libs/libatopology.so.2
+Tested in 13.51s
+Shadowing /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib
+Copying /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib to /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c
+/home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c
+Compiled in 2.12s
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/.libs/libasound.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/.libs/libasound.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/.libs/libasound.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/.libs/libasound.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm_alaw.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm_alaw.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/pcm.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/pcm.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/pcm/.libs/pcm_alaw.o /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/pcm/.libs/pcm_alaw.o
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2.0.0 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/topology/.libs/libatopology.so.2.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/topology/.libs/libatopology.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/topology/.libs/libatopology.so.2 /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/topology/.libs/libatopology.so.2
+Mismatch /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib/src/timer/timer.bc /home/cbh/galapagos-corey-runs/corey-pilot-baseline/build-copies/alsa-lib-0_alaw_to_s16-5-c/src/timer/timer.bc
+Tested in 13.35s

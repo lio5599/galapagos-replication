@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	int x = a_val ^ 0x55;
+	int t = ((x & 15) << 4) + 264;
+
+	switch ((x >> 4) & 7) {
+	case 0: t -= 256; break;
+	case 1: break;
+	case 2: t <<= 1; break;
+	case 3: t <<= 2; break;
+	case 4: t <<= 3; break;
+	case 5: t <<= 4; break;
+	case 6: t <<= 5; break;
+	case 7: t <<= 6; break;
+	}
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

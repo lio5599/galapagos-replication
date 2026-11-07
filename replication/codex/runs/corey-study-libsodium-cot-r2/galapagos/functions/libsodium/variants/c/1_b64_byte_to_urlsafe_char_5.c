@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Accumulate the five terms using u OR v equals u XOR (v AND NOT u).
+    // This adds only previously unset bits, even when multiple terms overlap.
+    // The original unsigned masks preserve all boundary and out-of-range behavior.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int term;
+
+    term = (a ^ 255U) & b & (x + ('a' - 26));
+    result ^= term & ~result;
+    term = (b ^ 255U) & c & (x + ('0' - 52));
+    result ^= term & ~result;
+    term = ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '-';
+    result ^= term & ~result;
+    term = ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '_';
+    result ^= term & ~result;
+
+    return (int)result;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

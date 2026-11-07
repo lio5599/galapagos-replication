@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	int value;
+	int segment;
+	int magnitude;
+
+	value = a_val ^ 0x55;
+	segment = (value >> 4) & 7;
+	magnitude = ((value & 15) << 1) | 1;
+
+	if (segment == 0)
+		magnitude <<= 3;
+	else {
+		magnitude |= 32;
+		magnitude <<= segment + 2;
+	}
+
+	return (value & 128) ? magnitude : -magnitude;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+    int decoded = a_val ^ 0x55;
+    int segment = (decoded >> 4) & 7;
+    int mantissa = decoded & 15;
+    int magnitude;
+
+    if (segment == 0) {
+        magnitude = mantissa * 16 + 8;
+    } else {
+        int scale = 1 << (segment + 3);
+        magnitude = mantissa * scale + scale / 2 + (1 << (segment + 7));
+    }
+
+    if (!(decoded & 128))
+        magnitude = -magnitude;
+
+    return magnitude;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

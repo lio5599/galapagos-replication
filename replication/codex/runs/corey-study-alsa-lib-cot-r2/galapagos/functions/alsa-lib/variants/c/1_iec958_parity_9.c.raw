@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Complement exactly the 27 field bits and count their parity.
+	// Complementing an odd number of bits flips parity, so start at one.
+	// Unsigned long preserves all 27 positions, including on narrow-int targets.
+	unsigned long value = (~((unsigned long)data >> 4)) & 0x07ffffffUL;
+	unsigned int parity = 1;
+
+	while (value != 0) {
+		value &= value - 1UL;
+		parity ^= 1U;
+	}
+	return parity;
+}

@@ -1,0 +1,8 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Complementary zero-or-one weights select the sum or the cap.
+	// Exactly one term survives, so equality and overflow cases follow the reference.
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	unsigned int cap = 4294967295;
+	return (a + b) * (1u - saturated) + cap * saturated;
+}

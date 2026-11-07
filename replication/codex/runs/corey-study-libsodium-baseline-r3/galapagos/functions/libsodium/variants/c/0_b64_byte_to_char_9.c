@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ~((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ~((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int terms[5] = {
+        a & (x + 'A'),
+        (~a & b) & (x + ('a' - 26)),
+        (~b & c) & (x + ('0' - 52)),
+        d & '+',
+        e & '/'
+    };
+    unsigned int result = 0U;
+    unsigned int i = 5U;
+
+    while (i != 0U) {
+        unsigned int term = terms[--i];
+        result ^= term & ~result;
+    }
+
+    return (int)result;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

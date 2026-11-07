@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // The reference maps 0..63 to Base64 characters and otherwise computes a masked unsigned result.
+    // Name each original mask and retain every unsigned operation.
+    // Masks are not assumed to be Boolean, so out-of-range inputs also match.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 0xFFU) & b & (x + ('a' - 26))) |
+                 ((b ^ 0xFFU) & c & (x + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

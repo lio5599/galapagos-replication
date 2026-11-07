@@ -1,0 +1,1331 @@
+Results will be in /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/out/libsodium
+DEBUG:asyncio:Using selector: EpollSelector
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": null, "variant": null, "action": "build_reference_project"}
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/tests/../../use_cases/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/tests/../../use_cases/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+INFO:root:No change provided
+INFO:root:Setting up autogen
+INFO:root:Running ./autogen.sh -s
+DEBUG:root:libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, 'build-aux'.
+libtoolize: copying file 'build-aux/config.guess'
+libtoolize: copying file 'build-aux/config.sub'
+libtoolize: copying file 'build-aux/install-sh'
+libtoolize: copying file 'build-aux/ltmain.sh'
+libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+libtoolize: copying file 'm4/libtool.m4'
+libtoolize: copying file 'm4/ltoptions.m4'
+libtoolize: copying file 'm4/ltsugar.m4'
+libtoolize: copying file 'm4/ltversion.m4'
+libtoolize: copying file 'm4/lt~obsolete.m4'
+configure.ac:48: installing 'build-aux/compile'
+configure.ac:8: installing 'build-aux/missing'
+src/libsodium/Makefile.am: installing 'build-aux/depcomp'
+parallel-tests: installing 'build-aux/test-driver'
+Done.
+Downloading config.guess and config.sub...
+curl: (22) The requested URL returned error: 502
+curl: (22) The requested URL returned error: 502
+Done.
+
+INFO:root:Calling configure
+INFO:root:Running ./configure
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Compiled in 90.06s
+INFO:root:Pipeline for variants of b64_byte_to_char /home/diogo/galapagos-clones/libsodium/src/libsodium/sodium/codecs.c
+INFO:root:Pipeline for variants of b64_byte_to_urlsafe_char /home/diogo/galapagos-clones/libsodium/src/libsodium/sodium/codecs.c
+INFO:root:Pipeline for variants of b64_char_to_byte /home/diogo/galapagos-clones/libsodium/src/libsodium/sodium/codecs.c
+INFO:root:Variants to check 30
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c
+Compiled in 1.87s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c
+Compiled in 1.66s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "7", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c
+Tested in 76.49s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "7", "action": "equivalence_check"}
+DEBUG:root:Creating debug folder
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpl6lw6dd7 and /tmp/tmpyrxf_ghj to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp9oem41rv
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmplqc1koz_
+INFO:root:Alive verifier for: /tmp/tmpl6lw6dd7 /tmp/tmpyrxf_ghj
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-7-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "2", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c
+Tested in 78.04s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp2a9c0h0x and /tmp/tmp8wfjnhcm to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpjou2vjuw
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpkg_xdft3
+INFO:root:Alive verifier for: /tmp/tmp2a9c0h0x /tmp/tmp8wfjnhcm
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-2-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c
+Compiled in 1.58s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c
+Compiled in 1.55s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "5", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c
+Tested in 77.15s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp8pu5fi40 and /tmp/tmpvgrjb09v to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpj_x4sm2z
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7lxmvcla
+INFO:root:Alive verifier for: /tmp/tmp8pu5fi40 /tmp/tmpvgrjb09v
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "0", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c
+Tested in 77.32s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpf68pcdiz and /tmp/tmpz5kza_k2 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpzsdnz71s
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp4m8b4v_y
+INFO:root:Alive verifier for: /tmp/tmpf68pcdiz /tmp/tmpz5kza_k2
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c
+Compiled in 1.54s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c
+Compiled in 1.77s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "6", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c
+Tested in 78.57s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp0ppmk8vv and /tmp/tmpoh_iekdg to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_bm3bb7l
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmplddfj_7t
+INFO:root:Alive verifier for: /tmp/tmp0ppmk8vv /tmp/tmpoh_iekdg
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "8", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c
+Tested in 75.66s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpkav4bpy9 and /tmp/tmpln1_cnxq to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp17i67ijm
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmptbq98j4o
+INFO:root:Alive verifier for: /tmp/tmpkav4bpy9 /tmp/tmpln1_cnxq
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c
+Compiled in 1.63s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c
+Compiled in 1.57s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "3", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c
+Tested in 77.68s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpzy0vtreh and /tmp/tmp9hrci23w to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi_hfcmf_
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpzzazjror
+INFO:root:Alive verifier for: /tmp/tmpzy0vtreh /tmp/tmp9hrci23w
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-3-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "1", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c
+Tested in 77.61s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp5wd83hmu and /tmp/tmp3n2479h7 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpafizwqus
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp82qvbklp
+INFO:root:Alive verifier for: /tmp/tmp5wd83hmu /tmp/tmp3n2479h7
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-1-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c
+Compiled in 1.71s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c
+Compiled in 1.66s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "9", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c
+Tested in 76.83s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpzv8w15hi and /tmp/tmpc911ql0s to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmps2x240ta
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmph2ep_09o
+INFO:root:Alive verifier for: /tmp/tmpzv8w15hi /tmp/tmpc911ql0s
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-9-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "4", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c
+Tested in 77.66s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_char", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpvj4dct4u and /tmp/tmptbwh_en3 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpzmo2o1tq
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpamtakfh6
+INFO:root:Alive verifier for: /tmp/tmpvj4dct4u /tmp/tmptbwh_en3
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-0_b64_byte_to_char-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_char', '--src-fn=b64_byte_to_char', '--tgt-fn=b64_byte_to_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c
+Compiled in 1.86s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c
+Compiled in 1.76s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "7", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c
+Tested in 77.87s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "7", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpard77o0x and /tmp/tmpexzoxxp1 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmprood5pru
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp9_3jjcsu
+INFO:root:Alive verifier for: /tmp/tmpard77o0x /tmp/tmpexzoxxp1
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-7-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "5", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c
+Tested in 77.86s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpzwlfp722 and /tmp/tmp6avqrh1g to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpsi8ecwjk
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmrx7uypc
+INFO:root:Alive verifier for: /tmp/tmpzwlfp722 /tmp/tmp6avqrh1g
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c
+Compiled in 1.61s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c
+Compiled in 1.66s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "8", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c
+Tested in 79.10s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpr6h9beqb and /tmp/tmpf9rw8xpr to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp685qmc0_
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmplyl_vye7
+INFO:root:Alive verifier for: /tmp/tmpr6h9beqb /tmp/tmpf9rw8xpr
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "9", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c
+Tested in 80.05s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpsinpbivx and /tmp/tmpibjgmuga to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpir69_yor
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp71mr7xms
+INFO:root:Alive verifier for: /tmp/tmpsinpbivx /tmp/tmpibjgmuga
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-9-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c
+Compiled in 1.89s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c
+Compiled in 1.64s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "4", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c
+Tested in 76.55s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpkyrrlxmh and /tmp/tmp47ywzmrb to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp30a13ifm
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpzu64zhdh
+INFO:root:Alive verifier for: /tmp/tmpkyrrlxmh /tmp/tmp47ywzmrb
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "6", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c
+Tested in 78.56s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpzdsv0seo and /tmp/tmpkgd7twl4 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp0g2qyohz
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpvcfc3emj
+INFO:root:Alive verifier for: /tmp/tmpzdsv0seo /tmp/tmpkgd7twl4
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c
+Compiled in 1.59s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c
+Compiled in 1.69s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "2", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c
+Tested in 74.59s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpnp3v34jk and /tmp/tmpxsdw41pc to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpy14gs5sb
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp917wcex1
+INFO:root:Alive verifier for: /tmp/tmpnp3v34jk /tmp/tmpxsdw41pc
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-2-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "3", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c
+Tested in 70.13s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp5xkgdba9 and /tmp/tmpcwwh17pr to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpcvv5kvjx
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpy4ikckbc
+INFO:root:Alive verifier for: /tmp/tmp5xkgdba9 /tmp/tmpcwwh17pr
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-3-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/FailedToProve/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c
+Compiled in 1.55s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c
+Compiled in 1.55s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "1", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c
+Tested in 69.96s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmph3ud2vmg and /tmp/tmpzg1n5bze to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpno3wey9x
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpvmm2tpyl
+INFO:root:Alive verifier for: /tmp/tmph3ud2vmg /tmp/tmpzg1n5bze
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-1-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "0", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c
+Tested in 70.59s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_byte_to_urlsafe_char", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpam0s164o and /tmp/tmpdlatn_gg to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpre0xewja
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp03qn5u0n
+INFO:root:Alive verifier for: /tmp/tmpam0s164o /tmp/tmpdlatn_gg
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-1_b64_byte_to_urlsafe_char-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_byte_to_urlsafe_char', '--src-fn=b64_byte_to_urlsafe_char', '--tgt-fn=b64_byte_to_urlsafe_char', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c
+Compiled in 1.48s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c
+Compiled in 1.44s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "4", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c
+Tested in 72.30s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpkd0qsqu1 and /tmp/tmpkht142vz to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpr2yayp1i
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpd19d0mva
+INFO:root:Alive verifier for: /tmp/tmpkd0qsqu1 /tmp/tmpkht142vz
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-4-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "8", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c
+Tested in 69.27s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpsrmgkmtu and /tmp/tmp6raeqbxv to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpoka_176e
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpgwh6b3d6
+INFO:root:Alive verifier for: /tmp/tmpsrmgkmtu /tmp/tmp6raeqbxv
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-8-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c
+Compiled in 1.56s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c
+Compiled in 1.53s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "1", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c
+Tested in 69.23s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpu0jms4jg and /tmp/tmpuh_kj6x7 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmppwuv6ddp
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpgxrscdd1
+INFO:root:Alive verifier for: /tmp/tmpu0jms4jg /tmp/tmpuh_kj6x7
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-1-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "5", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c
+Tested in 69.93s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp1qby126i and /tmp/tmpb_0d8157 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpezm1qha9
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3fduq3n7
+INFO:root:Alive verifier for: /tmp/tmp1qby126i /tmp/tmpb_0d8157
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-5-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/FailedToProve/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c
+Compiled in 1.58s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-2-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-2-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+llvm-as: /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.ll:1231:65: error: use of undefined value '@__const.b64_char_to_byte.hi'
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %hi, ptr align 4 @__const.b64_char_to_byte.hi, i64 12, i1 false)
+                                                                ^
+WARNING:root:Could not compile variant libsodium Command '['llvm-as', '/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.ll', '-o', '/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-2-c/src/libsodium/sodium/codecs.bc']' returned non-zero exit status 1.
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c
+Compiled in 1.53s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "3", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c
+Tested in 69.21s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpyjx4shbb and /tmp/tmp0ufn_c_r to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi4vlcvi4
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmphzb9x92u
+INFO:root:Alive verifier for: /tmp/tmpyjx4shbb /tmp/tmp0ufn_c_r
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-3-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "9", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c
+Tested in 69.58s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmps9vnbv92 and /tmp/tmps8mylrqq to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi91m437_
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpl1p_p07l
+INFO:root:Alive verifier for: /tmp/tmps9vnbv92 /tmp/tmps8mylrqq
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-9-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c
+Compiled in 1.56s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c
+Compiled in 1.52s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "7", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c
+Tested in 69.73s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "7", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmp8hkfdeju and /tmp/tmpj7zmv567 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpksth39i9
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmph_4qj1q_
+INFO:root:Alive verifier for: /tmp/tmp8hkfdeju /tmp/tmpj7zmv567
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-7-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "6", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c
+Tested in 69.90s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpobs_j44j and /tmp/tmpmui2a_gu to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp9u7iq7hv
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpyzkkr2xw
+INFO:root:Alive verifier for: /tmp/tmpobs_j44j /tmp/tmpmui2a_gu
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-6-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium
+Copying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c
+Compiled in 1.53s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27.0.0 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/.libs/libsodium.so.27.0.0
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/.libs/libsodium.so
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/.libs/libsodium.so.27 /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/.libs/libsodium.so.27
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/.libs/libsodium_la-codecs.o /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/.libs/libsodium_la-codecs.o
+INFO:root:Modified files 5
+INFO:root:Bitcodes 1
+INFO:root:Executables 3
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "0", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c
+Tested in 71.01s
+GALAPAGOS_PROGRESS {"project": "libsodium", "function": "b64_char_to_byte", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+DEBUG:root:Copying /tmp/tmpwlxfi7kv and /tmp/tmptos8kx76 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp2pv_hgc0
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpf47ewl4s
+INFO:root:Alive verifier for: /tmp/tmpwlxfi7kv /tmp/tmptos8kx76
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium/src/libsodium/sodium/codecs.bc and /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/build-copies/libsodium-2_b64_char_to_byte-0-c/src/libsodium/sodium/codecs.bc
+INFO:root:Alive flags ['--func=b64_char_to_byte', '--src-fn=b64_char_to_byte', '--tgt-fn=b64_char_to_byte', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-libsodium-cot-r3/scripts/verifier/debug/codecs.bccmp/Ok/codecs.bc.alive.txt

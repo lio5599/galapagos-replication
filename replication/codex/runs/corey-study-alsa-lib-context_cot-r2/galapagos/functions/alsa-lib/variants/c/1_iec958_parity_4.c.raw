@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask to the selected 27 bits, then count ones in parallel.
+	// Pair, nibble, byte, and half-word sums accumulate the population.
+	// Its low bit is the reference parity, including when no bits are set.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+
+	value -= (value >> 1) & 0x55555555U;
+	value = (value & 0x33333333U) + ((value >> 2) & 0x33333333U);
+	value = (value + (value >> 4)) & 0x0f0f0f0fU;
+	value += value >> 8;
+	value += value >> 16;
+	return value & 1U;
+}

@@ -1,0 +1,20 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Compute the magnitude first in units of eight.
+	// Segment zero uses twice the mantissa plus one; other segments add 32.
+	// Conditional factors two, four, and sixteen implement the exponent bits.
+	// Their product equals the reference shift, with all results within range.
+	int u = a_val ^ 0x55;
+	int seg = (u >> 4) & 7;
+	int exponent = (seg == 0) ? 0 : seg - 1;
+	int t = 2 * (u & 15) + 1 + (seg != 0) * 32;
+
+	if (exponent & 1)
+		t *= 2;
+	if (exponent & 2)
+		t *= 4;
+	if (exponent & 4)
+		t *= 16;
+	t *= 8;
+	return (u & 128) ? t : -t;
+}

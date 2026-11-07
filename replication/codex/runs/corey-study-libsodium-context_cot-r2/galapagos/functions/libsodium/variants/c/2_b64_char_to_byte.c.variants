@@ -1,0 +1,189 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Maps Base64 characters to 0–63 and other inputs by the reference's byte masks.
+    // Each original mask is retained, including its behavior outside the byte range.
+    // Unsigned arithmetic agrees wherever the reference's signed arithmetic is defined.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (((u - 'A') >> 8) & 255U) ^ 255U;
+    const unsigned int b = ((('Z' - u) >> 8) & 255U) ^ 255U;
+    const unsigned int d = (((u - 'a') >> 8) & 255U) ^ 255U;
+    const unsigned int e = ((('z' - u) >> 8) & 255U) ^ 255U;
+    const unsigned int f = (((u - '0') >> 8) & 255U) ^ 255U;
+    const unsigned int g = ((('9' - u) >> 8) & 255U) ^ 255U;
+    const unsigned int p = (((0U - (u ^ '+')) >> 8) & 255U) ^ 255U;
+    const unsigned int q = (((0U - (u ^ '/')) >> 8) & 255U) ^ 255U;
+    const unsigned int x = (a & b & (u - 'A')) |
+                           (d & e & (u - 'a' + 26U)) |
+                           (f & g & (u - '0' + 52U)) |
+                           (p & 62U) | (q & 63U);
+    return x | (((((0U - x) >> 8) & 255U) ^ 255U) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Complementing before the shift produces the same eight-bit masks.
+    // All intermediate values use unsigned arithmetic without narrowing the input.
+    // The final mask therefore preserves the reference's non-byte edge cases.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ((~(u - 'A') >> 8) & 255U) &
+                           ((~('Z' - u) >> 8) & 255U);
+    const unsigned int b = ((~(u - 'a') >> 8) & 255U) &
+                           ((~('z' - u) >> 8) & 255U);
+    const unsigned int d = ((~(u - '0') >> 8) & 255U) &
+                           ((~('9' - u) >> 8) & 255U);
+    const unsigned int p = (~(0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int q = (~(0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - 'a' + 26U)) |
+                           (d & (u - '0' + 52U)) |
+                           (p & 62U) | (q & 63U);
+    return x | (((~(0U - x) >> 8) & 255U) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // De Morgan's law combines each pair of range masks before shifting.
+    // This is a bitwise identity, not an assumption that c is a byte.
+    // Since x is at most 255, its final zero mask is 255 exactly when x is zero.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (~((u - 'A') | ('Z' - u)) >> 8) & 255U;
+    const unsigned int b = (~((u - 'a') | ('z' - u)) >> 8) & 255U;
+    const unsigned int d = (~((u - '0') | ('9' - u)) >> 8) & 255U;
+    const unsigned int p = (~(0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int q = (~(0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - 'a' + 26U)) |
+                           (d & (u - '0' + 52U)) |
+                           (p & 62U) | (q & 63U);
+    if (x != 0U)
+        return x;
+    return ((0U - (u ^ 'A')) >> 8) & 255U;
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Extract the relevant eight bits before complementing the combined masks.
+    // Masking the complement makes this identical to the original XOR with 255.
+    // The conditional replaces only the zero test on the bounded intermediate x.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ~(((u - 'A') >> 8) | (('Z' - u) >> 8)) & 255U;
+    const unsigned int b = ~(((u - 'a') >> 8) | (('z' - u) >> 8)) & 255U;
+    const unsigned int d = ~(((u - '0') >> 8) | (('9' - u) >> 8)) & 255U;
+    const unsigned int p = ~((0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int q = ~((0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - 'a' + 26U)) |
+                           (d & (u - '0' + 52U)) |
+                           (p & 62U) | (q & 63U);
+    return x != 0U ? x : (((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Accumulate the five masked contributions using associative bitwise OR.
+    // Every mask still examines bits 8 through 15 of the full unsigned input.
+    // The original final correction is retained for all defined reference inputs.
+    const unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    x |= ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A');
+    x |= ((~((u - 'a') | ('z' - u)) >> 8) & 255U) & (u - 'a' + 26U);
+    x |= ((~((u - '0') | ('9' - u)) >> 8) & 255U) & (u - '0' + 52U);
+    x |= ((~(0U - (u ^ '+')) >> 8) & 255U) & 62U;
+    x |= ((~(0U - (u ^ '/')) >> 8) & 255U) & 63U;
+    return x | (((~(0U - x) >> 8) & 255U) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // XOR with 0xFF00 complements precisely the bits later extracted by shifting.
+    // Combining range operands with OR is equivalent to ANDing their complements.
+    // No input truncation or ordinary character-range test changes edge behavior.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ((((u - 'A') | ('Z' - u)) ^ 0xFF00U) >> 8) & 255U;
+    const unsigned int b = ((((u - 'a') | ('z' - u)) ^ 0xFF00U) >> 8) & 255U;
+    const unsigned int d = ((((u - '0') | ('9' - u)) ^ 0xFF00U) >> 8) & 255U;
+    const unsigned int p = (((0U - (u ^ '+')) ^ 0xFF00U) >> 8) & 255U;
+    const unsigned int q = (((0U - (u ^ '/')) ^ 0xFF00U) >> 8) & 255U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - 'a' + 26U)) |
+                           (d & (u - '0' + 52U)) |
+                           (p & 62U) | (q & 63U);
+    return x | (((((0U - x) ^ 0xFF00U) >> 8) & 255U) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Within eight bits, complementing v is equivalent to subtracting v from 255.
+    // Each extracted value is bounded before subtraction, so the identity is exact.
+    // Unsigned offsets preserve every input for which the reference is defined.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = 255U - ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    const unsigned int b = 255U - ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    const unsigned int d = 255U - ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    const unsigned int p = 255U - (((0U - (u ^ '+')) >> 8) & 255U);
+    const unsigned int q = 255U - (((0U - (u ^ '/')) >> 8) & 255U);
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - 'a' + 26U)) |
+                           (d & (u - '0' + 52U)) |
+                           (p & 62U) | (q & 63U);
+    return x | ((255U - (((0U - x) >> 8) & 255U)) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Factoring out the common low-byte mask preserves all five contributions.
+    // Bits above the low byte cannot affect bitwise OR or AND in the low byte.
+    // The final correction uses the resulting bounded x, exactly as the reference.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (~((u - 'A') | ('Z' - u)) >> 8) & (u - 'A');
+    const unsigned int b = (~((u - 'a') | ('z' - u)) >> 8) & (u - 'a' + 26U);
+    const unsigned int d = (~((u - '0') | ('9' - u)) >> 8) & (u - '0' + 52U);
+    const unsigned int p = (~(0U - (u ^ '+')) >> 8) & 62U;
+    const unsigned int q = (~(0U - (u ^ '/')) >> 8) & 63U;
+    const unsigned int x = (a | b | d | p | q) & 255U;
+    return x | (((~(0U - x) >> 8) &
+                 ((0U - (u ^ 'A')) >> 8)) & 255U);
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // De Morgan's law also expresses the union of contributions as complemented AND.
+    // The contributions retain the reference's full-width unsigned mask arithmetic.
+    // The final branch is valid because their union is confined to eight bits.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A');
+    const unsigned int b = ((~((u - 'a') | ('z' - u)) >> 8) & 255U) & (u - 'a' + 26U);
+    const unsigned int d = ((~((u - '0') | ('9' - u)) >> 8) & 255U) & (u - '0' + 52U);
+    const unsigned int p = ((~(0U - (u ^ '+')) >> 8) & 255U) & 62U;
+    const unsigned int q = ((~(0U - (u ^ '/')) >> 8) & 255U) & 63U;
+    const unsigned int x = ~((~a) & (~b) & (~d) & (~p) & (~q));
+    if (x == 0U)
+        return ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x;
+}
+
+static unsigned int b64_char_to_byte(int c)
+{
+    // Cache unsigned offsets and derive upper-bound differences from those offsets.
+    // Unsigned modular arithmetic makes each derived difference identical to the original.
+    // Mask extraction and the final correction preserve even non-byte input behavior.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = u - (unsigned int)'A';
+    const unsigned int b = u - (unsigned int)'a';
+    const unsigned int d = u - (unsigned int)'0';
+    const unsigned int ar = ((unsigned int)'Z' - (unsigned int)'A') - a;
+    const unsigned int br = ((unsigned int)'z' - (unsigned int)'a') - b;
+    const unsigned int dr = ((unsigned int)'9' - (unsigned int)'0') - d;
+    unsigned int x = ((~(a | ar) >> 8) & 255U) & a;
+    x |= ((~(b | br) >> 8) & 255U) & (b + 26U);
+    x |= ((~(d | dr) >> 8) & 255U) & (d + 52U);
+    x |= ((~(0U - (u ^ '+')) >> 8) & 255U) & 62U;
+    x |= ((~(0U - (u ^ '/')) >> 8) & 255U) & 63U;
+    return x | (((~(0U - x) >> 8) & 255U) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}

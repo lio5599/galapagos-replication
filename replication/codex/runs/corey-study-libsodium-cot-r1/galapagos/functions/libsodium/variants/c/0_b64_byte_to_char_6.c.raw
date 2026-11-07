@@ -1,0 +1,23 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Accumulate terms using r OR t = r XOR (t AND NOT r).
+    // Only previously unset bits are toggled, even when terms overlap.
+    // The original byte masks and unsigned wraparound cover every input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int term;
+
+    term = (~a & b) & (x + ('a' - 26));
+    result ^= term & ~result;
+    term = (~b & c) & (x + ('0' - 52));
+    result ^= term & ~result;
+    term = d & '+';
+    result ^= term & ~result;
+    term = e & '/';
+    result ^= term & ~result;
+    return (int)result;
+}

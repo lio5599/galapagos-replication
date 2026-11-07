@@ -1,0 +1,25 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Iterate over the three alphabet ranges, then handle the two symbols.
+    // Each iteration contributes exactly one original masked term.
+    // The final masks preserve zero for A and the original invalid-input value.
+    // Non-byte inputs retain the same masks on every reference-defined input.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int first[3] = { 'A', 'a', '0' };
+    const unsigned int last[3] = { 'Z', 'z', '9' };
+    const unsigned int base[3] = { 0U, 26U, 52U };
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 3U; ++i) {
+        const unsigned int lo =
+            255U ^ (((u - first[i]) >> 8) & 255U);
+        const unsigned int hi =
+            255U ^ (((last[i] - u) >> 8) & 255U);
+        x |= lo & hi & (u - first[i] + base[i]);
+    }
+    x |= (255U ^ (((0U - (u ^ '+')) >> 8) & 255U)) & 62U;
+    x |= (255U ^ (((0U - (u ^ '/')) >> 8) & 255U)) & 63U;
+    return x |
+        ((255U ^ (((0U - x) >> 8) & 255U)) &
+         (((0U - (u ^ 'A')) >> 8) & 255U));
+}

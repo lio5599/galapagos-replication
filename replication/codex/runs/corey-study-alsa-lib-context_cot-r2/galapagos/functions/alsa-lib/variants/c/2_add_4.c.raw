@@ -1,0 +1,10 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Compute the unsigned result first, then replace it when capped.
+	// Unsigned wrapping is harmless because that result is discarded.
+	// The original comparison also handles equality exactly.
+	unsigned int result = a + b;
+	if (a >= 4294967295 - b)
+		result = 4294967295;
+	return result;
+}

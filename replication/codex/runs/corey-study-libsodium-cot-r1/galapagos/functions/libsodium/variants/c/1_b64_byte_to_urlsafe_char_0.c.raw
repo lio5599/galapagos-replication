@@ -1,0 +1,16 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // The reference computes a masked URL-safe Base64 character value from x.
+    // Factor its five byte masks without changing their unsigned arithmetic.
+    // Preserve partial masks for inputs outside 0 through 63 as well.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 255U) & b & (x + ('a' - 26))) |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '-') | (e & '_'));
+}

@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Shift away bits 0 through 3, then XOR exactly 27 successive bits.
+	// XOR gives the set-bit count modulo two, including zero for empty input.
+	// Higher bits cannot reach the tested position during these 27 iterations.
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

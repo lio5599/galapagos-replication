@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Combine the first two terms with the standard bitwise selection identity.
+    // The second candidate is byte-masked, so full complement and byte complement agree.
+    // Selection acts independently on every bit, preserving arbitrary-input masks.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int p = x + 'A';
+    unsigned int q = b & (x + ('a' - 26));
+    unsigned int first = q ^ (a & (p ^ q));
+    return first |
+           ((b ^ 0xFFU) & c & (x + ('0' - 52))) |
+           (((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & '+') |
+           (((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & '/');
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

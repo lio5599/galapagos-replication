@@ -1,0 +1,210 @@
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 0xFFU;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 0xFFU;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 0xFFU) & b & (x + ('a' - 26))) |
+                 ((b ^ 0xFFU) & c & (x + ('0' - 52))) |
+                 ((d ^ 0xFFU) & '-') |
+                 ((e ^ 0xFFU) & '_'));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int r;
+
+    r = a & (x + 'A');
+    r |= (0xFFU - a) & b & (x + ('a' - 26));
+    r |= (0xFFU - b) & c & (x + ('0' - 52));
+    r |= (0xFFU - (((0U - (x ^ 62U)) >> 8) & 0xFFU)) & '-';
+    r |= (0xFFU - (((0U - (x ^ 63U)) >> 8) & 0xFFU)) & '_';
+
+    return (int)r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+
+    return (int)(0xFFU &
+                 ((a & (x + 'A')) |
+                  (~a & b & (x + ('a' - 26))) |
+                  (~b & c & (x + ('0' - 52))) |
+                  (~d & '-') |
+                  (~e & '_')));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int masks[5];
+    unsigned int values[5];
+    unsigned int r = 0U;
+    unsigned int i;
+
+    masks[0] = ((x - 26U) >> 8) & 0xFFU;
+    masks[1] = ((x - 52U) >> 8) & 0xFFU;
+    masks[2] = ((x - 62U) >> 8) & 0xFFU;
+    masks[3] = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    masks[4] = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+
+    masks[2] &= masks[1] ^ 0xFFU;
+    masks[1] &= masks[0] ^ 0xFFU;
+
+    values[0] = x + 'A';
+    values[1] = x + ('a' - 26);
+    values[2] = x + ('0' - 52);
+    values[3] = '-';
+    values[4] = '_';
+
+    for (i = 0U; i < 5U; ++i)
+        r |= masks[i] & values[i];
+
+    return (int)r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int terms[5];
+    unsigned int r = 0U;
+    unsigned int i = 5U;
+
+    terms[0] = a & (x + 'A');
+    terms[1] = (a ^ 0xFFU) & b & (x + ('a' - 26));
+    terms[2] = (b ^ 0xFFU) & c & (x + ('0' - 52));
+    terms[3] = ((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & '-';
+    terms[4] = ((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & '_';
+
+    while (i != 0U)
+        r |= terms[--i];
+
+    return (int)r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int upper = a & (x + 'A');
+    unsigned int lower = (a ^ 0xFFU) & b & (x + ('a' - 26));
+    unsigned int digit = (b ^ 0xFFU) & c & (x + ('0' - 52));
+    unsigned int dash = ((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & '-';
+    unsigned int under = ((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & '_';
+
+    return (int)~(~upper & ~lower & ~digit & ~dash & ~under);
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int r = 0U;
+
+    if (a != 0U)
+        r |= a & (x + 'A');
+    if ((a ^ 0xFFU) != 0U)
+        r |= (a ^ 0xFFU) & b & (x + ('a' - 26));
+    if ((b ^ 0xFFU) != 0U)
+        r |= (b ^ 0xFFU) & c & (x + ('0' - 52));
+    if (d != 0U)
+        r |= d & '-';
+    if (e != 0U)
+        r |= e & '_';
+
+    return (int)r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 0xFFU;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 0xFFU;
+    unsigned int r = 0U;
+    unsigned int bit;
+
+    for (bit = 1U; bit <= 0x80U; bit <<= 1)
+    {
+        if ((a & (x + 'A') & bit) ||
+            ((a ^ 0xFFU) & b & (x + ('a' - 26)) & bit) ||
+            ((b ^ 0xFFU) & c & (x + ('0' - 52)) & bit) ||
+            ((d ^ 0xFFU) & '-' & bit) ||
+            ((e ^ 0xFFU) & '_' & bit))
+            r |= bit;
+    }
+
+    return (int)r;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) / 256U) % 256U;
+    unsigned int b = ((x - 52U) / 256U) % 256U;
+    unsigned int c = ((x - 62U) / 256U) % 256U;
+    unsigned int d = ((0U - (x ^ 62U)) / 256U) % 256U;
+    unsigned int e = ((0U - (x ^ 63U)) / 256U) % 256U;
+
+    return (int)((a & (x + 'A')) |
+                 ((255U - a) & b & (x + ('a' - 26))) |
+                 ((255U - b) & c & (x + ('0' - 52))) |
+                 ((255U - d) & '-') |
+                 ((255U - e) & '_'));
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 0xFFU;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 0xFFU;
+    unsigned int lower = b & (x + ('a' - 26));
+    unsigned int digit = c & (x + ('0' - 52));
+    unsigned int dash = 0xFFU & '-';
+    unsigned int under = 0xFFU & '_';
+
+    lower ^= lower & a;
+    digit ^= digit & b;
+    dash ^= dash & d;
+    under ^= under & e;
+
+    return (int)((a & (x + 'A')) | lower | digit | dash | under);
+}
+```

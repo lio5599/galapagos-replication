@@ -1,0 +1,165 @@
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	int seg, t;
+
+	a_val ^= 0x55;
+	seg = (a_val >> 4) & 7;
+	t = ((a_val & 15) << 4) + 8;
+	if (seg != 0)
+		t = (t + 256) << (seg - 1);
+
+	return (a_val & 0x80) ? t : -t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int t = ((x & 15) * 16) + 8;
+
+	switch (seg) {
+	case 0: break;
+	case 1: t += 256; break;
+	case 2: t = (t + 256) * 2; break;
+	case 3: t = (t + 256) * 4; break;
+	case 4: t = (t + 256) * 8; break;
+	case 5: t = (t + 256) * 16; break;
+	case 6: t = (t + 256) * 32; break;
+	case 7: t = (t + 256) * 64; break;
+	}
+
+	return (x & 128) ? t : -t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	static const int base[8] = {
+		8, 264, 528, 1056, 2112, 4224, 8448, 16896
+	};
+	static const int step[8] = {
+		16, 16, 32, 64, 128, 256, 512, 1024
+	};
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int t = base[seg] + (int)(x & 15) * step[seg];
+
+	return (x & 128) ? t : -t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int t = (int)(x & 15) * 16 + 8;
+
+	if (seg > 0) {
+		t += 256;
+		while (--seg > 0)
+			t *= 2;
+	}
+
+	return (2 * (int)(x >> 7) - 1) * t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int nonzero = (seg != 0);
+	int t = ((int)(x & 15) * 16 + 8 + 256 * nonzero)
+		<< (seg - nonzero);
+
+	return (x & 128) ? t : -t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	static const int scale[8] = { 1, 1, 2, 4, 8, 16, 32, 64 };
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int t = ((int)(x & 15) * 16 + (seg ? 264 : 8))
+		* scale[seg];
+
+	if (!(x & 128))
+		t = -t;
+	return t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	int seg = ((a_val >> 4) ^ 5) & 7;
+	int mantissa = (a_val ^ 5) & 15;
+	int t;
+
+	if (seg == 0)
+		t = mantissa * 16 + 8;
+	else
+		t = (mantissa * 2 + 33) << (seg + 2);
+
+	return (a_val & 128) ? t : -t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int t = ((int)(x & 15) * 2 + 33) << (seg + 3);
+
+	if (seg == 0)
+		t -= 256;
+	else
+		t /= 2;
+
+	return (x & 128) ? t : -t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	static const int low[16] = {
+		8, 24, 40, 56, 72, 88, 104, 120,
+		136, 152, 168, 184, 200, 216, 232, 248
+	};
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int t = low[x & 15];
+
+	if (seg)
+		t = (t + 256) * (1 << (seg - 1));
+
+	return (x & 128) ? t : -t;
+}
+```
+
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned int x = a_val ^ 0x55u;
+	int seg = (x >> 4) & 7;
+	int sign = (x & 128) ? 1 : -1;
+	int t = sign * ((int)(x & 15) * 16 + 8);
+
+	if (seg) {
+		t += sign * 256;
+		t *= 1 << (seg - 1);
+	}
+
+	return t;
+}
+```

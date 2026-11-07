@@ -1,0 +1,20 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Maps Base64 bytes to 0..63 and other bytes to 255; wider inputs follow its masks.
+    // Complemented difference bytes reproduce the three range masks exactly.
+    // Negated XOR bytes reproduce the punctuation masks, even for non-byte inputs.
+    // Since x is at most 255, the reference's zero mask is equivalent to x == 0.
+    // Unsigned payload arithmetic agrees wherever the reference has defined behavior.
+    const unsigned int u = (unsigned int)c;
+    unsigned int x =
+        (~((u - (unsigned int)'A') >> 8) &
+         ~(((unsigned int)'Z' - u) >> 8) & (u - (unsigned int)'A') & 255U) |
+        (~((u - (unsigned int)'a') >> 8) &
+         ~(((unsigned int)'z' - u) >> 8) & (u - ((unsigned int)'a' - 26U)) & 255U) |
+        (~((u - (unsigned int)'0') >> 8) &
+         ~(((unsigned int)'9' - u) >> 8) & (u - ((unsigned int)'0' - 52U)) & 255U) |
+        (~((0U - (u ^ (unsigned int)'+')) >> 8) & 62U) |
+        (~((0U - (u ^ (unsigned int)'/')) >> 8) & 63U);
+
+    return x ? x : (((0U - (u ^ (unsigned int)'A')) >> 8) & 255U);
+}

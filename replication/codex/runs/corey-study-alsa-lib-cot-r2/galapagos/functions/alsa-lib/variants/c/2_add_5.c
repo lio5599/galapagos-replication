@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The comparison produces either zero or one.
+	// Complementary weights select the same branch as the reference.
+	// Unsigned arithmetic makes an unused overflowing sum harmless.
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	return saturated * (unsigned int)4294967295
+	     + (1U - saturated) * (a + b);
+}
+
+
+int main(){
+    add(0,0);
+}

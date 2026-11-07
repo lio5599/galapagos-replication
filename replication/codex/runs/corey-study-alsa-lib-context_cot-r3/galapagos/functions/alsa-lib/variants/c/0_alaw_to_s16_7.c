@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Factor eight out of the biased mantissa for nonzero segments.
+	// Thus 16 times mantissa plus 264 becomes eight times twice mantissa plus 33.
+	// Segment zero remains separate; the largest shift is nine and is safe.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg)
+		t = (2 * mant + 33) << (seg + 2);
+	else
+		t = (2 * mant + 1) << 3;
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

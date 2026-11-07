@@ -1,0 +1,43 @@
+[
+  {
+    "step": "alsa-lib-split_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "split_variants.py",
+      "c",
+      "alsa-lib"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "alsa-lib-template_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "template_variants.py",
+      "c",
+      "alsa-lib"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "alsa-lib-compile_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "compile_variants.py",
+      "c",
+      "alsa-lib"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "alsa-lib-usecase",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "-m",
+      "tests.usecase",
+      "alsa-lib",
+      "c"
+    ],
+    "exit_code": 0
+  }
+]

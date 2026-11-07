@@ -1,0 +1,217 @@
+#ifndef B64_IMPLEMENTATION
+#define B64_IMPLEMENTATION 1
+#endif
+
+#if B64_IMPLEMENTATION == 1
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 255U) & b & (x + ('a' - 26))) |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}
+
+#elif B64_IMPLEMENTATION == 2
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = (x - 26U) >> 8;
+    unsigned int b = (x - 52U) >> 8;
+    unsigned int c = (x - 62U) >> 8;
+    unsigned int d = (0U - (x ^ 62U)) >> 8;
+    unsigned int e = (0U - (x ^ 63U)) >> 8;
+
+    return (int)(((a & (x + 'A')) |
+                  (~a & b & (x + ('a' - 26))) |
+                  (~b & c & (x + ('0' - 52))) |
+                  (~d & '+') | (~e & '/')) & 255U);
+}
+
+#elif B64_IMPLEMENTATION == 3
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int result = a & (x + 'A');
+
+    result |= (~a & b) & (x + ('a' - 26));
+    result |= (~b & c) & (x + ('0' - 52));
+    result |= (~((0U - (x ^ 62U)) >> 8) & 255U) & '+';
+    result |= (~((0U - (x ^ 63U)) >> 8) & 255U) & '/';
+
+    return (int)result;
+}
+
+#elif B64_IMPLEMENTATION == 4
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int masks[5] = {
+        a,
+        (a ^ 255U) & b,
+        (b ^ 255U) & c,
+        (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U,
+        (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U
+    };
+    unsigned int values[5] = {
+        x + 'A', x + ('a' - 26), x + ('0' - 52), '+', '/'
+    };
+    unsigned int result = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i)
+        result |= masks[i] & values[i];
+
+    return (int)result;
+}
+
+#elif B64_IMPLEMENTATION == 5
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int upper = a & (x + 'A');
+    unsigned int lower = b & (x + ('a' - 26));
+    unsigned int digit = c & (x + ('0' - 52));
+
+    lower ^= lower & a;
+    digit ^= digit & b;
+
+    return (int)(upper | lower | digit | (d & '+') | (e & '/'));
+}
+
+#elif B64_IMPLEMENTATION == 6
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int upper = x + 'A';
+    unsigned int lower = x + ('a' - 26);
+    unsigned int digit = x + ('0' - 52);
+
+    return (int)((~((~a | ~upper) &
+                    (a | ~b | ~lower) &
+                    (b | ~c | ~digit) &
+                    (d | ~(unsigned int)'+') &
+                    (e | ~(unsigned int)'/'))) & 255U);
+}
+
+#elif B64_IMPLEMENTATION == 7
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+
+    return (int)((a & (x + 'A')) |
+                 ((255U - a) & b & (x + ('a' - 26))) |
+                 ((255U - b) & c & (x + ('0' - 52))) |
+                 ((255U - d) & '+') |
+                 ((255U - e) & '/'));
+}
+
+#elif B64_IMPLEMENTATION == 8
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int thresholds[3] = {26U, 52U, 62U};
+    unsigned int masks[3];
+    unsigned int i;
+    unsigned int result;
+
+    for (i = 0U; i < 3U; ++i)
+        masks[i] = ((x - thresholds[i]) >> 8) & 255U;
+
+    result = masks[0] & (x + 'A');
+    result |= (masks[1] & ~masks[0]) & (x + ('a' - 26));
+    result |= (masks[2] & ~masks[1]) & (x + ('0' - 52));
+
+    for (i = 62U; i <= 63U; ++i) {
+        unsigned int mask = ~((0U - (x ^ i)) >> 8) & 255U;
+        unsigned int value = (i == 62U) ? '+' : '/';
+        result |= mask & value;
+    }
+
+    return (int)result;
+}
+
+#elif B64_IMPLEMENTATION == 9
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ~((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ~((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int upper = x + 'A';
+    unsigned int lower = x + ('a' - 26);
+    unsigned int digit = x + ('0' - 52);
+    unsigned int result = 0U;
+    unsigned int bit;
+
+    for (bit = 1U; bit < 256U; bit <<= 1) {
+        if (((a & bit) && (upper & bit)) ||
+            ((~a & b & bit) && (lower & bit)) ||
+            ((~b & c & bit) && (digit & bit)) ||
+            ((d & bit) && ((unsigned int)'+' & bit)) ||
+            ((e & bit) && ((unsigned int)'/' & bit)))
+            result |= bit;
+    }
+
+    return (int)result;
+}
+
+#elif B64_IMPLEMENTATION == 10
+
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ~((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ~((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int terms[5] = {
+        a & (x + 'A'),
+        (~a & b) & (x + ('a' - 26)),
+        (~b & c) & (x + ('0' - 52)),
+        d & '+',
+        e & '/'
+    };
+    unsigned int result = 0U;
+    unsigned int i = 5U;
+
+    while (i != 0U) {
+        unsigned int term = terms[--i];
+        result ^= term & ~result;
+    }
+
+    return (int)result;
+}
+
+#else
+#error B64_IMPLEMENTATION must be between 1 and 10
+#endif

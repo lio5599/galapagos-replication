@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Form the segment scale separately as a power of two.
+	// For nonzero segments, halving the base and doubling the scale
+	// leaves the reference magnitude unchanged, without rounding.
+	// Segment zero keeps its original offset and all products fit.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int scale = 1 << seg;
+	int t;
+
+	if (seg == 0)
+		t = (x & 15) * 16 + 8;
+	else
+		t = ((x & 15) * 8 + 132) * scale;
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

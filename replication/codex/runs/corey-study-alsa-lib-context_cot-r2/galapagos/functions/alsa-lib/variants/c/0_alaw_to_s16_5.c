@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Use a zero-or-one flag to select the segment-dependent offset.
+	// Subtracting that flag from seg gives zero for segments zero and one,
+	// and seg minus one otherwise, so every shift count is valid.
+	// Multiplication by the decoded sign preserves both polarities.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int nonzero = seg != 0;
+	int t = ((x & 15) * 16 + 8 + 256 * nonzero)
+		<< (seg - nonzero);
+	int sign = 2 * ((x >> 7) & 1) - 1;
+
+	return sign * t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

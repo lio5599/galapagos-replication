@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Express each masked term using De Morgan's identity for AND.
+    // The identities hold bitwise for all unsigned inputs, including wraparound cases.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int p = ~(~a | ~(x + 'A'));
+    unsigned int q = ~(~(a ^ 255U) | ~b | ~(x + ('a' - 26)));
+    unsigned int r = ~(~(b ^ 255U) | ~c | ~(x + ('0' - 52)));
+    unsigned int s = ~(~d | ~(unsigned int) '-');
+    unsigned int t = ~(~e | ~(unsigned int) '_');
+    return p | q | r | s | t;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

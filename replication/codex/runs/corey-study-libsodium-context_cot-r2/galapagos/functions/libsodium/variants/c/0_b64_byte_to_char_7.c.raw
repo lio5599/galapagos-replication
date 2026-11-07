@@ -1,0 +1,23 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Evaluate the low and high nibbles separately, then join them.
+    // Every reference term is byte-masked, and AND distributes over OR.
+    // The nibble partition therefore loses no bits, even for unrestricted inputs.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU;
+    unsigned int p = x + 'A';
+    unsigned int q = x + ('a' - 26);
+    unsigned int r = x + ('0' - 52);
+    unsigned int low = (a & 0x0FU & p) |
+                       ((a ^ 0xFFU) & b & 0x0FU & q) |
+                       ((b ^ 0xFFU) & c & 0x0FU & r) |
+                       (d & 0x0FU & '+') | (e & 0x0FU & '/');
+    unsigned int high = (a & 0xF0U & p) |
+                        ((a ^ 0xFFU) & b & 0xF0U & q) |
+                        ((b ^ 0xFFU) & c & 0xF0U & r) |
+                        (d & 0xF0U & '+') | (e & 0xF0U & '/');
+    return low | high;
+}

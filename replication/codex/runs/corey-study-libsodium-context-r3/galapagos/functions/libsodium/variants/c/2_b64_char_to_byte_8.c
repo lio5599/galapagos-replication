@@ -1,0 +1,31 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        ((u - 'A') & 255U) &
+        ~(((u - 'A') | ('Z' - u)) >> 8);
+    const unsigned int lower =
+        ((u - ('a' - 26)) & 255U) &
+        ~(((u - 'a') | ('z' - u)) >> 8);
+    const unsigned int digit =
+        ((u - ('0' - 52)) & 255U) &
+        ~(((u - '0') | ('9' - u)) >> 8);
+    const unsigned int plus =
+        62U ^ (((0U - (u ^ '+')) >> 8) & 62U);
+    const unsigned int slash =
+        63U ^ (((0U - (u ^ '/')) >> 8) & 63U);
+    const unsigned int x = upper | lower | digit | plus | slash;
+    const unsigned int reject =
+        (((0U - (u ^ 'A')) >> 8) & 255U);
+    const unsigned int nonzero = ((0U - x) >> 8) & 255U;
+
+    return x | (reject ^ (reject & nonzero));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

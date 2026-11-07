@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Compute the union as the bytewise complement of intersected complements.
+    // Every term is byte-sized, so XOR with 255 is its exact byte complement.
+    // De Morgan's law preserves overlaps and partial masks for all inputs.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int t0 = a & (x + 'A');
+    unsigned int t1 = (a ^ 255U) & b & (x + ('a' - 26));
+    unsigned int t2 = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int t3 = d & '+';
+    unsigned int t4 = e & '/';
+    return (int)(255U ^ ((255U ^ t0) &
+                         (255U ^ t1) &
+                         (255U ^ t2) &
+                         (255U ^ t3) &
+                         (255U ^ t4)));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

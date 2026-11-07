@@ -1,0 +1,18 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Complement unsigned words before extracting their bytes.
+    // Byte extraction commutes with complement when the result is masked to 255.
+    // The original unsigned subtractions retain their behavior at every boundary.
+    unsigned int u = x - 26U;
+    unsigned int v = x - 52U;
+    unsigned int w = x - 62U;
+    unsigned int p = 0U - (x ^ 62U);
+    unsigned int q = 0U - (x ^ 63U);
+    unsigned int upper = (u >> 8) & (x + 'A');
+    unsigned int lower = (~u >> 8) & (v >> 8) & (x + ('a' - 26));
+    unsigned int digit = (~v >> 8) & (w >> 8) & (x + ('0' - 52));
+    unsigned int dash = (~p >> 8) & '-';
+    unsigned int underscore = (~q >> 8) & '_';
+
+    return (int)((upper | lower | digit | dash | underscore) & 255U);
+}

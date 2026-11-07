@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Only the input's low sixteen bits can affect the reference's masks.
+    // Normalize to those bits before computing the same five contributions.
+    // Since x is eight-bit, its zero mask is 255 exactly when x is zero.
+    // Branching on x preserves 'A', invalid bytes, and wider-input partial masks.
+    unsigned int u = (unsigned int)c & 65535U;
+    unsigned int a = 255U ^ ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    unsigned int b = 255U ^ ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    unsigned int d = 255U ^ ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    unsigned int p = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    unsigned int q = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    unsigned int x = (a & (u - 'A')) | (b & (u - 'a' + 26U))
+                   | (d & (u - '0' + 52U)) | (p & 62U) | (q & 63U);
+    if (x != 0U)
+        return x;
+    return ((0U - (u ^ 'A')) >> 8) & 255U;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Replace the first OR by XOR because its two terms have disjoint masks.
+    // One term uses a and the other its byte complement, so they cannot overlap.
+    // Keep OR for the remaining terms, whose masks may overlap on arbitrary inputs.
+    unsigned int a = ((x - 26U) >> 8) & 0xFFU;
+    unsigned int b = ((x - 52U) >> 8) & 0xFFU;
+    unsigned int c = ((x - 62U) >> 8) & 0xFFU;
+    unsigned int first = (a & (x + 'A')) ^
+                         ((a ^ 0xFFU) & b & (x + ('a' - 26)));
+    unsigned int digits = (b ^ 0xFFU) & c & (x + ('0' - 52));
+    unsigned int punctuation =
+        (((((0U - (x ^ 62U)) >> 8) & 0xFFU) ^ 0xFFU) & '+') |
+        (((((0U - (x ^ 63U)) >> 8) & 0xFFU) ^ 0xFFU) & '/');
+    return first | digits | punctuation;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

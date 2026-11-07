@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Accumulate OR using addition of only bits absent from the running result.
+    // Disjoint set bits cannot generate carries, so each addition equals OR.
+    // Byte masks bound the result to 255 and preserve all unsigned edge cases.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int result = a & (x + 'A');
+
+    result += ((~a & b) & (x + ('a' - 26))) & ~result;
+    result += ((~b & c) & (x + ('0' - 52))) & ~result;
+    result += (d & '+') & ~result;
+    result += (e & '/') & ~result;
+    return (int)result;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

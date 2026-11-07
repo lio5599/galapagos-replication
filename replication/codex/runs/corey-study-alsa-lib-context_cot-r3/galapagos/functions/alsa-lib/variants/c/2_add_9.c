@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// On the saturation path, replace b with the amount needed to reach the constant.
+	// Adding a then cancels the subtraction of a, including unsigned wrap.
+	// Otherwise retain b; the original comparison preserves the equality case.
+	return a + (a >= 4294967295 - b ? 4294967295 - a : b);
+}
+
+
+int main(){
+    add(0,0);
+}

@@ -1,0 +1,21 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Combine terms arithmetically using u OR v = u + v - (u AND v).
+    // All terms and accumulated unions are at most 255, so sums cannot overflow.
+    // No assumption about the input range or disjointness of terms is needed.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int result = a & (x + 'A');
+    unsigned int term = (a ^ 255U) & b & (x + ('a' - 26));
+    result = result + term - (result & term);
+    term = (b ^ 255U) & c & (x + ('0' - 52));
+    result = result + term - (result & term);
+    term = d & '+';
+    result = result + term - (result & term);
+    term = e & '/';
+    result = result + term - (result & term);
+    return (int)result;
+}

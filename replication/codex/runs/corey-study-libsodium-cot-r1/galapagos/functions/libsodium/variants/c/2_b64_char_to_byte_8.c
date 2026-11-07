@@ -1,0 +1,34 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Merge each contribution by adding only bits absent from the accumulator.
+    // Disjoint-bit addition equals OR and cannot introduce carries.
+    // Exact rejection masks retain overlapping and partial-mask edge cases.
+    // The reference's zero correction is applied after all five contributions.
+    unsigned int u = (unsigned int)c;
+    unsigned int reject[5] = {
+        (u - 'A') | ('Z' - u),
+        (u - 'a') | ('z' - u),
+        (u - '0') | ('9' - u),
+        0U - (u ^ '+'),
+        0U - (u ^ '/')
+    };
+    unsigned int value[5] = {
+        u - 'A', u - 'a' + 26U, u - '0' + 52U, 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i) {
+        unsigned int term = value[i] & (255U ^ ((reject[i] >> 8) & 255U));
+        x += term & ~x;
+    }
+    return x | ((255U ^ (((0U - x) >> 8) & 255U))
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

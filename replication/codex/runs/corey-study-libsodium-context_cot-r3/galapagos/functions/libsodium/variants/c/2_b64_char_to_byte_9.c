@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Use De Morgan's law to combine complemented contributions with AND.
+    // Complementing their intersection reconstructs the original five-way OR.
+    // A final byte mask and the exact correction retain all defined reference behavior.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ((u - 'A') | ('Z' - u)) >> 8;
+    const unsigned int b = ((u - 'a') | ('z' - u)) >> 8;
+    const unsigned int d = ((u - '0') | ('9' - u)) >> 8;
+    const unsigned int p = (0U - (u ^ '+')) >> 8;
+    const unsigned int q = (0U - (u ^ '/')) >> 8;
+    const unsigned int x = ~((a | ~(u - 'A'))
+                           & (b | ~(u - ('a' - 26)))
+                           & (d | ~(u - ('0' - 52)))
+                           & (p | ~62U)
+                           & (q | ~63U)) & 0xFFU;
+    return x | (~((0U - x) >> 8)
+              & ((0U - (u ^ 'A')) >> 8) & 0xFFU);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

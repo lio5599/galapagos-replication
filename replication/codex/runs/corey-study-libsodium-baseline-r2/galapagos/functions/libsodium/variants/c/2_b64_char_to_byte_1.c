@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int low[3] = { 'A', 'a', '0' };
+    const unsigned int high[3] = { 'Z', 'z', '9' };
+    const unsigned int offset[3] = { 0U, 26U, 52U };
+    unsigned int x = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 3U; ++i) {
+        unsigned int mask = ~(((u - low[i]) >> 8)
+                           | ((high[i] - u) >> 8)) & 255U;
+        x |= mask & (u - low[i] + offset[i]);
+    }
+
+    x |= ~((0U - (u ^ '+')) >> 8) & 62U;
+    x |= ~((0U - (u ^ '/')) >> 8) & 63U;
+
+    return x | ((~((0U - x) >> 8) & 255U)
+              & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

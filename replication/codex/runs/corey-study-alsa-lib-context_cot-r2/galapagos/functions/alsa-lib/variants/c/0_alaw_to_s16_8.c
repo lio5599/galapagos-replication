@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Compute the smallest segment first and return it directly.
+	// Higher segments restore the implicit mantissa bit before scaling:
+	// adding 16 before multiplying by 16 supplies the offset 256.
+	// The remaining offset 8 and sign exactly match the reference.
+	int x = a_val ^ 0x55;
+	int code = x & 127;
+	int t;
+
+	if (code < 16) {
+		t = code * 16 + 8;
+		return (x & 128) ? t : -t;
+	}
+
+	t = (((code & 15) | 16) * 16 + 8)
+		<< ((code >> 4) - 1);
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

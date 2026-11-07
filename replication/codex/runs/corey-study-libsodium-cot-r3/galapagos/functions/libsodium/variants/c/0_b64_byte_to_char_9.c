@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // Derive subtraction's second byte from the high part and low-byte borrow.
+    // Negation similarly subtracts the high part and a nonzero-low-byte borrow.
+    // Reducing to bytes preserves unsigned wraparound and all out-of-range inputs.
+    unsigned int lo = x & 255U;
+    unsigned int hi = x >> 8;
+    unsigned int a = (hi - (unsigned int)(lo < 26U)) & 255U;
+    unsigned int b = (hi - (unsigned int)(lo < 52U)) & 255U;
+    unsigned int c = (hi - (unsigned int)(lo < 62U)) & 255U;
+    unsigned int d = ((0U - hi - (unsigned int)((lo ^ 62U) != 0U)) & 255U) ^ 255U;
+    unsigned int e = ((0U - hi - (unsigned int)((lo ^ 63U) != 0U)) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 255U) & b & (x + ('a' - 26))) |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

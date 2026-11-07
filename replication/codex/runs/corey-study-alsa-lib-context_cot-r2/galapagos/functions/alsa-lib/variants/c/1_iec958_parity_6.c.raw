@@ -1,0 +1,15 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Visit original bits 4 through 30 using a moving unsigned mask.
+	// Each selected one toggles the result, matching the count modulo two.
+	// Unselected bits never affect the result, and zero leaves it zero.
+	unsigned int mask = 0x10U;
+	unsigned int parity = 0;
+	int bit;
+
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= (data & mask) != 0U;
+		mask <<= 1;
+	}
+	return parity;
+}

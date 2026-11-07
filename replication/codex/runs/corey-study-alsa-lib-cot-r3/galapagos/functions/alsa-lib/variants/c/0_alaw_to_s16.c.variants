@@ -1,0 +1,189 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// The reference decodes an A-law byte into a signed 16-bit PCM sample.
+	// Undo the alternating-bit mask, then decode the segment and mantissa.
+	// Segment zero uses bias 8; higher segments use bias 264 and scaling.
+	// The sign bit is unchanged by the mask, including at both extremes.
+	int decoded = a_val ^ 0x55;
+	int segment = (decoded >> 4) & 7;
+	int mantissa = decoded & 15;
+	int magnitude;
+
+	if (segment == 0)
+		magnitude = mantissa * 16 + 8;
+	else
+		magnitude = (mantissa * 16 + 264) << (segment - 1);
+
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode the seven magnitude bits before selecting the reference formula.
+	// Values below 16 are segment zero and require no exponent shift.
+	// Otherwise the shift is between zero and six, so it is always valid.
+	// Applying the original sign bit preserves every positive and negative code.
+	int decoded = a_val ^ 0x55;
+	int code = decoded & 0x7f;
+	int magnitude = (code < 16)
+		? code * 16 + 8
+		: ((code % 16) * 16 + 264) << (code / 16 - 1);
+
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Express the mantissa contribution as eight times an odd integer.
+	// Nonzero segments add 256 and multiply by the reference power of two.
+	// Segment zero instead adds nothing and uses a multiplier of one.
+	// All magnitudes, from 8 through 32256, fit in a signed 16-bit int.
+	int decoded = a_val ^ 0x55;
+	int segment = (decoded >> 4) & 7;
+	int magnitude = ((decoded & 15) * 2 + 1) * 8;
+	int scale = 1 << (segment ? segment - 1 : 0);
+
+	magnitude = (magnitude + (segment ? 256 : 0)) * scale;
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Enumerate the eight segment formulas rather than computing an exponent.
+	// Each nonzero segment doubles both the mantissa step and the bias.
+	// The masked segment always selects a case, including zero and seven.
+	// The sign is applied only after computing the nonnegative magnitude.
+	int decoded = a_val ^ 0x55;
+	int mantissa = decoded & 15;
+	int magnitude;
+
+	switch ((decoded >> 4) & 7) {
+	case 0: magnitude = mantissa * 16 + 8; break;
+	case 1: magnitude = mantissa * 16 + 264; break;
+	case 2: magnitude = mantissa * 32 + 528; break;
+	case 3: magnitude = mantissa * 64 + 1056; break;
+	case 4: magnitude = mantissa * 128 + 2112; break;
+	case 5: magnitude = mantissa * 256 + 4224; break;
+	case 6: magnitude = mantissa * 512 + 8448; break;
+	default: magnitude = mantissa * 1024 + 16896; break;
+	}
+
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Tables hold the expanded bias and mantissa step for each segment.
+	// These are exactly the reference bias and step after its left shift.
+	// Masking guarantees valid indices; segment zero has its special bias.
+	// The largest table-derived magnitude is 32256, so negation is safe.
+	static const int bias[8] = {
+		8, 264, 528, 1056, 2112, 4224, 8448, 16896
+	};
+	static const int step[8] = {
+		16, 16, 32, 64, 128, 256, 512, 1024
+	};
+	int decoded = a_val ^ 0x55;
+	int segment = (decoded >> 4) & 7;
+	int magnitude = bias[segment] + (decoded & 15) * step[segment];
+
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode the two nibbles separately instead of XORing the whole byte.
+	// XOR with 5 in each nibble reproduces the reference mask of 0x55.
+	// That mask never changes the sign bit, so the original sign is usable.
+	// A separate zero-segment branch avoids a negative shift count.
+	int mantissa = (a_val & 15) ^ 5;
+	int segment = ((a_val >> 4) ^ 5) & 7;
+	int magnitude = mantissa * 16 + 8;
+
+	if (segment != 0) {
+		magnitude += 256;
+		magnitude <<= segment - 1;
+	}
+	return (a_val & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Replace the exponent shift with repeated doubling of the magnitude.
+	// Segment zero keeps bias 8; all other segments first add 256.
+	// Segments zero and one perform no doubling, exactly as required.
+	// At most six doublings occur and no intermediate exceeds 32256.
+	int decoded = a_val ^ 0x55;
+	int segment = (decoded >> 4) & 7;
+	int magnitude = (decoded & 15) * 16 + 8;
+
+	if (segment > 0)
+		magnitude += 256;
+	while (segment > 1) {
+		magnitude += magnitude;
+		--segment;
+	}
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Assemble the unscaled magnitude with disjoint bit fields using OR.
+	// Mantissa bits occupy positions four through seven, separate from bias.
+	// Bias is 0x008 for segment zero and 0x108 for every other segment.
+	// The conditional shift is zero for segment zero and never negative.
+	int decoded = a_val ^ 0x55;
+	int segment = (decoded >> 4) & 7;
+	int magnitude = ((decoded & 15) << 4)
+		| (segment == 0 ? 0x008 : 0x108);
+
+	magnitude <<= segment == 0 ? 0 : segment - 1;
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// The first two segments combine into the formula code times 16 plus 8.
+	// In segment one, the code's extra 16 supplies the required bias of 256.
+	// Higher segments select their scale by magnitude-code thresholds.
+	// Threshold boundaries and the maximum code match the reference shifts.
+	int decoded = a_val ^ 0x55;
+	int code = decoded & 0x7f;
+	int magnitude;
+	int scale;
+
+	if (code < 32) {
+		magnitude = code * 16 + 8;
+	} else {
+		if (code < 48)
+			scale = 2;
+		else if (code < 64)
+			scale = 4;
+		else if (code < 80)
+			scale = 8;
+		else if (code < 96)
+			scale = 16;
+		else if (code < 112)
+			scale = 32;
+		else
+			scale = 64;
+		magnitude = ((code & 15) * 16 + 264) * scale;
+	}
+	return (decoded & 0x80) ? magnitude : -magnitude;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A Boolean nonzero-segment flag selects both bias and shift arithmetically.
+	// For segment zero it gives bias 8 and shift zero; otherwise bias is 264.
+	// Subtracting the flag yields exactly segment minus one for other segments.
+	// The sign multiplier is exactly minus one or plus one, with safe products.
+	int decoded = a_val ^ 0x55;
+	int segment = (decoded >> 4) & 7;
+	int nonzero = segment != 0;
+	int magnitude = (decoded & 15) * 16 + 8 + 256 * nonzero;
+	int sign = 2 * ((decoded & 0x80) != 0) - 1;
+
+	magnitude <<= segment - nonzero;
+	return sign * magnitude;
+}

@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Start with the segment-zero magnitude.
+	// For nonzero segments, adding 256 produces the reference bias.
+	// The guarded shift is always between zero and six.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = ((x & 15) << 4) + 8;
+
+	if (seg != 0) {
+		t += 256;
+		t <<= seg - 1;
+	}
+
+	if ((x & 128) == 0)
+		return -t;
+	return t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

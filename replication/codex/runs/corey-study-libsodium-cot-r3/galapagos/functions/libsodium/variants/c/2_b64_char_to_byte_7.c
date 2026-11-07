@@ -1,0 +1,38 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Add only contribution bits that are not already present in x.
+    // Those bits are disjoint from x, so addition equals bitwise OR without carries.
+    // Exact arithmetic masks are retained, including their behavior outside byte inputs.
+    // For eight-bit x, the shifted x-minus-one mask selects precisely the zero case.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int source[5] = {
+        (u - (unsigned int)'A') | ((unsigned int)'Z' - u),
+        (u - (unsigned int)'a') | ((unsigned int)'z' - u),
+        (u - (unsigned int)'0') | ((unsigned int)'9' - u),
+        0U - (u ^ (unsigned int)'+'),
+        0U - (u ^ (unsigned int)'/')
+    };
+    const unsigned int value[5] = {
+        u - (unsigned int)'A',
+        u - ((unsigned int)'a' - 26U),
+        u - ((unsigned int)'0' - 52U),
+        62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i) {
+        const unsigned int contribution = ~(source[i] >> 8) & value[i] & 255U;
+        x += contribution & ~x;
+    }
+    return x | (((x - 1U) >> 8) &
+                ((0U - (u ^ (unsigned int)'A')) >> 8) & 255U);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

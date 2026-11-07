@@ -1,0 +1,104 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The reference adds a and b, saturating at 4294967295.
+	// Below the original threshold, return the sum.
+	// Equality and values above the threshold return the cap.
+	if (a < 4294967295 - b)
+		return a + b;
+	return 4294967295;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Select the cap using exactly the reference's comparison.
+	// Otherwise select the sum; equality selects the cap.
+	return (a >= 4294967295 - b) ? 4294967295 : a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Negating the below-threshold comparison preserves the condition.
+	// Equality and larger values return the cap; smaller values add.
+	if (!(a < 4294967295 - b))
+		return 4294967295;
+	else
+		return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Split the reference's inclusive comparison into two cases.
+	// Both strict excess and exact equality return the cap.
+	// Only inputs below the threshold reach the addition.
+	if (a > 4294967295 - b)
+		return 4294967295;
+	if (a == 4294967295 - b)
+		return 4294967295;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Compute the unsigned result first, then replace it when capped.
+	// Unsigned wrapping is harmless because that result is discarded.
+	// The original comparison also handles equality exactly.
+	unsigned int result = a + b;
+	if (a >= 4294967295 - b)
+		result = 4294967295;
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Start with the cap and replace it only below the threshold.
+	// Equality and excess leave the capped result unchanged.
+	unsigned int result = 4294967295;
+	if (a < 4294967295 - b)
+		result = a + b;
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Expand the original condition into an all-zero or all-one mask.
+	// Select the sum below the threshold and the cap otherwise.
+	// Equality sets the mask, and any wrapped sum is masked away.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return (sum & ~mask) | (cap & mask);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use XOR selection with a mask derived from the original condition.
+	// A zero mask preserves the sum; an all-one mask changes it to cap.
+	// Equality selects cap, including when the provisional sum wraps.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return sum ^ ((sum ^ cap) & mask);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The original comparison produces a selector equal to zero or one.
+	// Exactly one product contributes: the sum or the converted cap.
+	// Equality selects cap, so a wrapped provisional sum contributes zero.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	return sum * (1u - saturated) + cap * saturated;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Add a correction only when the original comparison selects cap.
+	// With selector zero, return sum; with one, sum plus cap minus sum.
+	// Unsigned arithmetic preserves that identity even across wrapping.
+	// Equality enables the correction and returns the cap.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	return sum + (cap - sum) * saturated;
+}

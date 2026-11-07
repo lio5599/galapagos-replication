@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Turn the exact reference condition into a zero-or-one selector.
+	// Complementary factors retain exactly one of the unsigned sum and the cap.
+	// Equality selects the cap, and wrapped sums are multiplied by zero.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	return sum * (1U - saturated) + cap * saturated;
+}
+
+
+int main(){
+    add(0,0);
+}

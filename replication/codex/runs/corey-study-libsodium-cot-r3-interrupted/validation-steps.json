@@ -1,0 +1,32 @@
+[
+  {
+    "step": "libsodium-split_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "split_variants.py",
+      "c",
+      "libsodium"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "libsodium-template_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "template_variants.py",
+      "c",
+      "libsodium"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "libsodium-compile_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "compile_variants.py",
+      "c",
+      "libsodium"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Every contribution is byte-masked, so x lies between zero and 255.
+    // On that interval the reference's zero mask is 255 exactly when x is zero.
+    // Branch on x only; retain the arithmetic mask for arbitrary c values.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ~(((u - 'A') | ('Z' - u)) >> 8) & 0xFFU;
+    const unsigned int b = ~(((u - 'a') | ('z' - u)) >> 8) & 0xFFU;
+    const unsigned int d = ~(((u - '0') | ('9' - u)) >> 8) & 0xFFU;
+    const unsigned int p = ~((0U - (u ^ '+')) >> 8) & 0xFFU;
+    const unsigned int q = ~((0U - (u ^ '/')) >> 8) & 0xFFU;
+    const unsigned int x = (a & (u - 'A')) | (b & (u - ('a' - 26)))
+                         | (d & (u - ('0' - 52))) | (p & 62U) | (q & 63U);
+    if (x != 0U)
+        return x;
+    return ((0U - (u ^ 'A')) >> 8) & 0xFFU;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

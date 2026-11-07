@@ -1,0 +1,19 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Replace each eight-bit complement with subtraction from 255.
+    // For any mask from 0 through 255, 255 minus the mask equals its XOR with 255.
+    // This identity holds for partial masks too, preserving every unsigned input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = ((0U - (x ^ 62U)) >> 8) & 255U;
+    unsigned int e = ((0U - (x ^ 63U)) >> 8) & 255U;
+    unsigned int result = (255U - e) & '_';
+
+    result |= (255U - d) & '-';
+    result |= (255U - b) & c & (x + ('0' - 52));
+    result |= (255U - a) & b & (x + ('a' - 26));
+    result |= a & (x + 'A');
+
+    return (int)result;
+}

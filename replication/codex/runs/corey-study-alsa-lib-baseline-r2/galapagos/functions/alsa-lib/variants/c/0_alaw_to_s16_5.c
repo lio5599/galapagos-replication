@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	int value;
+	int segment;
+	int magnitude;
+	int shift;
+
+	value = a_val ^ 0x55;
+	segment = (value >> 4) & 7;
+	shift = segment - (segment != 0);
+	magnitude = ((value & 15) * 16 + 8
+		+ 256 * (segment != 0)) << shift;
+
+	return magnitude * (2 * ((value >> 7) & 1) - 1);
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

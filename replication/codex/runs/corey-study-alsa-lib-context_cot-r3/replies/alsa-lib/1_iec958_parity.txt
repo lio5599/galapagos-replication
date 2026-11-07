@@ -1,0 +1,151 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The reference computes the XOR of input bits 4 through 30.
+	// Examine exactly those 27 bits, XORing each into the result.
+	// Other bits are ignored, and an all-zero field returns zero.
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Count the ones in the selected 27-bit field using addition.
+	// Keeping only the count's low bit gives the reference parity.
+	// Masking excludes every unrelated bit, including for zero input.
+	unsigned int count = 0;
+	unsigned int remaining = 27;
+
+	data = (data >> 4) & 0x07ffffffU;
+	do {
+		count += data & 1U;
+		data >>= 1;
+	} while (--remaining != 0);
+	return count & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask the selected field and fold its bits together with XOR.
+	// Each fold combines disjoint groups until bit zero holds parity.
+	// Zero stays zero; bits outside the field cannot affect the result.
+	// Two successive eight-bit shifts avoid a width-sized shift.
+	data = (data >> 4) & 0x07ffffffU;
+	data ^= (data >> 8) >> 8;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	data ^= data >> 2;
+	data ^= data >> 1;
+	return data & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Fold the selected field into four bits without changing parity.
+	// Bit n of 0x6996 is the parity of the four-bit value n.
+	// The lookup shift is at most 15 and zero selects a zero bit.
+	data = (data >> 4) & 0x07ffffffU;
+	data ^= (data >> 8) >> 8;
+	data ^= data >> 8;
+	data ^= data >> 4;
+	return (0x6996U >> (data & 15U)) & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Clear one selected set bit per iteration and toggle parity.
+	// The number of iterations equals the selected population count.
+	// Zero skips the loop; unsigned subtraction has defined behavior.
+	unsigned int parity = 0;
+
+	data = (data >> 4) & 0x07ffffffU;
+	while (data != 0) {
+		data &= data - 1U;
+		parity ^= 1U;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Compute population counts in pairs, nibbles, then bytes.
+	// Add the byte counts and return the total count modulo two.
+	// The mask excludes unrelated bits and zero yields zero.
+	// Successive eight-bit shifts also work for narrower unsigned int.
+	data = (data >> 4) & 0x07ffffffU;
+	data -= (data >> 1) & 0x55555555U;
+	data = (data & 0x33333333U) + ((data >> 2) & 0x33333333U);
+	data = (data + (data >> 4)) & 0x0f0f0f0fU;
+	data += data >> 8;
+	data += (data >> 8) >> 8;
+	return data & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Combine 13 pairs of selected bits, then the final selected bit.
+	// XOR is associative, so grouping preserves the reference parity.
+	// Masking excludes unrelated bits; zero contributes no toggles.
+	unsigned int parity = 0;
+	int pair;
+
+	data = (data >> 4) & 0x07ffffffU;
+	for (pair = 0; pair < 13; pair++) {
+		parity ^= (data ^ (data >> 1)) & 1U;
+		data >>= 2;
+	}
+	return parity ^ (data & 1U);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Split the selected 27 bits into nine groups of three bits.
+	// XOR each group's three bits into the accumulated parity.
+	// The mask removes unrelated bits, and zero groups contribute zero.
+	unsigned int parity = 0;
+	int group;
+
+	data = (data >> 4) & 0x07ffffffU;
+	for (group = 0; group < 9; group++) {
+		parity ^= (data ^ (data >> 1) ^ (data >> 2)) & 1U;
+		data >>= 3;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// XOR successive right-shifted copies of the selected field.
+	// The accumulator's low bit receives each selected bit once.
+	// Stopping at zero only omits zero bits; zero input returns zero.
+	unsigned int accumulator = 0;
+
+	data = (data >> 4) & 0x07ffffffU;
+	while (data != 0) {
+		accumulator ^= data;
+		data >>= 1;
+	}
+	return accumulator & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Look up the parity of each of seven four-bit groups.
+	// The masked 27-bit field has a zero padding bit in its last group.
+	// XORing group parities equals the reference, including for zero.
+	unsigned int parity = 0;
+	int group;
+
+	data = (data >> 4) & 0x07ffffffU;
+	for (group = 0; group < 7; group++) {
+		parity ^= (0x6996U >> (data & 15U)) & 1U;
+		data >>= 4;
+	}
+	return parity;
+}

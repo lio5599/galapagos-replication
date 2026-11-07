@@ -1,0 +1,31 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Store the five exact masks and payloads, then OR their intersections.
+    // The fixed loop visits every contribution once and performs no extra lookup.
+    // Unsigned arithmetic and the unchanged correction preserve all defined inputs.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int masks[5] = {
+        ~(((u - 'A') | ('Z' - u)) >> 8) & 0xFFU,
+        ~(((u - 'a') | ('z' - u)) >> 8) & 0xFFU,
+        ~(((u - '0') | ('9' - u)) >> 8) & 0xFFU,
+        ~((0U - (u ^ '+')) >> 8) & 0xFFU,
+        ~((0U - (u ^ '/')) >> 8) & 0xFFU
+    };
+    const unsigned int values[5] = {
+        u - 'A', u - ('a' - 26), u - ('0' - 52), 62U, 63U
+    };
+    unsigned int x = 0U;
+    unsigned int i;
+    for (i = 0U; i < 5U; ++i)
+        x |= masks[i] & values[i];
+    return x | (~((0U - x) >> 8)
+              & ((0U - (u ^ 'A')) >> 8) & 0xFFU);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

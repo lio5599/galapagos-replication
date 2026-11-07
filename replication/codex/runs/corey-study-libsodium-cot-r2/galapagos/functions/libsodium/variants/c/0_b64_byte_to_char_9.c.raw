@@ -1,0 +1,16 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    // Replace unsigned shifts and byte masks with division and remainder.
+    // For unsigned values, division by 256 and remainder modulo 256 are exact equivalents.
+    // Subtracting an extracted byte from 255 complements its eight bits.
+    // Subtractions occur before division, preserving unsigned wraparound for all x.
+    unsigned int a = ((x - 26U) / 256U) % 256U;
+    unsigned int b = ((x - 52U) / 256U) % 256U;
+    unsigned int c = ((x - 62U) / 256U) % 256U;
+    unsigned int d = 255U - (((0U - (x ^ 62U)) / 256U) % 256U);
+    unsigned int e = 255U - (((0U - (x ^ 63U)) / 256U) % 256U);
+    return (int)((a & (x + 'A')) |
+                 ((255U - a) & b & (x + ('a' - 26))) |
+                 ((255U - b) & c & (x + ('0' - 52))) |
+                 (d & '+') | (e & '/'));
+}

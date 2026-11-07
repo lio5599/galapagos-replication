@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Only bits in the reference's range survive the initial mask.
+	// Clearing the lowest set bit once per iteration toggles parity once.
+	// Zero takes no iterations, and unsigned subtraction is well-defined.
+	unsigned int value = (data >> 4) & 0x07ffffffU;
+	unsigned int parity = 0;
+
+	while (value != 0U) {
+		value &= value - 1U;
+		parity ^= 1U;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

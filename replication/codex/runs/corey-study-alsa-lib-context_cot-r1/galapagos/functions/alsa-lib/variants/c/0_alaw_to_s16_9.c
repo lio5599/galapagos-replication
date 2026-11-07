@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Encode the segment-zero exception using zero-or-one comparisons.
+	// Zero uses base 2*m + 1 and shift three; others use base 2*m + 33.
+	// Nonzero segments shift by seg + 2, exactly matching the reference.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int base = 2 * (x & 15) + 1 + 32 * (seg != 0);
+	int shift = seg + 2 + (seg == 0);
+	int t = base << shift;
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

@@ -1,0 +1,218 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // The reference computes a masked URL-safe Base64 character value from x.
+    // Factor its five byte masks without changing their unsigned arithmetic.
+    // Preserve partial masks for inputs outside 0 through 63 as well.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) |
+                 ((a ^ 255U) & b & (x + ('a' - 26))) |
+                 ((b ^ 255U) & c & (x + ('0' - 52))) |
+                 (d & '-') | (e & '_'));
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Extract each byte using division and remainder instead of shifts.
+    // Subtractions wrap in unsigned int before extraction, as in the reference.
+    // Subtracting a byte from 255 complements it, including partial masks.
+    unsigned int a = x - 26U;
+    unsigned int b = x - 52U;
+    unsigned int c = x - 62U;
+    unsigned int d = 0U - (x ^ 62U);
+    unsigned int e = 0U - (x ^ 63U);
+
+    a = (a / 256U) % 256U;
+    b = (b / 256U) % 256U;
+    c = (c / 256U) % 256U;
+    d = 255U - (d / 256U) % 256U;
+    e = 255U - (e / 256U) % 256U;
+
+    return (int)((a & (x + 'A')) |
+                 ((255U - a) & b & (x + ('a' - 26))) |
+                 ((255U - b) & c & (x + ('0' - 52))) |
+                 (d & '-') | (e & '_'));
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Form the five original contributions, then combine using De Morgan's law.
+    // All contributions are bytes, so the final byte mask changes nothing.
+    // Unsigned wraparound and partial masks remain intact for every input.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int p = a & (x + 'A');
+    unsigned int q = (~a & 255U) & b & (x + ('a' - 26));
+    unsigned int r = (~b & 255U) & c & (x + ('0' - 52));
+    unsigned int s = (~((0U - (x ^ 62U)) >> 8) & 255U) & '-';
+    unsigned int t = (~((0U - (x ^ 63U)) >> 8) & 255U) & '_';
+
+    return (int)(~(~p & ~q & ~r & ~s & ~t) & 255U);
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Store the original masks and candidate values in parallel arrays.
+    // OR their masked contributions; overlapping bits must not be added.
+    // This preserves the reference even when out-of-range inputs yield partial masks.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int masks[5] = {
+        a,
+        (a ^ 255U) & b,
+        (b ^ 255U) & (((x - 62U) >> 8) & 255U),
+        (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U,
+        (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U
+    };
+    unsigned int values[5] = {
+        x + 'A', x + ('a' - 26), x + ('0' - 52), '-', '_'
+    };
+    unsigned int result = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 5U; ++i)
+        result |= masks[i] & values[i];
+
+    return (int)result;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Evaluate the reference independently for each of its eight output bits.
+    // Each condition tests exactly one original masked contribution.
+    // No range assumption is made, so partial masks and unsigned wrap are preserved.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int result = 0U;
+    unsigned int bit;
+
+    for (bit = 1U; bit < 256U; bit <<= 1) {
+        if (((a & bit) && ((x + 'A') & bit)) ||
+            (!(a & bit) && (b & bit) && ((x + ('a' - 26)) & bit)) ||
+            (!(b & bit) && (c & bit) && ((x + ('0' - 52)) & bit)) ||
+            ((d & bit) && ('-' & bit)) ||
+            ((e & bit) && ('_' & bit)))
+            result |= bit;
+    }
+
+    return (int)result;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Reduce x to its low 16 bits before evaluating the byte masks.
+    // Every extracted mask depends only on bits 8 through 15 of unsigned arithmetic.
+    // Candidate values contribute only their low byte, so discarded bits never matter.
+    // This preserves all inputs, including values above 65535.
+    unsigned int a;
+    unsigned int b;
+    unsigned int result;
+
+    x &= 65535U;
+    a = ((x - 26U) >> 8) & 255U;
+    b = ((x - 52U) >> 8) & 255U;
+    result = a & (x + 'A');
+    result |= (a ^ 255U) & b & (x + ('a' - 26));
+    result |= (b ^ 255U) & (((x - 62U) >> 8) & 255U) &
+              (x + ('0' - 52));
+    result |= ((((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U) & '-';
+    result |= ((((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U) & '_';
+
+    return (int)result;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Combine the lowercase and digit contributions with XOR instead of OR.
+    // Their masks contain b and its complement, so they cannot share a set bit.
+    // That disjointness holds for arbitrary partial masks, not just valid indices.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int lower = (a ^ 255U) & b & (x + ('a' - 26));
+    unsigned int digit = (b ^ 255U) & c & (x + ('0' - 52));
+    unsigned int dash = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int underscore = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (int)((a & (x + 'A')) | (lower ^ digit) |
+                 (dash & '-') | (underscore & '_'));
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Complement unsigned words before extracting their bytes.
+    // Byte extraction commutes with complement when the result is masked to 255.
+    // The original unsigned subtractions retain their behavior at every boundary.
+    unsigned int u = x - 26U;
+    unsigned int v = x - 52U;
+    unsigned int w = x - 62U;
+    unsigned int p = 0U - (x ^ 62U);
+    unsigned int q = 0U - (x ^ 63U);
+    unsigned int upper = (u >> 8) & (x + 'A');
+    unsigned int lower = (~u >> 8) & (v >> 8) & (x + ('a' - 26));
+    unsigned int digit = (~v >> 8) & (w >> 8) & (x + ('0' - 52));
+    unsigned int dash = (~p >> 8) & '-';
+    unsigned int underscore = (~q >> 8) & '_';
+
+    return (int)((upper | lower | digit | dash | underscore) & 255U);
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Assemble each output bit from arithmetic on single-bit mask values.
+    // Products implement AND and nonzero sums implement OR for those bits.
+    // Eight iterations reproduce all output bits, including out-of-range behavior.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int upper = x + 'A';
+    unsigned int lower = x + ('a' - 26);
+    unsigned int digit = x + ('0' - 52);
+    unsigned int result = 0U;
+    unsigned int i;
+
+    for (i = 0U; i < 8U; ++i) {
+        unsigned int ab = (a >> i) & 1U;
+        unsigned int bb = (b >> i) & 1U;
+        unsigned int sum =
+            ab * ((upper >> i) & 1U) +
+            (1U - ab) * bb * ((lower >> i) & 1U) +
+            (1U - bb) * ((c >> i) & 1U) * ((digit >> i) & 1U) +
+            ((d >> i) & 1U) * (((unsigned int)'-' >> i) & 1U) +
+            ((e >> i) & 1U) * (((unsigned int)'_' >> i) & 1U);
+
+        result |= (unsigned int)(sum != 0U) << i;
+    }
+
+    return (int)result;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Use an XOR-based bit selector for the uppercase and lowercase terms.
+    // Selecting upper under a and lower otherwise equals their original masked OR.
+    // The selector works per bit, so partial masks and all unsigned inputs are valid.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int lower = b & (x + ('a' - 26));
+    unsigned int result = lower ^ (a & ((x + 'A') ^ lower));
+    unsigned int dash = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int underscore = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    result |= (b ^ 255U) & c & (x + ('0' - 52));
+    result |= dash & '-';
+    result |= underscore & '_';
+
+    return (int)result;
+}

@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode fields directly from the original byte using the XOR pattern.
+	// XOR 0x55 toggles segment bits by 5 and mantissa bits by 5, not the sign.
+	// Segment zero uses its special midpoint; all other scales match exactly.
+	int seg = ((a_val >> 4) & 7) ^ 5;
+	int mant = (a_val & 15) ^ 5;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (mant * 16 + 264) << (seg - 1);
+
+	return (a_val & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

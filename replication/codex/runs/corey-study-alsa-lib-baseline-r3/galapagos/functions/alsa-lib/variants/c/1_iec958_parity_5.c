@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	static const unsigned int parity_table[16] = {
+		0, 1, 1, 0, 1, 0, 0, 1,
+		1, 0, 0, 1, 0, 1, 1, 0
+	};
+	unsigned int parity = 0;
+
+	data = (data >> 4) & 0x07ffffffu;
+	while (data) {
+		parity ^= parity_table[data & 15u];
+		data >>= 4;
+	}
+
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

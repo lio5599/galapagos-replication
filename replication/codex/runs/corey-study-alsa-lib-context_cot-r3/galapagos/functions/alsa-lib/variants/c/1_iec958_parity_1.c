@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Count the ones in the selected 27-bit field using addition.
+	// Keeping only the count's low bit gives the reference parity.
+	// Masking excludes every unrelated bit, including for zero input.
+	unsigned int count = 0;
+	unsigned int remaining = 27;
+
+	data = (data >> 4) & 0x07ffffffU;
+	do {
+		count += data & 1U;
+		data >>= 1;
+	} while (--remaining != 0);
+	return count & 1U;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

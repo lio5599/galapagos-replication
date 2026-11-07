@@ -1,0 +1,151 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// The reference returns the parity of original bits 4 through 30.
+	// After discarding bits 0 through 3, XOR exactly 27 low bits.
+	// Higher bits are never examined; zero input yields zero.
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= data & 1U;
+		data >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Test original bits 4 through 30 directly and count set bits.
+	// Taking the count modulo two matches the reference.
+	// Unsigned long masks make every shift valid, even with narrow int.
+	unsigned int parity = 0;
+	unsigned long value = data;
+	int bit;
+
+	for (bit = 4; bit <= 30; bit++)
+		parity += (value & (1UL << bit)) != 0;
+	return parity & 1U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Isolate bits 4 through 30 and toggle parity for each set bit.
+	// Stopping when the remaining value is zero skips only zero bits.
+	// An empty field therefore returns zero without entering the loop.
+	unsigned int value = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+
+	while (value != 0) {
+		if (value & 1U)
+			parity = !parity;
+		value >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Mask to the reference field, then clear one set bit per iteration.
+	// Each cleared bit toggles parity, giving the set-bit count modulo two.
+	// Zero skips the loop, and bits outside the field cannot contribute.
+	unsigned int value = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+
+	while (value != 0) {
+		value &= value - 1U;
+		parity ^= 1U;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Isolate the 27 relevant bits and fold their XOR into bit zero.
+	// Successive power-of-two shifts include each field bit exactly once.
+	// Unsigned long supports every shift; masked-out bits and zero add nothing.
+	unsigned long value = (data >> 4) & 0x07ffffffUL;
+
+	value ^= value >> 16;
+	value ^= value >> 8;
+	value ^= value >> 4;
+	value ^= value >> 2;
+	value ^= value >> 1;
+	return (unsigned int)(value & 1UL);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Each bit of 0x6996 encodes the parity of its four-bit index.
+	// XOR the parities of the masked field's successive nibbles.
+	// The incomplete top nibble is zero-padded, and zero returns zero.
+	unsigned long value = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+
+	while (value != 0) {
+		parity ^= (unsigned int)((0x6996UL >> (value & 15UL)) & 1UL);
+		value >>= 4;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Parallel counting forms two-bit, four-bit, then byte-sized counts.
+	// Summing the byte counts and retaining bit zero gives field parity.
+	// The initial mask excludes other bits; all shifts fit unsigned long.
+	unsigned long value = (data >> 4) & 0x07ffffffUL;
+
+	value -= (value >> 1) & 0x55555555UL;
+	value = (value & 0x33333333UL) + ((value >> 2) & 0x33333333UL);
+	value = (value + (value >> 4)) & 0x0f0f0f0fUL;
+	value += value >> 8;
+	value += value >> 16;
+	return (unsigned int)(value & 1UL);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Process the masked field in pairs, XORing the two bits of each pair.
+	// Fourteen pairs cover all 27 relevant bits plus one zero padding bit.
+	// Padding and excluded input bits do not affect parity, including at zero.
+	unsigned int value = (data >> 4) & 0x07ffffffUL;
+	unsigned int parity = 0;
+	int pair;
+
+	for (pair = 0; pair < 14; pair++) {
+		parity ^= (value ^ (value >> 1)) & 1U;
+		value >>= 2;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Remainder by two extracts each binary digit; division removes it.
+	// Sum the digits of the masked field and return the sum modulo two.
+	// At most 27 are counted, so the sum fits; zero yields zero.
+	unsigned int value = (data >> 4) & 0x07ffffffUL;
+	unsigned int count = 0;
+
+	while (value != 0) {
+		count += value % 2U;
+		value /= 2U;
+	}
+	return count % 2U;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Complement exactly the 27 field bits and count their parity.
+	// Complementing an odd number of bits flips parity, so start at one.
+	// Unsigned long preserves all 27 positions, including on narrow-int targets.
+	unsigned long value = (~((unsigned long)data >> 4)) & 0x07ffffffUL;
+	unsigned int parity = 1;
+
+	while (value != 0) {
+		value &= value - 1UL;
+		parity ^= 1U;
+	}
+	return parity;
+}

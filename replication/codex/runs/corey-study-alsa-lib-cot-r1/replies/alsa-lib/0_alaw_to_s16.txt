@@ -1,0 +1,185 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into a signed 16-bit linear PCM sample.
+	// After XOR decoding, segment zero uses bias 8; other segments use
+	// bias 264 and scale by two to the segment minus one.
+	// All segments produce magnitudes from 8 through 32256, with no zero.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (mant * 16 + 264) << (seg - 1);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A nonzero-segment flag selects the extra bias and shift count.
+	// Segment zero gets bias 8 and shift zero; segments 1 through 7
+	// get bias 264 and shifts 0 through 6, so no shift is negative.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int nonzero = (seg != 0);
+	int t = ((x & 15) * 16 + 8 + nonzero * 256)
+		<< (seg - nonzero);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Expand each segment into its linear bias and mantissa step.
+	// The eight cases cover every segment, including the unscaled
+	// lowest two; the largest result is 16896 plus 15 times 1024.
+	int x = a_val ^ 0x55;
+	int mant = x & 15;
+	int t;
+
+	switch ((x >> 4) & 7) {
+	case 0: t = 8 + mant * 16; break;
+	case 1: t = 264 + mant * 16; break;
+	case 2: t = 528 + mant * 32; break;
+	case 3: t = 1056 + mant * 64; break;
+	case 4: t = 2112 + mant * 128; break;
+	case 5: t = 4224 + mant * 256; break;
+	case 6: t = 8448 + mant * 512; break;
+	default: t = 16896 + mant * 1024; break;
+	}
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Repeated doubling replaces the reference's variable left shift.
+	// Only nonzero segments add 256 to the initial bias.
+	// Segments zero and one require no doubling; all results fit in int.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = (x & 15) * 16 + 8;
+
+	if (seg != 0) {
+		t += 256;
+		while (seg > 1) {
+			t += t;
+			--seg;
+		}
+	}
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A scale table replaces exponentiation with multiplication.
+	// Its first two entries are both one, matching segments zero and one.
+	// The conditional bias preserves the lowest segment's special rule.
+	static const int scale[8] = { 1, 1, 2, 4, 8, 16, 32, 64 };
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = ((x & 15) * 16 + (seg ? 264 : 8)) * scale[seg];
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Tables store each segment's starting magnitude and sample spacing.
+	// These are the reference bias and mantissa coefficient after scaling.
+	// Masked indices cover exactly eight segments and sixteen mantissas.
+	static const int base[8] = {
+		8, 264, 528, 1056, 2112, 4224, 8448, 16896
+	};
+	static const int step[8] = {
+		16, 16, 32, 64, 128, 256, 512, 1024
+	};
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = base[seg] + (x & 15) * step[seg];
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decompose the required exponent into shifts by one, two, and four.
+	// Their combined effect equals the reference's shift by segment minus one.
+	// Segment zero uses its own bias and exponent zero; no negative shifts occur.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int exponent = seg ? seg - 1 : 0;
+	int t = (x & 15) * 16 + (seg ? 264 : 8);
+
+	if (exponent & 1)
+		t <<= 1;
+	if (exponent & 2)
+		t <<= 2;
+	if (exponent & 4)
+		t <<= 4;
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Factor eight out of both magnitude formulas.
+	// Segment zero becomes eight times an odd number from 1 through 31.
+	// Other segments use twice the mantissa plus 33, shifted by segment plus two.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = (2 * mant + 1) << 3;
+	else
+		t = (2 * mant + 33) << (seg + 2);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Start nonzero segments at segment seven's magnitude, then shift down.
+	// That magnitude is divisible by every required power of two, so no
+	// rounding occurs; segment zero retains its separate bias-8 formula.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (16896 + mant * 1024) >> (7 - seg);
+
+	return (x & 128) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Accumulate the four mantissa bits using their scaled positional weights.
+	// The initial magnitude supplies the segment's scaled bias.
+	// Every addition is nonnegative and the total never exceeds 32256.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int exponent = seg ? seg - 1 : 0;
+	int step = 16 << exponent;
+	int t = (seg ? 264 : 8) << exponent;
+
+	if (x & 1)
+		t += step;
+	if (x & 2)
+		t += step * 2;
+	if (x & 4)
+		t += step * 4;
+	if (x & 8)
+		t += step * 8;
+
+	return (x & 128) ? t : -t;
+}

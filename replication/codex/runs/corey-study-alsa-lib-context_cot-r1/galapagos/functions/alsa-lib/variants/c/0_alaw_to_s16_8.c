@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Apply the sign before multiplying by the segment scale.
+	// Multiplication, unlike left-shifting a negative value, is defined here.
+	// Every signed result remains between -32256 and 32256.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = (x & 15) * 16 + ((seg == 0) ? 8 : 264);
+	int scale = (seg == 0) ? 1 : (1 << (seg - 1));
+
+	if ((x & 128) == 0)
+		t = -t;
+
+	return t * scale;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

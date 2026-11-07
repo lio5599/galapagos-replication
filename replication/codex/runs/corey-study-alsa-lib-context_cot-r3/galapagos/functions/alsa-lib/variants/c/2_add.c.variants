@@ -1,0 +1,93 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The reference adds a and b, saturating at 4294967295 for 32-bit unsigned int.
+	// This uses exactly the reference's comparison and return expressions.
+	// Equality selects the saturation value, as does exceeding the threshold.
+	return a >= 4294967295 - b ? 4294967295 : a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reverse the branch order without changing the threshold.
+	// Only values strictly below the threshold use the ordinary sum.
+	// Equality and larger values return the same constant as the reference.
+	if (a < 4294967295 - b)
+		return a + b;
+	return 4294967295;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Start with the saturation result and replace it only below the threshold.
+	// The strict comparison leaves equality on the saturation path.
+	unsigned int result = 4294967295;
+	if (a < 4294967295 - b)
+		result = a + b;
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Split the reference's greater-than-or-equal test into its two cases.
+	// Both exceeding the threshold and exactly reaching it return the constant.
+	// Every remaining input takes the original addition path.
+	if (a > 4294967295 - b)
+		return 4294967295;
+	if (a == 4294967295 - b)
+		return 4294967295;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Turn the original condition into an all-ones or all-zero unsigned mask.
+	// Select the constant when the condition holds and the sum otherwise.
+	// Equality sets the mask; unsigned wrap in the unused sum is harmless.
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return ((unsigned int)4294967295 & mask) | ((a + b) & ~mask);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The original comparison produces a selector equal to zero or one.
+	// Exactly one term contributes: the constant or the ordinary sum.
+	// Equality selects the constant, and unsigned arithmetic stays defined.
+	unsigned int saturated = (a >= 4294967295 - b);
+	return saturated * (unsigned int)4294967295
+	     + (1u - saturated) * (a + b);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Clamp the first addend to the reference's threshold before adding b.
+	// On the saturation path, adding b cancels the subtraction of b.
+	// Otherwise the selected addend is a, giving the original sum.
+	return b + (a >= 4294967295 - b ? 4294967295 - b : a);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Express the result as the constant minus the remaining deficit.
+	// Below the threshold, subtracting that deficit gives a plus b.
+	// At or above the threshold, the deficit is zero.
+	return 4294967295
+	     - (a < 4294967295 - b ? (4294967295 - b) - a : 0);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Compute the unsigned sum, then conditionally overwrite it.
+	// Short-circuit evaluation performs the assignment only on saturation.
+	// The unchanged reference comparison also handles equality identically.
+	unsigned int result = a + b;
+	(a >= 4294967295 - b) && (result = 4294967295);
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// On the saturation path, replace b with the amount needed to reach the constant.
+	// Adding a then cancels the subtraction of a, including unsigned wrap.
+	// Otherwise retain b; the original comparison preserves the equality case.
+	return a + (a >= 4294967295 - b ? 4294967295 - a : b);
+}

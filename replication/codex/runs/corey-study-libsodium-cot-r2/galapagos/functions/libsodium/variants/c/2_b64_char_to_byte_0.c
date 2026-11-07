@@ -1,0 +1,39 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // The reference maps Base64 characters to sextets using byte-sliced masks.
+    // For ASCII byte inputs, other characters produce 255, including padding.
+    // Keep the original masks for non-byte inputs rather than range-testing c.
+    // Unsigned differences match every input where the reference is defined.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int upper =
+        (255U ^ (((u - 'A') >> 8) & 255U)) &
+        (255U ^ ((('Z' - u) >> 8) & 255U));
+    const unsigned int lower =
+        (255U ^ (((u - 'a') >> 8) & 255U)) &
+        (255U ^ ((('z' - u) >> 8) & 255U));
+    const unsigned int digit =
+        (255U ^ (((u - '0') >> 8) & 255U)) &
+        (255U ^ ((('9' - u) >> 8) & 255U));
+    const unsigned int plus =
+        255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    const unsigned int slash =
+        255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    const unsigned int x =
+        (upper & (u - 'A')) |
+        (lower & (u - 'a' + 26U)) |
+        (digit & (u - '0' + 52U)) |
+        (plus & 62U) | (slash & 63U);
+    const unsigned int zero =
+        255U ^ (((0U - x) >> 8) & 255U);
+    const unsigned int not_a =
+        ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x | (zero & not_a);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

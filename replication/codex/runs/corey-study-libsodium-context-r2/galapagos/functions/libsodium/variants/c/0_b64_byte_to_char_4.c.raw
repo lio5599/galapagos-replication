@@ -1,0 +1,14 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int result;
+
+    result = ((x - 26U) >> 8) & (x + 'A');
+    result |= ~((x - 26U) >> 8) &
+              ((x - 52U) >> 8) & (x + ('a' - 26));
+    result |= ~((x - 52U) >> 8) &
+              ((x - 62U) >> 8) & (x + ('0' - 52));
+    result |= ~((0U - (x ^ 62U)) >> 8) & '+';
+    result |= ~((0U - (x ^ 63U)) >> 8) & '/';
+
+    return result & 255U;
+}

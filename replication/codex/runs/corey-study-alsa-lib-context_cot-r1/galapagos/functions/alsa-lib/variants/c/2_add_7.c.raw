@@ -1,0 +1,10 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Convert the reference condition into an all-zero or all-one unsigned mask.
+	// Select only the sum bits below the threshold and only cap bits otherwise.
+	// Any wrapped sum is masked out, including at the saturation boundary.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int mask = 0U - (unsigned int)(a >= 4294967295 - b);
+	return (sum & ~mask) | (cap & mask);
+}

@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Use De Morgan's law to form the union of the five candidate terms.
+    // Each term retains the exact original byte masks rather than character comparisons.
+    // Thus negative and large inputs retain the reference's masked semantics.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a =
+        (~(((u - (unsigned int)'A') | ((unsigned int)'Z' - u)) >> 8) & 255U) &
+        (u - (unsigned int)'A');
+    const unsigned int b =
+        (~(((u - (unsigned int)'a') | ((unsigned int)'z' - u)) >> 8) & 255U) &
+        (u - (unsigned int)'a' + 26U);
+    const unsigned int d =
+        (~(((u - (unsigned int)'0') | ((unsigned int)'9' - u)) >> 8) & 255U) &
+        (u - (unsigned int)'0' + 52U);
+    const unsigned int p = ~((0U - (u ^ (unsigned int)'+')) >> 8) & 62U;
+    const unsigned int s = ~((0U - (u ^ (unsigned int)'/')) >> 8) & 63U;
+    const unsigned int x = ~(~a & ~b & ~d & ~p & ~s);
+    const unsigned int correction = ~((0U - x) >> 8) &
+                                   ((0U - (u ^ (unsigned int)'A')) >> 8) & 255U;
+    return ~(~x & ~correction);
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

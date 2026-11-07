@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    // For byte values u and v, their AND equals (u + v - (u XOR v)) divided by two.
+    // All operands below are bytes, so these sums cannot overflow unsigned int.
+    // Exact reference masks preserve partial-mask and wraparound edge cases.
+    unsigned int a = ((x - 26U) >> 8) & 255U;
+    unsigned int b = ((x - 52U) >> 8) & 255U;
+    unsigned int c = ((x - 62U) >> 8) & 255U;
+    unsigned int m0 = a;
+    unsigned int m1 = (a ^ 255U) & b;
+    unsigned int m2 = (b ^ 255U) & c;
+    unsigned int m3 = (((0U - (x ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int m4 = (((0U - (x ^ 63U)) >> 8) & 255U) ^ 255U;
+    unsigned int p0 = (x + 'A') & 255U;
+    unsigned int p1 = (x + ('a' - 26)) & 255U;
+    unsigned int p2 = (x + ('0' - 52)) & 255U;
+    unsigned int p3 = '+' & 255U;
+    unsigned int p4 = '/' & 255U;
+    return ((m0 + p0 - (m0 ^ p0)) >> 1) |
+           ((m1 + p1 - (m1 ^ p1)) >> 1) |
+           ((m2 + p2 - (m2 ^ p2)) >> 1) |
+           ((m3 + p3 - (m3 ^ p3)) >> 1) |
+           ((m4 + p4 - (m4 ^ p4)) >> 1);
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

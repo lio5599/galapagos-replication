@@ -1,0 +1,111 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The reference returns 4294967295 when a >= 4294967295 - b, otherwise a + b.
+	// A conditional expression selects exactly the same two results.
+	// The unchanged comparison preserves equality and zero-input cases.
+	return a >= 4294967295 - b ? 4294967295 : a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Split the saturation test into equality and strict inequality.
+	// Together these cover exactly the original greater-than-or-equal test.
+	// Equality returns the limit; all remaining cases return the sum.
+	if (a == 4294967295 - b)
+		return 4294967295;
+	if (a > 4294967295 - b)
+		return 4294967295;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reverse the branch by testing the complement of the original condition.
+	// Only values strictly below the threshold take the addition branch.
+	// Equality and every value above the threshold return the limit.
+	if (a < 4294967295 - b)
+		return a + b;
+	return 4294967295;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Start with the limit and replace it only when saturation is unnecessary.
+	// The replacement condition is the exact complement of the reference test.
+	// Equality retains the limit, and zero inputs follow the same comparison.
+	unsigned int result = 4294967295;
+	if (a < 4294967295 - b)
+		result = a + b;
+	return result;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Dispatch on the original comparison, whose value is either zero or one.
+	// A false comparison returns the sum; a true comparison returns the limit.
+	// Using the same comparison preserves all boundary cases.
+	switch (a >= 4294967295 - b) {
+	case 0:
+		return a + b;
+	default:
+		return 4294967295;
+	}
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Convert the original comparison into an all-zero or all-one unsigned mask.
+	// Masked OR selects the sum when false and the converted limit when true.
+	// Unsigned wrap in the unused sum cannot affect the selected result.
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return (sum & ~mask) | (limit & mask);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use an unsigned mask and XOR to select between the sum and the limit.
+	// A zero mask leaves the sum; an all-one mask changes it to the limit.
+	// The original comparison controls selection, including equality and zero.
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	unsigned int mask = 0u - (unsigned int)(a >= 4294967295 - b);
+	return sum ^ ((sum ^ limit) & mask);
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Weight the two possible results with complementary zero-or-one values.
+	// Exactly one term survives, as determined by the original comparison.
+	// Equality selects the limit; any wrapped unused sum is multiplied by zero.
+	unsigned int saturated = (a >= 4294967295 - b);
+	unsigned int sum = a + b;
+	unsigned int limit = 4294967295;
+	return sum * (1u - saturated) + limit * saturated;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Select an increment instead of selecting the final result.
+	// Normally add b; on saturation add the unsigned difference limit minus a.
+	// Unsigned arithmetic makes that latter sum equal to the converted limit.
+	// The unchanged comparison preserves the reference's boundary decisions.
+	unsigned int limit = 4294967295;
+	unsigned int increment;
+	if (a >= 4294967295 - b)
+		increment = limit - a;
+	else
+		increment = b;
+	return a + increment;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Initialize the result to the limit and use short-circuit evaluation.
+	// Only a false saturation test evaluates the assignment of the sum.
+	// Equality keeps the limit, and zero inputs behave exactly as in the reference.
+	unsigned int result = 4294967295;
+	(void)((a >= 4294967295 - b) || ((result = a + b), 1));
+	return result;
+}

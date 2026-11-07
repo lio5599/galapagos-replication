@@ -1,0 +1,8 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reverse the reference comparison and return the sum only below the threshold.
+	// Equality and all inputs above the threshold return the cap.
+	if (a < 4294967295 - b)
+		return a + b;
+	return 4294967295;
+}

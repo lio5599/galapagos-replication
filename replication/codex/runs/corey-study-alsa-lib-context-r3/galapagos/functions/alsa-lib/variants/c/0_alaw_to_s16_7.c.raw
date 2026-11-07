@@ -1,0 +1,24 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+    int x = a_val ^ 0x55;
+    int t = x & 127;
+
+    if (t < 16)
+        t = t * 16 + 8;
+    else if (t < 32)
+        t = (t - 16) * 16 + 264;
+    else if (t < 48)
+        t = (t - 32) * 32 + 528;
+    else if (t < 64)
+        t = (t - 48) * 64 + 1056;
+    else if (t < 80)
+        t = (t - 64) * 128 + 2112;
+    else if (t < 96)
+        t = (t - 80) * 256 + 4224;
+    else if (t < 112)
+        t = (t - 96) * 512 + 8448;
+    else
+        t = (t - 112) * 1024 + 16896;
+
+    return (x & 128) ? t : -t;
+}

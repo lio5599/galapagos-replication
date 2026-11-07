@@ -1,0 +1,20 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+    int segment, magnitude, shift;
+
+    a_val ^= 0x55;
+    segment = (a_val >> 4) & 7;
+    shift = segment > 1 ? segment - 1 : 0;
+    magnitude = segment ? (264 << shift) : 8;
+
+    if (a_val & 1)
+        magnitude += 16 << shift;
+    if (a_val & 2)
+        magnitude += 32 << shift;
+    if (a_val & 4)
+        magnitude += 64 << shift;
+    if (a_val & 8)
+        magnitude += 128 << shift;
+
+    return (a_val & 128) ? magnitude : -magnitude;
+}

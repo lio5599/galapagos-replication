@@ -1,0 +1,17 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x;
+
+    x = (u - 'A') &
+        ~(((u - 'A') >> 8) | (('Z' - u) >> 8)) & 0xFFU;
+    x |= (u - ('a' - 26)) &
+         ~(((u - 'a') >> 8) | (('z' - u) >> 8)) & 0xFFU;
+    x |= (u - ('0' - 52)) &
+         ~(((u - '0') >> 8) | (('9' - u) >> 8)) & 0xFFU;
+    x |= 62U & ~((0U - (u ^ '+')) >> 8);
+    x |= 63U & ~((0U - (u ^ '/')) >> 8);
+
+    return x | (0xFFU & ~((0U - x) >> 8) &
+                ((0U - (u ^ 'A')) >> 8));
+}

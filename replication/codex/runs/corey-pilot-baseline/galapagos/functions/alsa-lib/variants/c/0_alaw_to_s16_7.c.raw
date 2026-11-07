@@ -1,0 +1,23 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+    int decoded = a_val ^ 0x55;
+    int code = decoded & 127;
+    int magnitude = (code & 15) * 16 + 8;
+
+    if (code >= 16)
+        magnitude += 256;
+    if (code >= 32)
+        magnitude *= 2;
+    if (code >= 48)
+        magnitude *= 2;
+    if (code >= 64)
+        magnitude *= 2;
+    if (code >= 80)
+        magnitude *= 2;
+    if (code >= 96)
+        magnitude *= 2;
+    if (code >= 112)
+        magnitude *= 2;
+
+    return (decoded & 128) ? magnitude : -magnitude;
+}

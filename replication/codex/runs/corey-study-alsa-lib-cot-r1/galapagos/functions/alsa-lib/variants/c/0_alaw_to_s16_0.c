@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decode an A-law byte into a signed 16-bit linear PCM sample.
+	// After XOR decoding, segment zero uses bias 8; other segments use
+	// bias 264 and scale by two to the segment minus one.
+	// All segments produce magnitudes from 8 through 32256, with no zero.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int mant = x & 15;
+	int t;
+
+	if (seg == 0)
+		t = mant * 16 + 8;
+	else
+		t = (mant * 16 + 264) << (seg - 1);
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// The original comparison produces a selector equal to zero or one.
+	// Exactly one product contributes: the sum or the converted cap.
+	// Equality selects cap, so a wrapped provisional sum contributes zero.
+	unsigned int sum = a + b;
+	unsigned int cap = 4294967295;
+	unsigned int saturated = (unsigned int)(a >= 4294967295 - b);
+	return sum * (1u - saturated) + cap * saturated;
+}
+
+
+int main(){
+    add(0,0);
+}

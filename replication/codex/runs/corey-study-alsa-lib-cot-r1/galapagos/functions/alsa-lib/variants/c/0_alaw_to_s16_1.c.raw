@@ -1,0 +1,13 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A nonzero-segment flag selects the extra bias and shift count.
+	// Segment zero gets bias 8 and shift zero; segments 1 through 7
+	// get bias 264 and shifts 0 through 6, so no shift is negative.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int nonzero = (seg != 0);
+	int t = ((x & 15) * 16 + 8 + nonzero * 256)
+		<< (seg - nonzero);
+
+	return (x & 128) ? t : -t;
+}

@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Only the low sixteen input bits can affect the reference's extracted masks.
+    // Candidate values contribute only their low eight bits.
+    // Reducing x modulo 65536 therefore preserves every result, including wraparound.
+    unsigned int y = x & 65535U;
+    unsigned int a = ((y - 26U) >> 8) & 255U;
+    unsigned int b = ((y - 52U) >> 8) & 255U;
+    unsigned int c = ((y - 62U) >> 8) & 255U;
+    unsigned int d = (((0U - (y ^ 62U)) >> 8) & 255U) ^ 255U;
+    unsigned int e = (((0U - (y ^ 63U)) >> 8) & 255U) ^ 255U;
+
+    return (int)((a & (y + 'A')) |
+                 ((255U ^ a) & b & (y + ('a' - 26))) |
+                 ((255U ^ b) & c & (y + ('0' - 52))) |
+                 (d & '-') | (e & '_'));
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

@@ -1,0 +1,27 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int masks[5] = {
+        ~(((u - 'A') | ('Z' - u)) >> 8) & 0xFFU,
+        ~(((u - 'a') | ('z' - u)) >> 8) & 0xFFU,
+        ~(((u - '0') | ('9' - u)) >> 8) & 0xFFU,
+        ~((0U - (u ^ '+')) >> 8) & 0xFFU,
+        ~((0U - (u ^ '/')) >> 8) & 0xFFU
+    };
+    const unsigned int values[5] = {
+        u - 'A',
+        u - ('a' - 26),
+        u - ('0' - 52),
+        62U,
+        63U
+    };
+    const unsigned int x =
+        (masks[0] & values[0]) |
+        (masks[1] & values[1]) |
+        (masks[2] & values[2]) |
+        (masks[3] & values[3]) |
+        (masks[4] & values[4]);
+
+    return x | (~((0U - x) >> 8) &
+                ((0U - (u ^ 'A')) >> 8) & 0xFFU);
+}

@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use an all-ones mask to change the sum into the saturation value.
+	// A zero mask preserves the sum; equality selects saturation.
+	// Unsigned sum overflow is defined even when that sum is replaced.
+	unsigned int sum = a + b;
+	unsigned int mask = 0U - (unsigned int)(a >= 4294967295 - b);
+	return sum ^ ((sum ^ (unsigned int)4294967295) & mask);
+}
+
+
+int main(){
+    add(0,0);
+}

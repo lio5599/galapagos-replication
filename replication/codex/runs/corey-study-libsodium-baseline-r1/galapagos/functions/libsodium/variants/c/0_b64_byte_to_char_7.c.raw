@@ -1,0 +1,22 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int boundaries[3] = {26U, 52U, 62U};
+    unsigned int masks[3];
+    unsigned int result;
+    unsigned int i;
+
+    for (i = 0U; i < 3U; ++i)
+        masks[i] = ((x - boundaries[i]) >> 8) & 255U;
+
+    result = masks[0] & (x + 'A');
+    result |= (255U ^ masks[0]) & masks[1] & (x + ('a' - 26));
+    result |= (255U ^ masks[1]) & masks[2] & (x + ('0' - 52));
+
+    for (i = 0U; i < 2U; ++i) {
+        unsigned int mask = ((0U - (x ^ (62U + i))) >> 8) & 255U;
+        unsigned int value = i == 0U ? '+' : '/';
+        result |= (255U ^ mask) & value;
+    }
+
+    return (int)result;
+}

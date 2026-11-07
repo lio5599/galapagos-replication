@@ -1,0 +1,172 @@
+/* Substitute 1 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (~((u - 'A') >> 8) & 255U) &
+                           (~(('Z' - u) >> 8) & 255U);
+    const unsigned int b = (~((u - 'a') >> 8) & 255U) &
+                           (~(('z' - u) >> 8) & 255U);
+    const unsigned int d = (~((u - '0') >> 8) & 255U) &
+                           (~(('9' - u) >> 8) & 255U);
+    const unsigned int p = ~( (0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int s = ~( (0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - ('a' - 26))) |
+                           (d & (u - ('0' - 52))) |
+                           (p & 62U) | (s & 63U);
+    return x | ((~((0U - x) >> 8) & 255U) &
+                (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+/* Substitute 2 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (~((u - 'A') | ('Z' - u)) >> 8) & 255U;
+    const unsigned int b = (~((u - 'a') | ('z' - u)) >> 8) & 255U;
+    const unsigned int d = (~((u - '0') | ('9' - u)) >> 8) & 255U;
+    const unsigned int p = (~(0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int s = (~(0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - ('a' - 26))) |
+                           (d & (u - ('0' - 52))) |
+                           (p & 62U) | (s & 63U);
+    return x | (((~(0U - x) & (0U - (u ^ 'A'))) >> 8) & 255U);
+}
+
+/* Substitute 3 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ~(((u - 'A') | ('Z' - u)) >> 8);
+    const unsigned int b = ~(((u - 'a') | ('z' - u)) >> 8);
+    const unsigned int d = ~(((u - '0') | ('9' - u)) >> 8);
+    const unsigned int p = ~((0U - (u ^ '+')) >> 8);
+    const unsigned int s = ~((0U - (u ^ '/')) >> 8);
+    const unsigned int x = ((a & (u - 'A')) |
+                            (b & (u - ('a' - 26))) |
+                            (d & (u - ('0' - 52))) |
+                            (p & 62U) | (s & 63U)) & 255U;
+    return x | ((~((0U - x) >> 8) &
+                 ((0U - (u ^ 'A')) >> 8)) & 255U);
+}
+
+/* Substitute 4 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = 255U ^ ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    const unsigned int b = 255U ^ ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    const unsigned int d = 255U ^ ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    const unsigned int p = 255U ^ (((0U - (u ^ '+')) >> 8) & 255U);
+    const unsigned int s = 255U ^ (((0U - (u ^ '/')) >> 8) & 255U);
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - ('a' - 26))) |
+                           (d & (u - ('0' - 52))) |
+                           (p & 62U) | (s & 63U);
+    const unsigned int z = 255U ^ (((0U - x) >> 8) & 255U);
+    const unsigned int n = ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x | (z & n);
+}
+
+/* Substitute 5 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = 255U - ((((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    const unsigned int b = 255U - ((((u - 'a') | ('z' - u)) >> 8) & 255U);
+    const unsigned int d = 255U - ((((u - '0') | ('9' - u)) >> 8) & 255U);
+    const unsigned int p = 255U - (((0U - (u ^ '+')) >> 8) & 255U);
+    const unsigned int s = 255U - (((0U - (u ^ '/')) >> 8) & 255U);
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - ('a' - 26))) |
+                           (d & (u - ('0' - 52))) |
+                           (p & 62U) | (s & 63U);
+    const unsigned int z = 255U - (((0U - x) >> 8) & 255U);
+    return x | (z & (((0U - (u ^ 'A')) >> 8) & 255U));
+}
+
+/* Substitute 6 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    unsigned int x = 0U;
+    x |= ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A');
+    x |= ((~((u - 'a') | ('z' - u)) >> 8) & 255U) & (u - ('a' - 26));
+    x |= ((~((u - '0') | ('9' - u)) >> 8) & 255U) & (u - ('0' - 52));
+    x |= (~(0U - (u ^ '+')) >> 8) & 62U;
+    x |= (~(0U - (u ^ '/')) >> 8) & 63U;
+    return x | ((~(0U - x) >> 8) &
+                ((0U - (u ^ 'A')) >> 8) & 255U);
+}
+
+/* Substitute 7 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (u - 'A') &
+        ((~((u - 'A') | ('Z' - u)) >> 8) & 255U);
+    const unsigned int b = (u - ('a' - 26)) &
+        ((~((u - 'a') | ('z' - u)) >> 8) & 255U);
+    const unsigned int d = (u - ('0' - 52)) &
+        ((~((u - '0') | ('9' - u)) >> 8) & 255U);
+    const unsigned int p = (~(0U - (u ^ '+')) >> 8) & 62U;
+    const unsigned int s = (~(0U - (u ^ '/')) >> 8) & 63U;
+    const unsigned int x = ~(~a & ~b & ~d & ~p & ~s);
+    const unsigned int z = (~(0U - x) >> 8) & 255U;
+    const unsigned int n = ((0U - (u ^ 'A')) >> 8) & 255U;
+    return ~(~x & ~(z & n));
+}
+
+/* Substitute 8 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (((u - 'A') >> 8) | (('Z' - u) >> 8)) & 255U;
+    const unsigned int b = (((u - 'a') >> 8) | (('z' - u) >> 8)) & 255U;
+    const unsigned int d = (((u - '0') >> 8) | (('9' - u) >> 8)) & 255U;
+    const unsigned int p = ((0U - (u ^ '+')) >> 8) & 255U;
+    const unsigned int s = ((0U - (u ^ '/')) >> 8) & 255U;
+    const unsigned int x = (((u - 'A') & ~a) |
+                            ((u - ('a' - 26)) & ~b) |
+                            ((u - ('0' - 52)) & ~d) |
+                            (62U & ~p) | (63U & ~s)) & 255U;
+    const unsigned int z = ((0U - x) >> 8) & 255U;
+    const unsigned int n = ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x | (n & ~z);
+}
+
+/* Substitute 9 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ((u - 'A') & 255U) &
+        ~(((u - 'A') | ('Z' - u)) >> 8);
+    const unsigned int b = ((u - ('a' - 26)) & 255U) &
+        ~(((u - 'a') | ('z' - u)) >> 8);
+    const unsigned int d = ((u - ('0' - 52)) & 255U) &
+        ~(((u - '0') | ('9' - u)) >> 8);
+    const unsigned int p = 62U & ~((0U - (u ^ '+')) >> 8);
+    const unsigned int s = 63U & ~((0U - (u ^ '/')) >> 8);
+    const unsigned int x = (a | b) | (d | (p | s));
+    const unsigned int correction =
+        (((0U - (u ^ 'A')) >> 8) & 255U) & ~((0U - x) >> 8);
+    return (x ^ correction) ^ (x & correction);
+}
+
+/* Substitute 10 */
+static unsigned int b64_char_to_byte(int c)
+{
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = (~((u - 'A') | ('Z' - u)) >> 8) & 255U;
+    const unsigned int b = (~((u - 'a') | ('z' - u)) >> 8) & 255U;
+    const unsigned int d = (~((u - '0') | ('9' - u)) >> 8) & 255U;
+    const unsigned int p = (~(0U - (u ^ '+')) >> 8) & 62U;
+    const unsigned int s = (~(0U - (u ^ '/')) >> 8) & 63U;
+    const unsigned int x = (a & (u - 'A')) |
+                           (b & (u - ('a' - 26))) |
+                           (d & (u - ('0' - 52))) | p | s;
+    const unsigned int correction =
+        ((~(0U - x) & (0U - (u ^ 'A'))) >> 8) & 255U;
+    return x ^ (correction & ~x);
+}

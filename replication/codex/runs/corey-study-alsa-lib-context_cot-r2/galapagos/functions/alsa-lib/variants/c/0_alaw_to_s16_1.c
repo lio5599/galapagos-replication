@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Extract the segment and mantissa after undoing the alternating bits.
+	// For positive segments, 264 shifted by seg minus one equals
+	// a base of 132 shifted by seg; the mantissa scales identically.
+	// Segment zero is handled separately, including its minimum value 8.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int n = x & 15;
+	int t = seg ? ((n * 8 + 132) << seg) : (n * 16 + 8);
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

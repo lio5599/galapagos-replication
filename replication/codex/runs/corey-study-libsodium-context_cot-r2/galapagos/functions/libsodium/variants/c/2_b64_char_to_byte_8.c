@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // De Morgan's law also expresses the union of contributions as complemented AND.
+    // The contributions retain the reference's full-width unsigned mask arithmetic.
+    // The final branch is valid because their union is confined to eight bits.
+    const unsigned int u = (unsigned int)c;
+    const unsigned int a = ((~((u - 'A') | ('Z' - u)) >> 8) & 255U) & (u - 'A');
+    const unsigned int b = ((~((u - 'a') | ('z' - u)) >> 8) & 255U) & (u - 'a' + 26U);
+    const unsigned int d = ((~((u - '0') | ('9' - u)) >> 8) & 255U) & (u - '0' + 52U);
+    const unsigned int p = ((~(0U - (u ^ '+')) >> 8) & 255U) & 62U;
+    const unsigned int q = ((~(0U - (u ^ '/')) >> 8) & 255U) & 63U;
+    const unsigned int x = ~((~a) & (~b) & (~d) & (~p) & (~q));
+    if (x == 0U)
+        return ((0U - (u ^ 'A')) >> 8) & 255U;
+    return x;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

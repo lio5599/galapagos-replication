@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	unsigned int value;
+	int magnitude;
+
+	value = a_val ^ 0x55u;
+	magnitude = (int)((value & 15u) * 16u + 8u);
+
+	switch ((value >> 4) & 7u) {
+	case 0: break;
+	case 1: magnitude += 256; break;
+	case 2: magnitude = (magnitude + 256) * 2; break;
+	case 3: magnitude = (magnitude + 256) * 4; break;
+	case 4: magnitude = (magnitude + 256) * 8; break;
+	case 5: magnitude = (magnitude + 256) * 16; break;
+	case 6: magnitude = (magnitude + 256) * 32; break;
+	case 7: magnitude = (magnitude + 256) * 64; break;
+	}
+
+	return (value & 128u) ? magnitude : -magnitude;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

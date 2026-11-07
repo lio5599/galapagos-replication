@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Parallel counting forms two-bit, four-bit, then byte-sized counts.
+	// Summing the byte counts and retaining bit zero gives field parity.
+	// The initial mask excludes other bits; all shifts fit unsigned long.
+	unsigned long value = (data >> 4) & 0x07ffffffUL;
+
+	value -= (value >> 1) & 0x55555555UL;
+	value = (value & 0x33333333UL) + ((value >> 2) & 0x33333333UL);
+	value = (value + (value >> 4)) & 0x0f0f0f0fUL;
+	value += value >> 8;
+	value += value >> 16;
+	return (unsigned int)(value & 1UL);
+}

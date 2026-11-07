@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Repeated doubling replaces the reference's variable left shift.
+	// Only nonzero segments add 256 to the initial bias.
+	// Segments zero and one require no doubling; all results fit in int.
+	int x = a_val ^ 0x55;
+	int seg = (x >> 4) & 7;
+	int t = (x & 15) * 16 + 8;
+
+	if (seg != 0) {
+		t += 256;
+		while (seg > 1) {
+			t += t;
+			--seg;
+		}
+	}
+
+	return (x & 128) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}
