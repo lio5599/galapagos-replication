@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Switch statement for clear range handling
+    // Each case handles one range or specific value
+    if (x > 63) return 0;
+    if (x < 26) return 'A' + (int)x;
+    if (x < 52) return 'a' + (int)(x - 26);
+    if (x < 62) return '0' + (int)(x - 52);
+    if (x == 62) return '-';
+    return '_';
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

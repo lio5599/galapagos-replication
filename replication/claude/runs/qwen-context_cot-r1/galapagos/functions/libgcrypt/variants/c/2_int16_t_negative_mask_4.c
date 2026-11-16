@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask_5(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Extracts sign bit via mask, shifts to LSB, negates.
+  uint16_t u = (uint16_t)x & 0x8000;
+  u >>= 15;
+  return -(int)u;
+}
+
+
+int main(){
+    int16_t_negative_mask_5(0);
+}

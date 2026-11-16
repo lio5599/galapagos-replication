@@ -1,0 +1,14 @@
+int ctz(uint64_t in)
+{
+ // Alternative 3: Check bits from LSB using power-of-two masks.
+ // For each position i, check if bit i is set.
+ // Return first position where bit is 1.
+ // If none found in 0-63, return 64.
+ int i;
+ for (i = 0; i < 64; i++)
+ {
+  if (in & ((uint64_t)1 << i))
+   return i;
+ }
+ return 64;
+}

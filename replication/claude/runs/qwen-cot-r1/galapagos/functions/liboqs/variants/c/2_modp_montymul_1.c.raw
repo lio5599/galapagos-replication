@@ -1,0 +1,15 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Same Montgomery multiplication but computes w using full 64-bit mask.
+    // The mask 0x7FFFFFFF extracts low 31 bits of z*p0i before multiplying by p.
+    // This ensures w is a multiple of p that cancels low 31 bits of z.
+    // The subtraction and conditional addition normalize the result modulo p.
+    // Equivalent because (z+w) is divisible by 2^31, so shift gives quotient.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}

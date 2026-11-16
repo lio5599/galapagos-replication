@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Simplified: the function returns min(max(v, 0), t).
+    // max(v, 0) ensures non-negative.
+    // min(..., t) caps at t.
+    int non_neg_v = v < 0 ? 0 : v;
+    return non_neg_v < t ? non_neg_v : t;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

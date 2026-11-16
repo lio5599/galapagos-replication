@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Use arithmetic to compute mask for zeroing on underflow.
+    // If exponent <= 1, mask is 0, else mask is all 1s.
+    // Apply mask to result of exponent decrement.
+    // Equivalent to reference's t-based masking.
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t result = x - ((uint64_t)1 << 52);
+    uint64_t mask = (exp > 1) ? ~0ULL : 0ULL;
+    return result & mask;
+}
+
+
+int main(){
+    fpr_half(0);
+}

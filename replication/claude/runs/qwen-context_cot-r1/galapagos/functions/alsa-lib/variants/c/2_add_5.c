@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: check if b > UINT32_MAX - a (symmetric condition).
+	// This is logically equivalent to a > UINT32_MAX - b.
+	if (b > 4294967295U - a)
+		return 4294967295U;
+	return a + b;
+}
+
+
+int main(){
+    add(0,0);
+}

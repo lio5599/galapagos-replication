@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes header bytes per channel as (bps + 14) / 8 which is equivalent to
+    // (7 + bps + 7) / 8 since both represent ceiling of (bps+7)/8. The residual
+    // calculation remains identical to reference. Adds 16 for header and 2 for CRC.
+    int count;
+    int header_per_ch = (bps + 14) / 8;
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    count = 16 + ch * header_per_ch + residual + 2;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

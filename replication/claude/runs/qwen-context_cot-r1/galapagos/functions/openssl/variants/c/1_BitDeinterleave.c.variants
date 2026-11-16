@@ -1,0 +1,79 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference function always returns Ai unchanged because the if condition is false.
+    // All substitute implementations must also return Ai unchanged for equivalence.
+    // This is the simplest correct implementation: identity function.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using a temporary variable to hold the result.
+    // Since the reference always returns Ai unchanged, we copy Ai to a temp and return it.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using bitwise OR with zero, which leaves bits unchanged.
+    // Ai | 0 equals Ai for all valid inputs, matching the reference behavior.
+    uint64_t result = Ai | 0ULL;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using bitwise AND with all-ones mask.
+    // Ai & 0xFFFFFFFFFFFFFFFF equals Ai for all 64-bit values, matching reference.
+    uint64_t result = Ai & 0xFFFFFFFFFFFFFFFFULL;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using XOR with zero, which leaves bits unchanged.
+    // Ai ^ 0 equals Ai for all valid inputs, matching the reference behavior.
+    uint64_t result = Ai ^ 0ULL;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using left shift by 0, which leaves value unchanged.
+    // Ai << 0 equals Ai for all valid inputs, matching the reference behavior.
+    uint64_t result = Ai << 0;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using right shift by 0, which leaves value unchanged.
+    // Ai >> 0 equals Ai for all valid inputs, matching the reference behavior.
+    uint64_t result = Ai >> 0;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using addition with zero, which leaves value unchanged.
+    // Ai + 0 equals Ai for all valid inputs, matching the reference behavior.
+    uint64_t result = Ai + 0ULL;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using subtraction of zero, which leaves value unchanged.
+    // Ai - 0 equals Ai for all valid inputs, matching the reference behavior.
+    uint64_t result = Ai - 0ULL;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using multiplication by one, which leaves value unchanged.
+    // Ai * 1 equals Ai for all valid inputs, matching the reference behavior.
+    uint64_t result = Ai * 1ULL;
+    return result;
+}

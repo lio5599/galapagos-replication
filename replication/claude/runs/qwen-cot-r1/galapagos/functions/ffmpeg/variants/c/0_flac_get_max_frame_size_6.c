@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Separates the fixed overhead (16 header + 2 CRC = 18) from variable parts.
+    // Per-channel header bytes use ceiling division. Residual bytes depend on
+    // whether stereo coding is used. All ceiling divisions use +7 before /8.
+    int count;
+    int fixed_overhead = 18;
+    int per_ch_header = (7 + bps + 7) / 8;
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    count = fixed_overhead + ch * per_ch_header + residual;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Precomputes the shift amount as a constant for clarity.
+    // The loop structure and algorithm are identical to reference.
+    // Returns same result for all valid 64-bit unsigned inputs.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    const int SCALE = 12;
+
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << SCALE;
+}
+
+
+int main(){
+    icbrt64(0);
+}

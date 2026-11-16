@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int sgn_x = (sx >> 63) & 1;
+    int sgn_y = (sy >> 63) & 1;
+    int sgn_diff = sgn_x ^ sgn_y;
+    
+    if (sgn_diff) {
+        return sgn_x;
+    }
+    
+    return (sx < sy) ^ sgn_x;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

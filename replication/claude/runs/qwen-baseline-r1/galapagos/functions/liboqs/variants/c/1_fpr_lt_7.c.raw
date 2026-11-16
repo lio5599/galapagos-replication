@@ -1,0 +1,15 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int sign_bit = (sx ^ sy) >> 63;
+    int neg = (sx >> 63) & 1;
+    
+    int cmp1 = (sx - sy) >> 63 & 1;
+    int cmp2 = (sy - sx) >> 63 & 1;
+    
+    int same_sign_result = (neg & cmp2) | (~neg & cmp1);
+    int diff_sign_result = neg & sign_bit;
+    
+    return (same_sign_result & ~sign_bit) | diff_sign_result;
+}

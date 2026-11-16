@@ -1,0 +1,150 @@
+```c
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size: header(16) + sample_header(ch*(7+bps+7)/8)
+    // + residual_data + footer(2). For stereo(ch==2), residual uses mid/side coding.
+    // Equivalent to reference by direct translation of formula.
+    int count;
+    count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size by separating header, sample header, residual, footer.
+    // Sample header per channel is ceil((bps+14)/8) bytes. Residual differs for stereo.
+    // Uses integer arithmetic equivalent to reference.
+    int count;
+    int sample_header = ch * ((bps + 14) / 8);
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    count = 16 + sample_header + residual + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size. Header is 16 bytes, footer is 2 bytes.
+    // Sample header per channel: ceil((bps+14)/8). Residual uses different formula for stereo.
+    // Combines all components into single expression.
+    int count;
+    if (ch == 2) {
+        count = 18 + ch * ((bps + 14) / 8) + ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count = 18 + ch * ((bps + 14) / 8) + (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size by computing each component separately.
+    // Header=16, footer=2, sample_header=ch*ceil((bps+14)/8), residual varies by channels.
+    // Equivalent to reference by algebraic rearrangement.
+    int header = 16;
+    int footer = 2;
+    int sample_header = ch * ((bps + 14) / 8);
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    return header + sample_header + residual + footer;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size. Uses ternary operator for residual calculation.
+    // Header(16) + sample_header + residual + footer(2). Sample header per channel is ceil((bps+14)/8).
+    // Equivalent to reference by using conditional expression.
+    int count;
+    int sample_header = ch * ((bps + 14) / 8);
+    int residual = (ch == 2) ? ((2 * bps + 1) * blocksize + 7) / 8 : (ch * bps * blocksize + 7) / 8;
+    count = 16 + sample_header + residual + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size by precomputing constants.
+    // Header=16, footer=2, sample_header per channel=ceil((bps+14)/8).
+    // Residual formula differs for stereo vs mono/multi. Equivalent to reference.
+    int count;
+    count = 18;
+    count += ch * ((bps + 14) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size. Separates stereo and non-stereo cases early.
+    // For stereo: 18 + 2*ceil((bps+14)/8) + ceil((2*bps+1)*blocksize/8).
+    // For others: 18 + ch*ceil((bps+14)/8) + ceil(ch*bps*blocksize/8).
+    int count;
+    if (ch == 2) {
+        count = 18 + 2 * ((bps + 14) / 8) + ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count = 18 + ch * ((bps + 14) / 8) + (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size using intermediate variables for clarity.
+    // Header=16, footer=2, sample_header=ch*ceil((bps+14)/8), residual varies.
+    // Equivalent to reference by same arithmetic operations.
+    int header_size = 16;
+    int footer_size = 2;
+    int sample_hdr_size = ch * ((bps + 14) / 8);
+    int residual_size;
+    if (ch == 2) {
+        residual_size = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual_size = (ch * bps * blocksize + 7) / 8;
+    }
+    return header_size + sample_hdr_size + residual_size + footer_size;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size. Computes sample header as ch*((bps+14)/8).
+    // Residual for stereo uses (2*bps+1)*blocksize, otherwise ch*bps*blocksize.
+    // Adds header(16) and footer(2). Equivalent to reference.
+    int count;
+    int shdr = ch * ((bps + 14) / 8);
+    int res;
+    if (ch == 2) {
+        res = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        res = (ch * bps * blocksize + 7) / 8;
+    }
+    count = 16 + shdr + res + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size by computing total as sum of four parts.
+    // Part1: header(16), Part2: sample headers(ch*ceil((bps+14)/8)), Part3: residual, Part4: footer(2).
+    // Residual formula depends on whether ch==2. Equivalent to reference.
+    int part1 = 16;
+    int part2 = ch * ((bps + 14) / 8);
+    int part3;
+    if (ch == 2) {
+        part3 = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        part3 = (ch * bps * blocksize + 7) / 8;
+    }
+    int part4 = 2;
+    return part1 + part2 + part3 + part4;
+}
+```

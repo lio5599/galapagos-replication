@@ -1,0 +1,17 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 9: Use bitwise AND with shifting mask
+	// Create shifting mask starting at bit 4, up to bit 30
+	// XOR parity with result of AND operation
+	// Edge case: mask never matches set bit yields parity 0
+	unsigned int parity = 0;
+	unsigned int mask;
+	int bit;
+	for (bit = 4; bit <= 30; bit++) {
+		mask = 1u << bit;
+		if (data & mask) {
+			parity ^= 1;
+		}
+	}
+	return parity;
+}

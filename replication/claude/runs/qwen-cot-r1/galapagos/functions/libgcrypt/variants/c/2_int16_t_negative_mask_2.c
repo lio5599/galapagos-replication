@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask_3(int16_t x)
+{
+  // Use sign bit extraction via shift and negate.
+  // x >> 15 yields -1 if negative, 0 if non-negative in two's complement.
+  // Casting to int preserves this, so return x >> 15 directly.
+  return (int) (x >> 15);
+}
+
+
+int main(){
+    int16_t_negative_mask_3(0);
+}

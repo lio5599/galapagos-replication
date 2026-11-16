@@ -1,0 +1,7 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function using bitwise AND with all-ones mask.
+    // Ai & 0xFFFFFFFFFFFFFFFF equals Ai for all 64-bit values, matching reference.
+    uint64_t result = Ai & 0xFFFFFFFFFFFFFFFFULL;
+    return result;
+}

@@ -1,0 +1,199 @@
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sign_x = (sx >> 63) & 1;
+    int sign_y = (sy >> 63) & 1;
+    
+    if (sign_x != sign_y) {
+        return sign_x;
+    }
+    
+    if (sign_x == 0) {
+        return sx < sy;
+    } else {
+        return sx > sy;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int neg_x = (sx < 0);
+    int neg_y = (sy < 0);
+    
+    if (neg_x && !neg_y) return 1;
+    if (!neg_x && neg_y) return 0;
+    
+    if (neg_x) {
+        return sx > sy;
+    } else {
+        return sx < sy;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int diff_sign = ((sx ^ sy) >> 63) & 1;
+    int both_neg = ((sx & sy) >> 63) & 1;
+    
+    if (diff_sign) {
+        return (sx >> 63) & 1;
+    }
+    
+    if (both_neg) {
+        return (sy - sx) >> 63 & 1;
+    } else {
+        return (sx - sy) >> 63 & 1;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    if (sx >= 0 && sy >= 0) {
+        return sx < sy;
+    } else if (sx < 0 && sy >= 0) {
+        return 1;
+    } else if (sx >= 0 && sy < 0) {
+        return 0;
+    } else {
+        return sx > sy;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sign_mask = ((sx ^ sy) >> 63) & 1;
+    
+    if (sign_mask) {
+        return (sx >> 63) & 1;
+    }
+    
+    int64_t diff = sx - sy;
+    int result = (diff >> 63) & 1;
+    
+    if ((sx >> 63) & 1) {
+        result = !result && (diff != 0);
+    }
+    
+    return result;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    uint64_t ux = x;
+    uint64_t uy = y;
+    
+    int neg_x = (ux >> 63) & 1;
+    int neg_y = (uy >> 63) & 1;
+    
+    if (neg_x != neg_y) {
+        return neg_x;
+    }
+    
+    if (neg_x) {
+        return ux > uy;
+    } else {
+        return ux < uy;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int same_sign = ~((sx ^ sy) >> 63) & 1;
+    int neg = (sx >> 63) & 1;
+    
+    int cmp_result;
+    if (same_sign) {
+        if (neg) {
+            cmp_result = (sy - sx) >> 63 & 1;
+        } else {
+            cmp_result = (sx - sy) >> 63 & 1;
+        }
+    } else {
+        cmp_result = neg;
+    }
+    
+    return cmp_result;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int x_neg = sx < 0;
+    int y_neg = sy < 0;
+    
+    if (x_neg == y_neg) {
+        return x_neg ? (sx > sy) : (sx < sy);
+    } else {
+        return x_neg;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int sign_diff = ((sx ^ sy) >> 63) & 1;
+    int both_pos = ~((sx | sy) >> 63) & 1;
+    int both_neg = ((sx & sy) >> 63) & 1;
+    
+    if (sign_diff) {
+        return (sx >> 63) & 1;
+    } else if (both_pos) {
+        return sx < sy;
+    } else {
+        return sx > sy;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int result;
+    
+    if (sx >= 0) {
+        if (sy >= 0) {
+            result = sx < sy;
+        } else {
+            result = 0;
+        }
+    } else {
+        if (sy >= 0) {
+            result = 1;
+        } else {
+            result = sx > sy;
+        }
+    }
+    
+    return result;
+}
+```

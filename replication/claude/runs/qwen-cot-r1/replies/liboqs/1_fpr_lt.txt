@@ -1,0 +1,149 @@
+```c
+static int fpr_lt_1(uint64_t x, uint64_t y) {
+    // Reference: compares two IEEE 754 double-precision bit patterns as signed values
+    // Uses sign bits to determine comparison direction and handles same/different signs
+    // For same signs: uses subtraction sign bit; for different signs: sign of x determines result
+    // Edge case x==y handled by XOR of both subtraction results masking only when both negative
+    int cc0, cc1;
+    int64_t sx;
+    int64_t sy;
+
+    sx = *(int64_t *)&x;
+    sy = *(int64_t *)&y;
+    sy &= ~((sx ^ sy) >> 63);
+
+    cc0 = (int)((sx - sy) >> 63) & 1;
+    cc1 = (int)((sy - sx) >> 63) & 1;
+
+    return cc0 ^ ((cc0 ^ cc1) & (int)((x & y) >> 63));
+}
+static int fpr_lt_2(uint64_t x, uint64_t y) {
+    // Extract sign bits and use conditional logic based on sign agreement
+    // If signs differ, result is simply sign of x (negative x is less)
+    // If signs same, compare magnitudes using signed subtraction without overflow
+    // When both negative, larger magnitude means smaller value, so reverse comparison
+    int sx_sign = (x >> 63) & 1;
+    int sy_sign = (y >> 63) & 1;
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+
+    if (sx_sign != sy_sign) {
+        return sx_sign;
+    }
+    if (sx_sign == 0) {
+        return sx < sy;
+    }
+    return sy < sx;
+}
+static int fpr_lt_3(uint64_t x, uint64_t y) {
+    // Use sign bit extraction and branchless conditional selection
+    // Compute both possible comparison results and select based on sign agreement
+    // For positive numbers: normal signed comparison; for negative: reversed comparison
+    // Sign difference case handled by selecting sign of x directly
+    int sx_sign = (x >> 63) & 1;
+    int sy_sign = (y >> 63) & 1;
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int signs_differ = sx_sign ^ sy_sign;
+    int pos_compare = (sx < sy);
+    int neg_compare = (sy < sx);
+
+    return signs_differ ? sx_sign : (sx_sign ? neg_compare : pos_compare);
+}
+static int fpr_lt_4(uint64_t x, uint64_t y) {
+    // Branchless implementation using arithmetic on sign bits
+    // Map negative numbers to positive comparison space by flipping sign bit
+    // After mapping, standard unsigned comparison works for all cases
+    // This works because IEEE 754 ordering matches signed integer ordering after sign flip
+    uint64_t mx = x ^ ((x >> 63) & 0x8000000000000000ULL);
+    uint64_t my = y ^ ((y >> 63) & 0x8000000000000000ULL);
+
+    return (int)(mx < my);
+}
+static int fpr_lt_5(uint64_t x, uint64_t y) {
+    // Alternative branchless approach using conditional move logic
+    // Determine if signs are same or different, then apply appropriate comparison
+    // Uses bitwise operations to avoid branches while maintaining correctness
+    // Handles edge cases through careful combination of sign and magnitude checks
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_sign = (x >> 63) & 1;
+    int sy_sign = (y >> 63) & 1;
+    int same_sign = !(sx_sign ^ sy_sign);
+    int result_if_same = same_sign ? (sx_sign ? (sy < sx) : (sx < sy)) : sx_sign;
+
+    return result_if_same;
+}
+static int fpr_lt_6(uint64_t x, uint64_t y) {
+    // Direct translation of IEEE 754 comparison rules to bitwise operations
+    // Negative zero and positive zero are equal, handled by magnitude comparison
+    // Infinity and NaN comparisons follow IEEE 754 total ordering convention
+    // Sign bit determines overall ordering direction for same-sign operands
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_neg = (int)(x >> 63);
+    int sy_neg = (int)(y >> 63);
+
+    if (sx_neg && !sy_neg) return 1;
+    if (!sx_neg && sy_neg) return 0;
+    if (sx_neg) return sy < sx;
+    return sx < sy;
+}
+static int fpr_lt_7(uint64_t x, uint64_t y) {
+    // Use arithmetic properties of two's complement representation
+    // When signs match, subtraction doesn't overflow and sign bit gives comparison
+    // When signs differ, the sign of x alone determines the result
+    // Combines both cases using bitwise selection without explicit branching
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sign_diff = (int)((x ^ y) >> 63);
+    int same_sign_result = (int)((sx - sy) >> 63) & 1;
+    int diff_sign_result = (int)(x >> 63);
+
+    return sign_diff ? diff_sign_result : same_sign_result;
+}
+static int fpr_lt_8(uint64_t x, uint64_t y) {
+    // Implement comparison by converting to a comparable integer representation
+    // For positive floats, bit pattern increases with value
+    // For negative floats, bit pattern decreases with value, so invert
+    // This creates a monotonic mapping from float bits to integer order
+    uint64_t ux = x;
+    uint64_t uy = y;
+    int x_neg = (ux >> 63) & 1;
+    int y_neg = (uy >> 63) & 1;
+    uint64_t cx = x_neg ? (~ux) : (ux ^ 0x8000000000000000ULL);
+    uint64_t cy = y_neg ? (~uy) : (uy ^ 0x8000000000000000ULL);
+
+    return (int)(cx < cy);
+}
+static int fpr_lt_9(uint64_t x, uint64_t y) {
+    // Use the property that IEEE 754 doubles can be compared as signed integers
+    // after adjusting for the sign bit's effect on ordering
+    // Positive values compare normally; negative values need reversed comparison
+    // Sign bit extraction and conditional logic handles all cases correctly
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int xs = (int)(x >> 63);
+    int ys = (int)(y >> 63);
+    int cmp = (int)(sx < sy);
+    int rev_cmp = (int)(sy < sx);
+
+    return xs ^ ys ? xs : (xs ? rev_cmp : cmp);
+}
+static int fpr_lt_10(uint64_t x, uint64_t y) {
+    // Final implementation using explicit case analysis for clarity
+    // Case 1: x negative, y positive -> x < y is true
+    // Case 2: x positive, y negative -> x < y is false  
+    // Case 3: both positive -> compare as signed integers
+    // Case 4: both negative -> compare reversed as signed integers
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int x_neg = (x >> 63) & 1;
+    int y_neg = (y >> 63) & 1;
+
+    if (x_neg && !y_neg) return 1;
+    if (!x_neg && y_neg) return 0;
+    if (x_neg) return (int)(sy < sx);
+    return (int)(sx < sy);
+}
+```

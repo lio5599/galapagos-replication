@@ -1,0 +1,9 @@
+static int int16_t_negative_mask_1(int16_t x)
+{
+  // Reference: returns -1 if x is negative, 0 otherwise.
+  // Uses arithmetic right shift of sign bit to get 0 or 1,
+  // then negates to get 0 or -1.
+  uint16_t u = x;
+  u >>= 15;
+  return -(int) u;
+}

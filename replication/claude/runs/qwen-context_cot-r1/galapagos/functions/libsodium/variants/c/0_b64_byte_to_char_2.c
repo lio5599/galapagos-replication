@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+// Branchless implementation using conditional selection.
+// Computes all four possible results and selects based on range.
+// Uses unsigned arithmetic to avoid undefined behavior.
+{
+    unsigned int r1 = x + 'A';
+    unsigned int r2 = x - 26 + 'a';
+    unsigned int r3 = x - 52 + '0';
+    unsigned int r4 = '+';
+    unsigned int r5 = '/';
+    unsigned int mask1 = (x < 26) ? 0xFFFFFFFF : 0;
+    unsigned int mask2 = (x >= 26 && x < 52) ? 0xFFFFFFFF : 0;
+    unsigned int mask3 = (x >= 52 && x < 62) ? 0xFFFFFFFF : 0;
+    unsigned int mask4 = (x == 62) ? 0xFFFFFFFF : 0;
+    unsigned int mask5 = (x == 63) ? 0xFFFFFFFF : 0;
+    return (r1 & mask1) | (r2 & mask2) | (r3 & mask3) | (r4 & mask4) | (r5 & mask5);
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Mathematical decomposition: determine segment and offset
+    // Segment 0: A-Z, Segment 1: a-z, Segment 2: 0-9, Segment 3: special
+    if (x > 63) return 0;
+    int segment = (x < 26) ? 0 : (x < 52) ? 1 : (x < 62) ? 2 : 3;
+    int offset = (segment == 0) ? x : (segment == 1) ? x - 26 : (segment == 2) ? x - 52 : 0;
+    int base = (segment == 0) ? 'A' : (segment == 1) ? 'a' : (segment == 2) ? '0' : (x == 62) ? '-' : '_';
+    return base + offset;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

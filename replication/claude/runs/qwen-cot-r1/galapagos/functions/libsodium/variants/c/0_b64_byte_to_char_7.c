@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+// Same logic as reference, factored into named masks for each range boundary
+// Range 0-25: mask is lt26, output is x+'A'
+// Range 26-51: mask is (~lt26 & lt52), output is x+'a'-26
+// Range 52-61: mask is (~lt52 & lt62), output is x+'0'-52
+// Value 62: mask is (~is62 & 0xFF) where is62 detects equality, output is '+'
+// Value 63: mask is (~is63 & 0xFF), output is '/'
+// Note: for equality, when x==N, (0U-(x^N))>>8 = 0, so ~0&0xFF = 0xFF, meaning the term is active
+{
+    unsigned int lt26 = ((x - 26) >> 8) & 0xFF;
+    unsigned int lt52 = ((x - 52) >> 8) & 0xFF;
+    unsigned int lt62 = ((x - 62) >> 8) & 0xFF;
+    unsigned int eq62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int eq63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (lt26 & (x + 'A')) | ((~lt26 & lt52) & (x + 'a' - 26)) | ((~lt52 & lt62) & (x + '0' - 52)) | ((~eq62 & 0xFF) & '+') | ((~eq63 & 0xFF) & '/');
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

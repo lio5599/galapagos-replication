@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Uses unsigned arithmetic consistently with explicit cast for clarity.
+    // The product z = a*b is computed in 64 bits to prevent overflow.
+    // The term w eliminates the lower 31 bits of z when added, using p0i as inverse.
+    // The high 31 bits of (z+w) give the candidate result, which may exceed p.
+    // A single conditional subtraction ensures the result lies in [0, p-1].
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    d = (uint32_t)((z + w) >> 31);
+    d = (d >= p) ? d - p : d;
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

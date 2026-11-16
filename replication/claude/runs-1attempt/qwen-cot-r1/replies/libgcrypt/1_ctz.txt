@@ -1,0 +1,139 @@
+```c
+static int ctz(uint64_t in)
+{
+ // Counts trailing zeros: number of consecutive zero bits from LSB.
+ // Reference scans bits LSB to MSB, accumulating result until first 1.
+ // r increments while m (seen any 1) is 0 and current bit b is 0.
+ // When first 1 is seen, m becomes 1, so r stops incrementing.
+ // If in==0, all bits are 0, so r=64. Otherwise r=position of first 1.
+ int i, b, m = 0, r = 0;
+ for (i = 0; i < 64; i++)
+ {
+  b = (in >> i) & 1;
+  m |= b;
+  r += (m^1) & (b^1);
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Direct loop: find first set bit position from LSB.
+ // Iterate bits 0..63, return index of first bit that is 1.
+ // If no bit is set (in==0), return 64 as per reference behavior.
+ int i;
+ for (i = 0; i < 64; i++)
+ {
+  if ((in >> i) & 1)
+   return i;
+ }
+ return 64;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use de Bruijn-like approach with built-in __builtin_ctzll.
+ // __builtin_ctzll returns trailing zeros, undefined for 0.
+ // Handle in==0 separately to return 64, matching reference.
+ if (in == 0)
+  return 64;
+ return __builtin_ctzll(in);
+}
+
+static int ctz(uint64_t in)
+{
+ // Binary search approach: check halves to narrow down first set bit.
+ // If lower 32 bits are nonzero, search there; else search upper 32 + 32.
+ // Recursively narrow until single bit found. Handle in==0 returning 64.
+ if (in == 0)
+  return 64;
+ int r = 0;
+ if ((in & 0xFFFFFFFFULL) == 0) { in >>= 32; r += 32; }
+ if ((in & 0xFFFFULL) == 0) { in >>= 16; r += 16; }
+ if ((in & 0xFFULL) == 0) { in >>= 8; r += 8; }
+ if ((in & 0xFULL) == 0) { in >>= 4; r += 4; }
+ if ((in & 3ULL) == 0) { in >>= 2; r += 2; }
+ if ((in & 1ULL) == 0) { r += 1; }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use ffsll which finds first set bit (1-indexed), then subtract 1.
+ // ffsll returns 0 if no bit set, so handle in==0 to return 64.
+ // For nonzero in, ffsll returns position 1..64, subtract 1 gives 0..63.
+ if (in == 0)
+  return 64;
+ return ffsll(in) - 1;
+}
+
+static int ctz(uint64_t in)
+{
+ // Accumulate count by checking each bit position sequentially.
+ // Same logic as reference but expressed more directly:
+ // while bit i is 0, increment counter. Stop at first 1 or end.
+ int r = 0;
+ while (r < 64 && ((in >> r) & 1) == 0)
+  r++;
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use bitwise trick: isolate lowest set bit with in & -in.
+ // Then use a lookup or log2 to find its position.
+ // Handle in==0 returning 64. For nonzero, lowbit = in & -in.
+ // Use __builtin_ctzll on lowbit which is a power of 2.
+ if (in == 0)
+  return 64;
+ uint64_t lowbit = in & (~in + 1);
+ return __builtin_ctzll(lowbit);
+}
+
+static int ctz(uint64_t in)
+{
+ // Shift right until LSB is 1, counting shifts.
+ // Each shift removes one trailing zero. Stop when LSB is 1.
+ // If in becomes 0 during shifting, all 64 bits were zero.
+ int r = 0;
+ while (r < 64 && (in & 1) == 0)
+ {
+  in >>= 1;
+  r++;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use __builtin_ffsll which returns 1-based index of first set bit.
+ // Returns 0 if no bit is set. Map 0 to 64, otherwise subtract 1.
+ int pos = __builtin_ffsll(in);
+ if (pos == 0)
+  return 64;
+ return pos - 1;
+}
+
+static int ctz(uint64_t in)
+{
+ // Parity-based approach using population count on masked values.
+ // For each bit position i, check if all bits 0..i-1 are zero.
+ // This is equivalent to checking if (in & ((1ULL << i) - 1)) == 0.
+ // Find smallest i where this fails, or 64 if never fails.
+ int r;
+ for (r = 0; r < 64; r++)
+ {
+  if ((in & ((1ULL << r) - 1)) == 0 && (in >> r) & 1)
+   break;
+  if ((in & ((1ULL << r) - 1)) != 0)
+   break;
+ }
+ // Simpler: just find first set bit
+ for (r = 0; r < 64; r++)
+ {
+  if ((in >> r) & 1)
+   return r;
+ }
+ return 64;
+}
+```

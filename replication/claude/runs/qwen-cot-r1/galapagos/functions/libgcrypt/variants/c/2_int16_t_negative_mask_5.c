@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask_6(int16_t x)
+{
+  // Use comparison: x < 0 is true (1) or false (0).
+  // Negate the boolean result to get -1 or 0.
+  int is_neg = x < 0;
+  return -is_neg;
+}
+
+
+int main(){
+    int16_t_negative_mask_6(0);
+}

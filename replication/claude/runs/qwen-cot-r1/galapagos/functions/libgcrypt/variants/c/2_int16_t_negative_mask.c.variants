@@ -1,0 +1,90 @@
+static int int16_t_negative_mask_1(int16_t x)
+{
+  // Reference: returns -1 if x is negative, 0 otherwise.
+  // Uses arithmetic right shift of sign bit to get 0 or 1,
+  // then negates to get 0 or -1.
+  uint16_t u = x;
+  u >>= 15;
+  return -(int) u;
+}
+
+static int int16_t_negative_mask_2(int16_t x)
+{
+  // Direct conditional: if x < 0 return -1, else 0.
+  // Equivalent because the mask is -1 for negative, 0 otherwise.
+  if (x < 0)
+    return -1;
+  return 0;
+}
+
+static int int16_t_negative_mask_3(int16_t x)
+{
+  // Use sign bit extraction via shift and negate.
+  // x >> 15 yields -1 if negative, 0 if non-negative in two's complement.
+  // Casting to int preserves this, so return x >> 15 directly.
+  return (int) (x >> 15);
+}
+
+static int int16_t_negative_mask_4(int16_t x)
+{
+  // Extract sign bit as 0 or 1, then subtract from 0.
+  // (x >> 15) & 1 gives 1 if negative, 0 otherwise.
+  // Negating gives -1 or 0 respectively.
+  int sign_bit = (x >> 15) & 1;
+  return -sign_bit;
+}
+
+static int int16_t_negative_mask_5(int16_t x)
+{
+  // Use unsigned conversion and shift to isolate sign bit.
+  // Convert to uint16_t, shift right 15 to get 0 or 1.
+  // Subtract 1 then negate: 0->-1->1? No.
+  // Better: if bit is 1, return -1; if 0, return 0.
+  uint16_t u = (uint16_t) x;
+  int bit = (u >> 15) & 1;
+  return -bit;
+}
+
+static int int16_t_negative_mask_6(int16_t x)
+{
+  // Use comparison: x < 0 is true (1) or false (0).
+  // Negate the boolean result to get -1 or 0.
+  int is_neg = x < 0;
+  return -is_neg;
+}
+
+static int int16_t_negative_mask_7(int16_t x)
+{
+  // Arithmetic right shift propagates sign bit.
+  // For int16_t, x >> 15 is -1 if x < 0, else 0.
+  // Cast to int to match return type.
+  int result = x >> 15;
+  return result;
+}
+
+static int int16_t_negative_mask_8(int16_t x)
+{
+  // Use bitwise NOT on zero-extended sign bit.
+  // Shift right 15 to get 0 or 1, then compute ~0 & mask.
+  // If bit is 1, ~0 is -1; if 0, result is 0.
+  uint16_t u = (uint16_t) x;
+  int bit = (u >> 15) & 1;
+  return -bit;
+}
+
+static int int16_t_negative_mask_9(int16_t x)
+{
+  // Use conditional operator for clarity.
+  // Returns -1 when x is negative, 0 otherwise.
+  // Directly maps the definition of the mask.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask_10(int16_t x)
+{
+  // Use sign extension via shift and mask.
+  // Shift right 15 to get all 1s or all 0s.
+  // Cast to int ensures proper sign extension behavior.
+  int shifted = (int) (x >> 15);
+  return shifted;
+}

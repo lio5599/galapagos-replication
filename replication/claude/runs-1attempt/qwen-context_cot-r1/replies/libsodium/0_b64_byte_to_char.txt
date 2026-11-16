@@ -1,0 +1,133 @@
+```c
+static int b64_byte_to_char(unsigned int x)
+// Reference computes base64 encoding character for input 0-63.
+// 0-25: 'A'+x, 26-51: 'a'+(x-26), 52-61: '0'+(x-52), 62: '+', 63: '/'
+// Uses arithmetic tricks to select correct offset based on range.
+{
+    if (x <= 25) return x + 'A';
+    if (x <= 51) return x - 26 + 'a';
+    if (x <= 61) return x - 52 + '0';
+    if (x == 62) return '+';
+    if (x == 63) return '/';
+    return 0;
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses switch statement for clear range-based selection.
+// Each case handles one of the five base64 character groups.
+// Equivalent because it maps same inputs to same outputs.
+{
+    switch (x) {
+        case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+        case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19:
+        case 20: case 21: case 22: case 23: case 24: case 25: return x + 'A';
+        case 26: case 27: case 28: case 29: case 30: case 31: case 32: case 33: case 34: case 35:
+        case 36: case 37: case 38: case 39: case 40: case 41: case 42: case 43: case 44: case 45:
+        case 46: case 47: case 48: case 49: case 50: case 51: return x - 26 + 'a';
+        case 52: case 53: case 54: case 55: case 56: case 57: case 58: case 59: case 60: case 61: return x - 52 + '0';
+        case 62: return '+';
+        case 63: return '/';
+        default: return 0;
+    }
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses lookup table for direct mapping of 0-63 to base64 chars.
+// Table contains all 64 base64 characters in order.
+// Safe for x in 0-63, returns 0 for out-of-range inputs.
+{
+    static const char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    if (x < 64) return (unsigned char)table[x];
+    return 0;
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Computes result using conditional expressions with clear logic.
+// First checks if x is in valid range, then selects appropriate offset.
+// Handles edge cases by returning 0 for invalid inputs.
+{
+    if (x > 63) return 0;
+    if (x < 26) return (int)(x + 'A');
+    if (x < 52) return (int)(x - 26 + 'a');
+    if (x < 62) return (int)(x - 52 + '0');
+    return (x == 62) ? '+' : '/';
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses arithmetic to compute offset and addend based on ranges.
+// Calculates which group x belongs to and applies correct transformation.
+// Returns 0 for inputs outside 0-63 range.
+{
+    if (x > 63) return 0;
+    int offset = 0;
+    int addend = 'A';
+    if (x >= 26) { offset = 26; addend = 'a'; }
+    if (x >= 52) { offset = 52; addend = '0'; }
+    if (x == 62) return '+';
+    if (x == 63) return '/';
+    return (int)(x - offset + addend);
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Implements logic using nested ternary operators for compactness.
+// Each level of nesting checks a range boundary.
+// Equivalent to reference by following same decision tree.
+{
+    return (x > 63) ? 0 :
+           (x < 26) ? (int)(x + 'A') :
+           (x < 52) ? (int)(x - 26 + 'a') :
+           (x < 62) ? (int)(x - 52 + '0') :
+           (x == 62) ? '+' : '/';
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses bit manipulation to determine range and compute result.
+// Checks upper bits to identify which of 5 groups x belongs to.
+// Handles special cases for 62 and 63 separately.
+{
+    if (x > 63) return 0;
+    unsigned int group = (x >> 5) & 1;
+    if (group == 0) return (int)(x + 'A');
+    if (x < 52) return (int)(x - 26 + 'a');
+    if (x < 62) return (int)(x - 52 + '0');
+    return (x == 62) ? '+' : '/';
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses array indexing with computed base address.
+// Calculates pointer to correct character in base64 string.
+// Validates input range before accessing array.
+{
+    static const char b64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    if (x < 64) return (unsigned char)b64[x];
+    return 0;
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Implements using if-else chain with explicit range checks.
+// Each condition handles one segment of the base64 alphabet.
+// Returns 0 for undefined inputs to match reference behavior.
+{
+    if (x >= 0 && x <= 25) return (int)(x + 'A');
+    if (x >= 26 && x <= 51) return (int)(x - 26 + 'a');
+    if (x >= 52 && x <= 61) return (int)(x - 52 + '0');
+    if (x == 62) return '+';
+    if (x == 63) return '/';
+    return 0;
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses mathematical formula to compute character code.
+// Applies different offsets based on which range x falls into.
+// Validates input and returns 0 for out-of-range values.
+{
+    if (x > 63) return 0;
+    int result;
+    if (x <= 25) result = x + 'A';
+    else if (x <= 51) result = x + ('a' - 26);
+    else if (x <= 61) result = x + ('0' - 52);
+    else if (x == 62) result = '+';
+    else result = '/';
+    return result;
+}
+```

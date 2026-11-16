@@ -1,0 +1,13 @@
+int ctz(uint64_t in)
+{
+ // Counts trailing zeros by finding position of least significant set bit
+ // If in==0, no bits set, so return 64. Otherwise find first 1 from LSB.
+ // Uses bit test and early exit when first 1 is found.
+ int i;
+ for (i = 0; i < 64; i++)
+ {
+  if ((in >> i) & 1)
+   return i;
+ }
+ return 64;
+}

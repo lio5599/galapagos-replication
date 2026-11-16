@@ -1,0 +1,12 @@
+int16_t barrett_reduce(int16_t a) {
+  // Alternative 2: Use right shift by 26 after adding bias for rounding.
+  // v = floor((2^26 + m/2)/m) is the Barrett multiplier for m=3329.
+  // The expression computes floor(a*v/2^26) as quotient estimate.
+  // Subtracting m times quotient yields a mod m for valid range.
+  int16_t t;
+  const int16_t v = ((1<<26) + 1664)/3329;
+
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}

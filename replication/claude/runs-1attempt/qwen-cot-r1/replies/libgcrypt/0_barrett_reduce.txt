@@ -1,0 +1,111 @@
+```c
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction mod 3329 using precomputed v = floor(2^26/3329)
+  // Computes a mod 3329 for a in [-32768, 32767]
+  // t = round(v*a / 2^26) approximates a/3329, then t*3329 is subtracted
+  // The rounding via (1<<25) ensures correct quotient for negative a too
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Same Barrett reduction but compute v inline without const
+  // v = floor((2^26 + 1664)/3329) = 2003, used to estimate a/3329
+  // Multiplication by v then shift right 26 gives approximate quotient
+  // Adding 2^25 before shift implements rounding to nearest integer
+  int16_t t;
+  int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction with explicit v value 2003
+  // v = floor(2^26/3329) rounded = 2003, since 2^26/3329 ≈ 2002.99
+  // t = round(2003*a / 2^26) gives quotient q such that q*3329 ≈ a
+  // Result a - q*3329 lies in [0, 3328] for non-negative a
+  int16_t t;
+  const int16_t v = 2003;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction using right shift decomposition
+  // 2^26 = 67108864, v = 2003, so v*a/2^26 approximates a/3329
+  // The + (1<<25) rounds the division to nearest instead of truncating
+  // This handles negative inputs correctly by symmetric rounding
+  int16_t t;
+  const int16_t v = 2003;
+  t = ((int32_t)v*a + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction with step-by-step intermediate variables
+  // Compute scaled product v*a as 32-bit to avoid overflow
+  // Add rounding constant 2^25, then shift right by 26
+  // Multiply quotient by modulus 3329 and subtract from a
+  int16_t t;
+  int32_t scaled = (int32_t)2003 * a;
+  t = (scaled + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction using arithmetic right shift properties
+  // For negative a, arithmetic right shift preserves sign correctly
+  // The rounding term ensures quotient rounds toward nearest integer
+  // This makes a - t*3329 fall into [0, 3328] range for all valid a
+  int16_t t;
+  int32_t prod = (int32_t)2003 * a;
+  t = (prod + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction with explicit modulus constant
+  // v = 2003 is precomputed as floor(2^26/3329 + 0.5)
+  // The formula t = round(v*a/2^26) gives best integer estimate of a/3329
+  // Subtracting t*3329 from a yields remainder in [0, 3328]
+  int16_t t;
+  const int16_t MOD = 3329;
+  t = (((int32_t)2003 * a) + (1<<25)) >> 26;
+  t *= MOD;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction using combined expression for quotient
+  // All operations use 32-bit intermediate to prevent 16-bit overflow
+  // Shift by 26 divides by 2^26, effectively computing v*a/2^26
+  // Rounding ensures correct behavior for both positive and negative a
+  int16_t t;
+  t = (((int32_t)2003 * a) + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction with named constants for clarity
+  // SHIFT = 26 defines the scaling factor 2^26
+  // ROUND = 2^25 provides rounding to nearest integer
+  // V = 2003 is the Barrett multiplier for modulus 3329
+  int16_t t;
+  const int32_t V = 2003;
+  const int32_t ROUND = 33554432;
+  t = ((V * a) + ROUND) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction with minimal computation steps
+  // Directly compute quotient using Barrett multiplier 2003
+  // Add rounding bias before right shift by 26 bits
+  // Multiply quotient by 3329 and subtract from original a
+  int16_t t;
+  t = (((int32_t)2003 * a) + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+```

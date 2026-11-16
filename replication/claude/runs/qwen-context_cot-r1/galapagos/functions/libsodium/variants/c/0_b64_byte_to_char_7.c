@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+// Branchless using arithmetic overflow detection similar to reference.
+// Uses signed comparison via shift to create masks.
+// Equivalent logic to reference but structured differently.
+{
+    unsigned int m1 = ((x - 26) >> 8) & 0xFF;
+    unsigned int m2 = ((x - 52) >> 8) & 0xFF;
+    unsigned int m3 = ((x - 62) >> 8) & 0xFF;
+    unsigned int eq62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int eq63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    unsigned int sel1 = m1 & 0xFF;
+    unsigned int sel2 = (~m1 & 0xFF) & m2;
+    unsigned int sel3 = (~m2 & 0xFF) & m3;
+    unsigned int sel4 = (~m3 & 0xFF) & eq62;
+    unsigned int sel5 = (~eq62 & 0xFF) & eq63;
+    int r1 = x + 'A';
+    int r2 = x - 26 + 'a';
+    int r3 = x - 52 + '0';
+    int r4 = '+';
+    int r5 = '/';
+    return (sel1 ? r1 : 0) | (sel2 ? r2 : 0) | (sel3 ? r3 : 0) | (sel4 ? r4 : 0) | (sel5 ? r5 : 0);
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

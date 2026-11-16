@@ -1,0 +1,16 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes each component separately for clarity.
+    // header=16, subframe_hdr=ch*((7+bps+7)/8), residual depends on stereo, crc=2.
+    // Summing them gives the total max frame size.
+    int header = 16;
+    int subframe_hdr = ch * ((7 + bps + 7) / 8);
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    int crc = 2;
+    return header + subframe_hdr + residual + crc;
+}

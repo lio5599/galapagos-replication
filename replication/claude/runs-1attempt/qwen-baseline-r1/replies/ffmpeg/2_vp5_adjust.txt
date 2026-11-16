@@ -1,0 +1,123 @@
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= (v < 2 * t);
+    v -= t;
+    int s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int abs_v = (v < 0) ? -v : v;
+    int sign = (v < 0) ? 1 : 0;
+    int clamped = (abs_v >= 2 * t) ? 0 : abs_v;
+    int diff = t - clamped;
+    int result = (sign) ? -diff : diff;
+    return result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int abs_v = (v >> 31) ^ v - (v >> 31);
+    int sign = v >> 31;
+    int clamped = abs_v & -(abs_v < 2 * t);
+    int diff = t - clamped;
+    int result = (sign) ? -diff : diff;
+    return result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = (v < 0) ? -1 : 1;
+    int abs_v = v * sign;
+    if (abs_v >= 2 * t)
+        abs_v = 0;
+    int diff = t - abs_v;
+    return diff * sign;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int abs_v = (v ^ s1) - s1;
+    int mask = -(abs_v < 2 * t);
+    int clamped = abs_v & mask;
+    int diff = t - clamped;
+    int result = (diff ^ s1) - s1;
+    return result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int abs_v = (v < 0) ? -v : v;
+    int clamped = (abs_v < 2 * t) ? abs_v : 0;
+    int diff = t - clamped;
+    return (v < 0) ? -diff : diff;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int abs_v = (v ^ sign) - sign;
+    int limit = 2 * t;
+    int clamped = (abs_v < limit) ? abs_v : 0;
+    int diff = t - clamped;
+    return (diff ^ sign) - sign;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int abs_v = (v >> 31) ^ (v - (v >> 31));
+    int sign = v >> 31;
+    int clamped = abs_v * (abs_v < 2 * t);
+    int diff = t - clamped;
+    return (diff ^ sign) - sign;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = (v < 0) ? 1 : 0;
+    int abs_v = sign ? -v : v;
+    int clamped = (abs_v < 2 * t) ? abs_v : 0;
+    int diff = t - clamped;
+    return sign ? -diff : diff;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int abs_v = (v ^ s1) - s1;
+    int cond = abs_v < 2 * t;
+    int clamped = abs_v & -cond;
+    int diff = t - clamped;
+    int result = (diff ^ s1) - s1;
+    return result;
+}
+```

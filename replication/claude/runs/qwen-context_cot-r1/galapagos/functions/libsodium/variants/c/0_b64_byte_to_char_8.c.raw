@@ -1,0 +1,17 @@
+static int b64_byte_to_char(unsigned int x)
+// Uses ternary operators for clear range-based selection.
+// Each condition checks a specific range of x.
+// Returns appropriate base64 character for each range.
+{
+    if (x < 26) {
+        return x + 'A';
+    } else if (x < 52) {
+        return x - 26 + 'a';
+    } else if (x < 62) {
+        return x - 52 + '0';
+    } else if (x == 62) {
+        return '+';
+    } else {
+        return '/';
+    }
+}

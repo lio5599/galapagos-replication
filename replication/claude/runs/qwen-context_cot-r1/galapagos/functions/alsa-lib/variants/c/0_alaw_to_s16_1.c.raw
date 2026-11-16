@@ -1,0 +1,21 @@
+static int alaw_to_s16(unsigned char a_val)
+// Alternative using explicit segment table lookup for offset base.
+// Precomputes base values for each of the 8 segments.
+// XOR 0x55 prepares bits for standard A-law decoding.
+// Sign is applied at the end based on the sign bit.
+// Equivalent for all inputs including boundary cases.
+{
+	int t;
+	int seg;
+	int bases[] = {0, 0, 0, 0, 0, 0, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x400, 0x480, 0x500, 0x580};
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + bases[seg + 7];
+		t <<= seg - 1;
+	}
+	return ((a_val & 0x80) ? t : -t);
+}

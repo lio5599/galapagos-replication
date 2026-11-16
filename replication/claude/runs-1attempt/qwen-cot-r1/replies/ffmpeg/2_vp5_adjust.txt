@@ -1,0 +1,121 @@
+```c
+static int vp5_adjust_1(int v, int t)
+{
+    // Clamp v to [0, 2*t), then map to [0, t] via t - v, handling negative v by symmetry.
+    // The reference computes: if v < 0, result = t + v (clamped to >=0); if v >= 2*t, result = 0; else result = t - v.
+    // This is equivalent to clamping v to [0, 2*t) and computing t - v, but with special handling for negative inputs.
+    int s1 = v >> 31;
+    int av = (v ^ s1) - s1;
+    int clamped = av * (av < 2 * t);
+    int result = t - clamped;
+    result += s1;
+    result ^= s1;
+    return result;
+}
+
+static int vp5_adjust_2(int v, int t)
+{
+    // Direct conditional logic: handle negative, too large, and normal cases.
+    // If v < 0, return t + v (which is t - |v|). If v >= 2*t, return 0. Otherwise return t - v.
+    if (v < 0) {
+        return t + v;
+    } else if (v >= 2 * t) {
+        return 0;
+    } else {
+        return t - v;
+    }
+}
+
+static int vp5_adjust_3(int v, int t)
+{
+    // Use absolute value and min/max operations for clarity.
+    // Compute |v|, clamp to [0, 2*t), then result = t - clamped, adjusted for sign of original v.
+    int av = v < 0 ? -v : v;
+    int clamped = av < 2 * t ? av : 2 * t - 1;
+    int base = t - clamped;
+    if (v < 0) {
+        return t + v;
+    } else {
+        return base;
+    }
+}
+
+static int vp5_adjust_4(int v, int t)
+{
+    // Bitwise approach similar to reference but with explicit sign handling.
+    // s1 extracts sign bit. Convert v to absolute value, clamp, compute t - v, then restore sign logic.
+    int s1 = v >> 31;
+    int av = (v ^ s1) - s1;
+    int mask = -(av < 2 * t);
+    int clamped = av & mask;
+    int diff = t - clamped;
+    int result = diff + s1;
+    result ^= s1;
+    return result;
+}
+
+static int vp5_adjust_5(int v, int int t)
+{
+    // Ternary operator chain for direct mapping.
+    // Three cases: v < 0 maps to t + v, v >= 2*t maps to 0, else t - v.
+    return v < 0 ? t + v : (v >= 2 * t ? 0 : t - v);
+}
+
+static int vp5_adjust_6(int v, int t)
+{
+    // Use conditional moves with explicit comparisons.
+    // Compute three candidate results and select based on conditions.
+    int neg_result = t + v;
+    int normal_result = t - v;
+    int large_result = 0;
+    int is_neg = v < 0;
+    int is_large = v >= 2 * t;
+    int result = is_neg ? neg_result : (is_large ? large_result : normal_result);
+    return result;
+}
+
+static int vp5_adjust_7(int v, int t)
+{
+    // Arithmetic clamping using min/max idioms.
+    // Clamp v to [0, 2*t-1] for non-negative v, then compute t - v. For negative v, use t + v.
+    if (v < 0) {
+        return t + v;
+    }
+    int clamped = v < 2 * t ? v : 2 * t - 1;
+    return t - clamped;
+}
+
+static int vp5_adjust_8(int v, int t)
+{
+    // Single expression using nested ternary operators.
+    // Equivalent to the three-case logic: negative, too large, normal.
+    return v < 0 ? t + v : (v >= 2 * t ? 0 : t - v);
+}
+
+static int vp5_adjust_9(int v, int t)
+{
+    // Use logical AND/OR for condition selection without branching.
+    // Compute all three results and mask them with condition flags.
+    int neg = v < 0;
+    int large = v >= 2 * t;
+    int normal = !neg && !large;
+    int r1 = t + v;
+    int r2 = 0;
+    int r3 = t - v;
+    return neg * r1 + large * r2 + normal * r3;
+}
+
+static int vp5_adjust_10(int v, int t)
+{
+    // Hybrid approach: use absolute value and sign restoration.
+    // Compute absolute value, clamp to valid range, compute base result, adjust for original sign.
+    int sign = v >> 31;
+    int av = (v ^ sign) - sign;
+    int clamped = av < 2 * t ? av : 2 * t - 1;
+    int base = t - clamped;
+    if (sign) {
+        return t + v;
+    }
+    return base;
+}
+```

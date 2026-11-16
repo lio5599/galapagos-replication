@@ -1,0 +1,17 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses arithmetic masking similar to reference.
+// Computes offset based on range detection.
+// Adds appropriate base character ('A', 'a', '0').
+// Handles special chars '-' and '_' separately.
+{
+    unsigned int is_upper = (x <= 25) ? 0xFF : 0;
+    unsigned int is_lower = (x >= 26 && x <= 51) ? 0xFF : 0;
+    unsigned int is_digit = (x >= 52 && x <= 61) ? 0xFF : 0;
+    unsigned int is_dash = (x == 62) ? 0xFF : 0;
+    unsigned int is_under = (x == 63) ? 0xFF : 0;
+    return (is_upper & ('A' + x)) |
+           (is_lower & ('a' + x - 26)) |
+           (is_digit & ('0' + x - 52)) |
+           (is_dash & '-') |
+           (is_under & '_');
+}

@@ -1,0 +1,214 @@
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int result = 0;
+    if (c >= 'A' && c <= 'Z') {
+        result = c - 'A';
+    } else if (c >= 'a' && c <= 'z') {
+        result = c - 'a' + 26;
+    } else if (c >= '0' && c <= '9') {
+        result = c - '0' + 52;
+    } else if (c == '+') {
+        result = 62;
+    } else if (c == '/') {
+        result = 63;
+    }
+    return result;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int x = 0;
+    int is_upper = (c >= 'A' && c <= 'Z');
+    int is_lower = (c >= 'a' && c <= 'z');
+    int is_digit = (c >= '0' && c <= '9');
+    
+    if (is_upper) {
+        x = (unsigned int)(c - 'A');
+    } else if (is_lower) {
+        x = (unsigned int)(c - 'a' + 26);
+    } else if (is_digit) {
+        x = (unsigned int)(c - '0' + 52);
+    } else if (c == '+') {
+        x = 62;
+    } else if (c == '/') {
+        x = 63;
+    }
+    
+    return x;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int result = 0;
+    
+    if (c >= 'A' && c <= 'Z') {
+        result = (unsigned int)c - (unsigned int)'A';
+    } else if (c >= 'a' && c <= 'z') {
+        result = (unsigned int)c - (unsigned int)'a' + 26;
+    } else if (c >= '0' && c <= '9') {
+        result = (unsigned int)c - (unsigned int)'0' + 52;
+    } else if (c == '+') {
+        result = 62;
+    } else if (c == '/') {
+        result = 63;
+    }
+    
+    return result;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int val = 0;
+    
+    if (c >= 'A' && c <= 'Z') {
+        val = (unsigned int)(c - 65);
+    } else if (c >= 'a' && c <= 'z') {
+        val = (unsigned int)(c - 97 + 26);
+    } else if (c >= '0' && c <= '9') {
+        val = (unsigned int)(c - 48 + 52);
+    } else if (c == 43) {
+        val = 62;
+    } else if (c == 47) {
+        val = 63;
+    }
+    
+    return val;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int out = 0;
+    
+    if (c >= 65 && c <= 90) {
+        out = (unsigned int)(c - 65);
+    } else if (c >= 97 && c <= 122) {
+        out = (unsigned int)(c - 97 + 26);
+    } else if (c >= 48 && c <= 57) {
+        out = (unsigned int)(c - 48 + 52);
+    } else if (c == 43) {
+        out = 62;
+    } else if (c == 47) {
+        out = 63;
+    }
+    
+    return out;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int result = 0;
+    
+    if (c >= 'A' && c <= 'Z') {
+        result = (unsigned int)c - 65U;
+    } else if (c >= 'a' && c <= 'z') {
+        result = (unsigned int)c - 97U + 26U;
+    } else if (c >= '0' && c <= '9') {
+        result = (unsigned int)c - 48U + 52U;
+    } else if (c == '+') {
+        result = 62U;
+    } else if (c == '/') {
+        result = 63U;
+    }
+    
+    return result;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int x = 0;
+    
+    if (c >= 'A' && c <= 'Z') {
+        x = (unsigned int)(c - 'A');
+    }
+    if (c >= 'a' && c <= 'z') {
+        x = (unsigned int)(c - 'a' + 26);
+    }
+    if (c >= '0' && c <= '9') {
+        x = (unsigned int)(c - '0' + 52);
+    }
+    if (c == '+') {
+        x = 62;
+    }
+    if (c == '/') {
+        x = 63;
+    }
+    
+    return x;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int result = 0;
+    
+    if (c >= 'A' && c <= 'Z') {
+        result = (unsigned int)c - (unsigned int)'A';
+    } else if (c >= 'a' && c <= 'z') {
+        result = (unsigned int)c - (unsigned int)'a' + (unsigned int)26;
+    } else if (c >= '0' && c <= '9') {
+        result = (unsigned int)c - (unsigned int)'0' + (unsigned int)52;
+    } else if (c == '+') {
+        result = (unsigned int)62;
+    } else if (c == '/') {
+        result = (unsigned int)63;
+    }
+    
+    return result;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int val = 0;
+    
+    if (c >= 'A' && c <= 'Z') {
+        val = (unsigned int)(c - 'A');
+    } else if (c >= 'a' && c <= 'z') {
+        val = (unsigned int)(c - 'a') + 26;
+    } else if (c >= '0' && c <= '9') {
+        val = (unsigned int)(c - '0') + 52;
+    } else if (c == '+') {
+        val = 62;
+    } else if (c == '/') {
+        val = 63;
+    }
+    
+    return val;
+}
+```
+
+```c
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int out = 0;
+    
+    if (c >= 'A' && c <= 'Z') {
+        out = (unsigned int)c - (unsigned int)'A';
+    } else if (c >= 'a' && c <= 'z') {
+        out = (unsigned int)c - (unsigned int)'a' + 26;
+    } else if (c >= '0' && c <= '9') {
+        out = (unsigned int)c - (unsigned int)'0' + 52;
+    } else if (c == '+') {
+        out = 62;
+    } else if (c == '/') {
+        out = 63;
+    }
+    
+    return out;
+}
+```

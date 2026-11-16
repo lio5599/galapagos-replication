@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Simplified adjustment: negate sign bit and flip magnitude for negatives.
+    // This maps float order to unsigned integer order.
+    // Sign difference handled by sign bit comparison.
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    uint64_t ax = (x ^ 0x8000000000000000ULL) ^ ((uint64_t)sx << 63) ^ ((uint64_t)(-sx) & 0x7FFFFFFFFFFFFFFFULL);
+    uint64_t ay = (y ^ 0x8000000000000000ULL) ^ ((uint64_t)sy << 63) ^ ((uint64_t)(-sy) & 0x7FFFFFFFFFFFFFFFULL);
+    if (sx != sy) return sx;
+    return (ax < ay) ? 1 : 0;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

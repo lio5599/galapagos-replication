@@ -1,0 +1,26 @@
+Table 4 counts (C-to-C), archived run 'qwen-context-r1'
+
+Project    Function                   Comp.Isol Comp.Proj  Test Verif
+alsa-lib   alaw_to_s16                       10        10    10    10
+alsa-lib   iec958_parity                     10        10    10    10
+alsa-lib   add                               10        10    10     8
+ffmpeg     flac_get_max_frame_size           10        10    10     9
+ffmpeg     mix                               10        10    10     8
+ffmpeg     vp5_adjust                        10        10    10     1
+libgcrypt  barrett_reduce                    10        10     9     9
+libgcrypt  ctz                               10        10    10     9
+libgcrypt  int16_t_negative_mask             10         0     0     0
+liboqs     fpr_half                          10        10    10    10
+liboqs     fpr_lt                            10        10    10     3
+liboqs     modp_montymul                     10        10    10    10
+libsodium  b64_byte_to_char                  10        10     8     0
+libsodium  b64_byte_to_urlsafe_char          10         9     8     0
+libsodium  b64_char_to_byte                  10        10     0     0
+openssl    icbrt64                           10        10    10    10
+openssl    BitDeinterleave                    1         1     1     1
+openssl    BitInterleave                      0         0     0     0
+
+Total                                       161       150   136    98   (out of 180 variants, 18 functions)
+%                                          89.4      83.3  75.6  54.4
+
+Per-function counts written to runs/qwen-context-r1/table4.csv

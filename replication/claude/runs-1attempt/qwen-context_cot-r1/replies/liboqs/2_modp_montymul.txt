@@ -1,0 +1,165 @@
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Reference: Montgomery multiplication mod p. Computes (a*b mod p) using
+    // Montgomery reduction. z = a*b, w = ((z*p0i)&mask)*p, result = ((z+w)>>31) - p
+    // with conditional addition of p to keep result in [0, p-1].
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 1: Same logic but compute intermediate as uint64_t then mask.
+    // z = a*b, low31 = (z*p0i)&0x7FFFFFFF, w = low31*p, d = ((z+w)>>31)-p,
+    // add p if d<0 using arithmetic right shift trick.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    uint64_t low31 = (z * p0i) & 0x7FFFFFFFULL;
+    w = low31 * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 2: Compute t = (z+w)>>31 as uint64_t first, then subtract p.
+    // This avoids potential issues with casting intermediate. The conditional
+    // add uses the same sign-extension trick for branchless min/max.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    uint64_t t = (z + w) >> 31;
+    d = (uint32_t)t - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 3: Use explicit conditional for adding p instead of bitwise trick.
+    // After computing d = ((z+w)>>31) - p, if d < 0 (i.e., d > 0x7FFFFFFF as unsigned),
+    // add p. The original uses p & -(d>>31) which equals p when d<0 and 0 otherwise.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    if ((int32_t)d < 0) {
+        d += p;
+    }
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 4: Compute the Montgomery factor m = (z * p0i) & 0x7FFFFFFF explicitly.
+    // Then w = m * p. Result is ((z + w) >> 31) mod p, implemented via subtraction
+    // and conditional addition. Equivalent to reference by algebraic identity.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    uint32_t m = (uint32_t)((z * p0i) & 0x7FFFFFFFULL);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 5: Split the computation of w into two steps for clarity.
+    // First compute masked product, then multiply by p. The final result
+    // uses the same branchless conditional add as the reference.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    uint64_t masked = (z * p0i) & 0x7FFFFFFFULL;
+    w = masked * (uint64_t)p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 6: Use a temporary uint64_t for the final subtraction result.
+    // Compute t = (z+w)>>31, then d = t - p as uint64_t, cast to uint32_t.
+    // The conditional add works the same way since we only care about low 32 bits.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    uint64_t t = (z + w) >> 31;
+    uint64_t d64 = t - (uint64_t)p;
+    d = (uint32_t)d64;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 7: Reorder operations slightly. Compute z+w first, then shift.
+    // This is algebraically identical since (z+w)>>31 = ((z+w)>>31).
+    // The conditional addition of p ensures the result is in [0, p-1].
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    uint64_t sum = z + w;
+    d = (uint32_t)(sum >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 8: Use unsigned comparison for the conditional add.
+    // If d > 0x7FFFFFFF (i.e., the high bit is set), then d is negative as signed,
+    // so we add p. This is equivalent to the bitwise trick p & -(d>>31).
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    if (d > 0x7FFFFFFFU) {
+        d += p;
+    }
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 9: Compute the mask explicitly as a variable for clarity.
+    // The Montgomery reduction formula: result = ((a*b + m*p) / 2^31) mod p
+    // where m = (a*b * p0i) mod 2^31. Here we use & 0x7FFFFFFF for mod 2^31.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    uint64_t mask = 0x7FFFFFFFULL;
+    w = ((z * p0i) & mask) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Variant 10: Inline the conditional using ternary operator for clarity.
+    // After computing d = ((z+w)>>31) - p, if d is negative (as signed 32-bit),
+    // add p. The ternary is equivalent to the branchless bitwise version.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d = ((int32_t)d < 0) ? d + p : d;
+    return d;
+}

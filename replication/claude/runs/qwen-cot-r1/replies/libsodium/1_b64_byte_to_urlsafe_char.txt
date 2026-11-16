@@ -1,0 +1,145 @@
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Reference computes URL-safe Base64 char for index 0-63.
+// 0-25 -> 'A'-'Z', 26-51 -> 'a'-'z', 52-61 -> '0'-'9'.
+// 62 -> '-', 63 -> '_'. Uses branchless arithmetic with overflow checks.
+{
+    return (((((unsigned int) (x) - (unsigned int) (26)) >> 8) & 0xFF) & (x + 'A')) |
+           ((((((unsigned int) (x) - (unsigned int) (26)) >> 8) & 0xFF) ^ 0xFF) & ((((unsigned int) (x) - (unsigned int) (52)) >> 8) & 0xFF) & (x + ('a' - 26))) |
+           ((((((unsigned int) (x) - (unsigned int) (52)) >> 8) & 0xFF) ^ 0xFF) & ((((unsigned int) (x) - (unsigned int) (62)) >> 8) & 0xFF) & (x + ('0' - 52))) | (((((0U - ((unsigned int) (x) ^ (unsigned int) (62))) >> 8) & 0xFF) ^ 0xFF) & '-') |
+           (((((0U - ((unsigned int) (x) ^ (unsigned int) (63))) >> 8) & 0xFF) ^ 0xFF) & '_');
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Direct conditional logic for clarity.
+// Checks ranges explicitly: 0-25, 26-51, 52-61, 62, 63.
+// Returns corresponding URL-safe Base64 character.
+// Equivalent to reference but uses standard control flow.
+{
+    if (x <= 25) return 'A' + x;
+    if (x <= 51) return 'a' + (x - 26);
+    if (x <= 61) return '0' + (x - 52);
+    if (x == 62) return '-';
+    return '_';
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses lookup table for direct mapping.
+// Array indexed by x contains precomputed chars.
+// Simple, fast, and obviously correct for valid inputs.
+// Assumes x is in range 0-63 as per Base64 spec.
+{
+    static const char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    return table[x];
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Branchless approach using ternary operators.
+// Chains conditions to select correct character.
+// Maintains equivalence by covering all 64 cases.
+// Slightly more verbose than lookup but no array.
+{
+    return (x <= 25) ? ('A' + x) :
+           (x <= 51) ? ('a' + (x - 26)) :
+           (x <= 61) ? ('0' + (x - 52)) :
+           (x == 62) ? '-' : '_';
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses arithmetic masking similar to reference.
+// Computes offset based on range detection.
+// Adds appropriate base character ('A', 'a', '0').
+// Handles special chars '-' and '_' separately.
+{
+    unsigned int is_upper = (x <= 25) ? 0xFF : 0;
+    unsigned int is_lower = (x >= 26 && x <= 51) ? 0xFF : 0;
+    unsigned int is_digit = (x >= 52 && x <= 61) ? 0xFF : 0;
+    unsigned int is_dash = (x == 62) ? 0xFF : 0;
+    unsigned int is_under = (x == 63) ? 0xFF : 0;
+    return (is_upper & ('A' + x)) |
+           (is_lower & ('a' + x - 26)) |
+           (is_digit & ('0' + x - 52)) |
+           (is_dash & '-') |
+           (is_under & '_');
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Simplified branchless using subtraction overflow.
+// Similar to reference but with clearer variable names.
+// Uses unsigned overflow to detect range boundaries.
+// Combines results with bitwise OR.
+{
+    unsigned int mask_upper = (~((x - 26) >> 8)) & 0xFF;
+    unsigned int mask_lower = (~((x - 52) >> 8)) & 0xFF;
+    unsigned int mask_digit = (~((x - 62) >> 8)) & 0xFF;
+    unsigned int mask_dash = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int mask_under = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (mask_upper & (x + 'A')) |
+           ((~mask_upper & mask_lower) & (x + 'a' - 26)) |
+           ((~mask_lower & mask_digit) & (x + '0' - 52)) |
+           ((~mask_digit & mask_dash) & '-') |
+           ((~mask_dash & mask_under) & '_');
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses switch statement for explicit case handling.
+// Each case returns the correct character.
+// Compiler may optimize to jump table.
+// Clearly maps each input to output.
+{
+    switch (x) {
+        case 0: return 'A'; case 1: return 'B'; case 2: return 'C';
+        case 3: return 'D'; case 4: return 'E'; case 5: return 'F';
+        case 6: return 'G'; case 7: return 'H'; case 8: return 'I';
+        case 9: return 'J'; case 10: return 'K'; case 11: return 'L';
+        case 12: return 'M'; case 13: return 'N'; case 14: return 'O';
+        case 15: return 'P'; case 16: return 'Q'; case 17: return 'R';
+        case 18: return 'S'; case 19: return 'T'; case 20: return 'U';
+        case 21: return 'V'; case 22: return 'W'; case 23: return 'X';
+        case 24: return 'Y'; case 25: return 'Z';
+        case 26: return 'a'; case 27: return 'b'; case 28: return 'c';
+        case 29: return 'd'; case 30: return 'e'; case 31: return 'f';
+        case 32: return 'g'; case 33: return 'h'; case 34: return 'i';
+        case 35: return 'j'; case 36: return 'k'; case 37: return 'l';
+        case 38: return 'm'; case 39: return 'n'; case 40: return 'o';
+        case 41: return 'p'; case 42: return 'q'; case 43: return 'r';
+        case 44: return 's'; case 45: return 't'; case 46: return 'u';
+        case 47: return 'v'; case 48: return 'w'; case 49: return 'x';
+        case 50: return 'y'; case 51: return 'z';
+        case 52: return '0'; case 53: return '1'; case 54: return '2';
+        case 55: return '3'; case 56: return '4'; case 57: return '5';
+        case 58: return '6'; case 59: return '7'; case 60: return '8';
+        case 61: return '9';
+        case 62: return '-';
+        case 63: return '_';
+        default: return 0;
+    }
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses bit manipulation to compute range flags.
+// Calculates which range x falls into.
+// Selects character using weighted sum.
+// Equivalent to reference arithmetic approach.
+{
+    int r = 0;
+    if (x < 26) r = 'A' + x;
+    else if (x < 52) r = 'a' + (x - 26);
+    else if (x < 62) r = '0' + (x - 52);
+    else if (x == 62) r = '-';
+    else r = '_';
+    return r;
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Compact lookup using string literal.
+// Indexes directly into constant string.
+// Simple and efficient for valid inputs.
+// Relies on C string indexing.
+{
+    return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"[x];
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses arithmetic to compute base and offset.
+// Determines character class via division-like logic.
+// Adds appropriate ASCII base value.
+// Handles special cases for '-' and '_'.
+{
+    if (x < 26) return 'A' + x;
+    if (x < 52) return 'a' + x - 26;
+    if (x < 62) return '0' + x - 52;
+    return (x == 62) ? '-' : '_';
+}
+```

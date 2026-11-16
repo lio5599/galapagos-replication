@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Inline conditional expressions for each character class.
+    // Returns appropriate value if char matches, else 0.
+    // Combines results with OR, masks with validity.
+    // Equivalent by same logical decomposition.
+    unsigned int uc = (unsigned int)c;
+    unsigned int v = 0;
+    if (uc >= 'A' && uc <= 'Z') v = uc - 'A';
+    else if (uc >= 'a' && uc <= 'z') v = uc - 'a' + 26;
+    else if (uc >= '0' && uc <= '9') v = uc - '0' + 52;
+    else if (uc == '+') v = 62;
+    else if (uc == '/') v = 63;
+    else v = 0;
+    return v;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

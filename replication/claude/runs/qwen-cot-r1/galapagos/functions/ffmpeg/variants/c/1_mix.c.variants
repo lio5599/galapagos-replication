@@ -1,0 +1,110 @@
+
+static int mix(int c0, int c1)
+{
+    // Reference computes weighted average of 5-6-5 RGB components.
+    // Blue: 5 bits, Green: 6 bits, Red: 5 bits.
+    // Each channel is computed as (2*c0 + c1)/3 using integer division.
+    // Results are reassembled into 16-bit 5-6-5 format.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+static int mix(int c0, int c1)
+{
+    // Extract each 5-6-5 component separately.
+    // Compute weighted sum (2*c0 + c1) for each channel.
+    // Divide by 3 using integer division for averaging.
+    // Reconstruct 16-bit color by shifting and adding.
+    int b0 = c0 & 0x1F, b1 = c1 & 0x1F;
+    int g0 = (c0 >> 5) & 0x3F, g1 = (c1 >> 5) & 0x3F;
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    return ((2*r0+r1)/3) << 10 | ((2*g0+g1)/3) << 5 | ((2*b0+b1)/3);
+}
+static int mix(int c0, int c1)
+{
+    // Use bitwise extraction for cleaner channel access.
+    // Weight c0 twice as much as c1 in each channel.
+    // Integer division by 3 performs floor averaging.
+    // Shift results back to their bit positions in 5-6-5 format.
+    int red = (2*(c0>>10) + (c1>>10)) / 3;
+    int green = (2*((c0>>5)&0x3F) + ((c1>>5)&0x3F)) / 3;
+    int blue = (2*(c0&0x1F) + (c1&0x1F)) / 3;
+    return (red << 10) + (green << 5) + blue;
+}
+static int mix(int c0, int c1)
+{
+    // Compute average as (c0 + c0 + c1) / 3 per channel.
+    // Extract components using masks and shifts.
+    // Integer division truncates toward zero for positive values.
+    // Reassemble using left shifts to position bits correctly.
+    int r = (2*(c0>>10) + c1>>10) / 3;
+    int g = (2*((c0&0x03E0)>>5) + ((c1&0x03E0)>>5)) / 3;
+    int b = (2*(c0&0x001F) + (c1&0x001F)) / 3;
+    return r*1024 + g*32 + b;
+}
+static int mix(int c0, int c1)
+{
+    // Process each color channel independently.
+    // Apply weights 2 and 1 to c0 and c1 respectively.
+    // Divide sum by 3 for weighted average with truncation.
+    // Combine channels into final 16-bit 5-6-5 color value.
+    int cr0 = c0 >> 10, cr1 = c1 >> 10;
+    int cg0 = (c0 >> 5) & 63, cg1 = (c1 >> 5) & 63;
+    int cb0 = c0 & 31, cb1 = c1 & 31;
+    return ((2*cr0+cr1)/3)*1024 + ((2*cg0+cg1)/3)*32 + ((2*cb0+cb1)/3);
+}
+static int mix(int c0, int c1)
+{
+    // Use arithmetic shifts and masks to isolate channels.
+    // Weighted average favors c0 with ratio 2:1.
+    // Division by 3 uses integer arithmetic with truncation.
+    // Final assembly multiplies by powers of two for positioning.
+    int red_sum = 2*(c0>>10) + (c1>>10);
+    int green_sum = 2*((c0>>5)&0x3F) + ((c1>>5)&0x3F);
+    int blue_sum = 2*(c0&0x1F) + (c1&0x1F);
+    return (red_sum/3)<<10 | (green_sum/3)<<5 | (blue_sum/3);
+}
+static int mix(int c0, int c1)
+{
+    // Decompose input colors into 5-6-5 components.
+    // Compute 2*c0 + c1 for each channel separately.
+    // Integer divide by 3 to get averaged component values.
+    // Reconstruct output by shifting components to proper positions.
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int g0 = (c0 & 0x07E0) >> 5, g1 = (c1 & 0x07E0) >> 5;
+    int b0 = c0 & 0x001F, b1 = c1 & 0x001F;
+    return ((2*r0+r1)/3)<<10 + ((2*g0+g1)/3)<<5 + ((2*b0+b1)/3);
+}
+static int mix(int c0, int c1)
+{
+    // Extract red, green, blue from 5-6-5 format inputs.
+    // Weight c0 double compared to c1 in averaging.
+    // Use integer division which truncates fractional parts.
+    // Pack results back into 5-6-5 format with shifts.
+    int red = (2*(c0>>10) + (c1>>10)) / 3;
+    int green = (2*((c0>>5)&0x3F) + ((c1>>5)&0x3F)) / 3;
+    int blue = (2*(c0&0x1F) + (c1&0x1F)) / 3;
+    return (red << 10) | (green << 5) | blue;
+}
+static int mix(int c0, int c1)
+{
+    // Calculate weighted average per channel with c0 weight 2.
+    // Isolate channels using bit masks and right shifts.
+    // Integer division by 3 provides floor of true average.
+    // Combine channels using bitwise OR after shifting.
+    int r = (2*(c0>>10) + c1>>10) / 3;
+    int g = (2*((c0&0x03E0)>>5) + ((c1&0x03E0)>>5)) / 3;
+    int b = (2*(c0&0x001F) + (c1&0x001F)) / 3;
+    return (r << 10) | (g << 5) | b;
+}
+static int mix(int c0, int c1)
+{
+    // Parse 5-6-5 color fields from both inputs.
+    // Apply 2:1 weighting ratio favoring first input.
+    // Truncate average via integer division by three.
+    // Assemble final color by positioning each 5/6-bit field.
+    int c0r = c0 >> 10, c0g = (c0 >> 5) & 0x3F, c0b = c0 & 0x1F;
+    int c1r = c1 >> 10, c1g = (c1 >> 5) & 0x3F, c1b = c1 & 0x1F;
+    return ((2*c0r+c1r)/3)<<10 | ((2*c0g+c1g)/3)<<5 | ((2*c0b+c1b)/3);
+}

@@ -1,0 +1,16 @@
+static int b64_byte_to_char(unsigned int x)
+// Simplified variable names for the same arithmetic masking approach
+// mask_lt_26 is 0xFF when x<26, else 0
+// mask_lt_52 is 0xFF when x<52, else 0
+// mask_lt_62 is 0xFF when x<62, else 0
+// eq_62 is 0xFF when x==62, else 0
+// eq_63 is 0xFF when x==63, else 0
+// Each range selects its corresponding character offset
+{
+    unsigned int lt26 = ((x - 26) >> 8) & 0xFF;
+    unsigned int lt52 = ((x - 52) >> 8) & 0xFF;
+    unsigned int lt62 = ((x - 62) >> 8) & 0xFF;
+    unsigned int is62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int is63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (lt26 & (x + 'A')) | ((~lt26 & lt52) & (x + 'a' - 26)) | ((~lt52 & lt62) & (x + '0' - 52)) | ((~is62 & 0xFF) & '+') | ((~is63 & 0xFF) & '/');
+}

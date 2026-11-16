@@ -1,0 +1,109 @@
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  int32_t temp = (int32_t)v * a;
+  temp += (1<<25);
+  t = temp >> 26;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = (int16_t)(((int32_t)v*a + (1<<25)) >> 26);
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  int32_t prod = (int32_t)v * a;
+  int32_t shifted = (prod + (1<<25)) >> 26;
+  t = (int16_t)shifted;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = (int16_t)((int32_t)v * a / (1<<26) + (int32_t)a * (int32_t)v / (1<<26) / 2);
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  int32_t numerator = (int32_t)v * a + (1<<25);
+  t = numerator >> 26;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = (int16_t)(((int32_t)v * a + (1<<25)) / (1<<26));
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  int32_t va = (int32_t)v * a;
+  t = (va + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = (int16_t)((int32_t)v * a >> 26) + (int16_t)(((int32_t)v * a & ((1<<26)-1)) >> 25);
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+```
+
+```c
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  int32_t result = (int32_t)v * a;
+  result += (1<<25);
+  t = result >> 26;
+  t *= 3329;
+  return a - t;
+}
+```

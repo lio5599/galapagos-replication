@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+// Uses arithmetic to compute offset and base character.
+// Determines which range x falls into using comparisons.
+// Equivalent to reference for all x in 0-63.
+{
+    if (x <= 25) {
+        return (int)(x + 'A');
+    }
+    if (x <= 51) {
+        return (int)(x - 26 + 'a');
+    }
+    if (x <= 61) {
+        return (int)(x - 52 + '0');
+    }
+    if (x == 62) {
+        return '+';
+    }
+    return '/';
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

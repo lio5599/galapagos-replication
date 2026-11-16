@@ -1,0 +1,12 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: use bitwise operations to isolate and modify exponent.
+    // Mask exponent bits, decrement via arithmetic trick.
+    // Subtract 1<<52 from x to reflect exponent decrement.
+    // Apply mask to clear mantissa if exponent becomes 0.
+    // Equivalent to reference: handles zero and normal cases correctly.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (exp + 1) >> 11;
+    x -= (uint64_t)1 << 52;
+    x &= (uint64_t)t - 1;
+    return x;
+}

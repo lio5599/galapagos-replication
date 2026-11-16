@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 7: Iterate over bit positions directly
+	// Check each bit position from 4 to 30 individually
+	// XOR result with bit value at each position
+	// Edge case: no bits set in range returns 0
+	unsigned int parity = 0;
+	int bit;
+	for (bit = 4; bit <= 30; bit++) {
+		if (data & (1u << bit)) {
+			parity ^= 1;
+		}
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

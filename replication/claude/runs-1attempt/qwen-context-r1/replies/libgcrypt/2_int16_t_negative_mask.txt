@@ -1,0 +1,59 @@
+```c
+static int int16_t_negative_mask_1 (int16_t x)
+{
+  return (x < 0) ? -1 : 0;
+}
+
+static int int16_t_negative_mask_2 (int16_t x)
+{
+  return -(int) ((uint16_t) x >> 15);
+}
+
+static int int16_t_negative_mask_3 (int16_t x)
+{
+  int mask = (x >> 15) & 1;
+  return -mask;
+}
+
+static int int16_t_negative_mask_4 (int16_t x)
+{
+  return (x < 0) ? ~0 : 0;
+}
+
+static int int16_t_negative_mask_5 (int16_t x)
+{
+  uint16_t u = (uint16_t) x;
+  u = u >> 15;
+  return (int) u - 1;
+}
+
+static int int16_t_negative_mask_6 (int16_t x)
+{
+  return (x & 0x8000) ? -1 : 0;
+}
+
+static int int16_t_negative_mask_7 (int16_t x)
+{
+  int sign = (x >> 15);
+  return sign | (sign >> 1) | (sign >> 2) | (sign >> 3) | (sign >> 4) |
+         (sign >> 5) | (sign >> 6) | (sign >> 7);
+}
+
+static int int16_t_negative_mask_8 (int16_t x)
+{
+  return -(int) ((x >> 15) & 0x1);
+}
+
+static int int16_t_negative_mask_9 (int16_t x)
+{
+  uint16_t u = (uint16_t) x;
+  u >>= 15;
+  return (int) (u * -1);
+}
+
+static int int16_t_negative_mask_10 (int16_t x)
+{
+  int t = (x >> 15);
+  return t + (t & 0x1) - 1;
+}
+```

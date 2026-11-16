@@ -1,0 +1,12 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses explicit ceiling division function logic inline: (n + d - 1) / d.
+    // For per-channel header, n = bps + 7, d = 8, giving (bps + 14) / 8.
+    // For residual, n is the bit count, d = 8, giving (bits + 7) / 8.
+    int count;
+    int header_bytes = ch * ((bps + 14) / 8);
+    int residual_bits = (ch == 2) ? (2 * bps + 1) * blocksize : ch * bps * blocksize;
+    int residual_bytes = (residual_bits + 7) / 8;
+    count = 16 + header_bytes + residual_bytes + 2;
+    return count;
+}

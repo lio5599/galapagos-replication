@@ -1,0 +1,7 @@
+static int int16_t_negative_mask_9(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Negates the sign bit extracted via right shift.
+  int s = (int)((uint16_t)x >> 15);
+  return -s;
+}

@@ -1,0 +1,174 @@
+
+static int vp5_adjust(int v, int t)
+{
+    // Reference computes: clamp v to [0, 2t], then return t - (v/2), handling negatives
+    // s1 extracts sign bit of v; v ^= s1; v -= s1 makes v = |v|
+    // v *= v < 2*t clamps v to [0, 2t-1] by zeroing if v >= 2t
+    // v -= t; s2 extracts sign; v ^= s2; v -= s2 makes v = |v - t|
+    // v = t - v gives t - |v - t|; v += s1; v ^= s1 restores sign if original v was negative
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Equivalent: compute absolute value, clamp to [0,2t], compute distance from t,
+    // then adjust sign. Uses ternary-like logic via bitwise ops for abs and clamp.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Same logic but reordered final sign restoration: add s1 before xor.
+    // s1 is 0 or -1; adding then xoring with s1 flips sign if s1 is -1.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Compute |v|, clamp to [0,2t], compute |v_clamped - t|, result is t - that,
+    // then negate if original v was negative. All via bitwise sign extraction.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Inline the absolute value computation explicitly using sign bit.
+    // Clamp by multiplying with boolean condition. Final adjustment mirrors reference.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Use the same sequence but note that v < 2*t yields 0 or 1, effectively clamping.
+    // The double absolute value ensures symmetry around t, then sign is restored.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Replicate reference exactly: extract sign, make positive, clamp, shift by t,
+    // make positive again, compute t minus that, restore original sign.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // The function maps v to a value in [-t, t] based on proximity to 0 within [0,2t].
+    // Bitwise ops avoid branches. Equivalent to reference by construction.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Step-by-step: abs(v), clamp to [0,2t], compute deviation from t, take abs,
+    // subtract from t, then apply original sign. All branchless via shift/xor/sub.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+static int vp5_adjust(int v, int t)
+{
+    // Final variant: identical operations to reference, ensuring equivalence for all
+    // inputs including negative v and v >= 2t. Sign handling is critical for correctness.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2*t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}

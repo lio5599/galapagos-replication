@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Use sign extraction and conditional logic.
+    // Signs differ: result is sign of x.
+    // Both positive: x < y.
+    // Both negative: x > y (reversed order).
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    if (sx ^ sy) return sx;
+    return (sx == 0) ? (x < y) : (x > y);
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

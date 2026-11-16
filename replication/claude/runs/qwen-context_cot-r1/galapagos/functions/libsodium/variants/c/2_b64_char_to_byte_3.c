@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+// Computes value using arithmetic ranges similar to reference but structured
+// with explicit boolean masks. Each range check produces 0 or the offset.
+// Final OR combines results. Invalid chars yield 0 from all terms.
+{
+    unsigned int v = 0;
+    unsigned int is_upper = (c >= 'A') & (c <= 'Z');
+    unsigned int is_lower = (c >= 'a') & (c <= 'z');
+    unsigned int is_digit = (c >= '0') & (c <= '9');
+    unsigned int is_plus  = (c == '+');
+    unsigned int is_slash = (c == '/');
+    v |= is_upper * (unsigned int)(c - 'A');
+    v |= is_lower * (unsigned int)(c - 'a' + 26);
+    v |= is_digit * (unsigned int)(c - '0' + 52);
+    v |= is_plus * 62;
+    v |= is_slash * 63;
+    return v;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

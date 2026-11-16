@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The if block is dead code, so Ai remains unmodified.
+    // Returning Ai directly ensures functional equivalence.
+    // This is the simplest correct implementation.
+    // Edge cases: all 64-bit integers are returned as-is.
+    return Ai;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

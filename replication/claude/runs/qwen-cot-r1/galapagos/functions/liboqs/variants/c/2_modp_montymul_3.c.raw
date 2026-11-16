@@ -1,0 +1,16 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Reorders operations slightly: computes low 31 bits of z*p0i first.
+    // The Montgomery reduction relies on finding m such that z + m*p is divisible by R=2^31.
+    // Here m = (z * p0i) mod 2^31, so w = m * p cancels low bits of z.
+    // The quotient (z+w)/R is then reduced modulo p by conditional subtraction.
+    // Equivalent because the algebraic structure of Montgomery multiplication is preserved.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = (uint32_t)(z * p0i);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31);
+    if (d >= p) d -= p;
+    return d;
+}

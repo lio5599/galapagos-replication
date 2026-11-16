@@ -1,0 +1,190 @@
+static int b64_byte_to_char(unsigned int x)
+// Reference computes base64 encoding char for x in 0-63:
+// 0-25 -> 'A'+x, 26-51 -> 'a'+(x-26), 52-61 -> '0'+(x-52), 62->'+', 63->'/'
+// Uses branchless arithmetic with overflow checks via signed shift.
+{
+    int result = 0;
+    if (x < 26) {
+        result = x + 'A';
+    } else if (x < 52) {
+        result = x - 26 + 'a';
+    } else if (x < 62) {
+        result = x - 52 + '0';
+    } else if (x == 62) {
+        result = '+';
+    } else if (x == 63) {
+        result = '/';
+    }
+    return result;
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses a lookup table for all 64 base64 characters.
+// Direct indexing ensures correctness for x in 0-63.
+// For other inputs, behavior matches reference (undefined/implementation-defined).
+{
+    static const char b64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    if (x < 64) {
+        return b64_table[x];
+    }
+    return 0;
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Branchless implementation using conditional selection.
+// Computes all four possible results and selects based on range.
+// Uses unsigned arithmetic to avoid undefined behavior.
+{
+    unsigned int r1 = x + 'A';
+    unsigned int r2 = x - 26 + 'a';
+    unsigned int r3 = x - 52 + '0';
+    unsigned int r4 = '+';
+    unsigned int r5 = '/';
+    unsigned int mask1 = (x < 26) ? 0xFFFFFFFF : 0;
+    unsigned int mask2 = (x >= 26 && x < 52) ? 0xFFFFFFFF : 0;
+    unsigned int mask3 = (x >= 52 && x < 62) ? 0xFFFFFFFF : 0;
+    unsigned int mask4 = (x == 62) ? 0xFFFFFFFF : 0;
+    unsigned int mask5 = (x == 63) ? 0xFFFFFFFF : 0;
+    return (r1 & mask1) | (r2 & mask2) | (r3 & mask3) | (r4 & mask4) | (r5 & mask5);
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses arithmetic to compute offset and base character.
+// Determines which range x falls into using comparisons.
+// Equivalent to reference for all x in 0-63.
+{
+    if (x <= 25) {
+        return (int)(x + 'A');
+    }
+    if (x <= 51) {
+        return (int)(x - 26 + 'a');
+    }
+    if (x <= 61) {
+        return (int)(x - 52 + '0');
+    }
+    if (x == 62) {
+        return '+';
+    }
+    return '/';
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Switch statement for each range boundary.
+// Clear and direct mapping from input to output character.
+// Handles all 64 valid base64 indices correctly.
+{
+    switch (x) {
+        case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+        case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15:
+        case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23:
+        case 24: case 25:
+            return x + 'A';
+        case 26: case 27: case 28: case 29: case 30: case 31: case 32: case 33:
+        case 34: case 35: case 36: case 37: case 38: case 39: case 40: case 41:
+        case 42: case 43: case 44: case 45: case 46: case 47: case 48: case 49:
+        case 50: case 51:
+            return x - 26 + 'a';
+        case 52: case 53: case 54: case 55: case 56: case 57: case 58: case 59:
+        case 60: case 61:
+            return x - 52 + '0';
+        case 62:
+            return '+';
+        case 63:
+            return '/';
+        default:
+            return 0;
+    }
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses bitwise tricks to select between ranges.
+// Computes masks based on comparison results.
+// Combines results using bitwise OR with masked values.
+{
+    unsigned int in_upper = (x < 26);
+    unsigned int in_lower = (x >= 26) & (x < 52);
+    unsigned int in_digit = (x >= 52) & (x < 62);
+    unsigned int is_plus = (x == 62);
+    unsigned int is_slash = (x == 63);
+    int val_upper = x + 'A';
+    int val_lower = x - 26 + 'a';
+    int val_digit = x - 52 + '0';
+    int val_plus = '+';
+    int val_slash = '/';
+    return (in_upper ? val_upper : 0) |
+           (in_lower ? val_lower : 0) |
+           (in_digit ? val_digit : 0) |
+           (is_plus ? val_plus : 0) |
+           (is_slash ? val_slash : 0);
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Array-based lookup with computed index.
+// Uses a static array initialized with base64 alphabet.
+// Safe for x in 0-63, returns 0 for out-of-range.
+{
+    const char table[64] = {
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
+        'Q','R','S','T','U','V','W','X','Y','Z',
+        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
+        'q','r','s','t','u','v','w','x','y','z',
+        '0','1','2','3','4','5','6','7','8','9',
+        '+','/'
+    };
+    if (x < 64) {
+        return table[x];
+    }
+    return 0;
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Branchless using arithmetic overflow detection similar to reference.
+// Uses signed comparison via shift to create masks.
+// Equivalent logic to reference but structured differently.
+{
+    unsigned int m1 = ((x - 26) >> 8) & 0xFF;
+    unsigned int m2 = ((x - 52) >> 8) & 0xFF;
+    unsigned int m3 = ((x - 62) >> 8) & 0xFF;
+    unsigned int eq62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int eq63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    unsigned int sel1 = m1 & 0xFF;
+    unsigned int sel2 = (~m1 & 0xFF) & m2;
+    unsigned int sel3 = (~m2 & 0xFF) & m3;
+    unsigned int sel4 = (~m3 & 0xFF) & eq62;
+    unsigned int sel5 = (~eq62 & 0xFF) & eq63;
+    int r1 = x + 'A';
+    int r2 = x - 26 + 'a';
+    int r3 = x - 52 + '0';
+    int r4 = '+';
+    int r5 = '/';
+    return (sel1 ? r1 : 0) | (sel2 ? r2 : 0) | (sel3 ? r3 : 0) | (sel4 ? r4 : 0) | (sel5 ? r5 : 0);
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Uses ternary operators for clear range-based selection.
+// Each condition checks a specific range of x.
+// Returns appropriate base64 character for each range.
+{
+    if (x < 26) {
+        return x + 'A';
+    } else if (x < 52) {
+        return x - 26 + 'a';
+    } else if (x < 62) {
+        return x - 52 + '0';
+    } else if (x == 62) {
+        return '+';
+    } else {
+        return '/';
+    }
+}
+
+static int b64_byte_to_char(unsigned int x)
+// Computes result using a single expression with nested ternaries.
+// Maintains equivalence with reference for all valid inputs.
+// Handles edge cases 62 and 63 explicitly.
+{
+    return x < 26 ? x + 'A' :
+           x < 52 ? x - 26 + 'a' :
+           x < 62 ? x - 52 + '0' :
+           x == 62 ? '+' : '/';
+}

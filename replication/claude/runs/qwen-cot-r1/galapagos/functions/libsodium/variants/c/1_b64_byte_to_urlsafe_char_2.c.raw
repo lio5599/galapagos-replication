@@ -1,0 +1,9 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses lookup table for direct mapping.
+// Array indexed by x contains precomputed chars.
+// Simple, fast, and obviously correct for valid inputs.
+// Assumes x is in range 0-63 as per Base64 spec.
+{
+    static const char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    return table[x];
+}

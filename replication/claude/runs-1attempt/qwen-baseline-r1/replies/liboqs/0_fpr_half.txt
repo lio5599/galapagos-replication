@@ -1,0 +1,95 @@
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    exp--;
+    return (x & 0xFFFFFFFFFFFFFULL) | ((uint64_t)exp << 52);
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t mask = 0xFFFFFFFFFFFFFULL;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    return (x & mask) | ((uint64_t)(exp - 1) << 52);
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t significand = x & 0xFFFFFFFFFFFFFULL;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    exp -= 1;
+    return significand | ((uint64_t)exp << 52);
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    return x - ((uint64_t)1 << 52);
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t bias = (uint64_t)1023;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    uint32_t new_exp = exp - 1;
+    return (x & 0xFFFFFFFFFFFFFULL) | ((uint64_t)new_exp << 52);
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    uint64_t result = x;
+    result &= 0xFFFFFFFFFFFFFULL;
+    result |= ((uint64_t)(exp - 1) << 52);
+    return result;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t sign = x & 0x8000000000000000ULL;
+    uint64_t exp_field = (x >> 52) & 0x7FF;
+    uint64_t frac = x & 0xFFFFFFFFFFFFFULL;
+    if (exp_field == 0) return x;
+    exp_field--;
+    return sign | (exp_field << 52) | frac;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    uint64_t new_x = x;
+    new_x ^= (uint64_t)1 << 52;
+    return new_x;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t mantissa = x & 0xFFFFFFFFFFFFFULL;
+    uint32_t exponent = (uint32_t)(x >> 52) & 0x7FF;
+    if (exponent == 0) return x;
+    exponent--;
+    return (mantissa) | ((uint64_t)exponent << 52);
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FF;
+    if (e == 0) return x;
+    return x - (1ULL << 52);
+}
+```

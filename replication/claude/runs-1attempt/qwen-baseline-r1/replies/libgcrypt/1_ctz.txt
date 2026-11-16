@@ -1,0 +1,128 @@
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    while (r < 64 && !(in & 1)) {
+        in >>= 1;
+        r++;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    for (; r < 64; r++) {
+        if (in & 1) break;
+        in >>= 1;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    uint64_t mask = 1;
+    while (r < 64 && !(in & mask)) {
+        mask <<= 1;
+        r++;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    if (in == 0) return 64;
+    while ((in & 1) == 0) {
+        in >>= 1;
+        r++;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    uint64_t temp = in;
+    while (r < 64 && (temp & 1) == 0) {
+        temp >>= 1;
+        r++;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    for (int i = 0; i < 64; i++) {
+        if ((in >> i) & 1) {
+            r = i;
+            break;
+        }
+        r = 64;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 64;
+    for (int i = 0; i < 64; i++) {
+        if ((in >> i) & 1) {
+            r = i;
+            break;
+        }
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    while (r < 64) {
+        if (in & ((uint64_t)1 << r)) break;
+        r++;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    uint64_t bit = 1;
+    while (r < 64) {
+        if (in & bit) break;
+        bit <<= 1;
+        r++;
+    }
+    return r;
+}
+```
+
+```c
+static int ctz(uint64_t in)
+{
+    int r = 0;
+    for (; r < 64; r++) {
+        if (in & ((uint64_t)1 << r)) break;
+    }
+    return r;
+}
+```

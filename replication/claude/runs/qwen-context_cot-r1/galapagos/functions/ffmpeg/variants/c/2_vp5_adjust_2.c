@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Use ternary operators for the same logic.
+    // The function clamps v to the range [0, t], returning t for negative v.
+    int non_neg = (v < 0) ? 0 : v;
+    return (non_neg >= t) ? t : non_neg;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A-law to PCM conversion using standard decoding algorithm.
+	// XOR 0x55 prepares bits for magnitude interpretation.
+	// Low t values expanded linearly, high values use segment shift.
+	// Segment determines additional shift after base offset.
+	// Sign bit controls output sign for correct signed result.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

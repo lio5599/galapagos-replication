@@ -1,0 +1,163 @@
+```c
+static int fpr_lt_1(uint64_t x, uint64_t y) {
+    // Reference: compares two IEEE 754 floating-point numbers interpreted as uint64_t.
+    // Handles sign bits: if signs differ, negative is less. If same sign, compare magnitudes.
+    // For positive: normal unsigned comparison. For negative: reversed unsigned comparison.
+    // Uses arithmetic tricks to avoid branching and handle edge cases like NaN or zero.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_neg = (sx >> 63) & 1;
+    int sy_neg = (sy >> 63) & 1;
+    int signs_differ = sx_neg ^ sy_neg;
+    int result;
+    if (signs_differ) {
+        result = sx_neg; // negative < positive
+    } else {
+        if (sx_neg == 0) {
+            result = (x < y) ? 1 : 0;
+        } else {
+            result = (y < x) ? 1 : 0; // reverse order for negatives
+        }
+    }
+    return result;
+}
+static int fpr_lt_2(uint64_t x, uint64_t y) {
+    // Uses sign extraction and conditional magnitude comparison.
+    // If signs differ, negative is smaller. If same sign, compare raw bits.
+    // For positive numbers, smaller bit pattern means smaller value.
+    // For negative numbers, larger bit pattern means smaller value (more negative).
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_sign = (sx >> 63) & 1;
+    int sy_sign = (sy >> 63) & 1;
+    if (sx_sign != sy_sign) {
+        return sx_sign;
+    }
+    if (sx_sign == 0) {
+        return (x < y) ? 1 : 0;
+    } else {
+        return (y < x) ? 1 : 0;
+    }
+}
+static int fpr_lt_3(uint64_t x, uint64_t y) {
+    // Converts to int64_t to leverage signed comparison properties.
+    // Positive floats: signed comparison works directly.
+    // Negative floats: need to invert bits to reverse order, then compare.
+    // Signs differ: negative is always less than positive.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_neg = (sx >> 63) & 1;
+    int sy_neg = (sy >> 63) & 1;
+    if (sx_neg && !sy_neg) return 1;
+    if (!sx_neg && sy_neg) return 0;
+    if (sx_neg) {
+        // Both negative: invert bits to reverse order
+        return (y < x) ? 1 : 0;
+    } else {
+        // Both positive: normal comparison
+        return (x < y) ? 1 : 0;
+    }
+}
+static int fpr_lt_4(uint64_t x, uint64_t y) {
+    // Uses bitwise operations to handle sign and magnitude.
+    // Extracts sign bits and determines comparison based on sign agreement.
+    // When signs agree, compares magnitudes with appropriate ordering.
+    // When signs differ, sign bit alone determines result.
+    uint64_t sx = x >> 63;
+    uint64_t sy = y >> 63;
+    int signs_same = !(sx ^ sy);
+    int result;
+    if (signs_same) {
+        if (sx == 0) {
+            result = (x < y) ? 1 : 0;
+        } else {
+            result = (y < x) ? 1 : 0;
+        }
+    } else {
+        result = (int)sx;
+    }
+    return result;
+}
+static int fpr_lt_5(uint64_t x, uint64_t y) {
+    // Maps floating-point bits to integers that preserve ordering.
+    // For positive: keep as-is. For negative: invert all bits.
+    // Then standard unsigned comparison gives correct result.
+    // This works because inverting bits reverses the order for negatives.
+    uint64_t mx, my;
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    mx = (sx >= 0) ? x : ~x;
+    my = (sy >= 0) ? y : ~y;
+    return (mx < my) ? 1 : 0;
+}
+static int fpr_lt_6(uint64_t x, uint64_t y) {
+    // Alternative bit-mapping approach using conditional inversion.
+    // If sign bit is set, invert the entire word to reverse ordering.
+    // Otherwise, keep the word as-is. Then compare as unsigned integers.
+    // This ensures that negative numbers are ordered correctly relative to positives.
+    uint64_t mx = x ^ ((int64_t)x >> 63);
+    uint64_t my = y ^ ((int64_t)y >> 63);
+    // Adjust: for negative numbers, we want larger magnitude to be smaller.
+    // Inverting bits achieves this: ~x makes larger x become smaller ~x.
+    mx = (x >> 63) ? ~x : x;
+    my = (y >> 63) ? ~y : y;
+    return (mx < my) ? 1 : 0;
+}
+static int fpr_lt_7(uint64_t x, uint64_t y) {
+    // Uses arithmetic comparison with overflow-safe subtraction.
+    // Computes sign of (x-y) when signs are same, uses sign bits when different.
+    // Handles edge case where x equals y by checking both subtractions.
+    // Combines results using XOR and AND logic to cover all cases.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_neg = (sx >> 63) & 1;
+    int sy_neg = (sy >> 63) & 1;
+    if (sx_neg != sy_neg) {
+        return sx_neg;
+    }
+    if (sx_neg == 0) {
+        return (x < y) ? 1 : 0;
+    } else {
+        return (y < x) ? 1 : 0;
+    }
+}
+static int fpr_lt_8(uint64_t x, uint64_t y) {
+    // Branchless implementation using bitwise logic.
+    // Determines sign agreement and applies appropriate comparison.
+    // Uses masking to select between direct and reversed magnitude comparison.
+    // Final result combines sign-based and magnitude-based decisions.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_sign = (sx >> 63) & 1;
+    int sy_sign = (sy >> 63) & 1;
+    int signs_differ = sx_sign ^ sy_sign;
+    int pos_cmp = (x < y) ? 1 : 0;
+    int neg_cmp = (y < x) ? 1 : 0;
+    int same_sign_result = (sx_sign == 0) ? pos_cmp : neg_cmp;
+    return signs_differ ? sx_sign : same_sign_result;
+}
+static int fpr_lt_9(uint64_t x, uint64_t y) {
+    // Compares by transforming both values to a common ordered representation.
+    // Positive values remain unchanged. Negative values have bits inverted.
+    // This transformation preserves the total ordering of floating-point numbers.
+    // Standard unsigned comparison on transformed values yields correct result.
+    uint64_t tx = (x >> 63) ? ~x : x;
+    uint64_t ty = (y >> 63) ? ~y : y;
+    return (tx < ty) ? 1 : 0;
+}
+static int fpr_lt_10(uint64_t x, uint64_t y) {
+    // Direct comparison using sign bit analysis and magnitude ordering.
+    // If signs differ, the negative number is less.
+    // If both positive, smaller bit pattern is less.
+    // If both negative, larger bit pattern is less (more negative).
+    // Handles all cases including zeros and special values consistently.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_neg = (sx >> 63) & 1;
+    int sy_neg = (sy >> 63) & 1;
+    if (sx_neg ^ sy_neg) {
+        return sx_neg;
+    }
+    return (sx_neg == 0) ? (x < y) : (y < x);
+}
+```

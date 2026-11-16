@@ -1,0 +1,162 @@
+static int ctz(uint64_t in)
+{
+ // Reference computes count of trailing zeros: number of consecutive zero bits
+ // starting from LSB until first set bit. Returns 0-64. If in==0, returns 64.
+ // The loop accumulates result by detecting transitions from zero to one.
+ int i, b, m = 0, r = 0;
+ for (i = 0; i < 64; i++)
+ {
+  b = (in >> i) & 1;
+  m |= b;
+  r += (m^1) & (b^1);
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Direct loop counting trailing zeros by checking each bit from LSB.
+ // Increment counter while bit is zero and not all bits processed.
+ // If in is zero, loop completes with r=64.
+ int r = 0;
+ for (int i = 0; i < 64; i++)
+ {
+  if ((in & 1) == 0)
+  {
+   r++;
+  }
+  else
+  {
+   break;
+  }
+  in >>= 1;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use de Bruijn multiplication method for fast trailing zero count.
+ // Multiply by de Bruijn constant, use top bits as table index.
+ // Handle in==0 case separately since multiplication would be undefined.
+ if (in == 0) return 64;
+ static const int mul_table[64] = {
+  0, 1, 2, 53, 3, 7, 54, 27, 4, 38, 41, 8, 34, 55, 48, 28,
+  62, 5, 39, 46, 44, 42, 22, 9, 24, 35, 59, 56, 49, 18, 29, 11,
+  63, 52, 6, 26, 37, 40, 33, 47, 61, 45, 43, 21, 23, 58, 17, 10,
+  51, 25, 36, 32, 60, 20, 57, 16, 50, 31, 19, 15, 30, 14, 13, 12
+ };
+ return mul_table[((uint64_t)((in & -in) * 0x022FDD63CC95386DULL)) >> 58];
+}
+
+static int ctz(uint64_t in)
+{
+ // Binary search approach: check halves to find first set bit position.
+ // Repeatedly narrow down which half contains the first set bit.
+ // If in is zero, return 64 after all checks fail.
+ if (in == 0) return 64;
+ int r = 0;
+ if ((in & 0xFFFFFFFF) == 0) { in >>= 32; r += 32; }
+ if ((in & 0xFFFF) == 0) { in >>= 16; r += 16; }
+ if ((in & 0xFF) == 0) { in >>= 8; r += 8; }
+ if ((in & 0xF) == 0) { in >>= 4; r += 4; }
+ if ((in & 0x3) == 0) { in >>= 2; r += 2; }
+ if ((in & 0x1) == 0) { r += 1; }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use compiler builtin __builtin_ctzll for trailing zero count.
+ // Handle in==0 separately since builtin has undefined behavior for zero.
+ // This directly computes the same result as the reference function.
+ if (in == 0) return 64;
+ return __builtin_ctzll(in);
+}
+
+static int ctz(uint64_t in)
+{
+ // Iterative approach using bit manipulation: isolate lowest set bit
+ // and count how many shifts needed to make it the LSB.
+ // If in is zero, return 64. Otherwise count shifts.
+ if (in == 0) return 64;
+ int r = 0;
+ uint64_t low = in & ~(in - 1);
+ while ((low & 1) == 0)
+ {
+  low >>= 1;
+  r++;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Loop through bits checking if bit i is the first set bit.
+ // A bit is first set if it is 1 and all lower bits are 0.
+ // Count such position. If no bit is set, return 64.
+ int r = 64;
+ for (int i = 0; i < 64; i++)
+ {
+  if ((in >> i) & 1)
+  {
+   r = i;
+   break;
+  }
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use the property that (in & -in) isolates the lowest set bit.
+ // Then use a series of conditional checks to determine its position.
+ // Handle in==0 case where isolation yields zero.
+ if (in == 0) return 64;
+ uint64_t isolated = in & -in;
+ int r = 0;
+ if (isolated & 0x00000000FFFFFFFFULL) r += 0, isolated &= 0x00000000FFFFFFFFULL;
+ else r += 32, isolated >>= 32;
+ if (isolated & 0x0000FFFFULL) r += 0, isolated &= 0x0000FFFFULL;
+ else r += 16, isolated >>= 16;
+ if (isolated & 0x00FFULL) r += 0, isolated &= 0x00FFULL;
+ else r += 8, isolated >>= 8;
+ if (isolated & 0x0FUL) r += 0, isolated &= 0x0FUL;
+ else r += 4, isolated >>= 4;
+ if (isolated & 0x3UL) r += 0, isolated &= 0x3UL;
+ else r += 2, isolated >>= 2;
+ if (isolated & 0x1UL) r += 0;
+ else r += 1;
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Simple loop checking each bit position from 0 to 63.
+ // Return the index of the first set bit found.
+ // If no bit is set after checking all 64, return 64.
+ for (int i = 0; i < 64; i++)
+ {
+  if (in & ((uint64_t)1 << i))
+  {
+   return i;
+  }
+ }
+ return 64;
+}
+
+static int ctz(uint64_t in)
+{
+ // Use parallel bit counting technique to find trailing zeros.
+ // Mask out higher bits progressively and check if remaining is zero.
+ // Accumulate offset when lower half is all zeros.
+ int r = 0;
+ if (in == 0) return 64;
+ if ((in & 0x00000000FFFFFFFFULL) == 0) { in >>= 32; r += 32; }
+ if ((in & 0x000000000000FFFFULL) == 0) { in >>= 16; r += 16; }
+ if ((in & 0x00000000000000FFULL) == 0) { in >>= 8; r += 8; }
+ if ((in & 0x000000000000000FULL) == 0) { in >>= 4; r += 4; }
+ if ((in & 0x0000000000000003ULL) == 0) { in >>= 2; r += 2; }
+ if ((in & 0x0000000000000001ULL) == 0) { r += 1; }
+ return r;
+}

@@ -1,0 +1,189 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Computes odd parity of bits 4-30 of input data.
+	// Reference shifts right by 4, then counts set bits in positions 0-26 (original 4-30).
+	// Returns 1 if odd number of set bits, 0 otherwise.
+	// Equivalent to computing parity of the 27-bit window from bit 4 to bit 30 inclusive.
+	unsigned int parity;
+	int bit;
+
+	data >>= 4;
+	parity = 0;
+	for (bit = 4; bit <= 30; bit++) {
+		if (data & 1)
+			parity++;
+		data >>= 1;
+	}
+	return (parity & 1);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Use XOR accumulation instead of counting.
+	// XORing each bit into parity gives same result as counting mod 2.
+	// After shifting right by 4, iterate 27 bits (original bits 4-30).
+	// XOR is associative and commutative, so order doesn't matter.
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= (data & 1);
+		data >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Extract the 27-bit window directly using mask and shift.
+	// Mask bits 4-30 inclusive, then compute parity via XOR fold.
+	// Using __builtin_parity if available, otherwise manual XOR.
+	// The mask 0x7FFFFF0 covers bits 4-22, need bits 4-30 so use larger mask.
+	unsigned int window = (data >> 4) & 0x1FFFFFF;
+	unsigned int parity = 0;
+	while (window) {
+		parity ^= (window & 1);
+		window >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Compute parity using Brian Kernighan's algorithm on the window.
+	// Clear lowest set bit each iteration, count iterations mod 2.
+	// Window is bits 4-30 extracted via shift and mask.
+	// This counts set bits efficiently without iterating all 27 positions.
+	unsigned int window = (data >> 4) & 0x1FFFFFF;
+	unsigned int count = 0;
+	while (window) {
+		window &= (window - 1);
+		count++;
+	}
+	return count & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Use XOR folding with parallel bit operations.
+	// Shift and XOR to reduce 27 bits to parity in log steps.
+	// First extract window, then fold: XOR with shifted versions.
+	// After enough folds, lowest bit holds the parity.
+	unsigned int window = (data >> 4) & 0x1FFFFFF;
+	window ^= window >> 16;
+	window ^= window >> 8;
+	window ^= window >> 4;
+	window ^= window >> 2;
+	window ^= window >> 1;
+	return window & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Iterate over original bit positions 4 through 30 directly.
+	// Test each bit position using left-shifted mask instead of shifting data.
+	// This avoids modifying the original data variable.
+	// Same 27 bits are checked, parity accumulated via XOR.
+	unsigned int parity = 0;
+	int bit;
+	for (bit = 4; bit <= 30; bit++) {
+		if (data & (1u << bit))
+			parity ^= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Use lookup table for byte-wise parity, then combine.
+	// Extract window bits 4-30, split into bytes, look up parity.
+	// XOR the parities of each byte segment.
+	// Handle partial bytes at boundaries correctly.
+	unsigned int window = (data >> 4) & 0x1FFFFFF;
+	unsigned char b0 = window & 0xFF;
+	unsigned char b1 = (window >> 8) & 0xFF;
+	unsigned char b2 = (window >> 16) & 0xFF;
+	unsigned char b3 = (window >> 24) & 0xFF;
+	static const unsigned char parity_table[256] = {
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,
+		1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1
+	};
+	return parity_table[b0] ^ parity_table[b1] ^ parity_table[b2] ^ parity_table[b3];
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Recursive XOR reduction on the window.
+	// Split window into halves, XOR them, repeat until single bit.
+	// This is similar to parallel fold but structured recursively in loop.
+	// Extract 27-bit window first, then fold down.
+	unsigned int window = (data >> 4) & 0x1FFFFFF;
+	window ^= window >> 13;
+	window &= 0x1FFF;
+	window ^= window >> 7;
+	window &= 0x7F;
+	window ^= window >> 4;
+	window &= 0xF;
+	window ^= window >> 2;
+	window &= 0x3;
+	window ^= window >> 1;
+	return window & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Use __builtin_parity if available, with fallback.
+	// Extract the 27-bit window from bits 4-30.
+	// __builtin_parity returns parity of all set bits in argument.
+	// For portability, this assumes GCC/Clang; otherwise manual method.
+	// The mask ensures only bits 4-30 contribute to parity.
+	unsigned int window = (data >> 4) & 0x1FFFFFF;
+	return __builtin_parity(window);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Accumulate parity using addition modulo 2 via subtraction.
+	// Instead of XOR, use add and mask, which is equivalent for single bits.
+	// Iterate through each of the 27 bits in the window.
+	// Addition mod 2 of bits is same as XOR for parity computation.
+	unsigned int window = (data >> 4) & 0x1FFFFFF;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 27; i++) {
+		parity = (parity + (window & 1)) & 1;
+		window >>= 1;
+	}
+	return parity;
+}

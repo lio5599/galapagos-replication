@@ -1,0 +1,155 @@
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes Montgomery multiplication: (a * b * R^-1) mod p where R = 2^31.
+    // Uses 64-bit intermediate arithmetic to avoid overflow during multiplication.
+    // The factor p0i is the modular inverse of p mod 2^31, used to zero out low bits.
+    // The final adjustment ensures the result is in [0, p-1] range.
+    // Edge case: when a or b is zero, result is zero; when p=1, result is zero.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Same Montgomery multiplication but computes w using full 64-bit mask.
+    // The mask 0x7FFFFFFF extracts low 31 bits of z*p0i before multiplying by p.
+    // This ensures w is a multiple of p that cancels low 31 bits of z.
+    // The subtraction and conditional addition normalize the result modulo p.
+    // Equivalent because (z+w) is divisible by 2^31, so shift gives quotient.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Uses explicit conditional instead of bitwise trick for final adjustment.
+    // The core Montgomery step remains identical: compute z, cancel low bits via w.
+    // After shifting, if result is negative (d < 0), add p to bring into range.
+    // This is equivalent to d += p & -(d >> 31) since -(d>>31) is -1 if d<0, else 0.
+    // Handles all edge cases including zero inputs and p=1 correctly.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    if (d >= p) d -= p;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Reorders operations slightly: computes low 31 bits of z*p0i first.
+    // The Montgomery reduction relies on finding m such that z + m*p is divisible by R=2^31.
+    // Here m = (z * p0i) mod 2^31, so w = m * p cancels low bits of z.
+    // The quotient (z+w)/R is then reduced modulo p by conditional subtraction.
+    // Equivalent because the algebraic structure of Montgomery multiplication is preserved.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = (uint32_t)(z * p0i);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31);
+    if (d >= p) d -= p;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Uses unsigned arithmetic consistently with explicit cast for clarity.
+    // The product z = a*b is computed in 64 bits to prevent overflow.
+    // The term w eliminates the lower 31 bits of z when added, using p0i as inverse.
+    // The high 31 bits of (z+w) give the candidate result, which may exceed p.
+    // A single conditional subtraction ensures the result lies in [0, p-1].
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    d = (uint32_t)((z + w) >> 31);
+    d = (d >= p) ? d - p : d;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Splits the Montgomery step into explicit multiplication and masking.
+    // Computes m = (a*b * p0i) mod 2^31, then w = m*p.
+    // Adding w to z makes the sum divisible by 2^31, so right shift yields quotient.
+    // The quotient is reduced modulo p by subtracting p if necessary.
+    // This matches the reference because the conditional subtraction is equivalent to the bitwise trick.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = (uint32_t)(z * p0i);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31);
+    if (d >= p) d -= p;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Uses the same core logic but writes the final adjustment with ternary operator.
+    // The Montgomery multiplication computes (a*b*R^-1) mod p with R=2^31.
+    // The intermediate w ensures z+w is a multiple of R, so division by R is exact.
+    // The result after shift is in [0, 2p-1], so one subtraction suffices to reduce mod p.
+    // Edge cases like a=0 or b=0 yield z=0, w=0, d=0, which is correct.
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31);
+    return (d >= p) ? d - p : d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes the Montgomery product by explicitly handling the modular inverse step.
+    // The value p0i satisfies p * p0i ≡ -1 (mod 2^31), enabling cancellation of low bits.
+    // After computing z = a*b, we find m = (z * p0i) mod 2^31 and set w = m*p.
+    // Then (z + w) / 2^31 is the candidate, reduced modulo p by conditional subtraction.
+    // This is algebraically identical to the reference implementation.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = (uint32_t)(z * p0i);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31);
+    if (d >= p) d -= p;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative formulation using the same mathematical foundation.
+    // The key insight is that Montgomery multiplication maps (a,b) to (a*b*R^-1) mod p.
+    // With R=2^31, the reduction uses p0i to compute a correction term w = m*p.
+    // The sum z+w is divisible by R, so shifting right by 31 gives the quotient.
+    // Final reduction modulo p is done via comparison and subtraction, equivalent to reference.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = (uint32_t)(z * p0i);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31);
+    d -= (d >= p) ? p : 0;
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Final variant emphasizing the role of p0i in zeroing low bits.
+    // The product z = a*b is reduced by adding w = m*p where m = (z*p0i) mod 2^31.
+    // This makes z+w divisible by 2^31, so the high 31 bits are the quotient.
+    // The quotient is then reduced modulo p by subtracting p if it is too large.
+    // All edge cases are handled correctly, including when p=1 or inputs are zero.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = (uint32_t)(z * p0i);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31);
+    if (d >= p) d -= p;
+    return d;
+}

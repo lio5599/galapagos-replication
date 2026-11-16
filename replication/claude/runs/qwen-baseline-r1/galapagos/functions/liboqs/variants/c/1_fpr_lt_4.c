@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int sign_mask = (sx ^ sy) >> 63;
+    int sign_x = sx >> 63;
+    
+    int diff1 = sx - sy;
+    int diff2 = sy - sx;
+    
+    int result_same = ((diff1 >> 63) & ~sign_mask) | ((diff2 >> 63) & sign_mask & (sign_x + 1));
+    int result_diff = sign_x & sign_mask;
+    
+    return (result_same | result_diff) & 1;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

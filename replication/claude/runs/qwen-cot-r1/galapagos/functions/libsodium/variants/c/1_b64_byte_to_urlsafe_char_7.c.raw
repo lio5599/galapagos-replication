@@ -1,0 +1,14 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Uses bit manipulation to compute range flags.
+// Calculates which range x falls into.
+// Selects character using weighted sum.
+// Equivalent to reference arithmetic approach.
+{
+    int r = 0;
+    if (x < 26) r = 'A' + x;
+    else if (x < 52) r = 'a' + (x - 26);
+    else if (x < 62) r = '0' + (x - 52);
+    else if (x == 62) r = '-';
+    else r = '_';
+    return r;
+}

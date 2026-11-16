@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference function always returns Ai unchanged because the if condition is false.
+    // All substitute implementations must also return Ai unchanged for equivalence.
+    // This is the simplest correct implementation: identity function.
+    return Ai;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

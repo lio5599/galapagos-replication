@@ -1,0 +1,149 @@
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Reference computes signed comparison of two 64-bit values interpreted as
+    // floating-point numbers with sign bit at bit 63. For same signs, uses
+    // subtraction sign; for different signs, sign of x determines result.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int signs_differ = (sx ^ sy) >> 63;
+    int both_negative = (sx & sy) >> 63;
+    int same_sign_result = (sx - sy) >> 63;
+    int opp_sign_result = sx >> 63;
+    int result = (signs_differ & opp_sign_result) | (~signs_differ & same_sign_result);
+    return result & 1;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Extract sign bits and compare magnitudes appropriately.
+    // If signs differ, negative is less than positive.
+    // If both positive, normal comparison. If both negative, reverse comparison.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_sign = sx >> 63;
+    int sy_sign = sy >> 63;
+    int sign_diff = sx_sign ^ sy_sign;
+    int lt_same_sign = (sx - sy) >> 63;
+    int lt_diff_sign = sx_sign;
+    return (sign_diff & lt_diff_sign) | (~sign_diff & lt_same_sign) & 1;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Use conditional logic based on sign bits.
+    // When signs match, compare via subtraction.
+    // When signs differ, the negative number is smaller.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_neg = (sx >> 63) & 1;
+    int sy_neg = (sy >> 63) & 1;
+    int same_sign = !(sx_neg ^ sy_neg);
+    int diff_sign = sx_neg ^ sy_neg;
+    int cmp_same = ((sx - sy) >> 63) & 1;
+    int cmp_diff = sx_neg;
+    return (same_sign & cmp_same) | (diff_sign & cmp_diff);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Decompose into cases: both positive, both negative, or mixed signs.
+    // For mixed signs, x < y iff x is negative.
+    // For same signs, use signed subtraction result.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int x_neg = sx < 0;
+    int y_neg = sy < 0;
+    int mixed = x_neg != y_neg;
+    int same = x_neg == y_neg;
+    int lt_mixed = x_neg;
+    int lt_same = (sx - sy) < 0;
+    return (mixed & lt_mixed) | (same & lt_same);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Compute result by selecting between two comparison outcomes.
+    // Outcome 1: result when signs are same (sx - sy sign).
+    // Outcome 2: result when signs differ (sx sign).
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sign_x = (sx >> 63) & 1;
+    int sign_y = (sy >> 63) & 1;
+    int signs_same = !(sign_x ^ sign_y);
+    int lt_if_same = ((sx - sy) >> 63) & 1;
+    int lt_if_diff = sign_x;
+    int result = signs_same ? lt_if_same : lt_if_diff;
+    return result;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Handle three cases explicitly using sign bit extraction.
+    // Case 1: x positive, y positive: compare normally.
+    // Case 2: x negative, y negative: compare reversed.
+    // Case 3: mixed signs: x < y iff x is negative.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int xs = (sx >> 63) & 1;
+    int ys = (sy >> 63) & 1;
+    int both_pos = !xs && !ys;
+    int both_neg = xs && ys;
+    int mixed = xs != ys;
+    int lt_pos = (sx < sy);
+    int lt_neg = (sy < sx);
+    int lt_mix = xs;
+    return (both_pos & lt_pos) | (both_neg & lt_neg) | (mixed & lt_mix);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Use arithmetic to blend the two possible comparison results.
+    // When signs same, use (sx-sy) sign. When different, use sx sign.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_sign = (int)(sx >> 63) & 1;
+    int sy_sign = (int)(sy >> 63) & 1;
+    int sign_xor = sx_sign ^ sy_sign;
+    int cmp_sub = (int)((sx - sy) >> 63) & 1;
+    int cmp_sign = sx_sign;
+    int blend = sign_xor;
+    return (blend & cmp_sign) | (~blend & cmp_sub);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Replicate reference logic with explicit masking.
+    // Mask sy to 0 when signs differ to avoid overflow issues.
+    // Compute both subtraction signs and select appropriately.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sign_mask = -(sx ^ sy) >> 63;
+    int64_t sy_masked = sy & ~sign_mask;
+    int cc0 = (int)((sx - sy_masked) >> 63) & 1;
+    int cc1 = (int)((sy_masked - sx) >> 63) & 1;
+    int both_neg = (int)((x & y) >> 63) & 1;
+    return cc0 ^ ((cc0 ^ cc1) & both_neg);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Direct case analysis using sign bits.
+    // Positive numbers: standard comparison.
+    // Negative numbers: reversed comparison.
+    // Mixed: negative is less.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int neg_x = (sx >> 63) & 1;
+    int neg_y = (sy >> 63) & 1;
+    if (neg_x == 0 && neg_y == 0) return sx < sy;
+    if (neg_x == 1 && neg_y == 1) return sy < sx;
+    return neg_x;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Bitwise approach mimicking reference structure.
+    // Compute comparison under same-sign assumption.
+    // Adjust for different signs using sign of x.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sx_neg = (int)(sx >> 63) & 1;
+    int sy_neg = (int)(sy >> 63) & 1;
+    int same_sign = !(sx_neg ^ sy_neg);
+    int lt_val = (int)((sx - sy) >> 63) & 1;
+    int diff_sign_lt = sx_neg;
+    int same_sign_lt = lt_val;
+    return (same_sign & same_sign_lt) | (!same_sign & diff_sign_lt);
+}
+```

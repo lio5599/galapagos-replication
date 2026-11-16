@@ -1,0 +1,16 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Equivalent to reference but computes subframe header as ch*((bps+14)/8).
+    // Uses helper variable for the residual numerator before dividing by 8.
+    // This avoids any potential overflow in intermediate steps differently.
+    int count;
+    int subframe = ch * ((bps + 14) / 8);
+    int res_num;
+    if (ch == 2) {
+        res_num = (2 * bps + 1) * blocksize;
+    } else {
+        res_num = ch * bps * blocksize;
+    }
+    count = 16 + subframe + (res_num + 7) / 8 + 2;
+    return count;
+}

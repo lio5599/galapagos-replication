@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    int y = 0;
+    unsigned int mask1 = (x < 26) ? ~0U : 0U;
+    unsigned int mask2 = (x >= 26 && x < 52) ? ~0U : 0U;
+    unsigned int mask3 = (x >= 52 && x < 62) ? ~0U : 0U;
+    unsigned int mask4 = (x == 62) ? ~0U : 0U;
+    unsigned int mask5 = (x == 63) ? ~0U : 0U;
+    
+    y |= (mask1 & (x + 'A'));
+    y |= (mask2 & (x + 'a' - 26));
+    y |= (mask3 & (x + '0' - 52));
+    y |= (mask4 & '+');
+    y |= (mask5 & '/');
+    
+    return y;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

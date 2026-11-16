@@ -1,0 +1,137 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Reference computes max FLAC frame size: 16-byte header + per-channel
+    // subframe header bytes + residual data bytes + 2-byte CRC. For stereo,
+    // residual uses mid-side coding requiring (2*bps+1)*blocksize bits.
+    // For other channel counts, it uses ch*bps*blocksize bits. All divisions
+    // by 8 are ceiling divisions via +7 before /8.
+    int count;
+    count = 16;
+    count += ch * ((7+bps+7)/8);
+    if (ch == 2) {
+        count += (( 2*bps+1) * blocksize + 7) / 8;
+    } else {
+        count += ( ch*bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Same computation as reference but computed in a single return expression.
+    // The per-channel header bytes use ceiling division (bps+14)/8 which equals
+    // (7+bps+7)/8. Residual bytes differ for stereo vs others. Final +2 for CRC.
+    int count;
+    count = 16;
+    count += ch * ((bps + 14) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses a helper variable for the residual byte count to avoid repetition.
+    // For stereo, residual bits are (2*bps+1)*blocksize; otherwise ch*bps*blocksize.
+    // Ceiling division by 8 is done via (bits+7)/8. Header and CRC added separately.
+    int count;
+    int residual_bytes;
+    if (ch == 2) {
+        residual_bytes = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual_bytes = (ch * bps * blocksize + 7) / 8;
+    }
+    count = 16 + ch * ((7 + bps + 7) / 8) + residual_bytes + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes header bytes per channel as (bps + 14) / 8 which is equivalent to
+    // (7 + bps + 7) / 8 since both represent ceiling of (bps+7)/8. The residual
+    // calculation remains identical to reference. Adds 16 for header and 2 for CRC.
+    int count;
+    int header_per_ch = (bps + 14) / 8;
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    count = 16 + ch * header_per_ch + residual + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses ternary operator to select residual byte count based on channel count.
+    // The expression for stereo residual is ((2*bps+1)*blocksize+7)/8.
+    // For non-stereo, it is (ch*bps*blocksize+7)/8. Header and CRC added directly.
+    int count;
+    int residual = (ch == 2) ? ((2 * bps + 1) * blocksize + 7) / 8 : (ch * bps * blocksize + 7) / 8;
+    count = 16 + ch * ((7 + bps + 7) / 8) + residual + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Combines all terms into one expression using ternary for residual selection.
+    // (7+bps+7)/8 simplifies to (bps+14)/8 for ceiling division of (bps+7)/8.
+    // Adds 18 for the fixed header (16) and CRC (2) bytes.
+    int count;
+    count = 18 + ch * ((bps + 14) / 8) + ((ch == 2) ? ((2 * bps + 1) * blocksize + 7) / 8 : (ch * bps * blocksize + 7) / 8);
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Separates the fixed overhead (16 header + 2 CRC = 18) from variable parts.
+    // Per-channel header bytes use ceiling division. Residual bytes depend on
+    // whether stereo coding is used. All ceiling divisions use +7 before /8.
+    int count;
+    int fixed_overhead = 18;
+    int per_ch_header = (7 + bps + 7) / 8;
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    count = fixed_overhead + ch * per_ch_header + residual;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses explicit ceiling division function logic inline: (n + d - 1) / d.
+    // For per-channel header, n = bps + 7, d = 8, giving (bps + 14) / 8.
+    // For residual, n is the bit count, d = 8, giving (bits + 7) / 8.
+    int count;
+    int header_bytes = ch * ((bps + 14) / 8);
+    int residual_bits = (ch == 2) ? (2 * bps + 1) * blocksize : ch * bps * blocksize;
+    int residual_bytes = (residual_bits + 7) / 8;
+    count = 16 + header_bytes + residual_bytes + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes residual bits first, then converts to bytes with ceiling division.
+    // Stereo uses mid-side coding with (2*bps+1) bits per sample. Others use
+    // ch*bps bits per sample. Header bytes per channel use (bps+14)/8.
+    int count;
+    int residual_bits;
+    if (ch == 2) {
+        residual_bits = (2 * bps + 1) * blocksize;
+    } else {
+        residual_bits = ch * bps * blocksize;
+    }
+    count = 16 + ch * ((bps + 14) / 8) + (residual_bits + 7) / 8 + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Directly returns the sum of all components in a single expression.
+    // 16 for frame header, ch*((bps+14)/8) for subframe headers, residual bytes
+    // selected via ternary, and 2 for CRC. Equivalent to reference for all inputs.
+    int count;
+    count = 16 + ch * ((bps + 14) / 8) + ((ch == 2) ? ((2 * bps + 1) * blocksize + 7) / 8 : (ch * bps * blocksize + 7) / 8) + 2;
+    return count;
+}

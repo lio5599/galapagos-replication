@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Computes a mod 3329 using Barrett reduction algorithm
+  // v = round(2^26 / 3329) serves as the reciprocal approximation
+  // Multiplying a by v and shifting right by 26 approximates a/3329
+  // The bias term 2^25 ensures correct rounding for all valid inputs
+  // Subtracting t*3329 from a yields the remainder
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

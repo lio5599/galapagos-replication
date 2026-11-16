@@ -1,0 +1,125 @@
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Reference: compares two floating-point numbers represented as uint64_t
+    // by handling sign bits and magnitude ordering correctly.
+    // Positive values: normal signed comparison.
+    // Negative values: reversed order.
+    // Mixed signs: negative is less than positive.
+    int cc0, cc1;
+    int64_t sx;
+    int64_t sy;
+
+    sx = *(int64_t *)&x;
+    sy = *(int64_t *)&y;
+    sy &= ~((sx ^ sy) >> 63); /* set sy=0 if signs differ */
+
+    cc0 = (int)((sx - sy) >> 63) & 1; /* Neither subtraction overflows when */
+    cc1 = (int)((sy - sx) >> 63) & 1; /* the signs are the same. */
+
+    return cc0 ^ ((cc0 ^ cc1) & (int)((x & y) >> 63));
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Direct case analysis on sign bits.
+    // Extract sign bits of x and y.
+    // If signs differ, negative is less.
+    // If same sign, compare magnitudes with correct order.
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    if (sx != sy) return sx;
+    if (sx == 0) return (x < y) ? 1 : 0;
+    return (x > y) ? 1 : 0;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Use sign extraction and conditional logic.
+    // Signs differ: result is sign of x.
+    // Both positive: x < y.
+    // Both negative: x > y (reversed order).
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    if (sx ^ sy) return sx;
+    return (sx == 0) ? (x < y) : (x > y);
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Bitwise approach without branches.
+    // Compute sign bits.
+    // If signs differ, return sx.
+    // If same sign, use magnitude comparison with order adjustment.
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    int signs_differ = sx ^ sy;
+    int lt_pos = (x < y) & 1;
+    int lt_neg = (x > y) & 1;
+    return (signs_differ & sx) | ((~signs_differ) & (sx ? lt_neg : lt_pos));
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Reinterpret as signed integers and handle cases.
+    // Cast to int64_t to access sign bit naturally.
+    // Handle sign differences and magnitude comparisons.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int xs = sx < 0;
+    int ys = sy < 0;
+    if (xs != ys) return xs;
+    if (xs) return sx > sy;
+    return sx < sy;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Use arithmetic on sign-extended values.
+    // When signs same, subtraction does not overflow.
+    // Use sign of difference with order correction for negatives.
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int xs = (sx >> 63) & 1;
+    int ys = (sy >> 63) & 1;
+    if (xs != ys) return xs;
+    int diff = sx - sy;
+    int sgn = (diff >> 63) & 1;
+    return xs ? (1 - sgn) : sgn;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Transform negative numbers to preserve order.
+    // For negative floats, invert magnitude bits to reverse order.
+    // Then compare as unsigned.
+    uint64_t mx = x;
+    uint64_t my = y;
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    if (sx) mx = ~mx;
+    if (sy) my = ~my;
+    if (sx != sy) return sx;
+    return (mx < my) ? 1 : 0;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Adjust representation so unsigned comparison works.
+    // Flip all bits for negative numbers to reverse magnitude order.
+    // Then standard unsigned comparison gives correct result.
+    uint64_t ax = (x >> 63) ? ~x : x;
+    uint64_t ay = (y >> 63) ? ~y : y;
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    if (sx != sy) return sx;
+    return (ax < ay) ? 1 : 0;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Use sign mask to adjust comparison.
+    // Create adjusted values where unsigned order matches float order.
+    // Handle sign differences separately.
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    uint64_t ax = x ^ ((uint64_t)sx << 63) ^ (~((uint64_t)sx << 63) & (uint64_t)0x7FFFFFFFFFFFFFFFULL);
+    uint64_t ay = y ^ ((uint64_t)sy << 63) ^ (~((uint64_t)sy << 63) & (uint64_t)0x7FFFFFFFFFFFFFFFULL);
+    if (sx != sy) return sx;
+    return (ax < ay) ? 1 : 0;
+}
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Simplified adjustment: negate sign bit and flip magnitude for negatives.
+    // This maps float order to unsigned integer order.
+    // Sign difference handled by sign bit comparison.
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    uint64_t ax = (x ^ 0x8000000000000000ULL) ^ ((uint64_t)sx << 63) ^ ((uint64_t)(-sx) & 0x7FFFFFFFFFFFFFFFULL);
+    uint64_t ay = (y ^ 0x8000000000000000ULL) ^ ((uint64_t)sy << 63) ^ ((uint64_t)(-sy) & 0x7FFFFFFFFFFFFFFFULL);
+    if (sx != sy) return sx;
+    return (ax < ay) ? 1 : 0;
+}
+```

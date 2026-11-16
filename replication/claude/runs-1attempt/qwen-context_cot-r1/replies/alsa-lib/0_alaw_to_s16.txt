@@ -1,0 +1,201 @@
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Reference: Converts A-law encoded 8-bit value to 16-bit signed PCM.
+	// XOR with 0x55 to restore sign/magnitude, extract magnitude bits.
+	// If low segment (t<16), scale directly; else use segment decoding.
+	// Apply sign from original MSB of a_val.
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return ((a_val & 0x80) ? t : -t);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Same logic but compute sign separately early.
+	// Extract sign bit before XOR, then process magnitude.
+	// Equivalent because sign is determined by original MSB.
+	int t;
+	int seg;
+	int sign = a_val & 0x80;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return sign ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Use ternary for sign application at end.
+	// Process magnitude identically, apply sign via conditional.
+	// Equivalent because sign handling is identical.
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Compute magnitude first, then apply sign.
+	// Store magnitude in t, determine sign from original a_val.
+	// Equivalent because operations on magnitude are identical.
+	int t;
+	int seg;
+	unsigned char orig = a_val;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (orig & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Inline the sign check into return statement.
+	// Process magnitude identically, return with sign adjustment.
+	// Equivalent because sign logic is preserved.
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Use explicit if-else for sign application.
+	// Process magnitude identically, apply sign with if-else.
+	// Equivalent because sign handling is identical.
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	if (a_val & 0x80)
+		return t;
+	else
+		return -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Compute sign mask and use arithmetic for sign.
+	// Process magnitude identically, apply sign via subtraction.
+	// Equivalent because sign application is mathematically identical.
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	int sign = (a_val & 0x80) ? 1 : -1;
+	return t * sign;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Use bitwise NOT and addition for negation.
+	// Process magnitude identically, negate using two's complement.
+	// Equivalent because -t equals ~t + 1 in two's complement.
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	if (a_val & 0x80)
+		return t;
+	else
+		return ~t + 1;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Separate magnitude computation into helper variable.
+	// Process magnitude identically, store in mag, apply sign.
+	// Equivalent because magnitude computation is identical.
+	int mag;
+	int seg;
+	a_val ^= 0x55;
+	mag = a_val & 0x7f;
+	if (mag < 16)
+		mag = (mag << 4) + 8;
+	else {
+		seg = (mag >> 4) & 0x07;
+		mag = ((mag & 0x0f) << 4) + 0x108;
+		mag <<= seg - 1;
+	}
+	return (a_val & 0x80) ? mag : -mag;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Approach: Use conditional expression for magnitude path selection.
+	// Process magnitude with ternary operator instead of if-else.
+	// Equivalent because both paths compute same result.
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+```

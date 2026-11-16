@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask_6(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Uses sign extension: shift right arithmetically by 15.
+  int32_t s = (int32_t)x;
+  s >>= 15;
+  return (int)s;
+}
+
+
+int main(){
+    int16_t_negative_mask_6(0);
+}

@@ -1,0 +1,22 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Uses do-while style logic with explicit break condition.
+    // Same mathematical algorithm for integer cube root extraction.
+    // Handles all 64-bit inputs correctly including zero.
+    uint64_t r = 0;
+    uint64_t b;
+    int s = 63;
+
+    for (;;) {
+        if (s < 0) break;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+        s -= 3;
+    }
+    return r << 12;
+}

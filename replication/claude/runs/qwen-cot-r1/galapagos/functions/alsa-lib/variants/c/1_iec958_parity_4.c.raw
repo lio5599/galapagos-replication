@@ -1,0 +1,15 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 4: Recursive bit extraction via shift and mask
+	// Shift data right by 4, process 27 bits (positions 4-30)
+	// Accumulate parity via XOR of each extracted bit
+	// Edge case: all zeros yield parity 0
+	unsigned int temp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 27; i++) {
+		parity ^= temp & 1;
+		temp >>= 1;
+	}
+	return parity;
+}

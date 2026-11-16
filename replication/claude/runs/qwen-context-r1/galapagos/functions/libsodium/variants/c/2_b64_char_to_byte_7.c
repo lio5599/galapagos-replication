@@ -1,0 +1,40 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    unsigned int result = 0;
+    unsigned int mask_upper = ((unsigned int)(c - 'A') >> 8) & 0xFF;
+    unsigned int mask_upper_inv = mask_upper ^ 0xFF;
+    unsigned int mask_upper_end = ((unsigned int)('Z' - c) >> 8) & 0xFF;
+    unsigned int mask_upper_end_inv = mask_upper_end ^ 0xFF;
+    
+    unsigned int mask_lower = ((unsigned int)(c - 'a') >> 8) & 0xFF;
+    unsigned int mask_lower_inv = mask_lower ^ 0xFF;
+    unsigned int mask_lower_end = ((unsigned int)('z' - c) >> 8) & 0xFF;
+    unsigned int mask_lower_end_inv = mask_lower_end ^ 0xFF;
+    
+    unsigned int mask_digit = ((unsigned int)(c - '0') >> 8) & 0xFF;
+    unsigned int mask_digit_inv = mask_digit ^ 0xFF;
+    unsigned int mask_digit_end = ((unsigned int)('9' - c) >> 8) & 0xFF;
+    unsigned int mask_digit_end_inv = mask_digit_end ^ 0xFF;
+    
+    unsigned int is_plus = ((0U - ((unsigned int)c ^ (unsigned int)'+')) >> 8) & 0xFF;
+    is_plus = is_plus ^ 0xFF;
+    
+    unsigned int is_slash = ((0U - ((unsigned int)c ^ (unsigned int)'/')) >> 8) & 0xFF;
+    is_slash = is_slash ^ 0xFF;
+    
+    result = mask_upper_inv & mask_upper_end_inv & (c - 'A');
+    result |= mask_lower_inv & mask_lower_end_inv & (c - 'a' + 26);
+    result |= mask_digit_inv & mask_digit_end_inv & (c - '0' + 52);
+    result |= is_plus & 62;
+    result |= is_slash & 63;
+    
+    return result;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

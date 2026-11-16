@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    // Compact lookup using computed index from character properties.
+    // Builds index based on character class and offset.
+    // Invalid chars produce index out of valid range, mapped to 0.
+    // Equivalent by ensuring only valid chars produce correct values.
+    unsigned int uc = (unsigned int)c;
+    if (uc >= 'A' && uc <= 'Z') return uc - 'A';
+    if (uc >= 'a' && uc <= 'z') return uc - 'a' + 26;
+    if (uc >= '0' && uc <= '9') return uc - '0' + 52;
+    if (uc == '+') return 62;
+    if (uc == '/') return 63;
+    return 0;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

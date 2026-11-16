@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Arithmetic approach: compute offset and base character
+    // For x<26: base='A', offset=x; x<52: base='a', offset=x-26; etc.
+    unsigned int base, offset;
+    if (x < 26) { base = 'A'; offset = x; }
+    else if (x < 52) { base = 'a'; offset = x - 26; }
+    else if (x < 62) { base = '0'; offset = x - 52; }
+    else if (x == 62) { base = '-'; offset = 0; }
+    else if (x == 63) { base = '_'; offset = 0; }
+    else { base = 0; offset = 0; }
+    return (x < 64) ? (base + offset) : 0;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    int val;
+    if (x <= 25)
+        val = x + 65;
+    else if (x <= 51)
+        val = x + 71;
+    else if (x <= 61)
+        val = x + 4;
+    else if (x == 62)
+        val = 43;
+    else if (x == 63)
+        val = 47;
+    else
+        val = 0;
+    return val;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

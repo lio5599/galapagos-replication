@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: use subtraction to detect overflow.
+	// If a > UINT32_MAX - b, then adding b to a exceeds UINT32_MAX.
+	// UINT32_MAX is 0xFFFFFFFF, which is 4294967295U.
+	if (a > 0xFFFFFFFFU - b)
+		return 0xFFFFFFFFU;
+	return a + b;
+}
+
+
+int main(){
+    add(0,0);
+}

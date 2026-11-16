@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t adjusted = x - ((uint64_t)1 << 52);
+    uint32_t exponent = (uint32_t)(adjusted >> 52) & 0x7FF;
+    uint32_t t = (exponent + 1) >> 11;
+    adjusted &= (uint64_t)t - 1;
+    return adjusted;
+}
+
+
+int main(){
+    fpr_half(0);
+}

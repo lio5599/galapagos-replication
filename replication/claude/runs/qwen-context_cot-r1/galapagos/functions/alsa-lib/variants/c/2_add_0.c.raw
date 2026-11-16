@@ -1,0 +1,10 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reference: saturating addition for 32-bit unsigned integers.
+	// If a + b would overflow (exceed UINT32_MAX), return UINT32_MAX.
+	// Otherwise, return a + b.
+	// Check: if a > UINT32_MAX - b, then a + b > UINT32_MAX.
+	if (a > 4294967295U - b)
+		return 4294967295U;
+	return a + b;
+}

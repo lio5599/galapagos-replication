@@ -1,0 +1,88 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reference: saturating addition for 32-bit unsigned ints.
+	// Returns min(a+b, UINT_MAX). Uses threshold check to detect overflow.
+	// If a+b would exceed UINT_MAX, return UINT_MAX; else return a+b.
+	if (a >= 4294967295U - b)
+		return 4294967295U;
+	return a + b;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use unsigned overflow detection via result < a.
+	// If a+b overflows, result wraps around and becomes < a.
+	// In that case, return UINT_MAX; otherwise return a+b.
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 4294967295U;
+	return sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Check if b > UINT_MAX - a to detect overflow.
+	// Equivalent to a + b > UINT_MAX, which means overflow.
+	// Return UINT_MAX on overflow, else return a + b.
+	if (b > 4294967295U - a)
+		return 4294967295U;
+	return a + b;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use carry flag concept: if a + b < a, overflow occurred.
+	// This works because unsigned addition wraps modulo 2^32.
+	// Return UINT_MAX if overflow, else return the sum.
+	unsigned int sum = a + b;
+	return (sum < a) ? 4294967295U : sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Compute sum and check if it is less than either operand.
+	// Overflow causes wrap-around, making sum < a or sum < b.
+	// Return UINT_MAX if overflow detected, else return sum.
+	unsigned int sum = a + b;
+	if (sum < a || sum < b)
+		return 4294967295U;
+	return sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use subtraction to check for overflow: if a > UINT_MAX - b.
+	// This is equivalent to checking if a + b > UINT_MAX.
+	// Return UINT_MAX on overflow, else return a + b.
+	if (a > 4294967295U - b)
+		return 4294967295U;
+	return a + b;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Combine a and b, then clamp to UINT_MAX if overflow.
+	// Use conditional expression based on overflow detection.
+	// Overflow occurs when sum < a due to unsigned wrap-around.
+	unsigned int sum = a + b;
+	return (sum < a) ? 4294967295U : sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Check overflow by verifying if b exceeds the safe range.
+	// Safe range for b is 0 to UINT_MAX - a.
+	// If b is outside this range, return UINT_MAX; else return sum.
+	if (b > 4294967295U - a)
+		return 4294967295U;
+	return a + b;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use bitwise and arithmetic to detect overflow.
+	// If a + b < a, overflow has occurred in unsigned arithmetic.
+	// Return UINT_MAX on overflow, otherwise return the computed sum.
+	unsigned int sum = a + b;
+	return (sum < a) ? 4294967295U : sum;
+}
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Directly compute sum and use ternary for clamping.
+	// Overflow detection via sum < a is reliable for unsigned.
+	// Return UINT_MAX if overflow, else return the actual sum.
+	unsigned int sum = a + b;
+	return (sum < a) ? 4294967295U : sum;
+}

@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Converts A-law compressed byte to 16-bit signed PCM sample.
+	// XOR with 0x55 inverts bits to standard magnitude format.
+	// Small values use direct expansion, large use segment logic.
+	// Segment extracted from bits 4-6 controls shift amount.
+	// Sign bit from input applied to final magnitude.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

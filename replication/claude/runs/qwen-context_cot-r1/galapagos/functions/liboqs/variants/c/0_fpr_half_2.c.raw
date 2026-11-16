@@ -1,0 +1,11 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Subtract 2^52 to decrement exponent field.
+    // If exponent field becomes 0, result is zero.
+    // Otherwise, preserve mantissa and new exponent.
+    // Bitwise mask zeros result when exponent underflows.
+    x -= (uint64_t)1 << 52;
+    uint32_t new_exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (new_exp == 0) return 0;
+    return x;
+}

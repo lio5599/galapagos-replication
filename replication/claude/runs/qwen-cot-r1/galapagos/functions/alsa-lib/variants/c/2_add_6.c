@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Check for overflow using bitwise and arithmetic properties.
+	// Overflow in unsigned addition happens when carry out of MSB.
+	// This is detected when a + b < a.
+	// Return saturated value on overflow.
+	if ((a + b) < a)
+		return 4294967295;
+	return a + b;
+}
+
+
+int main(){
+    add(0,0);
+}

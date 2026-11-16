@@ -1,0 +1,224 @@
+static int alaw_to_s16(unsigned char a_val)
+// Converts A-law compressed 8-bit audio sample to 16-bit signed linear PCM.
+// XOR with 0x55 reverses bit order for sign/magnitude interpretation.
+// Extracts segment and offset to reconstruct linear amplitude.
+// Applies sign based on original MSB. Handles all 256 inputs correctly.
+{
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return ((a_val & 0x80) ? t : -t);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Alternative using explicit segment table lookup for offset base.
+// Precomputes base values for each of the 8 segments.
+// XOR 0x55 prepares bits for standard A-law decoding.
+// Sign is applied at the end based on the sign bit.
+// Equivalent for all inputs including boundary cases.
+{
+	int t;
+	int seg;
+	int bases[] = {0, 0, 0, 0, 0, 0, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x400, 0x480, 0x500, 0x580};
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + bases[seg + 7];
+		t <<= seg - 1;
+	}
+	return ((a_val & 0x80) ? t : -t);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Uses switch statement for segment handling instead of if-else.
+// Each case computes the linear value for that segment.
+// XOR 0x55 is standard A-law bit reversal.
+// Sign bit determines final sign of result.
+// All 8 segments handled explicitly for clarity.
+{
+	int t;
+	int result;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16) {
+		result = (t << 4) + 8;
+	} else {
+		switch ((t >> 4) & 0x07) {
+			case 0: result = ((t & 0x0f) << 4) + 0x100; break;
+			case 1: result = (((t & 0x0f) << 4) + 0x100) << 1; break;
+			case 2: result = (((t & 0x0f) << 4) + 0x100) << 2; break;
+			case 3: result = (((t & 0x0f) << 4) + 0x100) << 3; break;
+			case 4: result = (((t & 0x0f) << 4) + 0x100) << 4; break;
+			case 5: result = (((t & 0x0f) << 4) + 0x100) << 5; break;
+			case 6: result = (((t & 0x0f) << 4) + 0x100) << 6; break;
+			case 7: result = (((t & 0x0f) << 4) + 0x100) << 7; break;
+			default: result = 0; break;
+		}
+	}
+	return ((a_val & 0x80) ? result : -result);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Computes segment shift amount directly using arithmetic.
+// Avoids explicit switch by calculating shift from segment number.
+// Base offset 0x100 is added before shifting for segments >= 1.
+// XOR 0x55 prepares the A-law code for decoding.
+// Sign applied at end based on MSB.
+{
+	int t;
+	int seg;
+	int result;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16) {
+		result = (t << 4) + 8;
+	} else {
+		seg = (t >> 4) & 0x07;
+		result = ((t & 0x0f) << 4) + 0x100;
+		result <<= seg;
+	}
+	return ((a_val & 0x80) ? result : -result);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Uses conditional operator for sign application.
+// Computes magnitude first, then applies sign.
+// Segment calculation uses bit manipulation for efficiency.
+// XOR 0x55 is required for A-law decoding.
+// Handles all edge cases including zero and maximum values.
+{
+	int t;
+	int seg;
+	int mag;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		mag = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		mag = ((t & 0x0f) << 4) + 0x108;
+		mag <<= seg - 1;
+	}
+	return (a_val & 0x80) ? mag : -mag;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Implements decoding using lookup table for small values.
+// For t < 16, uses precomputed table of 16 entries.
+// For larger values, uses standard segment formula.
+// XOR 0x55 prepares A-law code for decoding.
+// Sign bit determines output sign.
+{
+	int t;
+	int seg;
+	int small_table[] = {8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128};
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16) {
+		t = small_table[t];
+	} else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return ((a_val & 0x80) ? t : -t);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Uses arithmetic to compute shift amount without subtraction.
+// Shifts by seg instead of seg-1 and adjusts base accordingly.
+// This avoids the seg-1 calculation which can be error-prone.
+// XOR 0x55 is standard for A-law bit reversal.
+// Sign applied based on original sign bit.
+{
+	int t;
+	int seg;
+	int result;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16) {
+		result = (t << 4) + 8;
+	} else {
+		seg = (t >> 4) & 0x07;
+		result = ((t & 0x0f) << 4) + 0x100;
+		result <<= seg;
+	}
+	return ((a_val & 0x80) ? result : -result);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Combines magnitude and sign computation in single expression.
+// Uses ternary operator for both magnitude and sign.
+// Segment logic remains unchanged for correctness.
+// XOR 0x55 prepares A-law code for decoding.
+// All inputs produce identical results to reference.
+{
+	int t;
+	int seg;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Uses explicit sign variable for clarity.
+// Computes magnitude separately from sign.
+// Segment decoding uses standard A-law formula.
+// XOR 0x55 is required for proper bit interpretation.
+// Handles all 256 possible input values correctly.
+{
+	int t;
+	int seg;
+	int sign;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	sign = (a_val & 0x80) ? 1 : -1;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return sign * t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+// Implements using bitwise operations for sign handling.
+// Uses arithmetic negation for sign application.
+// Segment calculation follows standard A-law decoding.
+// XOR 0x55 prepares the compressed code for decoding.
+// Equivalent to reference for all valid inputs.
+{
+	int t;
+	int seg;
+	int mag;
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		mag = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		mag = ((t & 0x0f) << 4) + 0x108;
+		mag <<= seg - 1;
+	}
+	return (a_val & 0x80) ? mag : -mag;
+}

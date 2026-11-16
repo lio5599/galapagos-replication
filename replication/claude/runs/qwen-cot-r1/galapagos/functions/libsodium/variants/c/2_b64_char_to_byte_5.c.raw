@@ -1,0 +1,16 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    // Uses arithmetic range check with ternary-like bitwise ops.
+    // For each range, computes value only if char is in range.
+    // Final AND with validity mask zeroes invalid inputs.
+    // Equivalent by same logical structure as reference.
+    unsigned int uc = (unsigned int)c;
+    unsigned int r1 = (uc >= 'A' && uc <= 'Z') ? (uc - 'A') : 0;
+    unsigned int r2 = (uc >= 'a' && uc <= 'z') ? (uc - 'a' + 26) : 0;
+    unsigned int r3 = (uc >= '0' && uc <= '9') ? (uc - '0' + 52) : 0;
+    unsigned int r4 = (uc == '+') ? 62 : 0;
+    unsigned int r5 = (uc == '/') ? 63 : 0;
+    unsigned int val = r1 | r2 | r3 | r4 | r5;
+    unsigned int valid = (uc >= 'A' && uc <= 'Z') || (uc >= 'a' && uc <= 'z') || (uc >= '0' && uc <= '9') || uc == '+' || uc == '/';
+    return valid ? val : 0;
+}

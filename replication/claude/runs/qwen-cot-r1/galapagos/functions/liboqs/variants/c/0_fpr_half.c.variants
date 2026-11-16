@@ -1,0 +1,119 @@
+
+static uint64_t fpr_half(uint64_t x) {
+    // Reference: divides a half-precision-like float by 2 by decrementing exponent.
+    // Handles zero by ensuring exponent doesn't underflow below zero.
+    // The exponent is in bits 52-62, with bias handled implicitly.
+    // Subtracting 1<<52 adjusts for the implicit leading 1 in normalized numbers.
+    // The mask and shift extract exponent, decrement, and reapply.
+    // Zero case: if exponent was 0, result remains 0 due to masking.
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: extract exponent, decrement it, clear mantissa if exponent becomes 0.
+    // Same as reference: subtract bias adjustment, adjust exponent, mask mantissa.
+    // Zero handling: when exponent field is 0, result is 0.
+    // The +1 and >>11 effectively decrement the exponent value.
+    // Masking with t-1 clears lower bits when t is 0 (zero case).
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t new_exp = (exp + 1) >> 11;
+    uint64_t mask = (uint64_t)new_exp - 1;
+    x -= (uint64_t)1 << 52;
+    x &= mask;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: directly manipulate exponent bits by subtracting 1<<52.
+    // Subtracting 1<<52 from x decrements the exponent by 1.
+    // Then mask out mantissa if exponent underflows to 0.
+    // Zero case: if original exponent was 0, x becomes negative-like, but masking handles it.
+    // The mask t-1 becomes 0 when exponent was 0, zeroing the result.
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x -= (uint64_t)1 << 52;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: compute new exponent by decrementing, then apply mask.
+    // Extract exponent, decrement via (exp+1)>>11 trick.
+    // Subtract 1<<52 to adjust for implicit bit, then mask mantissa.
+    // When exponent is 0, t=0, mask is -1 which is all 1s, but x was reduced.
+    // Actually, t=0 gives mask -1, but x after subtraction has high bits cleared.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (exp + 1) >> 11;
+    x -= (uint64_t)1 << 52;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: use conditional logic to handle zero explicitly.
+    // If exponent is 0, return 0 immediately.
+    // Otherwise, decrement exponent by subtracting 1<<52.
+    // This avoids complex masking for zero case.
+    // Equivalent because zero input stays zero, others have exponent decremented.
+    if (((x >> 52) & 0x7FF) == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: separate exponent and mantissa, decrement exponent, recombine.
+    // Extract exponent and mantissa parts.
+    // Decrement exponent; if it becomes 0, result is 0.
+    // Otherwise, subtract 1<<52 to decrement exponent in place.
+    // Mantissa is preserved unless exponent underflows.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: use arithmetic to decrement exponent without branching.
+    // The expression (exp + 1) >> 11 gives 0 if exp==0, else exp-1.
+    // Subtract 1<<52 to adjust exponent, then mask mantissa with t-1.
+    // When t=0, mask is all 1s but x has been reduced so high bits are 0.
+    // This ensures zero case returns 0.
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x -= (uint64_t)1 << 52;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: inline the exponent decrement and masking logic.
+    // Compute t as the adjusted exponent indicator.
+    // Subtract 1<<52 to decrement exponent field.
+    // Mask with t-1 to clear mantissa when exponent underflows.
+    // Zero case: t=0, mask=-1, but x after subtraction has zero exponent bits.
+    // Result is 0 for zero input, correct for others.
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x -= (uint64_t)1 << 52;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: use bitwise operations to isolate and modify exponent.
+    // Mask exponent bits, decrement via arithmetic trick.
+    // Subtract 1<<52 from x to reflect exponent decrement.
+    // Apply mask to clear mantissa if exponent becomes 0.
+    // Equivalent to reference: handles zero and normal cases correctly.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (exp + 1) >> 11;
+    x -= (uint64_t)1 << 52;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: combine exponent check and adjustment in minimal steps.
+    // If exponent is zero, return zero.
+    // Otherwise, subtract 1<<52 to decrement exponent.
+    // This is simpler and equivalent for all cases.
+    // Zero handling is explicit, avoiding masking complexity.
+    if (((x >> 52) & 0x7FF) == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}

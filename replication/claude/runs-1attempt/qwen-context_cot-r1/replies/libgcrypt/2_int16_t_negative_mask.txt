@@ -1,0 +1,91 @@
+static int int16_t_negative_mask_1(int16_t x)
+{
+  // Reference computes: if x < 0 return -1, else return 0.
+  // It shifts x right by 15 to get 1 if negative, 0 otherwise.
+  // Then negates that value: -1 or 0.
+  // This implementation uses conditional operator directly.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask_2(int16_t x)
+{
+  // If x is negative, sign bit is set. Shift right 15 bits gives 1.
+  // Negating 1 gives -1, negating 0 gives 0.
+  // Using arithmetic right shift on signed int16_t directly.
+  int16_t shifted = x >> 15;
+  return (int) shifted;
+}
+
+static int int16_t_negative_mask_3(int16_t x)
+{
+  // Check if x is negative by comparing with zero.
+  // If negative, return -1, otherwise return 0.
+  // This is logically equivalent to the bit manipulation approach.
+  if (x < 0) return -1;
+  return 0;
+}
+
+static int int16_t_negative_mask_4(int16_t x)
+{
+  // Extract sign bit by shifting right 15 positions.
+  // The result is 1 for negative numbers, 0 for non-negative.
+  // Subtract this from 0 to get -1 or 0.
+  uint16_t u = (uint16_t) x;
+  uint16_t sign = u >> 15;
+  return (int) (0 - sign);
+}
+
+static int int16_t_negative_mask_5(int16_t x)
+{
+  // Use bitwise NOT on the sign bit result.
+  // If x is negative, x >> 15 is 0xFFFF (as int16_t), which is -1.
+  // If x is non-negative, x >> 15 is 0, which is 0.
+  // Direct cast preserves the value.
+  return (int) (x >> 15);
+}
+
+static int int16_t_negative_mask_6(int16_t x)
+{
+  // Compute sign mask using multiplication.
+  // If x is negative, sign bit extraction gives 1, multiply by -1 gives -1.
+  // If x is non-negative, sign bit extraction gives 0, multiply by -1 gives 0.
+  uint16_t u = (uint16_t) x;
+  int sign = (int) (u >> 15);
+  return sign * -1;
+}
+
+static int int16_t_negative_mask_7(int16_t x)
+{
+  // Use ternary operator with explicit sign bit check.
+  // Check if the 15th bit is set by masking with 0x8000.
+  // If set, x is negative, return -1, else return 0.
+  if (x & 0x8000) return -1;
+  return 0;
+}
+
+static int int16_t_negative_mask_8(int16_t x)
+{
+  // Shift x right by 15 using unsigned conversion to avoid undefined behavior.
+  // The result is 1 if x was negative, 0 otherwise.
+  // Negate the result to get -1 or 0.
+  unsigned int u = (unsigned int) (uint16_t) x;
+  unsigned int sign = u >> 15;
+  return (int) (0 - sign);
+}
+
+static int int16_t_negative_mask_9(int16_t x)
+{
+  // Use subtraction from zero based on sign bit.
+  // Extract sign bit by right shifting 15 positions on unsigned value.
+  // Subtract that bit from 0 to produce -1 or 0.
+  uint16_t sign_bit = ((uint16_t) x) >> 15;
+  return -(int) sign_bit;
+}
+
+static int int16_t_negative_mask_10(int16_t x)
+{
+  // Compare x with zero to determine sign.
+  // Return -1 if x is strictly less than zero, 0 otherwise.
+  // This directly captures the semantics of the reference function.
+  return x < 0 ? -1 : 0;
+}

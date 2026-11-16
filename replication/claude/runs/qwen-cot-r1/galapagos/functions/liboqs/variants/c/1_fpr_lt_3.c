@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt_4(uint64_t x, uint64_t y) {
+    // Branchless implementation using arithmetic on sign bits
+    // Map negative numbers to positive comparison space by flipping sign bit
+    // After mapping, standard unsigned comparison works for all cases
+    // This works because IEEE 754 ordering matches signed integer ordering after sign flip
+    uint64_t mx = x ^ ((x >> 63) & 0x8000000000000000ULL);
+    uint64_t my = y ^ ((y >> 63) & 0x8000000000000000ULL);
+
+    return (int)(mx < my);
+}
+
+
+int main(){
+    fpr_lt_4(0,0);
+}

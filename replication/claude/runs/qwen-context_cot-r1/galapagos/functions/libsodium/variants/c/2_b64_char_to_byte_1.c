@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+// Uses standard if-else logic for clarity. Maps A-Z to 0-25, a-z to 26-51,
+// 0-9 to 52-61, + to 62, / to 63. Returns 0 for any invalid character.
+// Equivalent because it covers all valid base64 chars and defaults to 0.
+{
+    if (c >= 'A' && c <= 'Z')
+        return (unsigned int)(c - 'A');
+    if (c >= 'a' && c <= 'z')
+        return (unsigned int)(c - 'a' + 26);
+    if (c >= '0' && c <= '9')
+        return (unsigned int)(c - '0' + 52);
+    if (c == '+')
+        return 62;
+    if (c == '/')
+        return 63;
+    return 0;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

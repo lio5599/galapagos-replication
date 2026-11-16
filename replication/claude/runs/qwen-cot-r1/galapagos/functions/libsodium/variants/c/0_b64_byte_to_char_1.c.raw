@@ -1,0 +1,14 @@
+static int b64_byte_to_char(unsigned int x)
+// Uses a switch-like approach with explicit range checks via subtraction and sign extension
+// For x<26: returns x+'A'; for 26<=x<52: returns x-26+'a'; for 52<=x<62: returns x-52+'0'
+// For x==62: returns '+'; for x==63: returns '/'
+// The >>8 on unsigned subtraction creates 0xFF (all ones) when result is negative (borrow occurred)
+// This effectively tests if x < constant by checking if x - constant underflows
+{
+    unsigned int m1 = ((x - 26) >> 8) & 0xFF;
+    unsigned int m2 = ((x - 52) >> 8) & 0xFF;
+    unsigned int m3 = ((x - 62) >> 8) & 0xFF;
+    unsigned int eq62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int eq63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (m1 & (x + 'A')) | ((~m1 & m2) & (x + 'a' - 26)) | ((~m2 & m3) & (x + '0' - 52)) | ((~eq62 & 0xFF) & '+') | ((~eq63 & 0xFF) & '/');
+}

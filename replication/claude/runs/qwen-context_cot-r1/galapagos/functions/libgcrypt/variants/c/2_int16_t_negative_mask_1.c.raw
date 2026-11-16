@@ -1,0 +1,7 @@
+static int int16_t_negative_mask_2(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Uses arithmetic right shift on int16_t to propagate sign bit.
+  int16_t s = x >> 15;
+  return (int)s;
+}

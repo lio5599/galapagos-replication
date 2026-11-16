@@ -1,0 +1,180 @@
+
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x < 26)
+        return x + 'A';
+    else if (x < 52)
+        return x + 'a' - 26;
+    else if (x < 62)
+        return x + '0' - 52;
+    else if (x == 62)
+        return '+';
+    else if (x == 63)
+        return '/';
+    else
+        return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    int result = 0;
+    if (x <= 25)
+        result = x + 'A';
+    else if (x <= 51)
+        result = x + 'a' - 26;
+    else if (x <= 61)
+        result = x + '0' - 52;
+    else if (x == 62)
+        result = '+';
+    else if (x == 63)
+        result = '/';
+    return result;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    const char *table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    if (x < 64)
+        return table[x];
+    return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x < 26)
+        return 'A' + x;
+    if (x < 52)
+        return 'a' + (x - 26);
+    if (x < 62)
+        return '0' + (x - 52);
+    if (x == 62)
+        return '+';
+    if (x == 63)
+        return '/';
+    return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    int y = 0;
+    unsigned int mask1 = (x < 26) ? ~0U : 0U;
+    unsigned int mask2 = (x >= 26 && x < 52) ? ~0U : 0U;
+    unsigned int mask3 = (x >= 52 && x < 62) ? ~0U : 0U;
+    unsigned int mask4 = (x == 62) ? ~0U : 0U;
+    unsigned int mask5 = (x == 63) ? ~0U : 0U;
+    
+    y |= (mask1 & (x + 'A'));
+    y |= (mask2 & (x + 'a' - 26));
+    y |= (mask3 & (x + '0' - 52));
+    y |= (mask4 & '+');
+    y |= (mask5 & '/');
+    
+    return y;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    int val;
+    if (x <= 25)
+        val = x + 65;
+    else if (x <= 51)
+        val = x + 71;
+    else if (x <= 61)
+        val = x + 4;
+    else if (x == 62)
+        val = 43;
+    else if (x == 63)
+        val = 47;
+    else
+        val = 0;
+    return val;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x < 26)
+        return (int)('A' + x);
+    x -= 26;
+    if (x < 26)
+        return (int)('a' + x);
+    x -= 26;
+    if (x < 10)
+        return (int)('0' + x);
+    x -= 10;
+    if (x == 0)
+        return '+';
+    if (x == 1)
+        return '/';
+    return 0;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    int result;
+    if (x < 26) {
+        result = x + 'A';
+    } else if (x < 52) {
+        result = x - 26 + 'a';
+    } else if (x < 62) {
+        result = x - 52 + '0';
+    } else if (x == 62) {
+        result = '+';
+    } else if (x == 63) {
+        result = '/';
+    } else {
+        result = 0;
+    }
+    return result;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    int r = 0;
+    if (x < 26)
+        r = 'A' + x;
+    else if (x < 52)
+        r = 'a' + (x - 26);
+    else if (x < 62)
+        r = '0' + (x - 52);
+    else if (x == 62)
+        r = '+';
+    else if (x == 63)
+        r = '/';
+    return r;
+}
+
+
+
+static int b64_byte_to_char(unsigned int x)
+{
+    int out;
+    if (x < 26)
+        out = 65 + x;
+    else if (x < 52)
+        out = 97 + x - 26;
+    else if (x < 62)
+        out = 48 + x - 52;
+    else if (x == 62)
+        out = 43;
+    else if (x == 63)
+        out = 47;
+    else
+        out = 0;
+    return out;
+}

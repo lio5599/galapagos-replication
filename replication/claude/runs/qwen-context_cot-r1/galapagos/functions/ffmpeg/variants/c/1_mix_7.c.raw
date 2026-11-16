@@ -1,0 +1,13 @@
+static int mix(int c0, int c1)
+{
+    // Direct translation with explicit channel bounds.
+    // Red: 5 bits, Green: 6 bits, Blue: 5 bits.
+    // Average with weights 2:1, integer division by 3.
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int g0 = (c0 & 0x07E0) >> 5, g1 = (c1 & 0x07E0) >> 5;
+    int b0 = c0 & 0x001F, b1 = c1 & 0x001F;
+    int r = (2 * r0 + r1) / 3;
+    int g = (2 * g0 + g1) / 3;
+    int b = (2 * b0 + b1) / 3;
+    return (r << 10) + (g << 5) + b;
+}

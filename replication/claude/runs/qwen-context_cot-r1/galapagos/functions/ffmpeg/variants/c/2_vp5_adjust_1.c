@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Direct translation using explicit conditionals for clarity.
+    // If v < 0, the function effectively returns t.
+    // If v >= 2*t, it returns t.
+    // Otherwise, it returns min(v, t).
+    // Combining: returns t if v < 0 or v >= t, else v. But need to check v >= 2*t case.
+    // From tracing: it returns min(max(v, 0), t) for v < 2*t, and t for v >= 2*t.
+    // Which simplifies to: if v < 0 return t; else if v >= t return t; else return v.
+    if (v < 0) return t;
+    if (v >= t) return t;
+    return v;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

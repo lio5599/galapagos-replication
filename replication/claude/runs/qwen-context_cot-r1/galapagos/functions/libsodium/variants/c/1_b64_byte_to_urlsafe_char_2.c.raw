@@ -1,0 +1,12 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Branchless using conditional moves via ternary operators
+    // Equivalent to reference by handling each range separately
+    int result;
+    result = (x < 26) ? ('A' + x) : result;
+    result = (x >= 26 && x < 52) ? ('a' + x - 26) : result;
+    result = (x >= 52 && x < 62) ? ('0' + x - 52) : result;
+    result = (x == 62) ? '-' : result;
+    result = (x == 63) ? '_' : result;
+    return (x < 64) ? result : 0;
+}

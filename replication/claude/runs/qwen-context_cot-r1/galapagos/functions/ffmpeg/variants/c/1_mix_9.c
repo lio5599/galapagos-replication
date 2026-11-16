@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Step-by-step channel processing with clear naming.
+    // Extract red, green, blue from both inputs.
+    // Average each channel with weights 2 and 1, divide by 3.
+    int red0 = c0 >> 10, red1 = c1 >> 10;
+    int green0 = (c0 >> 5) & 0x3F, green1 = (c1 >> 5) & 0x3F;
+    int blue0 = c0 & 0x1F, blue1 = c1 & 0x1F;
+    int red = (2 * red0 + red1) / 3;
+    int green = (2 * green0 + green1) / 3;
+    int blue = (2 * blue0 + blue1) / 3;
+    return red * 1024 + green * 32 + blue;
+}
+
+
+int main(){
+    mix(0,0);
+}

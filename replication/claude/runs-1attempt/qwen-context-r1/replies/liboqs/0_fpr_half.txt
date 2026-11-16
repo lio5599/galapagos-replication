@@ -1,0 +1,138 @@
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint64_t sign = x & (1ULL << 63);
+    
+    if (exp == 0) {
+        return x;
+    }
+    
+    exp -= 1;
+    return sign | (exp << 52) | mantissa;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t result = x;
+    uint64_t exp = (result >> 52) & 0x7FF;
+    
+    if (exp != 0) {
+        result -= (1ULL << 52);
+    }
+    
+    return result;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t rest = x & ((1ULL << 52) - 1);
+    uint64_t sign = x & (1ULL << 63);
+    
+    if (exp == 0) {
+        return x;
+    }
+    
+    return sign | ((exp - 1) << 52) | rest;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t new_exp = ((x >> 52) & 0x7FF) - 1;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint64_t sign = x & (1ULL << 63);
+    
+    if ((x >> 52) & 0x7FF) {
+        return sign | (new_exp << 52) | mantissa;
+    } else {
+        return x;
+    }
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t mask = (1ULL << 52) - 1;
+    
+    if (exp == 0) {
+        return x;
+    }
+    
+    return x - (1ULL << 52);
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t sign = x & (1ULL << 63);
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t frac = x & ((1ULL << 52) - 1);
+    
+    if (exp != 0) {
+        exp--;
+    }
+    
+    return sign | (exp << 52) | frac;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t result = x;
+    uint64_t exp_field = (result >> 52) & 0x7FF;
+    
+    if (exp_field > 0) {
+        result &= ~((uint64_t)0x7FF << 52);
+        result |= ((exp_field - 1) << 52);
+    }
+    
+    return result;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t non_exp = x & ((1ULL << 52) - 1);
+    uint64_t sign = x & (1ULL << 63);
+    
+    if (exp == 0) {
+        return x;
+    }
+    
+    uint64_t new_exp = exp - 1;
+    return sign | (new_exp << 52) | non_exp;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint64_t sign = x & (1ULL << 63);
+    
+    if (exp == 0) {
+        return x;
+    }
+    
+    return sign | ((exp - 1) << 52) | mantissa;
+}
+```
+
+```c
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t result = x;
+    uint64_t exp = (result >> 52) & 0x7FF;
+    
+    if (exp != 0) {
+        result = (result & ~((uint64_t)0x7FF << 52)) | ((exp - 1) << 52);
+    }
+    
+    return result;
+}
+```

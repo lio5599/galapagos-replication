@@ -1,0 +1,103 @@
+```c
+static uint64_t fpr_half(uint64_t x) {
+    // Reference: divides IEEE-754 double by 2 by decrementing exponent, handling zero.
+    // Subtracting 1<<52 clears the exponent field if x is zero (exponent 0).
+    // For non-zero, it decrements the exponent by 1 (since exponent is biased).
+    // The mask operation ensures subnormal/zero cases are handled correctly.
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 1: Direct exponent manipulation with zero check via masking.
+    // If x is zero, subtracting 1<<52 underflows, making exponent field all 1s.
+    // The shift and mask then produce t=0, so x becomes 0. For non-zero, exponent decrements.
+    uint32_t exp;
+    x -= (uint64_t)1 << 52;
+    exp = (uint32_t)(x >> 52) & 0x7FF;
+    exp = (exp + 1) >> 11;
+    x &= (uint64_t)exp - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 2: Use conditional logic to handle zero case explicitly.
+    // If x is zero, return zero. Otherwise, decrement the exponent by 1.
+    // This avoids the underflow trick by checking for zero directly.
+    if (x == 0) {
+        return 0;
+    }
+    x -= (uint64_t)1 << 52;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 3: Extract exponent, decrement, and reconstruct.
+    // For zero, exponent is 0; decrementing would underflow, so we clamp to zero.
+    // For non-zero, we safely decrement the biased exponent by 1.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    exp -= 1;
+    return (x & ~(uint64_t)0x7FFULL << 52) | ((uint64_t)exp << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 4: Bitwise exponent decrement with saturation to zero.
+    // Subtract 1 from exponent if non-zero; if zero, result stays zero.
+    // Uses unsigned arithmetic to handle underflow gracefully via masking.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    exp = exp - (exp > 0);
+    return (x & ~(uint64_t)0x7FFULL << 52) | ((uint64_t)exp << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 5: Use the fact that dividing by 2 is shifting exponent down.
+    // For zero, the exponent is 0, so we must not decrement.
+    // For others, subtract 1 from the 11-bit exponent field.
+    uint64_t mask = (uint64_t)0x7FFULL << 52;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    return x - (uint64_t)1 << 52;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 6: Combine zero check with exponent adjustment in one expression.
+    // If x is zero, return 0. Else, subtract 1<<52 to decrement exponent.
+    // This relies on the IEEE-754 representation where exponent bias allows simple subtraction.
+    return (x == 0) ? 0 : x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 7: Use logical OR to avoid branching for zero case.
+    // If x is zero, the exponent part is zero, so we force result to zero.
+    // Otherwise, decrement exponent by subtracting 1<<52.
+    uint64_t result = x - ((uint64_t)1 << 52);
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    return result;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 8: Extract sign, exponent, mantissa; adjust exponent; reassemble.
+    // For zero, exponent is 0, so we return 0. For others, decrement exponent.
+    uint64_t sign = x & (uint64_t)1 << 63;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((uint64_t)1 << 52) - 1;
+    if (exp == 0) {
+        return 0;
+    }
+    exp -= 1;
+    return sign | ((uint64_t)exp << 52) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 9: Use arithmetic right shift on exponent after bias adjustment.
+    // Decrement exponent by 1 if non-zero; else keep zero.
+    // Reconstruct the double from sign, adjusted exponent, and mantissa.
+    uint64_t sign = x & (uint64_t)1 << 63;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((uint64_t)1 << 52) - 1;
+    exp = exp - (exp != 0);
+    return sign | ((uint64_t)exp << 52) | mantissa;
+}
+```

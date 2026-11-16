@@ -37,6 +37,24 @@ def default_galapagos():
     return os.path.abspath(os.path.join(HERE, "..", ".."))
 
 
+def incomplete(r):
+    """Why a result file is unfinished, or None. When tests.usecase is stopped (Ctrl+C), Galapagos
+    still writes a result for every variant, including ones it hadn't finished testing or verifying."""
+    if r.get("python_error_msg"):
+        return None                      # a real failure, recorded by Galapagos
+    if not r.get("compiled"):
+        return "stopped while building"
+    if "changes" not in r:
+        return "stopped while comparing"
+    if r.get("preserved_in_ex") and "pass_tests" not in r:
+        return "stopped during tests"
+    if r.get("pass_tests") is True:
+        want = {os.path.basename(p[0]) for p in (r.get("changes") or {}).get("bitcodes") or []}
+        if not want <= set((r.get("verification") or {}).keys()):
+            return "stopped during alive-tv"
+    return None
+
+
 def count_function(vdir, odir, fid):
     isol = len(glob.glob(os.path.join(vdir, f"{fid}*.bc")))
     results = []
@@ -48,7 +66,8 @@ def count_function(vdir, odir, fid):
     verif = sum(1 for r in results
                 if any((v or {}).get("correct transformations", 0) > 0
                        for v in (r.get("verification") or {}).values()))
-    return {"comp_isol": isol, "comp_proj": proj, "test": test, "verif": verif, "result_files": len(results)}
+    return {"comp_isol": isol, "comp_proj": proj, "test": test, "verif": verif, "result_files": len(results),
+            "incomplete": sum(1 for r in results if incomplete(r))}
 
 
 def show_details(g, p, vdir, odir, where):
@@ -83,6 +102,8 @@ def show_details(g, p, vdir, odir, where):
                                 f"{v.get('failed-to-prove transformations', 0)}/{v.get('Alive2 errors', 0)}"
                                 for b, v in ver.items() if v) or "-"
             err = re.sub(r"/\S*?/galapagos-clones/", ".../", (r.get("python_error_msg") or "").replace("\n", " "))[:110]
+            if incomplete(r):
+                err = f"INCOMPLETE: {incomplete(r)} (run was stopped)"
             print(f"{fn['name']:26s} {j:>3s}  {isol:4s} {yn(r.get('compiled')):4s} {yn(r.get('pass_tests')):4s}  {verdict:42s} {err}")
 
 
@@ -130,7 +151,14 @@ def main():
                 totals[k] += c[k]
             n_functions += 1
             note = "" if c["result_files"] or not c["comp_isol"] else "  (no result files yet)"
+            if c["incomplete"]:
+                note += f"  ({c['incomplete']} INCOMPLETE)"
             print(f"{p:10s} {fn['name']:26s} {c['comp_isol']:9d} {c['comp_proj']:9d} {c['test']:5d} {c['verif']:5d}{note}")
+    unfinished = sorted({r["project"] for r in rows if r["incomplete"]})
+    if unfinished:
+        print(f"\nWARNING: incomplete results in {', '.join(unfinished)}. tests.usecase was stopped before those "
+              "variants were tested or verified, so they would count as failures. Clean up and rerun "
+              "those libraries before using these numbers.")
     if n_functions:
         n = 10 * n_functions
         print(f"\n{'Total':37s} {totals['comp_isol']:9d} {totals['comp_proj']:9d} {totals['test']:5d} {totals['verif']:5d}"

@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Compute parity by XORing all bits in the range 4-30.
+	// Shift right by 4 to align, then XOR each bit into accumulator.
+	unsigned int temp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 27; i++) {
+		parity ^= (temp >> i) & 1;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

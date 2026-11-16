@@ -1,0 +1,217 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12 (since 2*18/3=12).
+    // Uses digit-by-digit restoration algorithm for cube root.
+    // The loop processes bits in groups of 3, building the root r.
+    // Final result is r shifted left by 12 bits for scaling.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r * 1 << (2 * 18 / 3);
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Same algorithm but with explicit constant 12 instead of expression.
+    // Processes bits from high to low in groups of 3.
+    // Maintains remainder in x and root in r.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Uses same digit-by-digit method with loop variable initialized differently.
+    // The shift amount 12 comes from 2*18/3 which equals 12.
+    // Edge case x=0 returns 0 correctly.
+    uint64_t r = 0;
+    uint64_t b;
+    int s = 63;
+
+    while (s >= 0) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+        s -= 3;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Restructured loop with post-decrement in condition.
+    // Algorithm builds cube root bit by bit in groups of 3.
+    // The scaling factor 2^12 is applied at the end.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+
+    for (s = 63; s >= 0; s = s - 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Uses do-while style logic with explicit break condition.
+    // Same mathematical algorithm for integer cube root extraction.
+    // Handles all 64-bit inputs correctly including zero.
+    uint64_t r = 0;
+    uint64_t b;
+    int s = 63;
+
+    for (;;) {
+        if (s < 0) break;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+        s -= 3;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Iterates through 22 iterations (63 down to 0 in steps of 3).
+    // Each iteration determines one trit of the cube root.
+    // Final shift by 12 provides the required scaling.
+    uint64_t r = 0;
+    uint64_t b;
+    int i;
+
+    for (i = 0; i < 22; i++) {
+        int s = 63 - 3 * i;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Uses counter-based loop instead of direct bit position tracking.
+    // The divisor b formula is identical to reference implementation.
+    // Scaling by 2^12 matches the original function behavior.
+    uint64_t r = 0;
+    uint64_t b;
+    int iter;
+
+    for (iter = 21; iter >= 0; iter--) {
+        int s = 3 * iter;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Same algorithm with b computed using expanded form.
+    // 3*r*(r+1)+1 equals 3*r*r + 3*r + 1 which is (r+1)^3 - r^3.
+    // This is the standard digit-by-digit cube root algorithm.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * r + 3 * r + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Uses temporary variable for shifted x value for clarity.
+    // The core algorithm remains the digit-by-digit restoration method.
+    // All edge cases including max uint64_t are handled correctly.
+    uint64_t r = 0;
+    uint64_t b;
+    uint64_t xshift;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        xshift = x >> s;
+        if (xshift >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Precomputes the shift amount as a constant for clarity.
+    // The loop structure and algorithm are identical to reference.
+    // Returns same result for all valid 64-bit unsigned inputs.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    const int SCALE = 12;
+
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << SCALE;
+}

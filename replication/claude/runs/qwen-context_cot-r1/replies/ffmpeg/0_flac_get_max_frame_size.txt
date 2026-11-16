@@ -1,0 +1,157 @@
+```c
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes max FLAC frame size: header (16) + subframe header (ch*(7+bps+7)/8)
+    // + residual data (stereo: (2*bps+1)*blocksize/8 rounded up; mono: ch*bps*blocksize/8 rounded up)
+    // + 2 bytes CRC. Uses integer arithmetic with rounding up via (x+7)/8.
+    int count;
+    count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Same computation as reference but using explicit rounding-up macro pattern.
+    // ceil_div(x,8) = (x+7)/8 for non-negative x. All terms are non-negative.
+    // Structure identical to reference but with reordered additions for clarity.
+    int count;
+    count = 16 + 2;
+    count += ch * ((bps + 14) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes frame size by separating stereo and non-stereo cases early.
+    // For ch==2: residual uses (2*bps+1)*blocksize. For ch!=2: uses ch*bps*blocksize.
+    // Both use ceiling division by 8. Header and CRC are constant offsets.
+    int count;
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    count = 16 + ch * ((bps + 14) / 8) + residual + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses a single expression combining all terms.
+    // The ternary operator selects the correct residual formula based on ch==2.
+    // All divisions are ceiling divisions implemented as (x+7)/8.
+    int count;
+    count = 16 + ch * ((bps + 14) / 8) + 2;
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes each component separately for clarity.
+    // header=16, subframe_hdr=ch*((7+bps+7)/8), residual depends on stereo, crc=2.
+    // Summing them gives the total max frame size.
+    int header = 16;
+    int subframe_hdr = ch * ((7 + bps + 7) / 8);
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    int crc = 2;
+    return header + subframe_hdr + residual + crc;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Equivalent to reference but computes subframe header as ch*((bps+14)/8).
+    // Uses helper variable for the residual numerator before dividing by 8.
+    // This avoids any potential overflow in intermediate steps differently.
+    int count;
+    int subframe = ch * ((bps + 14) / 8);
+    int res_num;
+    if (ch == 2) {
+        res_num = (2 * bps + 1) * blocksize;
+    } else {
+        res_num = ch * bps * blocksize;
+    }
+    count = 16 + subframe + (res_num + 7) / 8 + 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses bitwise logic for ceiling division by 8: (x + 7) / 8.
+    // This is equivalent to (x + 7) >> 3 for non-negative x.
+    // All inputs are non-negative in valid FLAC parameters.
+    int count;
+    count = 16;
+    count += ch * ((bps + 14) / 8);
+    int res_num;
+    if (ch == 2) {
+        res_num = (2 * bps + 1) * blocksize;
+    } else {
+        res_num = ch * bps * blocksize;
+    }
+    count += (res_num + 7) / 8;
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes the result by building up from the base constant 18 (16+2).
+    // Adds the subframe header contribution and then the residual data size.
+    // The residual calculation branches on stereo vs non-stereo.
+    int count;
+    count = 18;
+    count += ch * ((bps + 14) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Alternative structure: compute residual first, then add fixed components.
+    // The fixed components are 16 (header) + 2 (CRC) + subframe header.
+    // Subframe header is ch * ceil((bps+14)/8).
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    int fixed = 18 + ch * ((bps + 14) / 8);
+    return fixed + residual;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses a switch-like pattern with if-else for stereo detection.
+    // Computes all three variable components: subframe header, residual, and combines with constants.
+    // Ensures equivalence by preserving the exact arithmetic operations.
+    int count;
+    int subframe_hdr = ch * ((7 + bps + 7) / 8);
+    int residual;
+    if (ch == 2) {
+        residual = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual = (ch * bps * blocksize + 7) / 8;
+    }
+    count = 16 + subframe_hdr + residual + 2;
+    return count;
+}
+```

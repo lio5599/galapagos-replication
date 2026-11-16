@@ -1,0 +1,11 @@
+static int mix(int c0, int c1)
+{
+    // Use arithmetic shifts and masks to isolate channels.
+    // Weighted average favors c0 with ratio 2:1.
+    // Division by 3 uses integer arithmetic with truncation.
+    // Final assembly multiplies by powers of two for positioning.
+    int red_sum = 2*(c0>>10) + (c1>>10);
+    int green_sum = 2*((c0>>5)&0x3F) + ((c1>>5)&0x3F);
+    int blue_sum = 2*(c0&0x1F) + (c1&0x1F);
+    return (red_sum/3)<<10 | (green_sum/3)<<5 | (blue_sum/3);
+}

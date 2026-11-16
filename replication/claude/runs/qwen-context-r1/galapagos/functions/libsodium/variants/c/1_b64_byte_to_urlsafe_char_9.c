@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int idx = x;
+    if (idx < 26)
+        return (int)('A' + idx);
+    if (idx < 52)
+        return (int)('a' + (idx - 26));
+    if (idx < 62)
+        return (int)('0' + (idx - 52));
+    if (idx == 62)
+        return '-';
+    return '_';
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

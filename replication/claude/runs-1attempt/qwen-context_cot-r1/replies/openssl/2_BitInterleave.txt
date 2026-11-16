@@ -1,0 +1,305 @@
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Reference computes Morton code by interleaving bits of 32-bit halves.
+    // When condition is false, it returns Ai unchanged.
+    // The interleaving spreads bits of lo and hi into even/odd positions.
+    // t0/t1 handle spreading lo/hi into even bit positions.
+    // lo/hi handling spreads into odd bit positions.
+    // Final result combines both spreads into a 64-bit interleaved value.
+    if ((0)) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Equivalent implementation using identical logic structure.
+    // The condition is always false so Ai is returned unchanged.
+    // All intermediate computations are dead code but preserved.
+    // This maintains exact same control flow and side effects.
+    // No behavioral difference from reference implementation.
+    if ((0)) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Direct return since condition is always false.
+    // The if block contains dead code that never executes.
+    // Removing the dead code preserves observable behavior.
+    // This is the simplest equivalent form.
+    // All inputs produce identical output to reference.
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Another direct return implementation.
+    // Since the conditional is constant false, body never runs.
+    // Returning Ai directly matches reference behavior exactly.
+    // No intermediate variables or computations needed.
+    // Equivalent for all possible input values.
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Implementation using explicit constant false check.
+    // The condition evaluates to false at compile time.
+    // Therefore the function always returns the input unchanged.
+    // This matches the reference semantics precisely.
+    // Dead code in if block does not affect observable behavior.
+    if (false) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Simplified version recognizing dead code elimination.
+    // The if condition is statically determined to be false.
+    // Thus no computation occurs and input is returned as-is.
+    // This preserves all observable behaviors of reference.
+    // Equivalent under all defined behavior conditions.
+    if (0 == 1) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Implementation with reordered dead code statements.
+    // Since the if block never executes, statement order is irrelevant.
+    // The function still returns Ai unchanged for all inputs.
+    // This maintains equivalence with the reference implementation.
+    // All edge cases handled identically to reference.
+    if ((0)) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Version with additional parentheses in condition.
+    // Extra parentheses do not change evaluation result.
+    // Condition remains false so body is never executed.
+    // Function returns input unchanged as in reference.
+    // Behavior is identical for all input values.
+    if (((0))) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Implementation using logical not on true constant.
+    // !1 evaluates to false, matching original condition.
+    // The if body remains dead code and never executes.
+    // Result is always the input value unchanged.
+    // Equivalent to reference for all defined behaviors.
+    if (!1) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+    return Ai;
+}
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Final implementation with bitwise AND in condition.
+    // 0 & 1 evaluates to false, preserving original semantics.
+    // Dead code in if block does not affect output.
+    // Function returns Ai unchanged for all inputs.
+    // Fully equivalent to reference implementation.
+    if ((0 & 1)) {
+        uint32_t hi = (uint32_t)(Ai >> 32), lo = (uint32_t)Ai;
+        uint32_t t0, t1;
+        t0 = lo & 0x55555555;
+        t0 |= t0 >> 1; t0 &= 0x33333333;
+        t0 |= t0 >> 2; t0 &= 0x0f0f0f0f;
+        t0 |= t0 >> 4; t0 &= 0x00ff00ff;
+        t0 |= t0 >> 8; t0 &= 0x0000ffff;
+        t1 = hi & 0x55555555;
+        t1 |= t1 >> 1; t1 &= 0x33333333;
+        t1 |= t1 >> 2; t1 &= 0x0f0f0f0f;
+        t1 |= t1 >> 4; t1 &= 0x00ff00ff;
+        t1 |= t1 >> 8; t1 <<= 16;
+        lo &= 0xaaaaaaaa;
+        lo |= lo << 1; lo &= 0xcccccccc;
+        lo |= lo << 2; lo &= 0xf0f0f0f0;
+        lo |= lo << 4; lo &= 0xff00ff00;
+        lo |= lo << 8; lo >>= 16;
+        hi &= 0xaaaaaaaa;
+        hi |= hi << 1; hi &= 0xcccccccc;
+        hi |= hi << 2; hi &= 0xf0f0f0f0;
+        hi |= hi << 4; hi &= 0xff00ff00;
+        hi |= hi << 8; hi &= 0xffff0000;
+        Ai = ((uint64_t)(hi | lo) << 32) | (t1 | t0);
+    }
+    return Ai;
+}
+```

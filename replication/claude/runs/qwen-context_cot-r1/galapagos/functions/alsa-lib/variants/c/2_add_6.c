@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: use bitwise NOT to compute complement.
+	// UINT32_MAX - b equals ~b for unsigned 32-bit integers.
+	// So a > ~b iff a + b overflows.
+	if (a > ~b)
+		return 4294967295U;
+	return a + b;
+}
+
+
+int main(){
+    add(0,0);
+}

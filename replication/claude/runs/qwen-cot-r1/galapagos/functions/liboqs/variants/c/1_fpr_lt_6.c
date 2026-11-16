@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt_7(uint64_t x, uint64_t y) {
+    // Use arithmetic properties of two's complement representation
+    // When signs match, subtraction doesn't overflow and sign bit gives comparison
+    // When signs differ, the sign of x alone determines the result
+    // Combines both cases using bitwise selection without explicit branching
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    int sign_diff = (int)((x ^ y) >> 63);
+    int same_sign_result = (int)((sx - sy) >> 63) & 1;
+    int diff_sign_result = (int)(x >> 63);
+
+    return sign_diff ? diff_sign_result : same_sign_result;
+}
+
+
+int main(){
+    fpr_lt_7(0,0);
+}

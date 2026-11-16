@@ -1,0 +1,17 @@
+int ctz(uint64_t in)
+{
+ // Alternative 5: Bit manipulation using in & -in to isolate lowest set bit.
+ // If in is 0, return 64.
+ // Otherwise, isolate lowest bit and find its position via loop.
+ // Use repeated shifting to count position.
+ if (in == 0)
+  return 64;
+ uint64_t lowbit = in & (~in + 1);
+ int r = 0;
+ while ((lowbit & 1) == 0)
+ {
+  lowbit >>= 1;
+  r++;
+ }
+ return r;
+}

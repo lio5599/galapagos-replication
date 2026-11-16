@@ -1,0 +1,98 @@
+```c
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction modulo 3329 using precomputed constant v = floor(2^26 / 3329)
+  // Computes q = floor((v*a + 2^25) / 2^26), then returns a - q*3329
+  // This is equivalent to a mod 3329 for inputs in int16_t range
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Same Barrett reduction but compute v inline without const qualifier
+  // The value v = floor(2^26/3329) = 1998 is computed identically
+  int16_t t;
+  int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Use explicit constant 1998 for v since (2^26 + 1664)/3329 = 1998
+  // This avoids recomputing v and is mathematically identical
+  int16_t t;
+  const int16_t v = 1998;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Compute quotient using division by power of 2 via right shift
+  // Add 2^25 before shifting to achieve rounding instead of truncation
+  int16_t t;
+  const int16_t v = 1998;
+  int32_t scaled = (int32_t)v * a;
+  t = (scaled + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Break the computation into smaller steps for clarity
+  // v = 1998 is the Barrett constant for modulus 3329 with k=26
+  int16_t t;
+  const int16_t v = 1998;
+  int32_t product = (int32_t)v * a;
+  int32_t rounded = product + (1<<25);
+  t = rounded >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Use the fact that 1<<25 = 33554432 and 1<<26 = 67108864
+  // The rounding term 2^25 ensures correct floor division behavior
+  int16_t t;
+  const int16_t v = 1998;
+  t = ((int32_t)v*a + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Compute the Barrett reduction step by step
+  // The shift right by 26 is equivalent to division by 67108864
+  int16_t t;
+  const int16_t v = 1998;
+  int32_t num = (int32_t)v * a + (1<<25);
+  t = num / (1<<26);
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Use arithmetic right shift which preserves sign for negative numbers
+  // This is critical for correct Barrett reduction with signed inputs
+  int16_t t;
+  const int16_t v = 1998;
+  int32_t temp = (int32_t)v * a;
+  t = (temp + (1<<25)) >> 26;
+  t = t * 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Inline the multiplication by 3329 into the final subtraction
+  // Compute q = floor((1998*a + 2^25)/2^26), return a - 3329*q
+  int16_t t;
+  const int16_t v = 1998;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  return a - t * 3329;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Reorder operations slightly: compute full product then adjust
+  // The key insight is that v = floor(2^26/3329) ensures correctness
+  int16_t t;
+  const int16_t v = 1998;
+  int32_t scaled_product = (int32_t)v * a;
+  int32_t adjusted = scaled_product + (1<<25);
+  t = adjusted >> 26;
+  return a - t * 3329;
+}
+```

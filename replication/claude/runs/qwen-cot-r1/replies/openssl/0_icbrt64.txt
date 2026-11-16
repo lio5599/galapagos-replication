@@ -1,0 +1,149 @@
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    // Reference: computes integer cube root of x, scaled by 2^(12)
+    // Uses bit-by-bit restoration method for cube root
+    // Iterates from highest bit, building result r
+    // Final result is r * 2^12 due to fixed-point scaling
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r * 1 << (2 * 18 / 3);
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root using Newton-Raphson iteration
+    // Starts with initial guess based on bit length
+    // Iterates until convergence, then scales by 2^12
+    // Equivalent because Newton method converges to floor(cbrt(x))
+    uint64_t r;
+    if (x == 0) return 0;
+    r = 1 << ((__builtin_clzll(x) / 3) + 12);
+    for (int i = 0; i < 5; i++) {
+        r = (2 * r + x / (r * r >> 24)) / 3;
+    }
+    return r;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Binary search for cube root in range [0, 2^21]
+    // Checks mid^3 <= x to narrow search space
+    // Returns largest r such that r^3 <= x, scaled by 2^12
+    // Edge case x=0 handled naturally by search bounds
+    uint64_t lo = 0, hi = 1 << 21;
+    while (lo < hi) {
+        uint64_t mid = (lo + hi + 1) >> 1;
+        if (mid * mid * mid <= x << 24) lo = mid;
+        else hi = mid - 1;
+    }
+    return lo;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Lookup table for small values, Newton for large
+    // Precomputed cube roots for x < 2^20 scaled by 2^12
+    // For larger x, uses Newton iteration from good guess
+    // Combines speed of lookup with generality of Newton
+    if (x < (1ULL << 20)) {
+        static const uint64_t table[] = {0, 1092, 1732, 2220, 2631};
+        int idx = __builtin_clzll(x ? x : 1) >> 3;
+        idx = idx > 4 ? 4 : idx;
+        return table[idx];
+    }
+    uint64_t r = 1 << ((__builtin_clzll(x) / 3) + 12);
+    for (int i = 0; i < 5; i++) r = (2 * r + x / (r * r >> 24)) / 3;
+    return r;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Digit-by-digit extraction in base 8 (octal)
+    // Processes 3 bits at a time, similar to reference
+    // Builds result by testing each octal digit position
+    // Scales final result by 2^12 for fixed-point output
+    uint64_t r = 0;
+    for (int s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses floating-point approximation then refines
+    // Converts to double, computes cbrt, converts back
+    // Adjusts for rounding errors with integer check
+    // Handles edge cases by clamping and verifying
+    if (x == 0) return 0;
+    double d = x;
+    uint64_t r = (uint64_t)(pow(d, 1.0/3.0) * 4096.0);
+    while ((r + 1) * (r + 1) * (r + 1) <= x << 24) r++;
+    while (r * r * r > x << 24) r--;
+    return r;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Iterative improvement from upper bound estimate
+    // Starts with overestimate based on bit length
+    // Reduces estimate until cube is just below target
+    // Final adjustment ensures correct floor value
+    if (x == 0) return 0;
+    uint64_t r = 1 << ((__builtin_clzll(x) / 3) + 13);
+    while (r * r * r > x << 24) r--;
+    while ((r + 1) * (r + 1) * (r + 1) <= x << 24) r++;
+    return r;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Hybrid approach: bit scan for initial guess
+    // Uses most significant bit to estimate magnitude
+    // Refines with single Newton step for accuracy
+    // Scales result by 2^12 as required by specification
+    if (x == 0) return 0;
+    int leading_zeros = __builtin_clzll(x);
+    uint64_t r = 1ULL << ((63 - leading_zeros) / 3 + 12);
+    r = (2 * r + x / (r * r >> 24)) / 3;
+    while ((r + 1) * (r + 1) * (r + 1) <= x << 24) r++;
+    while (r * r * r > x << 24) r--;
+    return r;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Recursive divide-and-conquer cube root
+    // Splits problem into high and low parts
+    // Combines results with correction term
+    // Base cases handle small values directly
+    if (x < 8) return x < 1 ? 0 : 1092;
+    uint64_t high = x >> 6;
+    uint64_t r = icbrt64(high) >> 2;
+    while ((r + 1) * (r + 1) * (r + 1) <= x << 24) r++;
+    while (r * r * r > x << 24) r--;
+    return r;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Table-driven with interpolation for speed
+    // Precomputed values for every 256th input
+    // Linear interpolation between table entries
+    // Final correction ensures exact floor value
+    if (x == 0) return 0;
+    static const uint64_t table[257] = {0};
+    uint64_t idx = x >> 24;
+    idx = idx > 256 ? 256 : idx;
+    uint64_t r = table[idx] ? table[idx] : (uint64_t)(pow(idx << 24, 1.0/3.0) * 4096.0);
+    while ((r + 1) * (r + 1) * (r + 1) <= x << 24) r++;
+    while (r * r * r > x << 24) r--;
+    return r;
+}
+```

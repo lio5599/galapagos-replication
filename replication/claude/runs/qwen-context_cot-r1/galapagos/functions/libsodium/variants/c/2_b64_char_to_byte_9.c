@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+// Uses bitwise logic to create masks for each range.
+// Similar to reference but with clearer variable names for masks.
+// Combines masked values with OR. Invalid chars produce 0 masks.
+{
+    unsigned int u = (unsigned int)c;
+    // Mask is all 1s if condition true, 0 otherwise
+    unsigned int m1 = (u >= 'A' && u <= 'Z') ? ~0U : 0;
+    unsigned int m2 = (u >= 'a' && u <= 'z') ? ~0U : 0;
+    unsigned int m3 = (u >= '0' && u <= '9') ? ~0U : 0;
+    unsigned int m4 = (u == '+') ? ~0U : 0;
+    unsigned int m5 = (u == '/') ? ~0U : 0;
+    
+    unsigned int v1 = m1 & (u - 'A');
+    unsigned int v2 = m2 & (u - 'a' + 26);
+    unsigned int v3 = m3 & (u - '0' + 52);
+    unsigned int v4 = m4 & 62;
+    unsigned int v5 = m5 & 63;
+    
+    return v1 | v2 | v3 | v4 | v5;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

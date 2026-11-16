@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Counts trailing zeros using parallel bit manipulation
+ // Use SWAR technique to count zeros in parallel
+ // Combine results from byte-level operations
+ // If in==0, return 64
+ if (in == 0)
+  return 64;
+ uint64_t t = in & -in;
+ uint64_t v = t * 0x07EDD5E59A4E28C2ULL;
+ return (int)((v >> 58) & 63);
+}
+
+
+int main(){
+    ctz(0);
+}

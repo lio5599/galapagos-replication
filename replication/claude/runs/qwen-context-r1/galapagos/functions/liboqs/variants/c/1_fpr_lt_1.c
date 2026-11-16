@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    int64_t sx = *(int64_t *)&x;
+    int64_t sy = *(int64_t *)&y;
+    
+    int sx_neg = (sx >> 63) & 1;
+    int sy_neg = (sy >> 63) & 1;
+    
+    if (sx_neg != sy_neg) {
+        return sx_neg;
+    }
+    
+    if (sx_neg) {
+        return sy < sx ? 1 : 0;
+    }
+    
+    return sx < sy ? 1 : 0;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

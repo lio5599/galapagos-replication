@@ -1,0 +1,88 @@
+```c
+static uint64_t fpr_half(uint64_t x) {
+    // Reference computes half of a float by decrementing exponent by 1.
+    // It subtracts 2^52 to decrement exponent, then checks if exponent was 0 (denormal/zero).
+    // If exponent was 0, it clears all bits (result is 0). Otherwise, it keeps mantissa.
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Extract exponent, check if zero, decrement exponent if possible.
+    // If original exponent is 0, result is 0. Otherwise, subtract 2^52 to decrement exp.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Use conditional: if exponent is 0, return 0; else decrement exponent by subtracting 2^52.
+    // This directly implements the semantics of halting a float by reducing exponent.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Compute mask based on whether exponent is zero.
+    // If exp is 0, mask is 0, clearing all bits. Otherwise, mask is all 1s, preserving x after decrement.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mask = -(uint64_t)(exp != 0);
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Similar to reference but restructured: compute adjusted x, then use exponent to determine if zero.
+    // If original exponent was 0, the adjusted exponent becomes 0x7FF (after borrow), so t becomes 0.
+    uint64_t adj = x - ((uint64_t)1 << 52);
+    uint32_t exp_adj = (uint32_t)(adj >> 52) & 0x7FF;
+    uint32_t t = (exp_adj + 1) >> 11;
+    return adj & ((uint64_t)t - 1);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Check if x is zero or denormal (exponent 0). If so, return 0.
+    // Otherwise, decrement exponent by subtracting 2^52 from x.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Use arithmetic to compute whether exponent is zero without branching.
+    // t is 0 if exp is 0, else 1. Then mask is t-1, which is 0xFFFFFFFFFFFFFFFF if t=1, else 0.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (exp + 1) >> 11;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)t - 1);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Extract exponent and check for zero.
+    // If exponent is zero, result is zero. Otherwise, subtract 2^52 to decrement exponent.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t result = x - ((uint64_t)1 << 52);
+    if (exp == 0) {
+        return 0;
+    }
+    return result;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Compute the exponent field. If it is zero, return 0.
+    // Otherwise, the operation of halving is just decrementing the exponent, done by subtracting 2^52.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Use bitwise operations to determine if exponent is zero.
+    // If exp is 0, then (exp >> 10) is 0, so t is 0, and mask is 0, yielding 0.
+    // If exp > 0, t is 1, mask is all 1s, and we return x with exponent decremented.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (exp + 1) >> 11;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)t - 1);
+}
+```

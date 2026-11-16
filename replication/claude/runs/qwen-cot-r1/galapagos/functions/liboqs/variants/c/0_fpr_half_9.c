@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: combine exponent check and adjustment in minimal steps.
+    // If exponent is zero, return zero.
+    // Otherwise, subtract 1<<52 to decrement exponent.
+    // This is simpler and equivalent for all cases.
+    // Zero handling is explicit, avoiding masking complexity.
+    if (((x >> 52) & 0x7FF) == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+
+
+int main(){
+    fpr_half(0);
+}

@@ -1,0 +1,15 @@
+The following code is a reference implementeation of a function in C.
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+Create 10 substitute implementation(s) of the function, which are different but equivalent . It should be possible to directly replace the function and it should provide the same functionality
+For each implementation, add short comments at the start of the function body that explain the approach it uses and why it computes the same result as the reference, including for edge cases. In the first implementation, begin the comments with a one-line summary of what the reference function computes. Check each implementation against its comments and correct it if it is not equivalent before writing the next one.
+Write the comments as // lines immediately after the opening brace and before any code, using at most 6 comment lines per function. Do not put anything before the first function, between functions or after the last function. Do not use the characters { or } inside comments.
+Do not output any other text apart from code and these comments. Do not create auxiliary or helper functions. Maintain the original function's signature.

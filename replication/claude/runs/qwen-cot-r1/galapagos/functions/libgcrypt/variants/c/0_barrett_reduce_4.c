@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Alternative 4: Compute quotient using arithmetic right shift with bias.
+  // The bias (1<<25) rounds to nearest integer for positive/negative a.
+  // t*3329 is subtracted from a to get remainder modulo 3329.
+  // Equivalent due to identical Barrett reduction steps.
+  int16_t t;
+  const int16_t v = 3057;
+
+  t = (int16_t)(((int32_t)v*a + (1<<25)) >> 26);
+  t *= 3329;
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

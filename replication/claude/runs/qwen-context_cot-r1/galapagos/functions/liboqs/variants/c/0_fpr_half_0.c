@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Reference: halves a positive IEEE 754 double by decrementing exponent.
+    // Handles zero by ensuring exponent underflow results in zero output.
+    // Subtracts 2^52 to decrement exponent field by 1.
+    // Checks if exponent becomes zero (was 1 or 0) to handle subnormals/zero.
+    // If exponent is zero after decrement, result is zero; else keep mantissa.
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+int main(){
+    fpr_half(0);
+}

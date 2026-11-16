@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int temp;
+	unsigned int count;
+	int bit;
+
+	temp = data >> 4;
+	count = 0;
+	for (bit = 0; bit < 27; bit++) {
+		count += temp & 1;
+		temp >>= 1;
+	}
+	return (count & 1);
+}

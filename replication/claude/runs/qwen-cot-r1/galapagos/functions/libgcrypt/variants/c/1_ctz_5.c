@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Counts trailing zeros using built-in __builtin_ctzll if available
+ // GCC/Clang provide hardware-accelerated count trailing zeros
+ // Falls back to manual loop if builtin not supported
+ // Handles in==0 by checking before calling builtin
+ if (in == 0)
+  return 64;
+ #ifdef __GNUC__
+ return __builtin_ctzll(in);
+ #else
+ int i;
+ for (i = 0; i < 64; i++)
+  if ((in >> i) & 1)
+   return i;
+ return 64;
+ #endif
+}
+
+
+int main(){
+    ctz(0);
+}

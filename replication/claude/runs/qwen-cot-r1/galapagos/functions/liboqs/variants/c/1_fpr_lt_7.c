@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt_8(uint64_t x, uint64_t y) {
+    // Implement comparison by converting to a comparable integer representation
+    // For positive floats, bit pattern increases with value
+    // For negative floats, bit pattern decreases with value, so invert
+    // This creates a monotonic mapping from float bits to integer order
+    uint64_t ux = x;
+    uint64_t uy = y;
+    int x_neg = (ux >> 63) & 1;
+    int y_neg = (uy >> 63) & 1;
+    uint64_t cx = x_neg ? (~ux) : (ux ^ 0x8000000000000000ULL);
+    uint64_t cy = y_neg ? (~uy) : (uy ^ 0x8000000000000000ULL);
+
+    return (int)(cx < cy);
+}
+
+
+int main(){
+    fpr_lt_8(0,0);
+}

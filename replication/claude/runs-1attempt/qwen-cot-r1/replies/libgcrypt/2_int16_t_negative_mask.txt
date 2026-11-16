@@ -1,0 +1,111 @@
+static int int16_t_negative_mask_1 (int16_t x)
+{
+  // Reference: returns -1 if x < 0, else 0.
+  // Shifts sign bit to LSB via unsigned right shift, then negates.
+  // For x < 0, sign bit is 1, u becomes 1, return -1.
+  // For x >= 0, sign bit is 0, u becomes 0, return 0.
+  // Edge cases: INT16_MIN (-32768) has sign bit 1, returns -1.
+  // INT16_MAX (32767) has sign bit 0, returns 0.
+  uint16_t u = x;
+  u >>= 15;
+  return -(int) u;
+}
+
+static int int16_t_negative_mask_2 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Use arithmetic right shift on signed int16_t to replicate sign bit.
+  // Then cast to int and return. For negative x, shift yields -1.
+  // For non-negative x, shift yields 0. Direct return works.
+  // Edge cases handled correctly by two's complement behavior.
+  int16_t s = x >> 15;
+  return (int) s;
+}
+
+static int int16_t_negative_mask_3 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Check if x is negative directly with comparison.
+  // If negative, return -1; otherwise return 0.
+  // Simple and clear, handles all edge cases correctly.
+  // INT16_MIN is negative, returns -1. INT16_MAX is not, returns 0.
+  if (x < 0)
+    return -1;
+  return 0;
+}
+
+static int int16_t_negative_mask_4 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Extract sign bit by shifting unsigned value right by 15.
+  // Multiply by -1 to get -1 or 0.
+  // Same logic as reference but using multiplication instead of negation.
+  // Edge cases: sign bit extraction is reliable for all int16_t values.
+  uint16_t u = x;
+  u >>= 15;
+  return (int) u * -1;
+}
+
+static int int16_t_negative_mask_5 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Use conditional operator for concise expression.
+  // Check sign of x and return appropriate value.
+  // Handles all edge cases including INT16_MIN and INT16_MAX.
+  // Equivalent to if-else but in single expression.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask_6 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Cast to uint16_t, mask the sign bit with 0x8000.
+  // Shift right by 15 to get 0 or 1, then negate.
+  // Explicit masking ensures only sign bit is considered.
+  // Edge cases handled: sign bit of INT16_MIN is 1, returns -1.
+  uint16_t u = (uint16_t) x & 0x8000U;
+  u >>= 15;
+  return -(int) u;
+}
+
+static int int16_t_negative_mask_7 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Use arithmetic right shift on 32-bit int to propagate sign.
+  // Cast x to int, shift right by 15, result is -1 or 0.
+  // This works because sign extension fills with sign bit.
+  // Edge cases: INT16_MIN becomes -32768 in int, shift gives -1.
+  int s = (int) x >> 15;
+  return s;
+}
+
+static int int16_t_negative_mask_8 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Compute mask using subtraction: if x < 0, subtract 0 from -1.
+  // Use boolean expression converted to integer.
+  // (x < 0) evaluates to 1 or 0, subtract from 0 gives -1 or 0.
+  // Edge cases handled by standard comparison semantics.
+  return 0 - (x < 0);
+}
+
+static int int16_t_negative_mask_9 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Use bitwise NOT on zero and AND with sign condition.
+  // If x < 0, return ~0 which is -1 in two's complement.
+  // Otherwise return 0. The condition is cast to int.
+  // Edge cases: comparison works correctly for all int16_t values.
+  return (x < 0) ? ~0 : 0;
+}
+
+static int int16_t_negative_mask_10 (int16_t x)
+{
+  // Returns -1 if x < 0, else 0.
+  // Extract sign bit by shifting right 15 on unsigned.
+  // Use XOR with 0 and subtract to get -1 or 0.
+  // u is 0 or 1; 0 - u gives 0 or -1.
+  // Edge cases: sign bit extraction is correct for all values.
+  uint16_t u = (uint16_t) x >> 15;
+  return 0 - (int) u;
+}

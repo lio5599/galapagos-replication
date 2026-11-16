@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Same computation as reference but using explicit rounding-up macro pattern.
+    // ceil_div(x,8) = (x+7)/8 for non-negative x. All terms are non-negative.
+    // Structure identical to reference but with reordered additions for clarity.
+    int count;
+    count = 16 + 2;
+    count += ch * ((bps + 14) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

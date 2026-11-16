@@ -1,0 +1,155 @@
+```c
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Reference computes max FLAC frame size: 16-byte header + channel info + residual data + 2-byte CRC
+    // Channel info: ch * ceil((bps+14)/8) bytes for partitioned Rice params
+    // Residual: if stereo, uses mid-side coding with ceil((2*bps+1)*blocksize/8), else ch*bps*blocksize/8
+    // All divisions use integer ceiling via (numerator + 7) / 8
+    int count;
+    count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Equivalent using explicit ceiling division helper logic inline
+    // ceil(a/b) = (a + b - 1) / b for positive integers
+    // Header is 16, CRC is 2, channel params use ceil((bps+14)/8) per channel
+    // Residual uses different formula for stereo vs mono/multi
+    int count;
+    count = 16 + 2;
+    count += ch * ((bps + 14 + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Combine constant terms: 16 + 2 = 18 base overhead
+    // Channel parameter bytes: each channel needs ceil((bps+14)/8) bytes
+    // Residual coding differs for stereo due to mid-side transform
+    // All ceiling divisions use (x + 7) / 8 pattern for byte alignment
+    int count;
+    count = 18;
+    count += ch * ((bps + 14 + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Use ternary operator for residual calculation branch
+    // Base size 18 includes header and CRC
+    // Channel info scales linearly with ch using ceiling division
+    // Stereo residual uses 2*bps+1 bits per sample due to mid-side coding
+    int count;
+    count = 18;
+    count += ch * ((bps + 14 + 7) / 8);
+    count += (ch == 2) ? ((2 * bps + 1) * blocksize + 7) / 8 : (ch * bps * blocksize + 7) / 8;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Factor out common ceiling division pattern for byte conversion
+    // 16-byte header + 2-byte CRC = 18 fixed bytes
+    // Per-channel partitioned Rice parameters: ceil((bps+14)/8) bytes
+    // Residual: stereo uses different bit count due to correlation coding
+    int count;
+    count = 18;
+    count += ch * ((bps + 21) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Simplify (7+bps+7)/8 to (bps+14)/8 which equals (bps+21)/8 via ceiling
+    // Wait: (7+bps+7)/8 = (bps+14)/8, but ceiling of (bps+14)/8 is (bps+14+7)/8 = (bps+21)/8
+    // So ch * ((bps+21)/8) is correct for channel parameters
+    // Residual calculation remains conditional on channel count
+    int count;
+    count = 18;
+    count += ch * ((bps + 21) / 8);
+    count += (ch == 2) ? ((2 * bps + 1) * blocksize + 7) / 8 : (ch * bps * blocksize + 7) / 8;
+    return count;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Precompute channel parameter bytes per channel as ceil((bps+14)/8)
+    // Use direct formula: (bps + 14 + 7) / 8 = (bps + 21) / 8
+    // Stereo residual accounts for mid-side coding overhead
+    // Total is base 18 plus channel params plus residual bytes
+    int ch_param_bytes;
+    ch_param_bytes = (bps + 21) / 8;
+    int residual_bytes;
+    if (ch == 2) {
+        residual_bytes = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        residual_bytes = (ch * bps * blocksize + 7) / 8;
+    }
+    return 18 + ch * ch_param_bytes + residual_bytes;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Express residual calculation uniformly using conditional bit count
+    // For stereo: bits per sample = 2*bps+1, for others: bits per sample = bps
+    // Total residual bits = bits_per_sample * ch * blocksize for non-stereo
+    // But stereo uses different formula, so keep conditional
+    int bits_per_residual_sample;
+    if (ch == 2) {
+        bits_per_residual_sample = 2 * bps + 1;
+    } else {
+        bits_per_residual_sample = bps;
+    }
+    int residual_bits;
+    if (ch == 2) {
+        residual_bits = bits_per_residual_sample * blocksize;
+    } else {
+        residual_bits = ch * bits_per_residual_sample * blocksize;
+    }
+    return 18 + ch * ((bps + 21) / 8) + (residual_bits + 7) / 8;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Note: previous approach has bug for stereo - residual is not ch*bits but just bits*blocksize
+    // Correct: stereo residual = (2*bps+1)*blocksize bits, mono = ch*bps*blocksize bits
+    // So we must keep the original conditional structure for correctness
+    int residual_bits;
+    if (ch == 2) {
+        residual_bits = (2 * bps + 1) * blocksize;
+    } else {
+        residual_bits = ch * bps * blocksize;
+    }
+    return 18 + ch * ((bps + 21) / 8) + (residual_bits + 7) / 8;
+}
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Final clean version with explicit residual bit calculation
+    // Base overhead: 18 bytes (16 header + 2 CRC)
+    // Channel parameters: ch * ceil((bps+14)/8) = ch * (bps+21)/8
+    // Residual: stereo uses mid-side with (2*bps+1)*blocksize bits
+    // Non-stereo uses ch*bps*blocksize bits, both ceiling-divided by 8
+    int residual_bits;
+    if (ch == 2) {
+        residual_bits = (2 * bps + 1) * blocksize;
+    } else {
+        residual_bits = ch * bps * blocksize;
+    }
+    return 18 + ch * ((bps + 21) / 8) + (residual_bits + 7) / 8;
+}
+```

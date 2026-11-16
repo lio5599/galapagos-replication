@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes residual bits first, then converts to bytes with ceiling division.
+    // Stereo uses mid-side coding with (2*bps+1) bits per sample. Others use
+    // ch*bps bits per sample. Header bytes per channel use (bps+14)/8.
+    int count;
+    int residual_bits;
+    if (ch == 2) {
+        residual_bits = (2 * bps + 1) * blocksize;
+    } else {
+        residual_bits = ch * bps * blocksize;
+    }
+    count = 16 + ch * ((bps + 14) / 8) + (residual_bits + 7) / 8 + 2;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

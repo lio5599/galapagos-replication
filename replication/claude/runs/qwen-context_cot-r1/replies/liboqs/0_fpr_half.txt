@@ -1,0 +1,110 @@
+```c
+static uint64_t fpr_half(uint64_t x) {
+    // Reference: halves a positive IEEE 754 double by decrementing exponent.
+    // Handles zero by ensuring exponent underflow results in zero output.
+    // Subtracts 2^52 to decrement exponent field by 1.
+    // Checks if exponent becomes zero (was 1 or 0) to handle subnormals/zero.
+    // If exponent is zero after decrement, result is zero; else keep mantissa.
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Extract exponent, decrement, check for underflow to zero.
+    // If original exponent was 0 or 1, result is zero.
+    // Otherwise, keep mantissa bits unchanged.
+    // Uses mask to zero out result if exponent underflows.
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t mant = x & ((1ULL << 52) - 1);
+    if (exp <= 1) return 0;
+    return ((exp - 1) << 52) | mant;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Subtract 2^52 to decrement exponent field.
+    // If exponent field becomes 0, result is zero.
+    // Otherwise, preserve mantissa and new exponent.
+    // Bitwise mask zeros result when exponent underflows.
+    x -= (uint64_t)1 << 52;
+    uint32_t new_exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (new_exp == 0) return 0;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Check if exponent is 0 or 1, return 0 for underflow.
+    // Otherwise, subtract 2^52 to decrement exponent.
+    // Mantissa remains unchanged.
+    // Handles zero and subnormal inputs correctly.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp <= 1) return 0;
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Use arithmetic to compute mask for zeroing on underflow.
+    // If exponent <= 1, mask is 0, else mask is all 1s.
+    // Apply mask to result of exponent decrement.
+    // Equivalent to reference's t-based masking.
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t result = x - ((uint64_t)1 << 52);
+    uint64_t mask = (exp > 1) ? ~0ULL : 0ULL;
+    return result & mask;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Compute whether exponent underflows (becomes 0).
+    // If underflow, return 0; else return decremented value.
+    // Uses comparison to determine underflow condition.
+    // Mantissa bits preserved when no underflow.
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t half_x = x - ((uint64_t)1 << 52);
+    return (exp <= 1) ? 0 : half_x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Extract exponent and mantissa separately.
+    // If exponent is 0 or 1, result is zero.
+    // Otherwise, reconstruct with decremented exponent.
+    // Explicit reconstruction avoids ambiguity.
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t mant = x & ((1ULL << 52) - 1);
+    if (exp <= 1) return 0;
+    return ((exp - 1) << 52) | mant;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Use conditional move logic via arithmetic.
+    // Compute result as if decrementing always.
+    // Zero out result if exponent was 0 or 1.
+    // Mask computed from exponent comparison.
+    uint64_t exp = (x >> 52) & 0x7FF;
+    uint64_t result = x - ((uint64_t)1 << 52);
+    uint64_t zero_mask = -(exp <= 1);
+    return result & ~zero_mask;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Check exponent range for valid decrement.
+    // If exponent is 0 or 1, return 0.
+    // Otherwise, subtract 2^52 to decrement exponent.
+    // Simple branch-based implementation.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0 || exp == 1) return 0;
+    return x - ((uint64_t)1 << 52);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Use bitwise trick to zero result on underflow.
+    // Subtract 2^52 to decrement exponent.
+    // If new exponent is 0, mask result to 0.
+    // Mask derived from checking if exponent became 0.
+    x -= (uint64_t)1 << 52;
+    uint32_t new_exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mask = (new_exp != 0) ? ~0ULL : 0ULL;
+    return x & mask;
+}
+```

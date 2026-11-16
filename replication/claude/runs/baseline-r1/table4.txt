@@ -1,0 +1,26 @@
+Table 4 counts (C-to-C), archived run 'baseline-r1'
+
+Project    Function                   Comp.Isol Comp.Proj  Test Verif
+alsa-lib   alaw_to_s16                       10         9     9     9
+alsa-lib   iec958_parity                     10         8     8     8
+alsa-lib   add                               10        10    10    10
+ffmpeg     flac_get_max_frame_size           10        10    10     1
+ffmpeg     mix                               10         9     9     9
+ffmpeg     vp5_adjust                        10        10    10     1
+libgcrypt  barrett_reduce                    10        10    10    10
+libgcrypt  ctz                               10         9     9     9
+libgcrypt  int16_t_negative_mask             10        10    10    10
+liboqs     fpr_half                          10        10    10    10
+liboqs     fpr_lt                            10        10    10     9
+liboqs     modp_montymul                     10        10    10    10
+libsodium  b64_byte_to_char                  10         9     9     9
+libsodium  b64_byte_to_urlsafe_char          10        10    10    10
+libsodium  b64_char_to_byte                  10         9     9     9
+openssl    icbrt64                           10        10    10     8
+openssl    BitDeinterleave                   10        10    10    10
+openssl    BitInterleave                     10        10    10    10
+
+Total                                       180       173   173   152   (out of 180 variants, 18 functions)
+%                                         100.0      96.1  96.1  84.4
+
+Per-function counts written to runs/baseline-r1/table4.csv

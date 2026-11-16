@@ -1,0 +1,18 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Reference computes max FLAC frame size: 16-byte header + per-channel
+    // subframe header bytes + residual data bytes + 2-byte CRC. For stereo,
+    // residual uses mid-side coding requiring (2*bps+1)*blocksize bits.
+    // For other channel counts, it uses ch*bps*blocksize bits. All divisions
+    // by 8 are ceiling divisions via +7 before /8.
+    int count;
+    count = 16;
+    count += ch * ((7+bps+7)/8);
+    if (ch == 2) {
+        count += (( 2*bps+1) * blocksize + 7) / 8;
+    } else {
+        count += ( ch*bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}

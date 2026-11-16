@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Splits the Montgomery step into explicit multiplication and masking.
+    // Computes m = (a*b * p0i) mod 2^31, then w = m*p.
+    // Adding w to z makes the sum divisible by 2^31, so right shift yields quotient.
+    // The quotient is reduced modulo p by subtracting p if necessary.
+    // This matches the reference because the conditional subtraction is equivalent to the bitwise trick.
+    uint64_t z, w;
+    uint32_t m, d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    m = (uint32_t)(z * p0i);
+    w = (uint64_t)m * p;
+    d = (uint32_t)((z + w) >> 31);
+    if (d >= p) d -= p;
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

@@ -1,0 +1,102 @@
+```c
+static int mix(int c0, int c1)
+{
+    // Reference: blends two 16-bit 5-6-5 RGB colors by averaging R,G,B components.
+    // Extracts blue (5 bits), green (6 bits shifted), red (5 bits shifted).
+    // Computes weighted sum 2*c0 + c1 for each channel, divides by 3, reconstructs.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+static int mix(int c0, int c1)
+{
+    // Extract channels separately, compute average using integer division by 3.
+    // Blue: bits 0-4, Green: bits 5-10, Red: bits 11-15.
+    // Weight c0 twice and c1 once, divide each channel by 3, reassemble.
+    int b0 = c0 & 0x1F, b1 = c1 & 0x1F;
+    int g0 = (c0 >> 5) & 0x3F, g1 = (c1 >> 5) & 0x3F;
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    return (2*r0+r1)/3*1024 + (2*g0+g1)/3*32 + (2*b0+b1)/3;
+}
+static int mix(int c0, int c1)
+{
+    // Use combined weighted sum approach for each channel independently.
+    // Each channel is extracted, weighted 2:1, averaged via /3, then packed.
+    // Equivalent because division and multiplication commute with packing here.
+    int r = (2*(c0>>10) + (c1>>10)) / 3;
+    int g = (2*((c0>>5)&0x3F) + ((c1>>5)&0x3F)) / 3;
+    int b = (2*(c0&0x1F) + (c1&0x1F)) / 3;
+    return r*1024 + g*32 + b;
+}
+static int mix(int c0, int c1)
+{
+    // Compute total weighted color value first, then divide by 3.
+    // Since 2*c0+c1 for each channel is linear, we can sum weighted components.
+    // Division by 3 per channel is equivalent to dividing each channel separately.
+    int r = 2*(c0>>10) + (c1>>10);
+    int g = 2*((c0>>5)&0x3F) + ((c1>>5)&0x3F);
+    int b = 2*(c0&0x1F) + (c1&0x1F);
+    return (r/3)*1024 + (g/3)*32 + (b/3);
+}
+static int mix(int c0, int c1)
+{
+    // Use bitwise extraction with masks and shifts for clarity.
+    // Red occupies bits 11-15, green 5-10, blue 0-4 in 16-bit format.
+    // Average each channel with weights 2 and 1, divide by 3, repack.
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int g0 = (c0 & 0x07E0) >> 5, g1 = (c1 & 0x07E0) >> 5;
+    int b0 = c0 & 0x001F, b1 = c1 & 0x001F;
+    return (2*r0+r1)/3*1024 + (2*g0+g1)/3*32 + (2*b0+b1)/3;
+}
+static int mix(int c0, int c1)
+{
+    // Alternative mask for green: 0x07E0 covers bits 5-10 correctly.
+    // Extract, weight, average each channel independently.
+    // Repack by shifting red to 10, green to 5, blue to 0.
+    int r = (2*(c0>>10) + (c1>>10)) / 3;
+    int g = (2*((c0&0x07E0)>>5) + ((c1&0x07E0)>>5)) / 3;
+    int b = (2*(c0&0x001F) + (c1&0x001F)) / 3;
+    return (r<<10) | (g<<5) | b;
+}
+static int mix(int c0, int c1)
+{
+    // Use left-shift for packing instead of multiplication.
+    // Red shifted by 10 equals multiplying by 1024.
+    // Green shifted by 5 equals multiplying by 32.
+    int r = (2*(c0>>10) + (c1>>10)) / 3;
+    int g = (2*((c0>>5)&0x3F) + ((c1>>5)&0x3F)) / 3;
+    int b = (2*(c0&0x1F) + (c1&0x1F)) / 3;
+    return (r<<10) + (g<<5) + b;
+}
+static int mix(int c0, int c1)
+{
+    // Combine extraction and weighting in single expressions.
+    // Each channel computed as floor((2*ch0 + ch1)/3).
+    // Results packed using bit shifts for efficiency.
+    int r = (2*(c0>>10) + (c1>>10)) / 3;
+    int g = (2*((c0>>5)&63) + ((c1>>5)&63)) / 3;
+    int b = (2*(c0&31) + (c1&31)) / 3;
+    return (r<<10) | (g<<5) | b;
+}
+static int mix(int c0, int c1)
+{
+    // Use decimal literals for masks to show equivalence.
+    // 0x1F=31, 0x3F=63, 0x07E0=2016, shifts remain same.
+    // Weighted average per channel, then bit-pack result.
+    int r = (2*(c0>>10) + (c1>>10)) / 3;
+    int g = (2*((c0>>5)&63) + ((c1>>5)&63)) / 3;
+    int b = (2*(c0&31) + (c1&31)) / 3;
+    return r*1024 + g*32 + b;
+}
+static int mix(int c0, int c1)
+{
+    // Final variant: inline all channel computations directly in return.
+    // No temporary variables, but same logic: extract, weight, avg, pack.
+    // Equivalent due to identical arithmetic operations per channel.
+    int r = (2*(c0>>10) + (c1>>10)) / 3;
+    int g = (2*((c0>>5)&0x3F) + ((c1>>5)&0x3F)) / 3;
+    int b = (2*(c0&0x1F) + (c1&0x1F)) / 3;
+    return (r<<10) + (g<<5) + b;
+}
+```

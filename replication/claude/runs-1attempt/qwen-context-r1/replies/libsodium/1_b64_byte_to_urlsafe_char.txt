@@ -1,0 +1,175 @@
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    if (x < 26)
+        return x + 'A';
+    else if (x < 52)
+        return x + ('a' - 26);
+    else if (x < 62)
+        return x + ('0' - 52);
+    else if (x == 62)
+        return '-';
+    else
+        return '_';
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    if (x <= 25)
+        return (int)(x + 'A');
+    if (x <= 51)
+        return (int)(x + 'a' - 26);
+    if (x <= 61)
+        return (int)(x + '0' - 52);
+    if (x == 62)
+        return '-';
+    return '_';
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int result;
+    if (x < 26)
+        result = x + 'A';
+    else if (x < 52)
+        result = x + 'a' - 26;
+    else if (x < 62)
+        result = x + '0' - 52;
+    else if (x == 62)
+        result = '-';
+    else
+        result = '_';
+    return (int)result;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    int ret;
+    if (x < 26) {
+        ret = x + 'A';
+    } else if (x < 52) {
+        ret = x + ('a' - 26);
+    } else if (x < 62) {
+        ret = x + ('0' - 52);
+    } else if (x == 62) {
+        ret = '-';
+    } else {
+        ret = '_';
+    }
+    return ret;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    if (x < 26) return (int)(x + 65);
+    if (x < 52) return (int)(x + 97 - 26);
+    if (x < 62) return (int)(x + 48 - 52);
+    if (x == 62) return 45;
+    return 95;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    int base;
+    if (x < 26)
+        base = 'A';
+    else if (x < 52)
+        base = 'a' - 26;
+    else if (x < 62)
+        base = '0' - 52;
+    else if (x == 62)
+        return '-';
+    else
+        return '_';
+    return (int)(x + base);
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    if (x < 26) {
+        return (int)x + 'A';
+    }
+    x -= 26;
+    if (x < 26) {
+        return (int)x + 'a';
+    }
+    x -= 26;
+    if (x < 10) {
+        return (int)x + '0';
+    }
+    x -= 10;
+    if (x == 0) {
+        return '-';
+    }
+    return '_';
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    unsigned int idx = x;
+    if (idx < 26) {
+        return (int)(idx + 'A');
+    }
+    idx -= 26;
+    if (idx < 26) {
+        return (int)(idx + 'a');
+    }
+    idx -= 26;
+    if (idx < 10) {
+        return (int)(idx + '0');
+    }
+    idx -= 10;
+    if (idx == 0) {
+        return '-';
+    }
+    return '_';
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    int c;
+    if (x < 26)
+        c = 'A' + x;
+    else if (x < 52)
+        c = 'a' + (x - 26);
+    else if (x < 62)
+        c = '0' + (x - 52);
+    else if (x == 62)
+        c = '-';
+    else
+        c = '_';
+    return c;
+}
+```
+
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    if (x <= 25)
+        return (int)(x + 'A');
+    else if (x <= 51)
+        return (int)(x - 26 + 'a');
+    else if (x <= 61)
+        return (int)(x - 52 + '0');
+    else if (x == 62)
+        return '-';
+    else
+        return '_';
+}
+```

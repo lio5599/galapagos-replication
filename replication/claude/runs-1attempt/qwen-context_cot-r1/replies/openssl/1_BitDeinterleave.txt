@@ -1,0 +1,63 @@
+```c
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Reference computes identity: the if condition is always false (0),
+    // so the body is never executed. The function simply returns Ai unchanged.
+    // All substitute implementations must also return Ai unchanged.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity function: since the conditional block is never entered,
+    // the output equals the input for all inputs.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // No-op implementation: the reference function's body is dead code
+    // because the condition is constant false. Return input directly.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Equivalent to reference: the if block is unreachable, so Ai is
+    // returned as-is without modification for any input value.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference function has a constant-false condition, making the
+    // entire bit manipulation block dead code. Simply return the input.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Since (0) is always false, the function body never executes.
+    // Return Ai unchanged to match reference behavior exactly.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Reference returns input unchanged because the conditional block
+    // is never reached. This implementation does the same.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The if condition evaluates to false at compile time, so the
+    // function is equivalent to returning its argument directly.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Dead code elimination: the reference's if block is unreachable.
+    // Return Ai without any transformation to preserve equivalence.
+    return Ai;
+}
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Identity mapping: the reference function never modifies Ai because
+    // the condition is constant false. Return input unchanged.
+    return Ai;
+}
+```

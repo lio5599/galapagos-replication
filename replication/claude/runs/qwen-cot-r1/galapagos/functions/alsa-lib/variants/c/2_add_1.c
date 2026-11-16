@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use unsigned overflow detection: if a + b < a, overflow occurred.
+	// This works because unsigned arithmetic wraps modulo 2^32.
+	// When overflow happens, result is less than a.
+	// Return UINT_MAX on overflow, else return sum.
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 4294967295;
+	return sum;
+}
+
+
+int main(){
+    add(0,0);
+}

@@ -1,0 +1,14 @@
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int av = (v ^ s1) - s1;
+    int limit = 2 * t;
+    int clamped = av < limit ? av : limit - 1;
+    int diff = t - clamped;
+    int s2 = diff >> 31;
+    int ad = (diff ^ s2) - s2;
+    int result = t - ad;
+    result += s1;
+    result ^= s1;
+    return result;
+}

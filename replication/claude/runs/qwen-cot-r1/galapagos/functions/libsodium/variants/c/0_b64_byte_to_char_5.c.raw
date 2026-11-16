@@ -1,0 +1,16 @@
+static int b64_byte_to_char(unsigned int x)
+// Uses the same arithmetic branchless technique with explicit intermediate masks
+// lt26: 0xFF if x < 26, else 0x00
+// lt52: 0xFF if x < 52, else 0x00
+// lt62: 0xFF if x < 62, else 0x00
+// is62: 0xFF if x == 62, else 0x00
+// is63: 0xFF if x == 63, else 0x00
+// Each range is isolated by combining these masks with AND/OR/NOT
+{
+    unsigned int lt26 = ((x - 26) >> 8) & 0xFF;
+    unsigned int lt52 = ((x - 52) >> 8) & 0xFF;
+    unsigned int lt62 = ((x - 62) >> 8) & 0xFF;
+    unsigned int is62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int is63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (lt26 & (x + 'A')) | ((~lt26 & lt52) & (x + 'a' - 26)) | ((~lt52 & lt62) & (x + '0' - 52)) | ((~is62 & 0xFF) & '+') | ((~is63 & 0xFF) & '/');
+}

@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Check overflow by comparing a with UINT_MAX - b.
+	// If a > UINT_MAX - b, then a + b > UINT_MAX, causing overflow.
+	// Use UINT_MAX constant directly for clarity.
+	// Equivalent to reference since UINT_MAX is 4294967295.
+	if (a > 4294967295 - b)
+		return 4294967295;
+	return a + b;
+}
+
+
+int main(){
+    add(0,0);
+}

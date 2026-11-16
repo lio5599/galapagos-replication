@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Because the condition is a constant false, the bit interleaving code is dead.
+    // The function simply returns its argument without modification.
+    // This version demonstrates the identity property explicitly.
+    return 0 + Ai;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

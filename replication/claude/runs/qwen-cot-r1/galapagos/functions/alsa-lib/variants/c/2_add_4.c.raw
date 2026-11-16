@@ -1,0 +1,9 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Use conditional expression to return saturated sum.
+	// Check if addition would exceed UINT_MAX.
+	// If a + b would overflow, return UINT_MAX.
+	// Otherwise return the normal sum.
+	// The condition a > 4294967295 - b detects overflow.
+	return (a > 4294967295 - b) ? 4294967295 : a + b;
+}

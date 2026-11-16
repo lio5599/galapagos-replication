@@ -1,0 +1,12 @@
+static int mix(int c0, int c1)
+{
+    // Extract channels, compute weighted sum (2*c0 + c1), divide by 3.
+    // Pack result back into RGB565 format.
+    int b0 = c0 & 0x1F, b1 = c1 & 0x1F;
+    int g0 = (c0 >> 5) & 0x3F, g1 = (c1 >> 5) & 0x3F;
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int b = (2 * b0 + b1) / 3;
+    int g = (2 * g0 + g1) / 3;
+    int r = (2 * r0 + r1) / 3;
+    return r * 1024 + g * 32 + b;
+}

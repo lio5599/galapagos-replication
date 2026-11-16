@@ -1,0 +1,11 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Direct case analysis on sign bits.
+    // Extract sign bits of x and y.
+    // If signs differ, negative is less.
+    // If same sign, compare magnitudes with correct order.
+    int sx = (x >> 63) & 1;
+    int sy = (y >> 63) & 1;
+    if (sx != sy) return sx;
+    if (sx == 0) return (x < y) ? 1 : 0;
+    return (x > y) ? 1 : 0;
+}

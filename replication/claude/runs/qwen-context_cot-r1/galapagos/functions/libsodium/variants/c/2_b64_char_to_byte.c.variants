@@ -1,0 +1,201 @@
+static unsigned int b64_char_to_byte(int c)
+// Reference: converts base64 char to 0-63 value, returns 0 for invalid chars.
+// Uses branchless range checks via arithmetic to map A-Z, a-z, 0-9, +, /.
+// Invalid inputs (outside these ranges) result in 0 due to final masking.
+{
+    const unsigned int x =
+        ((((((unsigned int) (c) - (unsigned int) ('A')) >> 8) & 0xFF) ^ 0xFF) & (((((unsigned int) ('Z') - (unsigned int) (c)) >> 8) & 0xFF) ^ 0xFF) & (c - 'A')) |
+        ((((((unsigned int) (c) - (unsigned int) ('a')) >> 8) & 0xFF) ^ 0xFF) & (((((unsigned int) ('z') - (unsigned int) (c)) >> 8) & 0xFF) ^ 0xFF) & (c - ('a' - 26))) |
+        ((((((unsigned int) (c) - (unsigned int) ('0')) >> 8) & 0xFF) ^ 0xFF) & (((((unsigned int) ('9') - (unsigned int) (c)) >> 8) & 0xFF) ^ 0xFF) & (c - ('0' - 52))) | (((((0U - ((unsigned int) (c) ^ (unsigned int) ('+'))) >> 8) & 0xFF) ^ 0xFF) & 62) |
+        (((((0U - ((unsigned int) (c) ^ (unsigned int) ('/'))) >> 8) & 0xFF) ^ 0xFF) & 63);
+
+    return x | (((((0U - ((unsigned int) (x) ^ (unsigned int) (0))) >> 8) & 0xFF) ^ 0xFF) & (((((0U - ((unsigned int) (c) ^ (unsigned int) ('A'))) >> 8) & 0xFF) ^ 0xFF) ^ 0xFF));
+}
+static unsigned int b64_char_to_byte(int c)
+// Uses standard if-else logic for clarity. Maps A-Z to 0-25, a-z to 26-51,
+// 0-9 to 52-61, + to 62, / to 63. Returns 0 for any invalid character.
+// Equivalent because it covers all valid base64 chars and defaults to 0.
+{
+    if (c >= 'A' && c <= 'Z')
+        return (unsigned int)(c - 'A');
+    if (c >= 'a' && c <= 'z')
+        return (unsigned int)(c - 'a' + 26);
+    if (c >= '0' && c <= '9')
+        return (unsigned int)(c - '0' + 52);
+    if (c == '+')
+        return 62;
+    if (c == '/')
+        return 63;
+    return 0;
+}
+static unsigned int b64_char_to_byte(int c)
+// Uses a lookup table for ASCII values 0-127. Indexes by c if valid, else 0.
+// Table initialized with 0 for invalid, correct values for base64 chars.
+// Equivalent because it directly maps each valid char to its value.
+{
+    static const unsigned char table[128] = {
+        [0 ... 127] = 0,
+        ['A'] = 0, ['B'] = 1, ['C'] = 2, ['D'] = 3, ['E'] = 4, ['F'] = 5, ['G'] = 6, ['H'] = 7,
+        ['I'] = 8, ['J'] = 9, ['K'] = 10, ['L'] = 11, ['M'] = 12, ['N'] = 13, ['O'] = 14, ['P'] = 15,
+        ['Q'] = 16, ['R'] = 17, ['S'] = 18, ['T'] = 19, ['U'] = 20, ['V'] = 21, ['W'] = 22, ['X'] = 23,
+        ['Y'] = 24, ['Z'] = 25,
+        ['a'] = 26, ['b'] = 27, ['c'] = 28, ['d'] = 29, ['e'] = 30, ['f'] = 31, ['g'] = 32, ['h'] = 33,
+        ['i'] = 34, ['j'] = 35, ['k'] = 36, ['l'] = 37, ['m'] = 38, ['n'] = 39, ['o'] = 40, ['p'] = 41,
+        ['q'] = 42, ['r'] = 43, ['s'] = 44, ['t'] = 45, ['u'] = 46, ['v'] = 47, ['w'] = 48, ['x'] = 49,
+        ['y'] = 50, ['z'] = 51,
+        ['0'] = 52, ['1'] = 53, ['2'] = 54, ['3'] = 55, ['4'] = 56, ['5'] = 57, ['6'] = 58, ['7'] = 59,
+        ['8'] = 60, ['9'] = 61,
+        ['+'] = 62, ['/'] = 63
+    };
+    if ((unsigned int)c < 128)
+        return table[(unsigned char)c];
+    return 0;
+}
+static unsigned int b64_char_to_byte(int c)
+// Computes value using arithmetic ranges similar to reference but structured
+// with explicit boolean masks. Each range check produces 0 or the offset.
+// Final OR combines results. Invalid chars yield 0 from all terms.
+{
+    unsigned int v = 0;
+    unsigned int is_upper = (c >= 'A') & (c <= 'Z');
+    unsigned int is_lower = (c >= 'a') & (c <= 'z');
+    unsigned int is_digit = (c >= '0') & (c <= '9');
+    unsigned int is_plus  = (c == '+');
+    unsigned int is_slash = (c == '/');
+    v |= is_upper * (unsigned int)(c - 'A');
+    v |= is_lower * (unsigned int)(c - 'a' + 26);
+    v |= is_digit * (unsigned int)(c - '0' + 52);
+    v |= is_plus * 62;
+    v |= is_slash * 63;
+    return v;
+}
+static unsigned int b64_char_to_byte(int c)
+// Uses switch statement for each valid base64 character.
+// Default case returns 0 for invalid inputs.
+// Equivalent as it exhaustively lists all valid mappings.
+{
+    switch (c) {
+        case 'A': return 0; case 'B': return 1; case 'C': return 2; case 'D': return 3;
+        case 'E': return 4; case 'F': return 5; case 'G': return 6; case 'H': return 7;
+        case 'I': return 8; case 'J': return 9; case 'K': return 10; case 'L': return 11;
+        case 'M': return 12; case 'N': return 13; case 'O': return 14; case 'P': return 15;
+        case 'Q': return 16; case 'R': return 17; case 'S': return 18; case 'T': return 19;
+        case 'U': return 20; case 'V': return 21; case 'W': return 22; case 'X': return 23;
+        case 'Y': return 24; case 'Z': return 25;
+        case 'a': return 26; case 'b': return 27; case 'c': return 28; case 'd': return 29;
+        case 'e': return 30; case 'f': return 31; case 'g': return 32; case 'h': return 33;
+        case 'i': return 34; case 'j': return 35; case 'k': return 36; case 'l': return 37;
+        case 'm': return 38; case 'n': return 39; case 'o': return 40; case 'p': return 41;
+        case 'q': return 42; case 'r': return 43; case 's': return 44; case 't': return 45;
+        case 'u': return 46; case 'v': return 47; case 'w': return 48; case 'x': return 49;
+        case 'y': return 50; case 'z': return 51;
+        case '0': return 52; case '1': return 53; case '2': return 54; case '3': return 55;
+        case '4': return 56; case '5': return 57; case '6': return 58; case '7': return 59;
+        case '8': return 60; case '9': return 61;
+        case '+': return 62;
+        case '/': return 63;
+        default: return 0;
+    }
+}
+static unsigned int b64_char_to_byte(int c)
+// Uses a precomputed array of size 256 for all unsigned char values.
+// Indexes directly by (unsigned char)c. Invalid chars map to 0.
+// Equivalent as it provides direct lookup for all possible byte inputs.
+{
+    static const unsigned char table[256] = {
+        [0 ... 255] = 0,
+        ['A'] = 0, ['B'] = 1, ['C'] = 2, ['D'] = 3, ['E'] = 4, ['F'] = 5, ['G'] = 6, ['H'] = 7,
+        ['I'] = 8, ['J'] = 9, ['K'] = 10, ['L'] = 11, ['M'] = 12, ['N'] = 13, ['O'] = 14, ['P'] = 15,
+        ['Q'] = 16, ['R'] = 17, ['S'] = 18, ['T'] = 19, ['U'] = 20, ['V'] = 21, ['W'] = 22, ['X'] = 23,
+        ['Y'] = 24, ['Z'] = 25,
+        ['a'] = 26, ['b'] = 27, ['c'] = 28, ['d'] = 29, ['e'] = 30, ['f'] = 31, ['g'] = 32, ['h'] = 33,
+        ['i'] = 34, ['j'] = 35, ['k'] = 36, ['l'] = 37, ['m'] = 38, ['n'] = 39, ['o'] = 40, ['p'] = 41,
+        ['q'] = 42, ['r'] = 43, ['s'] = 44, ['t'] = 45, ['u'] = 46, ['v'] = 47, ['w'] = 48, ['x'] = 49,
+        ['y'] = 50, ['z'] = 51,
+        ['0'] = 52, ['1'] = 53, ['2'] = 54, ['3'] = 55, ['4'] = 56, ['5'] = 57, ['6'] = 58, ['7'] = 59,
+        ['8'] = 60, ['9'] = 61,
+        ['+'] = 62, ['/'] = 63
+    };
+    return table[(unsigned char)c];
+}
+static unsigned int b64_char_to_byte(int c)
+// Branchless implementation using conditional expressions (ternary operators).
+// Checks ranges in order. If char is in range, computes offset, else 0.
+// Equivalent to reference as it covers all cases and returns 0 for invalid.
+{
+    unsigned int result = 0;
+    if (c >= 'A' && c <= 'Z')
+        result = (unsigned int)(c - 'A');
+    else if (c >= 'a' && c <= 'z')
+        result = (unsigned int)(c - 'a' + 26);
+    else if (c >= '0' && c <= '9')
+        result = (unsigned int)(c - '0' + 52);
+    else if (c == '+')
+        result = 62;
+    else if (c == '/')
+        result = 63;
+    return result;
+}
+static unsigned int b64_char_to_byte(int c)
+// Uses arithmetic to determine validity and value.
+// Calculates potential value for each group, masked by validity.
+// Validity is determined by checking if c is within the character range.
+// Equivalent because masks ensure only one group contributes.
+{
+    unsigned int u = (unsigned int)c;
+    unsigned int val = 0;
+    unsigned int mask_upper = ((u >= 'A') & (u <= 'Z')) ? 0xFFFFFFFF : 0;
+    unsigned int mask_lower = ((u >= 'a') & (u <= 'z')) ? 0xFFFFFFFF : 0;
+    unsigned int mask_digit = ((u >= '0') & (u <= '9')) ? 0xFFFFFFFF : 0;
+    unsigned int mask_plus  = (u == '+') ? 0xFFFFFFFF : 0;
+    unsigned int mask_slash = (u == '/') ? 0xFFFFFFFF : 0;
+    
+    val |= mask_upper & (u - 'A');
+    val |= mask_lower & (u - 'a' + 26);
+    val |= mask_digit & (u - '0' + 52);
+    val |= mask_plus & 62;
+    val |= mask_slash & 63;
+    return val;
+}
+static unsigned int b64_char_to_byte(int c)
+// Implements logic using a helper array for offsets and ranges.
+// Iterates through ranges to find match. Returns 0 if no match.
+// Equivalent as it checks all valid base64 character sets.
+{
+    // Ranges: start, end, offset
+    struct { char start; char end; unsigned int offset; } ranges[] = {
+        {'A', 'Z', 0},
+        {'a', 'z', 26},
+        {'0', '9', 52},
+        {'+', '+', 62},
+        {'/', '/', 63}
+    };
+    int i;
+    for (i = 0; i < 5; i++) {
+        if (c >= ranges[i].start && c <= ranges[i].end) {
+            return (unsigned int)(c - ranges[i].start + ranges[i].offset);
+        }
+    }
+    return 0;
+}
+static unsigned int b64_char_to_byte(int c)
+// Uses bitwise logic to create masks for each range.
+// Similar to reference but with clearer variable names for masks.
+// Combines masked values with OR. Invalid chars produce 0 masks.
+{
+    unsigned int u = (unsigned int)c;
+    // Mask is all 1s if condition true, 0 otherwise
+    unsigned int m1 = (u >= 'A' && u <= 'Z') ? ~0U : 0;
+    unsigned int m2 = (u >= 'a' && u <= 'z') ? ~0U : 0;
+    unsigned int m3 = (u >= '0' && u <= '9') ? ~0U : 0;
+    unsigned int m4 = (u == '+') ? ~0U : 0;
+    unsigned int m5 = (u == '/') ? ~0U : 0;
+    
+    unsigned int v1 = m1 & (u - 'A');
+    unsigned int v2 = m2 & (u - 'a' + 26);
+    unsigned int v3 = m3 & (u - '0' + 52);
+    unsigned int v4 = m4 & 62;
+    unsigned int v5 = m5 & 63;
+    
+    return v1 | v2 | v3 | v4 | v5;
+}

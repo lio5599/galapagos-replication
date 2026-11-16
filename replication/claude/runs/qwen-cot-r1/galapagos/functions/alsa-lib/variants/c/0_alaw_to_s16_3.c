@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decompresses A-law byte to 16-bit signed integer.
+	// Bit inversion via XOR 0x55 aligns with standard A-law decoding.
+	// Magnitude decoded in two ranges: direct for t<16, segmented otherwise.
+	// Sign bit from original value determines output polarity.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+
+int main(){
+    alaw_to_s16('a');
+}

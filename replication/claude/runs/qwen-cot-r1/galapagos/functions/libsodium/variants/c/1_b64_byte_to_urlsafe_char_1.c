@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Direct conditional logic for clarity.
+// Checks ranges explicitly: 0-25, 26-51, 52-61, 62, 63.
+// Returns corresponding URL-safe Base64 character.
+// Equivalent to reference but uses standard control flow.
+{
+    if (x <= 25) return 'A' + x;
+    if (x <= 51) return 'a' + (x - 26);
+    if (x <= 61) return '0' + (x - 52);
+    if (x == 62) return '-';
+    return '_';
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

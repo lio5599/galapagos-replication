@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Alternative 6: Use Brian Kernighan algorithm variant.
+ // Count trailing zeros by checking if in is even.
+ // While in is even and non-zero, shift right and increment.
+ // If in becomes 0 during process, return accumulated count.
+ int r = 0;
+ uint64_t tmp = in;
+ while (r < 64)
+ {
+  if (tmp == 0)
+   return r;
+  if (tmp & 1)
+   return r;
+  tmp >>= 1;
+  r++;
+ }
+ return 64;
+}
+
+
+int main(){
+    ctz(0);
+}

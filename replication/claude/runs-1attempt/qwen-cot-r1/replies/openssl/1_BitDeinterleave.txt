@@ -1,0 +1,102 @@
+```c
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference function is a no-op because the if condition is always false.
+    // It returns the input Ai unchanged regardless of any bit manipulation code inside.
+    // All substitute implementations must also return Ai unchanged to be equivalent.
+    // This includes all edge cases: zero, max uint64, odd/even values, etc.
+    // The body inside the if block is dead code and never executes.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Direct return without any conditional logic since the original if is always false.
+    // Equivalent because the original function never enters the if block.
+    // No transformation occurs on Ai in the reference implementation.
+    // Handles all inputs identically by returning them as-is.
+    // Edge cases like 0 or UINT64_MAX are preserved correctly.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Use a constant false condition to mirror the original structure but simplified.
+    // The original if(0) ensures the body never runs, so we skip it entirely.
+    // Returning Ai directly yields identical results for all possible inputs.
+    // This approach avoids unnecessary code while preserving functionality.
+    // Edge cases are handled correctly since no modification occurs.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Assign Ai to a local variable and return it, mimicking identity operation.
+    // The reference function effectively performs identity due to dead code.
+    // This implementation explicitly shows the identity behavior.
+    // All input values are returned unchanged, matching reference behavior.
+    // Edge cases including boundary values are preserved correctly.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Use a ternary operator with a constant condition to return Ai unchanged.
+    // Since the condition is always true, Ai is returned directly.
+    // This mirrors the reference's behavior of returning input unmodified.
+    // Equivalent for all inputs including edge cases like zero and max values.
+    // The dead code in reference is irrelevant to the output.
+    return 1 ? Ai : 0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // XOR Ai with zero to produce an identity transformation.
+    // x ^ 0 equals x for any x, so this preserves the input value.
+    // Matches the reference function which returns Ai unchanged.
+    // Works correctly for all uint64_t values including edge cases.
+    // The bit manipulation in reference is never executed.
+    return Ai ^ 0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // OR Ai with zero to achieve identity operation.
+    // x | 0 equals x for any x, preserving the original value.
+    // Equivalent to reference since no actual transformation occurs there.
+    // Handles all inputs correctly, including boundary edge cases.
+    // The if block in reference is dead code and ignored.
+    return Ai | 0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // AND Ai with all ones (UINT64_MAX) to preserve all bits.
+    // x & UINT64_MAX equals x, acting as an identity operation.
+    // This matches the reference function's effective behavior.
+    // All uint64_t values are returned unchanged, including edge cases.
+    // Reference's internal code never executes due to false condition.
+    return Ai & UINT64_MAX;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Add zero to Ai to produce an identity transformation.
+    // x + 0 equals x for any x, preserving the input value.
+    // Equivalent to reference which returns Ai without modification.
+    // Correctly handles all inputs including zero and maximum values.
+    // The dead code in reference does not affect the output.
+    return Ai + 0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Subtract zero from Ai to achieve identity operation.
+    // x - 0 equals x for any x, preserving the original value.
+    // Matches reference function's behavior of returning input unchanged.
+    // Works for all uint64_t values including edge cases like 0 and max.
+    // Reference's if block is never entered, so no transformation occurs.
+    return Ai - 0;
+}
+```

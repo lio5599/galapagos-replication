@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Extract red, green, blue from 5-6-5 format inputs.
+    // Weight c0 double compared to c1 in averaging.
+    // Use integer division which truncates fractional parts.
+    // Pack results back into 5-6-5 format with shifts.
+    int red = (2*(c0>>10) + (c1>>10)) / 3;
+    int green = (2*((c0>>5)&0x3F) + ((c1>>5)&0x3F)) / 3;
+    int blue = (2*(c0&0x1F) + (c1&0x1F)) / 3;
+    return (red << 10) | (green << 5) | blue;
+}
+
+
+int main(){
+    mix(0,0);
+}

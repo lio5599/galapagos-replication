@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+
+	tmp &= 0x3FFFFFFF;
+	tmp = (tmp & 0x55555555) + ((tmp >> 1) & 0x55555555);
+	tmp = (tmp & 0x33333333) + ((tmp >> 2) & 0x33333333);
+	tmp = (tmp & 0x0F0F0F0F) + ((tmp >> 4) & 0x0F0F0F0F);
+	tmp = (tmp & 0x00FF00FF) + ((tmp >> 8) & 0x00FF00FF);
+	tmp = (tmp & 0x0000FFFF) + ((tmp >> 16) & 0x0000FFFF);
+	parity = tmp & 1;
+	return parity;
+}

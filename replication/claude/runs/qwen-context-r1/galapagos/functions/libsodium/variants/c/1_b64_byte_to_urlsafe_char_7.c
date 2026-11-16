@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    int c;
+    if (x < 26)
+        c = 'A' + x;
+    else if (x < 52)
+        c = 'a' + x - 26;
+    else if (x < 62)
+        c = '0' + x - 52;
+    else if (x == 62)
+        c = '-';
+    else
+        c = '_';
+    return c;
+}
+
+
+int main(){
+    b64_byte_to_urlsafe_char(0);
+}

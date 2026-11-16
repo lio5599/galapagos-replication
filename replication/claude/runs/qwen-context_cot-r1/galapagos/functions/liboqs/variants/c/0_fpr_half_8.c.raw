@@ -1,0 +1,10 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Halves positive IEEE 754 double by decrementing exponent.
+    // Check exponent range for valid decrement.
+    // If exponent is 0 or 1, return 0.
+    // Otherwise, subtract 2^52 to decrement exponent.
+    // Simple branch-based implementation.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0 || exp == 1) return 0;
+    return x - ((uint64_t)1 << 52);
+}

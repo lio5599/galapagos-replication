@@ -1,0 +1,199 @@
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x, scaled by 2^12 (since 2*18/3=12).
+    // Uses digit-by-digit restoration algorithm in base 2^3.
+    // For each group of 3 bits from MSB, determines next bit of root.
+    // Edge case: x=0 returns 0. Large x handled by 64-bit arithmetic.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r * 1 << (2 * 18 / 3);
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Same algorithm but unrolls the shift amount calculation explicitly.
+    // 2*18/3 equals 12, so final result is r << 12.
+    // The loop processes 3-bit chunks from bit 63 down to 0.
+    // b represents the cost of setting the next root bit.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Equivalent implementation using explicit variable for scale factor.
+    // The core logic remains identical digit-by-digit cube root extraction.
+    // Scale factor 2^12 is applied at end for fixed-point precision.
+    // Handles all 64-bit inputs correctly including zero and max values.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    int scale = 2 * 18 / 3;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << scale;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Reorders operations slightly: computes b before shifting r.
+    // Since r is shifted left by 1, the formula for b uses old r value.
+    // This is mathematically equivalent to original order.
+    // Final scaling by 2^12 provides 12-bit fractional precision.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        b = 3 * r * (r + 1) + 1;
+        r <<= 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses a while loop instead of for loop for iteration.
+    // Logic remains identical: process 3-bit groups from MSB.
+    // Decrement s by 3 each iteration until negative.
+    // Same restoration algorithm for integer cube root.
+    uint64_t r = 0;
+    uint64_t b;
+    int s = 63;
+    while (s >= 0) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+        s -= 3;
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes b using Horner-like form: r*(3*r+3)+1.
+    // This is algebraically equivalent to 3*r*(r+1)+1.
+    // May offer slight performance difference on some architectures.
+    // Same digit-by-digit extraction with 12-bit fractional output.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = r * (3 * r + 3) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Extracts the shift amount 12 into a named constant for clarity.
+    // The algorithm processes bits in groups of three from high to low.
+    // Each iteration determines one bit of the cube root.
+    // The remainder x is updated by subtracting the trial divisor.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    const int SHIFT = 12;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << SHIFT;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses temporary variable to store shifted x for comparison.
+    // Avoids recomputing x >> s in the subtraction step.
+    // Logically identical to reference implementation.
+    // Handles edge cases like x=0 naturally through loop logic.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    uint64_t shifted;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        shifted = x >> s;
+        if (shifted >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Rewrites the condition using subtraction to avoid division.
+    // (x >> s) >= b is equivalent to checking if x >= b << s.
+    // This form may be more efficient on some processors.
+    // Same restoration-based cube root algorithm with scaling.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    uint64_t trial;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        trial = b << s;
+        if (x >= trial) {
+            x -= trial;
+            r++;
+        }
+    }
+    return r << 12;
+}
+static uint64_t icbrt64(uint64_t x)
+{
+    // Combines the shift and increment into conditional logic.
+    // Uses ternary-like structure within the loop body.
+    // Mathematically equivalent to original bit-by-bit extraction.
+    // Final result scaled by 2^12 for fixed-point representation.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+    for (s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r += 1;
+        }
+    }
+    return r << 12;
+}
+```

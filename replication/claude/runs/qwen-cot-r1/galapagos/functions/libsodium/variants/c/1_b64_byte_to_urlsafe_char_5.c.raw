@@ -1,0 +1,17 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Simplified branchless using subtraction overflow.
+// Similar to reference but with clearer variable names.
+// Uses unsigned overflow to detect range boundaries.
+// Combines results with bitwise OR.
+{
+    unsigned int mask_upper = (~((x - 26) >> 8)) & 0xFF;
+    unsigned int mask_lower = (~((x - 52) >> 8)) & 0xFF;
+    unsigned int mask_digit = (~((x - 62) >> 8)) & 0xFF;
+    unsigned int mask_dash = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int mask_under = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (mask_upper & (x + 'A')) |
+           ((~mask_upper & mask_lower) & (x + 'a' - 26)) |
+           ((~mask_lower & mask_digit) & (x + '0' - 52)) |
+           ((~mask_digit & mask_dash) & '-') |
+           ((~mask_dash & mask_under) & '_');
+}

@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Reference computes count of trailing zeros (ctz) for 64-bit input.
+ // It iterates bits from LSB to MSB, tracking if any 1-bit has been seen.
+ // Before seeing first 1-bit, each 0-bit increments result.
+ // After first 1-bit, no more increments occur.
+ // Returns 0-64 depending on position of first 1-bit or 64 if all zeros.
+ int i, b, m = 0, r = 0;
+ for (i = 0; i < 64; i++)
+ {
+  b = (in >> i) & 1;
+  m |= b;
+  r += (m^1) & (b^1);
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

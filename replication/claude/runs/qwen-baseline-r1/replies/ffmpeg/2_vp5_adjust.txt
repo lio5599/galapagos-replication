@@ -1,0 +1,169 @@
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int abs_v = (v ^ s1) - s1;
+    int cond = abs_v < 2 * t;
+    int clamped = cond ? abs_v : 2 * t - 1;
+    int diff = t - clamped;
+    int s2 = diff >> 31;
+    int abs_diff = (diff ^ s2) - s2;
+    int result = t - abs_diff;
+    result += s1;
+    result ^= s1;
+    return result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int av = (v ^ sign) - sign;
+    int limit = 2 * t;
+    int bounded = av < limit ? av : limit - 1;
+    int d = t - bounded;
+    int dsign = d >> 31;
+    int ad = (d ^ dsign) - dsign;
+    int out = t - ad;
+    out += sign;
+    out ^= sign;
+    return out;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v < 0 ? -1 : 0;
+    int av = v < 0 ? -v : v;
+    int max_val = 2 * t - 1;
+    int clamped = av > max_val ? max_val : av;
+    int d = t - clamped;
+    int s2 = d < 0 ? -1 : 0;
+    int ad = d < 0 ? -d : d;
+    int res = t - ad;
+    res += s1;
+    res ^= s1;
+    return res;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int abs_v = (v ^ sign) - sign;
+    int two_t = 2 * t;
+    int clamped = abs_v < two_t ? abs_v : two_t - 1;
+    int diff = t - clamped;
+    int diff_sign = diff >> 31;
+    int abs_diff = (diff ^ diff_sign) - diff_sign;
+    int result = t - abs_diff;
+    result += sign;
+    result ^= sign;
+    return result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int av = (v ^ s1) - s1;
+    int bound = 2 * t - 1;
+    int clamped = av < bound + 1 ? av : bound;
+    int d = t - clamped;
+    int s2 = d >> 31;
+    int ad = (d ^ s2) - s2;
+    int out = t - ad;
+    out += s1;
+    out ^= s1;
+    return out;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int av = (v ^ sign) - sign;
+    int limit = 2 * t;
+    int clamped = av < limit ? av : limit - 1;
+    int d = t - clamped;
+    int dsign = d >> 31;
+    int ad = (d ^ dsign) - dsign;
+    int result = t - ad;
+    result += sign;
+    result ^= sign;
+    return result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int abs_v = (v ^ s1) - s1;
+    int two_t = 2 * t;
+    int clamped = abs_v < two_t ? abs_v : two_t - 1;
+    int diff = t - clamped;
+    int s2 = diff >> 31;
+    int abs_diff = (diff ^ s2) - s2;
+    int res = t - abs_diff;
+    res += s1;
+    res ^= s1;
+    return res;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int av = (v ^ sign) - sign;
+    int max_clamp = 2 * t - 1;
+    int clamped = av < max_clamp + 1 ? av : max_clamp;
+    int d = t - clamped;
+    int dsign = d >> 31;
+    int ad = (d ^ dsign) - dsign;
+    int out = t - ad;
+    out += sign;
+    out ^= sign;
+    return out;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int av = (v ^ s1) - s1;
+    int limit = 2 * t;
+    int clamped = av < limit ? av : limit - 1;
+    int diff = t - clamped;
+    int s2 = diff >> 31;
+    int ad = (diff ^ s2) - s2;
+    int result = t - ad;
+    result += s1;
+    result ^= s1;
+    return result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int abs_v = (v ^ sign) - sign;
+    int two_t = 2 * t;
+    int clamped = abs_v < two_t ? abs_v : two_t - 1;
+    int d = t - clamped;
+    int dsign = d >> 31;
+    int abs_d = (d ^ dsign) - dsign;
+    int res = t - abs_d;
+    res += sign;
+    res ^= sign;
+    return res;
+}
+```

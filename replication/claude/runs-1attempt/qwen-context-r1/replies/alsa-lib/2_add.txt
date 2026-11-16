@@ -1,0 +1,92 @@
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (b > 4294967295 - a)
+		return 4294967295;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 4294967295;
+	return sum;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a > 4294967295 - b)
+		return 4294967295;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	if (a + b < a)
+		return 4294967295;
+	return sum;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (4294967295 - a < b)
+		return 4294967295;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (4294967295 - b < a)
+		return 4294967295;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	unsigned int sum = a + b;
+	if (sum < b)
+		return 4294967295;
+	return sum;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a + b < a)
+		return 4294967295;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (a + b < b)
+		return 4294967295;
+	return a + b;
+}
+```
+
+```c
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	if (b >= 4294967296 - a)
+		return 4294967295;
+	return a + b;
+}
+```

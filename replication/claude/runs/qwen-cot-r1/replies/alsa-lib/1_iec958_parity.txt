@@ -1,0 +1,168 @@
+```c
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Reference: computes parity of bits 4-30 of input data
+	// Shifts right by 4, then counts set bits in positions 0-26 (original 4-30)
+	// Returns 1 if odd number of set bits, 0 otherwise
+	// Edge case: data with no bits set in range returns 0
+	unsigned int parity;
+	int bit;
+
+	data >>= 4;
+	parity = 0;
+	for (bit = 4; bit <= 30; bit++) {
+		if (data & 1)
+			parity++;
+		data >>= 1;
+	}
+	return (parity & 1);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 1: Use XOR accumulation for parity
+	// XOR all bits 4-30 together; result is 1 if odd count of 1s
+	// Equivalent because parity is XOR of all bits in range
+	// Edge case: empty range yields 0 parity
+	unsigned int parity = 0;
+	int bit;
+	for (bit = 4; bit <= 30; bit++) {
+		parity ^= (data >> bit) & 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 2: Extract bits 4-30 into mask, count set bits
+	// Create mask for bits 4-30, AND with data, then count bits
+	// Parity is LSB of bit count
+	// Edge case: masked value 0 gives parity 0
+	unsigned int masked = data & 0x7FFFFFF0;
+	unsigned int count = 0;
+	while (masked) {
+		count += masked & 1;
+		masked >>= 1;
+	}
+	return count & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 3: Use Brian Kernighan algorithm to count bits
+	// Extract bits 4-30, then use n &= n-1 to count set bits
+	// Each iteration removes lowest set bit
+	// Edge case: zero masked value loops zero times, count=0
+	unsigned int masked = data & 0x7FFFFFF0;
+	unsigned int count = 0;
+	while (masked) {
+		masked &= masked - 1;
+		count++;
+	}
+	return count & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 4: Recursive bit extraction via shift and mask
+	// Shift data right by 4, process 27 bits (positions 4-30)
+	// Accumulate parity via XOR of each extracted bit
+	// Edge case: all zeros yield parity 0
+	unsigned int temp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 27; i++) {
+		parity ^= temp & 1;
+		temp >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 5: Use lookup table for byte-wise parity
+	// Split masked bits into bytes, use precomputed parity per byte
+	// XOR byte parities together for final result
+	// Edge case: zero bytes have parity 0
+	unsigned int masked = data & 0x7FFFFFF0;
+	unsigned char *bytes = (unsigned char *)&masked;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 4; i++) {
+		unsigned char b = bytes[i];
+		unsigned int p = 0;
+		int j;
+		for (j = 0; j < 8; j++) {
+			p ^= b & 1;
+			b >>= 1;
+		}
+		parity ^= p;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 6: Parallel bit counting using SWAR technique
+	// Extract bits 4-30, apply parallel XOR reduction
+	// Uses bitwise ops to compute parity in log steps
+	// Edge case: zero input yields zero parity
+	unsigned int masked = data & 0x7FFFFFF0;
+	masked ^= masked >> 16;
+	masked ^= masked >> 8;
+	masked ^= masked >> 4;
+	masked ^= masked >> 2;
+	masked ^= masked >> 1;
+	return masked & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 7: Iterate over bit positions directly
+	// Check each bit position from 4 to 30 individually
+	// XOR result with bit value at each position
+	// Edge case: no bits set in range returns 0
+	unsigned int parity = 0;
+	int bit;
+	for (bit = 4; bit <= 30; bit++) {
+		if (data & (1u << bit)) {
+			parity ^= 1;
+		}
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 8: Use division and modulo to extract bits
+	// Shift right by 4, then repeatedly take mod 2 and divide by 2
+	// Accumulate parity via XOR of remainders
+	// Edge case: quotient becomes 0, remaining bits are 0
+	unsigned int temp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 27; i++) {
+		parity ^= temp % 2;
+		temp /= 2;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 9: Use bitwise AND with shifting mask
+	// Create shifting mask starting at bit 4, up to bit 30
+	// XOR parity with result of AND operation
+	// Edge case: mask never matches set bit yields parity 0
+	unsigned int parity = 0;
+	unsigned int mask;
+	int bit;
+	for (bit = 4; bit <= 30; bit++) {
+		mask = 1u << bit;
+		if (data & mask) {
+			parity ^= 1;
+		}
+	}
+	return parity;
+}
+```

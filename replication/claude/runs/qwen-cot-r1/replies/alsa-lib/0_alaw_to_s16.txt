@@ -1,0 +1,217 @@
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Converts A-law compressed 8-bit audio sample to 16-bit signed PCM.
+	// XORs with 0x55 to invert bits, extracts magnitude and sign.
+	// For low values (t<16), linear expansion; else uses segment decoding.
+	// Sign bit determines positive/negative output. Equivalent to reference.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return ((a_val & 0x80) ? t : -t);
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Same A-law to PCM conversion using direct bit manipulation.
+	// XOR 0x55 reverses the A-law bit pattern for standard decoding.
+	// Handles two cases: small values use simple shift, large use segment logic.
+	// Sign extension via conditional negation ensures correct signed result.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A-law decompression with explicit sign handling at end.
+	// XOR with 0x55 prepares bits for magnitude extraction.
+	// Low magnitude values expanded linearly, high values use segment shift.
+	// Final sign check applies negation if original sign bit was set.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decompresses A-law byte to 16-bit signed integer.
+	// Bit inversion via XOR 0x55 aligns with standard A-law decoding.
+	// Magnitude decoded in two ranges: direct for t<16, segmented otherwise.
+	// Sign bit from original value determines output polarity.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Converts A-law encoded sample to linear PCM.
+	// XOR 0x55 corrects bit ordering for magnitude extraction.
+	// Small values use simple left shift plus offset.
+	// Large values decode segment and offset then shift by segment-1.
+	// Sign bit controls final sign of result.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A-law to 16-bit PCM conversion with standard decoding steps.
+	// XOR with 0x55 inverts bits to match PCM magnitude layout.
+	// Two-path decoding: linear for low t, segmented for high t.
+	// Segment determines additional left shift amount.
+	// Sign bit from input determines output sign.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Decompresses A-law audio sample to signed 16-bit value.
+	// Bit inversion via XOR 0x55 prepares for magnitude decoding.
+	// Low magnitude values expanded with shift and add.
+	// High magnitude values use segment-based shift after offset.
+	// Original sign bit applied at end for correct polarity.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Standard A-law decompression to linear PCM format.
+	// XOR 0x55 corrects bit pattern for magnitude extraction.
+	// Two cases handle small and large magnitudes differently.
+	// Segment decoding adds offset and shifts by segment-1.
+	// Sign bit determines whether result is positive or negative.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Converts A-law compressed byte to 16-bit signed PCM sample.
+	// XOR with 0x55 inverts bits to standard magnitude format.
+	// Small values use direct expansion, large use segment logic.
+	// Segment extracted from bits 4-6 controls shift amount.
+	// Sign bit from input applied to final magnitude.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+
+static int alaw_to_s16(unsigned char a_val)
+{
+	// A-law to PCM conversion using standard decoding algorithm.
+	// XOR 0x55 prepares bits for magnitude interpretation.
+	// Low t values expanded linearly, high values use segment shift.
+	// Segment determines additional shift after base offset.
+	// Sign bit controls output sign for correct signed result.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+```

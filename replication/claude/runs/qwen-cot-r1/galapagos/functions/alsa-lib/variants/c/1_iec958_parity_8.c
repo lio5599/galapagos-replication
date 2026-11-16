@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 8: Use division and modulo to extract bits
+	// Shift right by 4, then repeatedly take mod 2 and divide by 2
+	// Accumulate parity via XOR of remainders
+	// Edge case: quotient becomes 0, remaining bits are 0
+	unsigned int temp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 27; i++) {
+		parity ^= temp % 2;
+		temp /= 2;
+	}
+	return parity;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

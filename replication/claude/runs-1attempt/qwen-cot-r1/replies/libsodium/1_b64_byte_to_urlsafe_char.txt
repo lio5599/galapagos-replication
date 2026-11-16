@@ -1,0 +1,139 @@
+```c
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Reference: maps 0-25->A-Z, 26-51->a-z, 52-61->0-9, 62->-, 63->_
+    // Uses branchless conditional logic via arithmetic overflow detection
+    // Each term activates only when x falls in its specific range
+    // Overflow of (x-N) when x<N produces all 1s after >>8 & 0xFF
+    // This creates a mask that selects the correct character offset
+    return (((((unsigned int) (x) - (unsigned int) (26)) >> 8) & 0xFF) & (x + 'A')) |
+           ((((((unsigned int) (x) - (unsigned int) (26)) >> 8) & 0xFF) ^ 0xFF) & ((((unsigned int) (x) - (unsigned int) (52)) >> 8) & 0xFF) & (x + ('a' - 26))) |
+           ((((((unsigned int) (x) - (unsigned int) (52)) >> 8) & 0xFF) ^ 0xFF) & ((((unsigned int) (x) - (unsigned int) (62)) >> 8) & 0xFF) & (x + ('0' - 52))) | (((((0U - ((unsigned int) (x) ^ (unsigned int) (62))) >> 8) & 0xFF) ^ 0xFF) & '-') |
+           (((((0U - ((unsigned int) (x) ^ (unsigned int) (63))) >> 8) & 0xFF) ^ 0xFF) & '_');
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Maps base64 index 0-63 to URL-safe characters using if-else chain
+    // Directly checks ranges for A-Z, a-z, 0-9, then special chars - and _
+    // Simpler logic but uses branches instead of branchless arithmetic
+    // Equivalent because each range maps to exactly one character set
+    if (x < 26) return 'A' + x;
+    if (x < 52) return 'a' + (x - 26);
+    if (x < 62) return '0' + (x - 52);
+    if (x == 62) return '-';
+    return '_';
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Uses lookup table for direct indexing into URL-safe base64 alphabet
+    // Array contains all 64 characters in order: A-Z, a-z, 0-9, -, _
+    // O(1) access with no branching or arithmetic complexity
+    // Equivalent because table is precomputed with correct mapping
+    static const char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    return (int) table[x];
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Branchless approach using ternary operators chained together
+    // Each condition checks range boundaries and returns appropriate char
+    // Equivalent to reference but uses C's conditional operator instead of bitwise
+    // Handles all 64 cases with clear range checks
+    return (x < 26) ? ('A' + x) :
+           (x < 52) ? ('a' + x - 26) :
+           (x < 62) ? ('0' + x - 52) :
+           (x == 62) ? '-' : '_';
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Uses switch statement for each possible input value 0-63
+    // Explicitly maps each index to its corresponding URL-safe character
+    // Equivalent because every input has exactly one output character
+    // No arithmetic needed, just direct mapping per case
+    switch (x) {
+        case 0: return 'A'; case 1: return 'B'; case 2: return 'C'; case 3: return 'D';
+        case 4: return 'E'; case 5: return 'F'; case 6: return 'G'; case 7: return 'H';
+        case 8: return 'I'; case 9: return 'J'; case 10: return 'K'; case 11: return 'L';
+        case 12: return 'M'; case 13: return 'N'; case 14: return 'O'; case 15: return 'P';
+        case 16: return 'Q'; case 17: return 'R'; case 18: return 'S'; case 19: return 'T';
+        case 20: return 'U'; case 21: return 'V'; case 22: return 'W'; case 23: return 'X';
+        case 24: return 'Y'; case 25: return 'Z'; case 26: return 'a'; case 27: return 'b';
+        case 28: return 'c'; case 29: return 'd'; case 30: return 'e'; case 31: return 'f';
+        case 32: return 'g'; case 33: return 'h'; case 34: return 'i'; case 35: return 'j';
+        case 36: return 'k'; case 37: return 'l'; case 38: return 'm'; case 39: return 'n';
+        case 40: return 'o'; case 41: return 'p'; case 42: return 'q'; case 43: return 'r';
+        case 44: return 's'; case 45: return 't'; case 46: return 'u'; case 47: return 'v';
+        case 48: return 'w'; case 49: return 'x'; case 50: return 'y'; case 51: return 'z';
+        case 52: return '0'; case 53: return '1'; case 54: return '2'; case 55: return '3';
+        case 56: return '4'; case 57: return '5'; case 58: return '6'; case 59: return '7';
+        case 60: return '8'; case 61: return '9'; case 62: return '-'; case 63: return '_';
+        default: return 0;
+    }
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Computes result using mathematical formula with modular arithmetic
+    // Determines which range x falls into using division and modulo
+    // Then applies appropriate offset for that character set
+    // Equivalent because each range has consistent character spacing
+    if (x < 26) return 'A' + x;
+    if (x < 52) return 'a' + (x % 26);
+    if (x < 62) return '0' + (x % 10);
+    return (x == 62) ? '-' : '_';
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Uses bitwise operations to determine range and compute character
+    // Similar to reference but with different bitwise logic structure
+    // Creates masks based on comparison results using subtraction overflow
+    // Each mask enables only the relevant character calculation term
+    unsigned int m1 = (x < 26) ? 0xFF : 0;
+    unsigned int m2 = (x >= 26 && x < 52) ? 0xFF : 0;
+    unsigned int m3 = (x >= 52 && x < 62) ? 0xFF : 0;
+    unsigned int m4 = (x == 62) ? 0xFF : 0;
+    unsigned int m5 = (x == 63) ? 0xFF : 0;
+    return (m1 & (x + 'A')) | (m2 & (x - 26 + 'a')) | (m3 & (x - 52 + '0')) | (m4 & '-') | (m5 & '_');
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Implements mapping using array of function pointers or computed goto
+    // Actually uses simple array indexing with precomputed character values
+    // Each index directly corresponds to the URL-safe base64 character
+    // Equivalent because array is initialized with correct character sequence
+    const char map[] = {
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
+        'Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f',
+        'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+        'w','x','y','z','0','1','2','3','4','5','6','7','8','9','-','_'
+    };
+    return (int) map[x];
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Uses arithmetic to compute base and offset for each character range
+    // Calculates which of the 5 groups x belongs to using division
+    // Then computes character using group-specific base and offset
+    // Equivalent because each group has uniform character encoding
+    int group = (x < 26) ? 0 : (x < 52) ? 1 : (x < 62) ? 2 : (x == 62) ? 3 : 4;
+    int base = (group == 0) ? 'A' : (group == 1) ? 'a' : (group == 2) ? '0' : (group == 3) ? '-' : '_';
+    int offset = (group < 3) ? (x - (group == 0 ? 0 : (group == 1 ? 26 : 52))) : 0;
+    return (group < 3) ? base + offset : base;
+}
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Branchless implementation using min/max and conditional masks
+    // Computes character by selecting appropriate base and offset
+    // Uses arithmetic comparisons to create selection masks
+    // Equivalent to reference but with more readable mask construction
+    unsigned int in_upper = (x < 26);
+    unsigned int in_lower = (x >= 26) & (x < 52);
+    unsigned int in_digit = (x >= 52) & (x < 62);
+    unsigned int is_dash = (x == 62);
+    unsigned int is_under = (x == 63);
+    int c1 = (int) (in_upper & (x + 'A'));
+    int c2 = (int) (in_lower & (x - 26 + 'a'));
+    int c3 = (int) (in_digit & (x - 52 + '0'));
+    int c4 = (int) (is_dash & '-');
+    int c5 = (int) (is_under & '_');
+    return c1 | c2 | c3 | c4 | c5;
+}
+```

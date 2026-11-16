@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using explicit 64-bit cast for shift operation
+    // Ensures the shift is performed on 64-bit value before truncation
+    // to avoid any potential issues with shift width interpretation
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t shifted = (z + w) >> 31;
+    d = (uint32_t)shifted - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

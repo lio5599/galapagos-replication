@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes integer cube root of x scaled by 2^12.
+    // Uses counter-based loop instead of direct bit position tracking.
+    // The divisor b formula is identical to reference implementation.
+    // Scaling by 2^12 matches the original function behavior.
+    uint64_t r = 0;
+    uint64_t b;
+    int iter;
+
+    for (iter = 21; iter >= 0; iter--) {
+        int s = 3 * iter;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

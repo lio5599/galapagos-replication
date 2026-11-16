@@ -1,0 +1,209 @@
+```c
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Reference: Converts A-law compressed 8-bit audio sample to 16-bit signed linear PCM.
+	// XOR with 0x55 uncomplements bits. Extract magnitude t from lower 7 bits.
+	// If t<16, scale by 16 and add 8 (linear segment 0). Else, extract segment (1-7),
+	// combine mantissa with offset 0x108, shift left by seg-1. Sign from bit 7.
+	int		t;
+	int		seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return ((a_val & 0x80) ? t : -t);
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Same logic but extract sign bit first and apply at end.
+	// XOR uncomplements. Mask magnitude. Handle two cases for linear expansion.
+	// Segment 0 (t<16): multiply by 16, add 8. Segments 1-7: use table-like formula.
+	// Sign bit determines positive or negative result.
+	int		t;
+	int		seg;
+	int		sign;
+
+	a_val ^= 0x55;
+	sign = (a_val & 0x80) ? -1 : 1;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return sign * t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Use ternary operator for sign and inline segment calculation.
+	// XOR with 0x55 restores original bit pattern. Lower 7 bits are magnitude.
+	// t<16 maps to first linear segment. Else, extract segment number 1-7.
+	// Mantissa bits shifted and added to base 0x108, then shifted by seg-1.
+	int		t;
+	int		seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Compute absolute value first, then apply sign via conditional.
+	// A-law encoding uses complemented bits, so XOR 0x55 uncomplements.
+	// Magnitude t is in lower 7 bits. Two ranges: t<16 and t>=16.
+	// For t>=16, segment bits determine shift amount. Mantissa is lower 4 bits.
+	int		t;
+	int		seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Separate sign extraction and use explicit if-else for sign.
+	// XOR 0x55 uncomplements A-law code. Extract 7-bit magnitude.
+	// If magnitude <16, it is in first segment: scale and offset.
+	// Otherwise, extract segment (1-7), compute linear value with shift.
+	int		t;
+	int		seg;
+	int		result;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	result = t;
+	if (a_val & 0x80)
+		result = -result;
+	return result;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Use bitwise NOT and addition for negation alternative.
+	// XOR 0x55 uncomplements. t holds magnitude from lower 7 bits.
+	// t<16: linear segment 0 with slope 16 and offset 8.
+	// t>=16: segment 1-7, mantissa shifted, base 0x108, shifted by seg-1.
+	int		t;
+	int		seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Compute sign multiplier as 1 or -1 explicitly.
+	// A-law bit 7 is sign (after XOR). Lower 7 bits are magnitude code.
+	// Magnitude <16: first linear segment. Else: segments 1-7.
+	// Segment number from bits 4-6 of magnitude. Mantissa from bits 0-3.
+	int		t;
+	int		seg;
+	int		sign;
+
+	a_val ^= 0x55;
+	sign = (a_val & 0x80) ? -1 : 1;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return sign * t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Use arithmetic right shift concept via sign extension.
+	// XOR 0x55 uncomplements A-law. Extract magnitude t.
+	// Two cases for linear expansion based on t value.
+	// Segment 0: t*16+8. Segments 1-7: (mantissa*16+0x108)<<(seg-1).
+	int		t;
+	int		seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Inline the segment calculation without intermediate seg var.
+	// XOR 0x55 uncomplements. t is 7-bit magnitude.
+	// If t<16, use first segment formula. Else compute segment from t>>4.
+	// Mantissa is t&0x0f, base is 0x108, shift by segment-1.
+	int		t;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		int seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Equivalent: Use explicit segment table logic via arithmetic.
+	// XOR 0x55 uncomplements A-law code. Lower 7 bits are magnitude.
+	// t<16: segment 0, linear with offset 8. t>=16: segments 1-7.
+	// Extract segment from bits 4-6, mantissa from bits 0-3.
+	int		t;
+	int		seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg -1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}
+```

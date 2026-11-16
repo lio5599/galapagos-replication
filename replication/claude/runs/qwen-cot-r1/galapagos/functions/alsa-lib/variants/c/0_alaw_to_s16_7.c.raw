@@ -1,0 +1,21 @@
+static int alaw_to_s16(unsigned char a_val)
+{
+	// Standard A-law decompression to linear PCM format.
+	// XOR 0x55 corrects bit pattern for magnitude extraction.
+	// Two cases handle small and large magnitudes differently.
+	// Segment decoding adds offset and shifts by segment-1.
+	// Sign bit determines whether result is positive or negative.
+	int t;
+	int seg;
+
+	a_val ^= 0x55;
+	t = a_val & 0x7f;
+	if (t < 16)
+		t = (t << 4) + 8;
+	else {
+		seg = (t >> 4) & 0x07;
+		t = ((t & 0x0f) << 4) + 0x108;
+		t <<= seg - 1;
+	}
+	return (a_val & 0x80) ? t : -t;
+}

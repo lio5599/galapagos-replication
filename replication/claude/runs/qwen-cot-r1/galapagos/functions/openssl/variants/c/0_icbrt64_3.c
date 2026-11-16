@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Lookup table for small values, Newton for large
+    // Precomputed cube roots for x < 2^20 scaled by 2^12
+    // For larger x, uses Newton iteration from good guess
+    // Combines speed of lookup with generality of Newton
+    if (x < (1ULL << 20)) {
+        static const uint64_t table[] = {0, 1092, 1732, 2220, 2631};
+        int idx = __builtin_clzll(x ? x : 1) >> 3;
+        idx = idx > 4 ? 4 : idx;
+        return table[idx];
+    }
+    uint64_t r = 1 << ((__builtin_clzll(x) / 3) + 12);
+    for (int i = 0; i < 5; i++) r = (2 * r + x / (r * r >> 24)) / 3;
+    return r;
+}
+
+
+int main(){
+    icbrt64(0);
+}

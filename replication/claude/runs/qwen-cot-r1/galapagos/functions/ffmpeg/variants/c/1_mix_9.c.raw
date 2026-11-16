@@ -1,0 +1,10 @@
+static int mix(int c0, int c1)
+{
+    // Parse 5-6-5 color fields from both inputs.
+    // Apply 2:1 weighting ratio favoring first input.
+    // Truncate average via integer division by three.
+    // Assemble final color by positioning each 5/6-bit field.
+    int c0r = c0 >> 10, c0g = (c0 >> 5) & 0x3F, c0b = c0 & 0x1F;
+    int c1r = c1 >> 10, c1g = (c1 >> 5) & 0x3F, c1b = c1 & 0x1F;
+    return ((2*c0r+c1r)/3)<<10 | ((2*c0g+c1g)/3)<<5 | ((2*c0b+c1b)/3);
+}

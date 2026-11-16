@@ -1,0 +1,9 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Combines all terms into one expression using ternary for residual selection.
+    // (7+bps+7)/8 simplifies to (bps+14)/8 for ceiling division of (bps+7)/8.
+    // Adds 18 for the fixed header (16) and CRC (2) bytes.
+    int count;
+    count = 18 + ch * ((bps + 14) / 8) + ((ch == 2) ? ((2 * bps + 1) * blocksize + 7) / 8 : (ch * bps * blocksize + 7) / 8);
+    return count;
+}

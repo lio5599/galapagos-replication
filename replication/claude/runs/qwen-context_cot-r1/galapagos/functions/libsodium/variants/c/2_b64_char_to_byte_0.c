@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+// Reference: converts base64 char to 0-63 value, returns 0 for invalid chars.
+// Uses branchless range checks via arithmetic to map A-Z, a-z, 0-9, +, /.
+// Invalid inputs (outside these ranges) result in 0 due to final masking.
+{
+    const unsigned int x =
+        ((((((unsigned int) (c) - (unsigned int) ('A')) >> 8) & 0xFF) ^ 0xFF) & (((((unsigned int) ('Z') - (unsigned int) (c)) >> 8) & 0xFF) ^ 0xFF) & (c - 'A')) |
+        ((((((unsigned int) (c) - (unsigned int) ('a')) >> 8) & 0xFF) ^ 0xFF) & (((((unsigned int) ('z') - (unsigned int) (c)) >> 8) & 0xFF) ^ 0xFF) & (c - ('a' - 26))) |
+        ((((((unsigned int) (c) - (unsigned int) ('0')) >> 8) & 0xFF) ^ 0xFF) & (((((unsigned int) ('9') - (unsigned int) (c)) >> 8) & 0xFF) ^ 0xFF) & (c - ('0' - 52))) | (((((0U - ((unsigned int) (c) ^ (unsigned int) ('+'))) >> 8) & 0xFF) ^ 0xFF) & 62) |
+        (((((0U - ((unsigned int) (c) ^ (unsigned int) ('/'))) >> 8) & 0xFF) ^ 0xFF) & 63);
+
+    return x | (((((0U - ((unsigned int) (x) ^ (unsigned int) (0))) >> 8) & 0xFF) ^ 0xFF) & (((((0U - ((unsigned int) (c) ^ (unsigned int) ('A'))) >> 8) & 0xFF) ^ 0xFF) ^ 0xFF));
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

@@ -1,0 +1,11 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+// Branchless approach using ternary operators.
+// Chains conditions to select correct character.
+// Maintains equivalence by covering all 64 cases.
+// Slightly more verbose than lookup but no array.
+{
+    return (x <= 25) ? ('A' + x) :
+           (x <= 51) ? ('a' + (x - 26)) :
+           (x <= 61) ? ('0' + (x - 52)) :
+           (x == 62) ? '-' : '_';
+}

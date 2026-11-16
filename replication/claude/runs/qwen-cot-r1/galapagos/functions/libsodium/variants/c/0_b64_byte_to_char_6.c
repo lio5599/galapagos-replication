@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+// Direct translation of reference with minimal refactoring for readability
+// The expression ((x-N)>>8)&0xFF acts as a predicate: 0xFF when x<N, 0x00 when x>=N
+// This works because unsigned subtraction underflows to a large value when x<N
+// Shifting right by 8 propagates the sign bit (which is 1 for underflow) to all bits
+// Masking with 0xFF keeps only the low byte which is 0xFF or 0x00
+// Equality check uses XOR: x^N is 0 when equal, so 0-0=0, and 0>>8=0, but we want 0xFF for equality
+// Actually (0U - (x^N))>>8: when x==N, x^N=0, 0-0=0, 0>>8=0, then ~0&0xFF=0xFF. When x!=N, x^N!=0, 0-(nonzero) underflows to large value, >>8 gives 0xFF, ~0xFF=0x00
+{
+    unsigned int m1 = ((x - 26) >> 8) & 0xFF;
+    unsigned int m2 = ((x - 52) >> 8) & 0xFF;
+    unsigned int m3 = ((x - 62) >> 8) & 0xFF;
+    unsigned int e62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int e63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (m1 & (x + 'A')) | ((~m1 & m2) & (x + 'a' - 26)) | ((~m2 & m3) & (x + '0' - 52)) | ((~e62 & 0xFF) & '+') | ((~e63 & 0xFF) & '/');
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

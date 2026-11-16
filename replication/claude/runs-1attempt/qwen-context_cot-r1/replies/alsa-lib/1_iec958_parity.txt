@@ -1,0 +1,144 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Reference: computes parity of bits 4-30 of input (27 bits).
+	// Shifts right by 4, then counts set bits in positions 0-26.
+	// Returns LSB of count (odd/even parity).
+	unsigned int parity;
+	int bit;
+
+	data >>= 4;
+	parity = 0;
+	for (bit = 4; bit <= 30; bit++) {
+		if (data & 1)
+			parity++;
+		data >>= 1;
+	}
+	return (parity & 1);
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Count set bits in bits 4-30 using loop with mask.
+	// Extract each bit by shifting and masking, accumulate parity.
+	// Equivalent to reference: same 27-bit range, same parity logic.
+	unsigned int parity = 0;
+	int bit;
+	for (bit = 4; bit <= 30; bit++) {
+		if (data & (1u << bit))
+			parity ^= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Use XOR accumulation for parity instead of count.
+	// XORing 1 for each set bit gives same result as count mod 2.
+	// Processes bits 4-30 by shifting data right after initial shift.
+	unsigned int parity = 0;
+	int bit;
+	data >>= 4;
+	for (bit = 0; bit < 27; bit++) {
+		parity ^= (data & 1);
+		data >>= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Extract bits 4-30 into a 27-bit value, then use builtin popcount.
+	// Mask with (1<<27)-1 to isolate the 27 bits after shifting.
+	// Parity is popcount mod 2, equivalent to reference.
+	unsigned int extracted = (data >> 4) & 0x7FFFFFFu;
+	unsigned int count = 0;
+	while (extracted) {
+		count += extracted & 1;
+		extracted >>= 1;
+	}
+	return count & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Compute parity using Brian Kernighan algorithm on extracted bits.
+	// data>>4 & 0x7FFFFFF gives bits 4-30. Count set bits via n&=n-1.
+	// Each iteration removes lowest set bit, count increments.
+	unsigned int val = (data >> 4) & 0x7FFFFFFu;
+	unsigned int count = 0;
+	while (val) {
+		val &= val - 1;
+		count++;
+	}
+	return count & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Process bits 4-30 by iterating with a mask that shifts left.
+	// Start mask at 1<<4, shift up to 1<<30, check each bit.
+	// XOR parity for each set bit, equivalent to reference.
+	unsigned int parity = 0;
+	unsigned int mask = 1u << 4;
+	while (mask <= (1u << 30)) {
+		if (data & mask)
+			parity ^= 1;
+		mask <<= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Split into two halves: bits 4-16 and bits 17-30.
+	// Compute parity of each half separately, then XOR results.
+	// This covers all 27 bits in range 4-30 equivalently.
+	unsigned int low = (data >> 4) & 0x1FFFu;
+	unsigned int high = (data >> 17) & 0x7FFFu;
+	unsigned int p_low = 0, p_high = 0;
+	while (low) { p_low ^= low & 1; low >>= 1; }
+	while (high) { p_high ^= high & 1; high >>= 1; }
+	return p_low ^ p_high;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Use a lookup table approach conceptually via repeated halving.
+	// Extract 27 bits, fold by XORing halves repeatedly.
+	// Final result is parity of the folded value.
+	unsigned int val = (data >> 4) & 0x7FFFFFFu;
+	val ^= val >> 16;
+	val ^= val >> 8;
+	val ^= val >> 4;
+	val ^= val >> 2;
+	val ^= val >> 1;
+	return val & 1;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Iterate through 27 bits using index and bit extraction.
+	// For each position i from 0 to 26, check bit i+4 of data.
+	// Accumulate parity via XOR, matching reference semantics.
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 27; i++) {
+		if (data & (1u << (i + 4)))
+			parity ^= 1;
+	}
+	return parity;
+}
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Compute parity by processing word in chunks.
+	// Extract bits 4-30, then use divide-and-conquer XOR folding.
+	// Shift and XOR reduces to single bit parity efficiently.
+	unsigned int val = (data >> 4) & 0x7FFFFFFu;
+	val = val ^ (val >> 1);
+	val = val ^ (val >> 2);
+	val = val ^ (val >> 4);
+	val = val ^ (val >> 8);
+	val = val ^ (val >> 16);
+	return val & 1;
+}

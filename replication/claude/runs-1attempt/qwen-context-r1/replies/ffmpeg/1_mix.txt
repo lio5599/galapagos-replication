@@ -1,0 +1,118 @@
+```c
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (red / 3) * 1024 + (green / 3) * 32 + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int b0 = c0 & 0x001F;
+    int b1 = c1 & 0x001F;
+    int g0 = (c0 & 0x03E0) >> 5;
+    int g1 = (c1 & 0x03E0) >> 5;
+    int r0 = c0 >> 10;
+    int r1 = c1 >> 10;
+    int blue = 2 * b0 + b1;
+    int green = 2 * g0 + g1;
+    int red = 2 * r0 + r1;
+    return (red / 3) * 1024 + (green / 3) * 32 + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int blue = (c0 & 0x001F) + (c0 & 0x001F) + (c1 & 0x001F);
+    int green = ((c0 & 0x03E0) + (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = (c0 >> 10) + (c0 >> 10) + (c1 >> 10);
+    return (red / 3) * 1024 + (green / 3) * 32 + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x3E0) + (c1 & 0x3E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (red / 3) * 1024 + (green / 3) * 32 + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x1F) + (c1 & 0x1F);
+    int green = (2 * (c0 & 0x3E0) + (c1 & 0x3E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (red / 3) * 1024 + (green / 3) * 32 + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int r_div = red / 3;
+    int g_div = green / 3;
+    int b_div = blue / 3;
+    return r_div * 1024 + g_div * 32 + b_div;
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (red / 3) * 0x400 + (green / 3) * 0x20 + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int b0 = c0 & 0x001F;
+    int b1 = c1 & 0x001F;
+    int g0 = (c0 >> 5) & 0x1F;
+    int g1 = (c1 >> 5) & 0x1F;
+    int r0 = c0 >> 10;
+    int r1 = c1 >> 10;
+    int blue = 2 * b0 + b1;
+    int green = 2 * g0 + g1;
+    int red = 2 * r0 + r1;
+    return (red / 3) * 1024 + (green / 3) * 32 + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return ((red / 3) << 10) + ((green / 3) << 5) + (blue / 3);
+}
+```
+
+```c
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int result = 0;
+    result += (red / 3) * 1024;
+    result += (green / 3) * 32;
+    result += (blue / 3);
+    return result;
+}
+```

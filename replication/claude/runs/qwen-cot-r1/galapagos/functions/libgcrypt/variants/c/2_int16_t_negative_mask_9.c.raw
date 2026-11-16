@@ -1,0 +1,8 @@
+static int int16_t_negative_mask_10(int16_t x)
+{
+  // Use sign extension via shift and mask.
+  // Shift right 15 to get all 1s or all 0s.
+  // Cast to int ensures proper sign extension behavior.
+  int shifted = (int) (x >> 15);
+  return shifted;
+}

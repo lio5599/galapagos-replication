@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int b64_char_to_byte(int c)
+{
+    if (c < 'A' || c > 'z')
+        return 0;
+    if (c <= 'Z')
+        return (unsigned int)(c - 'A');
+    if (c <= 'a' - 1)
+        return 0;
+    if (c <= 'z')
+        return (unsigned int)(c - 'a' + 26);
+    if (c <= '9')
+        return (unsigned int)(c - '0' + 52);
+    if (c == '+')
+        return 62;
+    if (c == '/')
+        return 63;
+    return 0;
+}
+
+
+int main(){
+    b64_char_to_byte(0);
+}

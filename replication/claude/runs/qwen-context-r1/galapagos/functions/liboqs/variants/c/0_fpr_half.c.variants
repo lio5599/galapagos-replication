@@ -1,0 +1,99 @@
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t mask = (uint64_t)1 << 52;
+    x -= mask;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint32_t t = (exp + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    x -= 0x0010000000000000ULL;
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t one_shifted = (uint64_t)1 << 52;
+    x -= one_shifted;
+    uint32_t upper = (uint32_t)(x >> 52);
+    uint32_t masked = upper & 0x7FF;
+    uint32_t t = (masked + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    x -= (uint64_t)1 << 52;
+    uint32_t t = ((uint32_t)((x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t adjusted = x - ((uint64_t)1 << 52);
+    uint32_t exponent = (uint32_t)(adjusted >> 52) & 0x7FF;
+    uint32_t t = (exponent + 1) >> 11;
+    adjusted &= (uint64_t)t - 1;
+    return adjusted;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    x -= (uint64_t)0x1 << 52;
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t sub = (uint64_t)1 << 52;
+    x -= sub;
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    x -= (uint64_t)1 << 52;
+    uint32_t upper_bits = (uint32_t)(x >> 52);
+    uint32_t masked_exp = upper_bits & 0x7FF;
+    uint32_t t = (masked_exp + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t mask = (uint64_t)1 << 52;
+    x -= mask;
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}

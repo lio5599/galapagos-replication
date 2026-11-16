@@ -1,0 +1,25 @@
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x > 63)
+        return 0;
+    
+    int offset = 0;
+    int base = 'A';
+    
+    if (x >= 26) {
+        offset = 26;
+        base = 'a';
+    }
+    if (x >= 52) {
+        offset = 52;
+        base = '0';
+    }
+    if (x >= 62) {
+        if (x == 62)
+            return '+';
+        if (x == 63)
+            return '/';
+    }
+    
+    return base + (int)(x - offset);
+}

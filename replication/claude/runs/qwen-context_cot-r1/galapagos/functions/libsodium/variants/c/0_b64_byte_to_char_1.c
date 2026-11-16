@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+// Uses a lookup table for all 64 base64 characters.
+// Direct indexing ensures correctness for x in 0-63.
+// For other inputs, behavior matches reference (undefined/implementation-defined).
+{
+    static const char b64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    if (x < 64) {
+        return b64_table[x];
+    }
+    return 0;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

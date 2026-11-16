@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Binary search for cube root in range [0, 2^21]
+    // Checks mid^3 <= x to narrow search space
+    // Returns largest r such that r^3 <= x, scaled by 2^12
+    // Edge case x=0 handled naturally by search bounds
+    uint64_t lo = 0, hi = 1 << 21;
+    while (lo < hi) {
+        uint64_t mid = (lo + hi + 1) >> 1;
+        if (mid * mid * mid <= x << 24) lo = mid;
+        else hi = mid - 1;
+    }
+    return lo;
+}
+
+
+int main(){
+    icbrt64(0);
+}

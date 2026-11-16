@@ -1,0 +1,224 @@
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x < 26)
+        return x + 'A';
+    else if (x < 52)
+        return x + 'a' - 26;
+    else if (x < 62)
+        return x + '0' - 52;
+    else if (x == 62)
+        return '+';
+    else if (x == 63)
+        return '/';
+    else
+        return 0;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    const char *table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    if (x <= 63)
+        return table[x];
+    else
+        return 0;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    int result;
+    if (x < 26)
+        result = x + 65;
+    else if (x < 52)
+        result = x + 97 - 26;
+    else if (x < 62)
+        result = x + 48 - 52;
+    else if (x == 62)
+        result = 43;
+    else if (x == 63)
+        result = 47;
+    else
+        result = 0;
+    return result;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x > 63)
+        return 0;
+    if (x < 26)
+        return (int)(x) + 'A';
+    if (x < 52)
+        return (int)(x - 26) + 'a';
+    if (x < 62)
+        return (int)(x - 52) + '0';
+    if (x == 62)
+        return '+';
+    return '/';
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    int y = (int)x;
+    if (y < 0 || y > 63)
+        return 0;
+    if (y < 26)
+        return y + 'A';
+    y -= 26;
+    if (y < 26)
+        return y + 'a';
+    y -= 26;
+    if (y < 10)
+        return y + '0';
+    y -= 10;
+    if (y == 0)
+        return '+';
+    return '/';
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    static const char b64_table[] = {
+        'A','B','C','D','E','F','G','H','I','J','K','L','M',
+        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+        'a','b','c','d','e','f','g','h','i','j','k','l','m',
+        'n','o','p','q','r','s','t','u','v','w','x','y','z',
+        '0','1','2','3','4','5','6','7','8','9','+','/'
+    };
+    if (x <= 63)
+        return b64_table[x];
+    else
+        return 0;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    unsigned int mask1 = ((x - 26) >> 8) & 0xFF;
+    unsigned int mask2 = ((x - 52) >> 8) & 0xFF;
+    unsigned int mask3 = ((x - 62) >> 8) & 0xFF;
+    unsigned int eq62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int eq63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    
+    int r1 = (mask1 & (x + 'A'));
+    int r2 = ((~mask1 & mask2) & (x + 'a' - 26));
+    int r3 = ((~mask2 & mask3) & (x + '0' - 52));
+    int r4 = ((~eq62) & '+');
+    int r5 = ((~eq63) & '/');
+    
+    return r1 | r2 | r3 | r4 | r5;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    if (x <= 63) {
+        if (x < 26)
+            return (int)x + 'A';
+        else if (x < 52)
+            return (int)(x - 26) + 'a';
+        else if (x < 62)
+            return (int)(x - 52) + '0';
+        else if (x == 62)
+            return '+';
+        else
+            return '/';
+    }
+    return 0;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    int c;
+    switch (x) {
+        case 0:  c = 'A'; break;
+        case 1:  c = 'B'; break;
+        case 2:  c = 'C'; break;
+        case 3:  c = 'D'; break;
+        case 4:  c = 'E'; break;
+        case 5:  c = 'F'; break;
+        case 6:  c = 'G'; break;
+        case 7:  c = 'H'; break;
+        case 8:  c = 'I'; break;
+        case 9:  c = 'J'; break;
+        case 10: c = 'K'; break;
+        case 11: c = 'L'; break;
+        case 12: c = 'M'; break;
+        case 13: c = 'N'; break;
+        case 14: c = 'O'; break;
+        case 15: c = 'P'; break;
+        case 16: c = 'Q'; break;
+        case 17: c = 'R'; break;
+        case 18: c = 'S'; break;
+        case 19: c = 'T'; break;
+        case 20: c = 'U'; break;
+        case 21: c = 'V'; break;
+        case 22: c = 'W'; break;
+        case 23: c = 'X'; break;
+        case 24: c = 'Y'; break;
+        case 25: c = 'Z'; break;
+        case 26: c = 'a'; break;
+        case 27: c = 'b'; break;
+        case 28: c = 'c'; break;
+        case 29: c = 'd'; break;
+        case 30: c = 'e'; break;
+        case 31: c = 'f'; break;
+        case 32: c = 'g'; break;
+        case 33: c = 'h'; break;
+        case 34: c = 'i'; break;
+        case 35: c = 'j'; break;
+        case 36: c = 'k'; break;
+        case 37: c = 'l'; break;
+        case 38: c = 'm'; break;
+        case 39: c = 'n'; break;
+        case 40: c = 'o'; break;
+        case 41: c = 'p'; break;
+        case 42: c = 'q'; break;
+        case 43: c = 'r'; break;
+        case 44: c = 's'; break;
+        case 45: c = 't'; break;
+        case 46: c = 'u'; break;
+        case 47: c = 'v'; break;
+        case 48: c = 'w'; break;
+        case 49: c = 'x'; break;
+        case 50: c = 'y'; break;
+        case 51: c = 'z'; break;
+        case 52: c = '0'; break;
+        case 53: c = '1'; break;
+        case 54: c = '2'; break;
+        case 55: c = '3'; break;
+        case 56: c = '4'; break;
+        case 57: c = '5'; break;
+        case 58: c = '6'; break;
+        case 59: c = '7'; break;
+        case 60: c = '8'; break;
+        case 61: c = '9'; break;
+        case 62: c = '+'; break;
+        case 63: c = '/'; break;
+        default: c = 0; break;
+    }
+    return c;
+}
+```
+
+```c
+static int b64_byte_to_char(unsigned int x)
+{
+    const char *t = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    return (x <= 63) ? (int)t[x] : 0;
+}
+```

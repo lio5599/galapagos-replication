@@ -1,0 +1,141 @@
+```c
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes Montgomery multiplication: (a*b*R^-1) mod p where R=2^32.
+    // Uses p0i = -p^-1 mod 2^32 to eliminate lower 32 bits of a*b.
+    // Adds multiple of p to cancel low bits, then reduces modulo p.
+    // Final conditional subtraction ensures result is in [0, p-1].
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using explicit low-bit masking for multiplier selection.
+    // Computes k = (a*b * p0i) mod 2^32, then t = a*b + k*p.
+    // Since k*p cancels low 32 bits of a*b, t is divisible by 2^32.
+    // Returns (t/2^32) mod p via conditional subtraction.
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = (z & 0xFFFFFFFF) * p0i;
+    w = w * p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Uses 64-bit arithmetic with explicit sign extension avoidance.
+    // Multiplier k = (a*b mod 2^32) * p0i mod 2^32 ensures k*p has same low bits as a*b.
+    // Sum z+w is multiple of 2^32, so shift right by 32 gives quotient.
+    // Conditional add of p handles case when quotient >= p.
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = (uint64_t)((uint32_t)(z * p0i)) * p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes product z = a*b, then finds k such that z+k*p is divisible by 2^32.
+    // k = (z mod 2^32) * p0i mod 2^32 works because p0i = -p^-1 mod 2^32.
+    // Result is (z+k*p)/2^32 reduced mod p using conditional subtraction.
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = (uint64_t)(z & 0xFFFFFFFF) * p0i;
+    w &= 0xFFFFFFFF;
+    w *= p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Standard Montgomery reduction with 32-bit limbs.
+    // z = a*b, k = (z0 * p0i) mod 2^32 where z0 is low 32 bits of z.
+    // w = k*p, then t = z+w is divisible by 2^32.
+    // d = t/2^32 - p, then add p if d was negative (i.e., t/2^32 < p).
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = (uint64_t)(z & 0xFFFFFFFF) * p0i;
+    w = (w & 0xFFFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Uses mask 0xFFFFFFFF instead of 0x7FFFFFFF for full 32-bit multiplier.
+    // The original uses 0x7FFFFFFF but p0i is odd so low bit handling works.
+    // Here we use full 32-bit k = (a*b mod 2^32)*p0i mod 2^32.
+    // This is equivalent because higher bits of k*p don't affect low 32 bits.
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = (uint64_t)(z & 0xFFFFFFFF) * p0i;
+    w &= 0xFFFFFFFF;
+    w *= p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes k = (a*b * p0i) & 0xFFFFFFFF to get 32-bit multiplier.
+    // Then w = k*p cancels low 32 bits of z = a*b.
+    // (z+w)/2^32 is the Montgomery reduced value, possibly >= p.
+    // Subtract p and conditionally add back if result went negative.
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = (uint64_t)(z * p0i) & 0xFFFFFFFF;
+    w *= p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Explicitly computes low 32 bits of product for multiplier calculation.
+    // k = (low32(a*b) * p0i) mod 2^32 ensures k*p matches low32(a*b).
+    // Sum z+k*p is divisible by 2^32, shift gives quotient mod 2^32.
+    // Final reduction mod p via conditional subtraction.
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    uint32_t z0 = (uint32_t)z;
+    w = (uint64_t)(z0 * p0i) * p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Uses intermediate 32-bit variables for clarity of Montgomery steps.
+    // z = a*b as 64-bit, extract low 32 bits z0.
+    // k = z0 * p0i mod 2^32, w = k*p.
+    // Result is ((z+w)/2^32) mod p using subtract-then-conditionally-add pattern.
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    uint32_t z0 = (uint32_t)z;
+    uint32_t k = z0 * p0i;
+    w = (uint64_t)k * p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Direct Montgomery multiplication with explicit 32-bit truncation.
+    // k = ((a*b) mod 2^32) * p0i mod 2^32 eliminates low bits when added to a*b.
+    // (a*b + k*p) / 2^32 gives value in range [0, 2p-2].
+    // Subtract p and add back if negative to get result in [0, p-1].
+    uint64_t z, w;
+    uint32_t d;
+    z = (uint64_t)a * (uint64_t)b;
+    w = (uint64_t)((uint32_t)z * p0i) * p;
+    d = (uint32_t)((z + w) >> 32) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+```

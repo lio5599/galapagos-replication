@@ -1,0 +1,15 @@
+static unsigned int b64_char_to_byte(int c)
+{
+    if (c >= 'A' && c <= 'Z')
+        return c - 'A';
+    else if (c >= 'a' && c <= 'z')
+        return c - 'a' + 26;
+    else if (c >= '0' && c <= '9')
+        return c - '0' + 52;
+    else if (c == '+')
+        return 62;
+    else if (c == '/')
+        return 63;
+    else
+        return 0;
+}

@@ -1,0 +1,95 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Reference: saturating addition for 32-bit unsigned integers.
+	// If a + b would overflow (exceed UINT32_MAX), return UINT32_MAX.
+	// Otherwise, return a + b.
+	// Check: if a > UINT32_MAX - b, then a + b > UINT32_MAX.
+	if (a > 4294967295U - b)
+		return 4294967295U;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: use unsigned overflow detection via comparison.
+	// a + b overflows iff a > UINT32_MAX - b.
+	// Return UINT32_MAX on overflow, else the sum.
+	if (a > 4294967295U - b)
+		return 4294967295U;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: compute sum and check if it is less than a.
+	// In unsigned arithmetic, a + b < a iff overflow occurred.
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 4294967295U;
+	return sum;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: compute sum and check if it is less than b.
+	// In unsigned arithmetic, a + b < b iff overflow occurred.
+	unsigned int sum = a + b;
+	if (sum < b)
+		return 4294967295U;
+	return sum;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: use conditional operator with overflow check.
+	// If a > UINT32_MAX - b, return UINT32_MAX, else a + b.
+	return (a > 4294967295U - b) ? 4294967295U : a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: check if b > UINT32_MAX - a (symmetric condition).
+	// This is logically equivalent to a > UINT32_MAX - b.
+	if (b > 4294967295U - a)
+		return 4294967295U;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: use bitwise NOT to compute complement.
+	// UINT32_MAX - b equals ~b for unsigned 32-bit integers.
+	// So a > ~b iff a + b overflows.
+	if (a > ~b)
+		return 4294967295U;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: compute sum, then saturate using conditional.
+	// If sum < a, overflow happened, so return UINT32_MAX.
+	unsigned int sum = a + b;
+	return (sum < a) ? 4294967295U : sum;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: use subtraction to detect overflow.
+	// If a > UINT32_MAX - b, then adding b to a exceeds UINT32_MAX.
+	// UINT32_MAX is 0xFFFFFFFF, which is 4294967295U.
+	if (a > 0xFFFFFFFFU - b)
+		return 0xFFFFFFFFU;
+	return a + b;
+}
+
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: compute sum and use unsigned comparison for saturation.
+	// When overflow occurs, sum wraps around and becomes less than a.
+	// Return UINT32_MAX in that case, otherwise return sum.
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 0xFFFFFFFFU;
+	return sum;
+}

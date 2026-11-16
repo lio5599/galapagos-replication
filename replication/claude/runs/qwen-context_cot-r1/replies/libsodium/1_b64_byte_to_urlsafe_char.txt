@@ -1,0 +1,117 @@
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Reference computes URL-safe base64 char for x in [0,63]:
+    // 0-25 -> 'A'+x, 26-51 -> 'a'+(x-26), 52-61 -> '0'+(x-52), 62 -> '-', 63 -> '_'
+    // Uses branchless arithmetic with overflow checks via >> 8 masking
+    if (x < 26) return 'A' + x;
+    if (x < 52) return 'a' + (x - 26);
+    if (x < 62) return '0' + (x - 52);
+    if (x == 62) return '-';
+    if (x == 63) return '_';
+    return 0; // Undefined behavior for x >= 64 in reference
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Direct lookup table approach for x in [0,63]
+    // Maps each index to corresponding URL-safe base64 character
+    static const char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    if (x < 64) return table[x];
+    return 0; // Undefined for x >= 64
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Branchless using conditional moves via ternary operators
+    // Equivalent to reference by handling each range separately
+    int result;
+    result = (x < 26) ? ('A' + x) : result;
+    result = (x >= 26 && x < 52) ? ('a' + x - 26) : result;
+    result = (x >= 52 && x < 62) ? ('0' + x - 52) : result;
+    result = (x == 62) ? '-' : result;
+    result = (x == 63) ? '_' : result;
+    return (x < 64) ? result : 0;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Arithmetic approach: compute offset and base character
+    // For x<26: base='A', offset=x; x<52: base='a', offset=x-26; etc.
+    unsigned int base, offset;
+    if (x < 26) { base = 'A'; offset = x; }
+    else if (x < 52) { base = 'a'; offset = x - 26; }
+    else if (x < 62) { base = '0'; offset = x - 52; }
+    else if (x == 62) { base = '-'; offset = 0; }
+    else if (x == 63) { base = '_'; offset = 0; }
+    else { base = 0; offset = 0; }
+    return (x < 64) ? (base + offset) : 0;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Bit manipulation approach similar to reference but simplified
+    // Uses arithmetic overflow detection to select correct character set
+    int c;
+    c = (x < 26) ? 'A' + x : c;
+    c = (x >= 26 && x <= 51) ? 'a' + x - 26 : c;
+    c = (x >= 52 && x <= 61) ? '0' + x - 52 : c;
+    c = (x == 62) ? '-' : c;
+    c = (x == 63) ? '_' : c;
+    return (x <= 63) ? c : 0;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Switch statement for clear range handling
+    // Each case handles one range or specific value
+    if (x > 63) return 0;
+    if (x < 26) return 'A' + (int)x;
+    if (x < 52) return 'a' + (int)(x - 26);
+    if (x < 62) return '0' + (int)(x - 52);
+    if (x == 62) return '-';
+    return '_';
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Lookup using computed index into string literal
+    // String contains all 64 URL-safe base64 characters in order
+    const char *chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    return (x < 64) ? chars[x] : 0;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Nested ternary for compact branchless-like logic
+    // Evaluates ranges from smallest to largest
+    if (x >= 64) return 0;
+    return (x < 26) ? ('A' + x) :
+           (x < 52) ? ('a' + x - 26) :
+           (x < 62) ? ('0' + x - 52) :
+           (x == 62) ? '-' : '_';
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Array-based lookup with bounds checking
+    // Precomputed array maps indices 0-63 to URL-safe base64 chars
+    const int lookup[64] = {
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
+        'Q','R','S','T','U','V','W','X','Y','Z',
+        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
+        'q','r','s','t','u','v','w','x','y','z',
+        '0','1','2','3','4','5','6','7','8','9','-','_'
+    };
+    return (x < 64) ? lookup[x] : 0;
+}
+
+static int b64_byte_to_urlsafe_char(unsigned int x)
+{
+    // Mathematical decomposition: determine segment and offset
+    // Segment 0: A-Z, Segment 1: a-z, Segment 2: 0-9, Segment 3: special
+    if (x > 63) return 0;
+    int segment = (x < 26) ? 0 : (x < 52) ? 1 : (x < 62) ? 2 : 3;
+    int offset = (segment == 0) ? x : (segment == 1) ? x - 26 : (segment == 2) ? x - 52 : 0;
+    int base = (segment == 0) ? 'A' : (segment == 1) ? 'a' : (segment == 2) ? '0' : (x == 62) ? '-' : '_';
+    return base + offset;
+}

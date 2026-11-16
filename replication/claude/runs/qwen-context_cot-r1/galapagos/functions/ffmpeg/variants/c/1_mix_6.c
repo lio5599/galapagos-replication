@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Compute weighted sums first, then divide by 3.
+    // Channels extracted via bitwise operations.
+    // Packing uses multiplication for positional values.
+    int rs = 2 * (c0 >> 10) + (c1 >> 10);
+    int gs = 2 * ((c0 >> 5) & 63) + ((c1 >> 5) & 63);
+    int bs = 2 * (c0 & 31) + (c1 & 31);
+    int r = rs / 3;
+    int g = gs / 3;
+    int b = bs / 3;
+    return r * 1024 + g * 32 + b;
+}
+
+
+int main(){
+    mix(0,0);
+}

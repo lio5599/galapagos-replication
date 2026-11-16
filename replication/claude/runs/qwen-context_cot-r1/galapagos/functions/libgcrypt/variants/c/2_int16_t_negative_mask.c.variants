@@ -1,0 +1,83 @@
+static int int16_t_negative_mask_1(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Shifts sign bit to LSB, then negates to get 0 or -1.
+  uint16_t u = (uint16_t)x;
+  u >>= 15;
+  return -(int)u;
+}
+
+static int int16_t_negative_mask_2(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Uses arithmetic right shift on int16_t to propagate sign bit.
+  int16_t s = x >> 15;
+  return (int)s;
+}
+
+static int int16_t_negative_mask_3(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Checks if x is negative and returns -1 or 0 accordingly.
+  if (x < 0)
+    return -1;
+  return 0;
+}
+
+static int int16_t_negative_mask_4(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Uses ternary operator based on sign check.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask_5(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Extracts sign bit via mask, shifts to LSB, negates.
+  uint16_t u = (uint16_t)x & 0x8000;
+  u >>= 15;
+  return -(int)u;
+}
+
+static int int16_t_negative_mask_6(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Uses sign extension: shift right arithmetically by 15.
+  int32_t s = (int32_t)x;
+  s >>= 15;
+  return (int)s;
+}
+
+static int int16_t_negative_mask_7(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Computes sign bit as 1 if negative, 0 otherwise, then negates.
+  int sign = (x >> 15) & 1;
+  return -sign;
+}
+
+static int int16_t_negative_mask_8(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Uses unsigned shift to isolate sign bit, then conditionally returns.
+  uint16_t u = (uint16_t)x;
+  int sign = (u >> 15) & 1;
+  return sign ? -1 : 0;
+}
+
+static int int16_t_negative_mask_9(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Negates the sign bit extracted via right shift.
+  int s = (int)((uint16_t)x >> 15);
+  return -s;
+}
+
+static int int16_t_negative_mask_10(int16_t x)
+{
+  // Returns 0 if x >= 0, else -1.
+  // Uses bitwise NOT on sign bit to get all 1s or all 0s.
+  uint16_t u = (uint16_t)x >> 15;
+  return (int)(u | (u << 1) | (u << 2) | (u << 3) | (u << 4) | (u << 5) | (u << 6) | (u << 7) | (u << 8) | (u << 9) | (u << 10) | (u << 11) | (u << 12) | (u << 13) | (u << 14) | (u << 15));
+}

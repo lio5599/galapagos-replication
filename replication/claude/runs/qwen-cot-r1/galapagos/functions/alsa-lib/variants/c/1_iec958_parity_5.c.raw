@@ -1,0 +1,22 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 5: Use lookup table for byte-wise parity
+	// Split masked bits into bytes, use precomputed parity per byte
+	// XOR byte parities together for final result
+	// Edge case: zero bytes have parity 0
+	unsigned int masked = data & 0x7FFFFFF0;
+	unsigned char *bytes = (unsigned char *)&masked;
+	unsigned int parity = 0;
+	int i;
+	for (i = 0; i < 4; i++) {
+		unsigned char b = bytes[i];
+		unsigned int p = 0;
+		int j;
+		for (j = 0; j < 8; j++) {
+			p ^= b & 1;
+			b >>= 1;
+		}
+		parity ^= p;
+	}
+	return parity;
+}

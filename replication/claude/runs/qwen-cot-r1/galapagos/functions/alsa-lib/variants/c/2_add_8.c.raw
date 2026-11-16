@@ -1,0 +1,9 @@
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Compute sum first, then check for overflow.
+	// Overflow detected when sum < a since unsigned wraps.
+	// Return UINT_MAX if overflow detected.
+	// Otherwise return the computed sum.
+	unsigned int result = a + b;
+	return (result < a) ? 4294967295 : result;
+}

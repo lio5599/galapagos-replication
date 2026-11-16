@@ -1,0 +1,129 @@
+static int mix(int c0, int c1)
+{
+    // Reference: mixes two 16-bit RGB565 colors by averaging each channel.
+    // Blue: 5 bits (0-31), Green: 6 bits (0-63), Red: 5 bits (0-31).
+    // Each channel computes (2*c0_channel + c1_channel) / 3, then packs back.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Extract channels, compute weighted sum (2*c0 + c1), divide by 3.
+    // Pack result back into RGB565 format.
+    int b0 = c0 & 0x1F, b1 = c1 & 0x1F;
+    int g0 = (c0 >> 5) & 0x3F, g1 = (c1 >> 5) & 0x3F;
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int b = (2 * b0 + b1) / 3;
+    int g = (2 * g0 + g1) / 3;
+    int r = (2 * r0 + r1) / 3;
+    return r * 1024 + g * 32 + b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Use shift-based channel extraction for clarity.
+    // Compute average with weights 2 and 1, integer divide by 3.
+    // Reconstruct RGB565 by shifting and adding.
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int g0 = (c0 >> 5) & 63, g1 = (c1 >> 5) & 63;
+    int b0 = c0 & 31, b1 = c1 & 31;
+    int r = (2 * r0 + r1) / 3;
+    int g = (2 * g0 + g1) / 3;
+    int b = (2 * b0 + b1) / 3;
+    return (r << 10) | (g << 5) | b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Process each channel independently using masks and shifts.
+    // Weighted average: (2*c0 + c1)/3 per channel.
+    // Pack using bitwise OR after shifting to correct positions.
+    int red_sum = 2 * (c0 >> 10) + (c1 >> 10);
+    int green_sum = 2 * ((c0 >> 5) & 0x3F) + ((c1 >> 5) & 0x3F);
+    int blue_sum = 2 * (c0 & 0x1F) + (c1 & 0x1F);
+    int r = red_sum / 3;
+    int g = green_sum / 3;
+    int b = blue_sum / 3;
+    return (r << 10) + (g << 5) + b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Inline channel extraction and averaging.
+    // Red is bits 10-14, Green is bits 5-10, Blue is bits 0-4.
+    // Each averaged as (2*c0 + c1)/3, then packed via shifts.
+    int r = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    int g = (2 * ((c0 >> 5) & 0x3F) + ((c1 >> 5) & 0x3F)) / 3;
+    int b = (2 * (c0 & 0x1F) + (c1 & 0x1F)) / 3;
+    return r * 1024 + g * 32 + b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Use temporary variables for clarity of channel operations.
+    // Extract, weight, average, and repack each RGB channel.
+    // Integer division truncates, matching reference behavior.
+    int c0_r = c0 >> 10, c1_r = c1 >> 10;
+    int c0_g = (c0 >> 5) & 0x3F, c1_g = (c1 >> 5) & 0x3F;
+    int c0_b = c0 & 0x1F, c1_b = c1 & 0x1F;
+    int r = (2 * c0_r + c1_r) / 3;
+    int g = (2 * c0_g + c1_g) / 3;
+    int b = (2 * c0_b + c1_b) / 3;
+    return (r << 10) | (g << 5) | b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Compute weighted sums first, then divide by 3.
+    // Channels extracted via bitwise operations.
+    // Packing uses multiplication for positional values.
+    int rs = 2 * (c0 >> 10) + (c1 >> 10);
+    int gs = 2 * ((c0 >> 5) & 63) + ((c1 >> 5) & 63);
+    int bs = 2 * (c0 & 31) + (c1 & 31);
+    int r = rs / 3;
+    int g = gs / 3;
+    int b = bs / 3;
+    return r * 1024 + g * 32 + b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Direct translation with explicit channel bounds.
+    // Red: 5 bits, Green: 6 bits, Blue: 5 bits.
+    // Average with weights 2:1, integer division by 3.
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    int g0 = (c0 & 0x07E0) >> 5, g1 = (c1 & 0x07E0) >> 5;
+    int b0 = c0 & 0x001F, b1 = c1 & 0x001F;
+    int r = (2 * r0 + r1) / 3;
+    int g = (2 * g0 + g1) / 3;
+    int b = (2 * b0 + b1) / 3;
+    return (r << 10) + (g << 5) + b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Use mask-based extraction for green channel.
+    // Compute weighted average per channel.
+    // Repack using shifts and bitwise OR.
+    int r = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    int g = (2 * ((c0 & 0x07E0) >> 5) + ((c1 & 0x07E0) >> 5)) / 3;
+    int b = (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+    return (r << 10) | (g << 5) | b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Step-by-step channel processing with clear naming.
+    // Extract red, green, blue from both inputs.
+    // Average each channel with weights 2 and 1, divide by 3.
+    int red0 = c0 >> 10, red1 = c1 >> 10;
+    int green0 = (c0 >> 5) & 0x3F, green1 = (c1 >> 5) & 0x3F;
+    int blue0 = c0 & 0x1F, blue1 = c1 & 0x1F;
+    int red = (2 * red0 + red1) / 3;
+    int green = (2 * green0 + green1) / 3;
+    int blue = (2 * blue0 + blue1) / 3;
+    return red * 1024 + green * 32 + blue;
+}

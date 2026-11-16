@@ -1,0 +1,96 @@
+```c
+static uint64_t fpr_half(uint64_t x) {
+    // Reference: divides a half-precision-like float by 2 by decrementing exponent.
+    // Handles zero by checking if exponent is zero after adjustment.
+    // Subtracts 2^52 to normalize, extracts exponent, adjusts, and masks mantissa.
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 1: Extract exponent first, adjust, then handle mantissa.
+    // Same logic but reordered operations for clarity.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    if (exp == 0) return mantissa;
+    return ((uint64_t)(exp - 1) << 52) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 2: Use conditional to handle zero exponent case explicitly.
+    // If exponent is zero, return mantissa unchanged (zero value).
+    // Otherwise, decrement exponent and preserve mantissa.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    return (exp == 0) ? mantissa : ((uint64_t)(exp - 1) << 52) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 3: Compute adjusted exponent using arithmetic shift.
+    // (exp + 1) >> 11 gives 1 if exp > 0, 0 if exp == 0.
+    // Then mask mantissa based on this flag.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint32_t flag = (exp + 1) >> 11;
+    return (flag ? ((uint64_t)(exp - 1) << 52) : 0) | (flag ? mantissa : mantissa);
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 4: Use bitwise AND with adjusted exponent mask.
+    // If exp > 0, keep mantissa and set new exponent to exp-1.
+    // If exp == 0, result is just mantissa (which is zero for normalized zero).
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint64_t new_exp = (exp > 0) ? (uint64_t)(exp - 1) : 0;
+    return (new_exp << 52) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 5: Inline the exponent check using ternary operator.
+    // Directly compute result based on whether exponent is zero.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    return (exp == 0) ? mantissa : (((uint64_t)exp - 1) << 52) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 6: Use subtraction from 2^52 to normalize, then adjust.
+    // Similar to reference but with explicit normalization step.
+    uint64_t normalized = x - (1ULL << 52);
+    uint32_t exp = (uint32_t)(normalized >> 52) & 0x7FF;
+    uint64_t mantissa = normalized & ((1ULL << 52) - 1);
+    uint32_t flag = (exp + 1) >> 11;
+    return (flag ? ((uint64_t)(exp - 1) << 52) : 0) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 7: Compute result by conditionally zeroing exponent part.
+    // If exponent is zero, entire high bits become zero.
+    // Otherwise, decrement exponent and keep mantissa.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t high = (uint64_t)exp << 52;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    return (exp == 0) ? mantissa : (high - (1ULL << 52)) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 8: Use arithmetic to compute new exponent directly.
+    // new_exp = exp - (exp > 0), which gives exp-1 if exp>0, else 0.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint32_t new_exp = exp - (exp > 0);
+    return ((uint64_t)new_exp << 52) | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 9: Combine exponent adjustment and mantissa preservation.
+    // Use bitwise operations to conditionally include exponent part.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint64_t exp_part = ((uint64_t)(exp - 1) << 52) & -(uint64_t)(exp > 0);
+    return exp_part | mantissa;
+}
+static uint64_t fpr_half(uint64_t x) {
+    // Alternative 10: Use mask based on exponent to select between zero and adjusted.
+    // Mask is all 1s if exp > 0, all 0s if exp == 0.
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    uint64_t mantissa = x & ((1ULL << 52) - 1);
+    uint64_t mask = -(uint64_t)(exp > 0);
+    uint64_t adjusted_exp = ((uint64_t)(exp - 1) << 52) & mask;
+    return adjusted_exp | mantissa;
+}
+```

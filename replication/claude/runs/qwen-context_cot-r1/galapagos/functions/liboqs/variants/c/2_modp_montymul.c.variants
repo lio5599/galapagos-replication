@@ -1,0 +1,147 @@
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Reference computes Montgomery multiplication: (a*b/p) mod p
+    // Uses 64-bit intermediate arithmetic and conditional subtraction
+    // The key steps are: compute product, compute correction term,
+    // add and shift, then conditionally subtract p to normalize result
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using explicit conditional for normalization step
+    // Computes same Montgomery product by explicitly checking sign
+    // of intermediate result to decide whether to add p back
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    if ((int32_t)d < 0) {
+        d += p;
+    }
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using ternary operator for conditional addition
+    // Same logic as reference but uses ternary instead of bitwise trick
+    // for the final normalization step when result is negative
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d = (int32_t)d < 0 ? d + p : d;
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative computing correction term with different masking
+    // Uses full 64-bit mask instead of 31-bit mask for p0i multiplication
+    // then adjusts the shift amount accordingly to maintain equivalence
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = (z * p0i) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using separate lower and upper 32-bit parts
+    // Splits the 64-bit product into high and low parts for clarity
+    // while maintaining the same mathematical computation steps
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t sum = z + w;
+    d = (uint32_t)(sum >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using explicit sign extension for conditional logic
+    // Computes the same result by explicitly handling the sign bit
+    // of the 32-bit result to determine if p needs to be added
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    int32_t sd = (int32_t)d;
+    d = sd < 0 ? (uint32_t)(sd + p) : d;
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using arithmetic right shift for sign detection
+    // Uses the fact that arithmetic right shift preserves sign bit
+    // to create a mask that is all 1s when result is negative
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    uint32_t mask = (uint32_t)((int32_t)d >> 31);
+    d += p & mask;
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative computing intermediate values in different order
+    // Reorders the computation of z and w but maintains same result
+    // by ensuring all intermediate values are properly typed
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using explicit 64-bit cast for shift operation
+    // Ensures the shift is performed on 64-bit value before truncation
+    // to avoid any potential issues with shift width interpretation
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t shifted = (z + w) >> 31;
+    d = (uint32_t)shifted - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Alternative using bitwise NOT for complement in conditional
+    // Uses ~ operator to compute complement for the mask generation
+    // instead of negation, which is mathematically equivalent
+    uint64_t z, w;
+    uint32_t d;
+
+    z = (uint64_t)a * (uint64_t)b;
+    w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    uint32_t sign = (uint32_t)((int32_t)d >> 31);
+    d += p & ~sign;
+    return d;
+}

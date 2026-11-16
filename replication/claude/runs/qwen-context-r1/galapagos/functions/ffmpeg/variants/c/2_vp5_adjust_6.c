@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int abs_v = (v ^ s1) - s1;
+    int clamped = abs_v;
+    if (clamped >= 2 * t)
+        clamped = 0;
+    int diff = clamped - t;
+    int s2 = diff >> 31;
+    int abs_diff = (diff ^ s2) - s2;
+    int result = t - abs_diff;
+    if (s1)
+        result = -result;
+    return result;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

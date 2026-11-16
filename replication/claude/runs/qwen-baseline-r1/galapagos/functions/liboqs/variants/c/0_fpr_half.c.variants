@@ -1,0 +1,89 @@
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    return x - ((uint64_t)1 << 52);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t bias = (uint64_t)1 << 52;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp <= 1) return x;
+    return x - bias;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    x &= ~((uint64_t)0x7FF << 52);
+    x |= ((uint64_t)(exp - 1) & 0x7FF) << 52;
+    return x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t mask = (uint64_t)0x7FF << 52;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    return (x & ~mask) | (((uint64_t)(exp - 1)) << 52);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    uint64_t new_exp = (uint64_t)(exp - 1) << 52;
+    return (x & 0x000FFFFFFFFFFFFFULL) | new_exp;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t significand = x & 0x000FFFFFFFFFFFFFULL;
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    return significand | ((uint64_t)(exp - 1) << 52);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    uint64_t result = x;
+    result -= (uint64_t)1 << 52;
+    return result;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t exp_field = (x >> 52) & 0x7FF;
+    if (exp_field == 0) return x;
+    return x - (1ULL << 52);
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t exp = (uint32_t)(x >> 52) & 0x7FF;
+    if (exp == 0) return x;
+    uint64_t new_x = x;
+    new_x &= ~(0x7FFULL << 52);
+    new_x |= ((uint64_t)(exp - 1) << 52);
+    return new_x;
+}
+
+
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t exp_bits = (x >> 52) & 0x7FF;
+    if (exp_bits == 0) return x;
+    return (x & 0x000FFFFFFFFFFFFFULL) | ((exp_bits - 1) << 52);
+}

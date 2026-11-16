@@ -1,0 +1,15 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint32_t x = (uint32_t)Ai;
+    uint32_t y = (uint32_t)(Ai >> 32);
+
+    x = (x * 0x80200802ULL) & 0x0888888808888888ULL;
+    x = (x * 0x01040104ULL) & 0x0101010101010101ULL;
+    x = (x * 0x00010001ULL) & 0x0001000100010001ULL;
+
+    y = (y * 0x80200802ULL) & 0x0888888808888888ULL;
+    y = (y * 0x01040104ULL) & 0x0101010101010101ULL;
+    y = (y * 0x00010001ULL) & 0x0001000100010001ULL;
+
+    return ((uint64_t)y << 1) | x;
+}

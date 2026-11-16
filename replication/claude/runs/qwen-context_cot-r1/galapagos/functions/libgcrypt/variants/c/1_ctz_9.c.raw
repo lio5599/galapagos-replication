@@ -1,0 +1,22 @@
+int ctz(uint64_t in)
+{
+ // Alternative 9: Binary search on bit positions.
+ // Check if lower half has any bits set.
+ // Recursively narrow down to find first set bit position.
+ // Use iterative approach with offset accumulation.
+ int r = 0;
+ uint64_t tmp = in;
+ int step;
+ for (step = 32; step >= 1; step >>= 1)
+ {
+  uint64_t mask = (1ULL << step) - 1;
+  if ((tmp & mask) == 0)
+  {
+   tmp >>= step;
+   r += step;
+  }
+ }
+ if (tmp == 0)
+  return 64;
+ return r;
+}

@@ -1,0 +1,18 @@
+static int b64_byte_to_char(unsigned int x)
+// Uses arithmetic predicates to implement a piecewise linear function
+// For x in [0,25]: result = x + 'A'
+// For x in [26,51]: result = x - 26 + 'a'
+// For x in [52,61]: result = x - 52 + '0'
+// For x = 62: result = '+'
+// For x = 63: result = '/'
+// Predicates are computed using unsigned arithmetic underflow detection
+// (x-N)>>8 yields 0xFFFFFFFF when x<N (underflow), 0x00000000 when x>=N
+// Masking with 0xFF gives 0xFF or 0x00 as a boolean mask
+{
+    unsigned int p1 = ((x - 26) >> 8) & 0xFF;
+    unsigned int p2 = ((x - 52) >> 8) & 0xFF;
+    unsigned int p3 = ((x - 62) >> 8) & 0xFF;
+    unsigned int q62 = ((0U - (x ^ 62)) >> 8) & 0xFF;
+    unsigned int q63 = ((0U - (x ^ 63)) >> 8) & 0xFF;
+    return (p1 & (x + 'A')) | ((~p1 & p2) & (x + 'a' - 26)) | ((~p2 & p3) & (x + '0' - 52)) | ((~q62 & 0xFF) & '+') | ((~q63 & 0xFF) & '/');
+}

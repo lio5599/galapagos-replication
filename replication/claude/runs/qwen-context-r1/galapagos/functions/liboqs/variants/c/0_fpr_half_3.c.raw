@@ -1,0 +1,9 @@
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t one_shifted = (uint64_t)1 << 52;
+    x -= one_shifted;
+    uint32_t upper = (uint32_t)(x >> 52);
+    uint32_t masked = upper & 0x7FF;
+    uint32_t t = (masked + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}

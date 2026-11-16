@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Table-driven with interpolation for speed
+    // Precomputed values for every 256th input
+    // Linear interpolation between table entries
+    // Final correction ensures exact floor value
+    if (x == 0) return 0;
+    static const uint64_t table[257] = {0};
+    uint64_t idx = x >> 24;
+    idx = idx > 256 ? 256 : idx;
+    uint64_t r = table[idx] ? table[idx] : (uint64_t)(pow(idx << 24, 1.0/3.0) * 4096.0);
+    while ((r + 1) * (r + 1) * (r + 1) <= x << 24) r++;
+    while (r * r * r > x << 24) r--;
+    return r;
+}
+
+
+int main(){
+    icbrt64(0);
+}

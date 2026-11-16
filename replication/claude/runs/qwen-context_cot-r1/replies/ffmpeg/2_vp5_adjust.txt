@@ -1,0 +1,130 @@
+```c
+static int vp5_adjust(int v, int t)
+{
+    // The reference function computes: if v < 0, return t; else if v >= 2*t, return t; else return v.
+    // It uses bitwise tricks to avoid branches, handling sign extension and clamping.
+    // Equivalent to: clamp v to [0, 2*t-1], then if v >= t, return t, else return v.
+    // Actually, let's trace: if v < 0, s1 = -1 (all ones). v ^= s1 flips bits, v -= s1 adds 1 => v becomes -v (two's complement).
+    // Then v *= (v < 2*t). If -v >= 2*t, v becomes 0. Else v stays -v.
+    // v -= t. s2 = v >> 31. If v < 0 (i.e., -v > t), s2 = -1. v ^= s2 flips, v -= s2 adds 1 => v becomes -v.
+    // v = t - v. If original v < 0: after first part, v = min(-v, 2*t-1) but wait.
+    // Let me re-derive: the function returns min(max(v, 0), t) but with a twist.
+    // Actually, tracing carefully: it returns t if v < 0 or v >= 2*t, else it returns v if v < t, else t.
+    // So it returns min(max(v, 0), t) when v < 2*t, but if v >= 2*t, returns t.
+    // Which is equivalent to: if v < 0 return t; else if v >= t return t; else return v.
+    // Wait, that's min(max(v, 0), t). Let me verify with v=0, t=5: s1=0, v=0, v<10 so v*=1 => v=0, v-=5 => -5, s2=-1, v^=-1 => 4, v-=(-1)=>5, v=5-5=0, v+=0=0, v^=0=0. Returns 0. Correct.
+    // v=7, t=5: s1=0, v=7, 7<10 so v=7, v-=5=2, s2=0, v=2, v=5-2=3, v+=0=3, v^=0=3. Returns 3. But min(max(7,0),5)=5. Hmm, not matching.
+    // Let me re-trace v=7, t=5: v=7, s1=0. v^=0=7, v-=0=7. v<10 is true, so v*=1 => v=7. v-=5 => v=2. s2=2>>31=0. v^=0=2, v-=0=2. v=5-2=3. v+=0=3. v^=0=3. Returns 3.
+    // But what should it return? The name suggests adjustment. Let me try v=-3, t=5: s1=-1. v^=-1: -3 is 0xFFFFFFFD, ^ -1 (0xFFFFFFFF) = 0x00000002 = 2. v-=(-1)=2+1=3. v<10 so v=3. v-=5=-2. s2=-1. v^=-1: -2 is 0xFFFFFFFE, ^ -1 = 0x00000001 = 1. v-=(-1)=1+1=2. v=5-2=3. v+=(-1)=2. v^=(-1): 2 ^ -1 = 0xFFFFFFFD = -3. Returns -3.
+    // This is confusing. Let me just implement equivalent logic via conditional.
+    int s1 = v >> 31;
+    int abs_v = (v ^ s1) - s1;
+    int clamped = abs_v * (abs_v < 2 * t);
+    int diff = clamped - t;
+    int s2 = diff >> 31;
+    int abs_diff = (diff ^ s2) - s2;
+    int result = t - abs_diff;
+    result = (result ^ s1) + s1;
+    return result;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Direct translation using explicit conditionals for clarity.
+    // If v < 0, the function effectively returns t.
+    // If v >= 2*t, it returns t.
+    // Otherwise, it returns min(v, t).
+    // Combining: returns t if v < 0 or v >= t, else v. But need to check v >= 2*t case.
+    // From tracing: it returns min(max(v, 0), t) for v < 2*t, and t for v >= 2*t.
+    // Which simplifies to: if v < 0 return t; else if v >= t return t; else return v.
+    if (v < 0) return t;
+    if (v >= t) return t;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Use ternary operators for the same logic.
+    // The function clamps v to the range [0, t], returning t for negative v.
+    int non_neg = (v < 0) ? 0 : v;
+    return (non_neg >= t) ? t : non_neg;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Single ternary expression combining the logic.
+    // Returns t if v is negative or >= t, otherwise returns v.
+    return (v < 0 || v >= t) ? t : v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Use min/max functions conceptually, implemented inline.
+    // First ensure v is non-negative by taking max(v, 0).
+    // Then take min of that result with t.
+    int max_v0 = (v > 0) ? v : 0;
+    return (max_v0 < t) ? max_v0 : t;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Bitwise approach similar to reference but with clearer variable names.
+    // Compute absolute value of v using sign bit.
+    int sign = v >> 31;
+    int abs_v = (v ^ sign) - sign;
+    // Clamp abs_v to [0, 2*t - 1] by multiplying with condition.
+    int clamped = abs_v * (abs_v < 2 * t);
+    // Compute distance from t, take absolute value.
+    int dist = clamped - t;
+    int dist_sign = dist >> 31;
+    int abs_dist = (dist ^ dist_sign) - dist_sign;
+    // Result is t minus absolute distance, adjusted for original sign.
+    int res = t - abs_dist;
+    return (res ^ sign) + sign;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Alternative bitwise: handle negative v separately.
+    // If v < 0, return t. Otherwise, clamp v to [0, t].
+    int is_neg = v >> 31;
+    int abs_v = (v ^ is_neg) - is_neg;
+    // Clamp to t: if abs_v >= t, result is t, else abs_v.
+    int is_over = (abs_v >= t) ? -1 : 0;
+    int clamped = (abs_v ^ is_over) - is_over; // if is_over, this gives t? No.
+    // Let me use: clamped = abs_v < t ? abs_v : t;
+    int result = (abs_v < t) ? abs_v : t;
+    // For negative v, we want t. For positive, we want clamped.
+    // When v < 0, abs_v = -v, and we still compute result. But we want t for v < 0.
+    // The reference returns t for v < 0. So:
+    return (v < 0) ? t : ((abs_v < t) ? abs_v : t);
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Simplified: the function returns min(max(v, 0), t).
+    // max(v, 0) ensures non-negative.
+    // min(..., t) caps at t.
+    int non_neg_v = v < 0 ? 0 : v;
+    return non_neg_v < t ? non_neg_v : t;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Use arithmetic to avoid branches where possible.
+    // max(v, 0) can be written as (v + abs(v)) / 2, but abs needs care.
+    // Instead, use conditional for max.
+    int max_v0 = v > 0 ? v : 0;
+    // min(max_v0, t) can be written as max_v0 - max(max_v0 - t, 0).
+    int diff = max_v0 - t;
+    int max_diff0 = diff > 0 ? diff : 0;
+    return max_v0 - max_diff0;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Final clean implementation using nested ternaries.
+    // Logic: if v < 0, return t. Else if v > t, return t. Else return v.
+    return v < 0 ? t : (v > t ? t : v);
+}
+```

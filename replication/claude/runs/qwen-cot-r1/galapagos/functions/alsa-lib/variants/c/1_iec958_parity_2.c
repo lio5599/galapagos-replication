@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 2: Extract bits 4-30 into mask, count set bits
+	// Create mask for bits 4-30, AND with data, then count bits
+	// Parity is LSB of bit count
+	// Edge case: masked value 0 gives parity 0
+	unsigned int masked = data & 0x7FFFFFF0;
+	unsigned int count = 0;
+	while (masked) {
+		count += masked & 1;
+		masked >>= 1;
+	}
+	return count & 1;
+}
+
+
+int main(){
+    iec958_parity(0);
+}

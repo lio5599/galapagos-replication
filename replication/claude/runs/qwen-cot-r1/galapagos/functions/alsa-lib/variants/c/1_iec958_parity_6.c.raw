@@ -1,0 +1,14 @@
+static unsigned int iec958_parity(unsigned int data)
+{
+	// Alternative 6: Parallel bit counting using SWAR technique
+	// Extract bits 4-30, apply parallel XOR reduction
+	// Uses bitwise ops to compute parity in log steps
+	// Edge case: zero input yields zero parity
+	unsigned int masked = data & 0x7FFFFFF0;
+	masked ^= masked >> 16;
+	masked ^= masked >> 8;
+	masked ^= masked >> 4;
+	masked ^= masked >> 2;
+	masked ^= masked >> 1;
+	return masked & 1;
+}

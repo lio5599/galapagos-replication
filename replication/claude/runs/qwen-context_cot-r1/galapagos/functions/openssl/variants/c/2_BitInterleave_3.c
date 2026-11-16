@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The if statement with condition (0) never executes its body.
+    // Thus, the function is equivalent to returning the input unchanged.
+    // This implementation uses a temporary variable for clarity.
+    uint64_t temp = Ai;
+    return temp;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

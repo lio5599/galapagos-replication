@@ -1,0 +1,159 @@
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int parity = 0;
+	int bit;
+
+	data >>= 4;
+	for (bit = 4; bit <= 30; bit++) {
+		parity ^= (data & 1);
+		data >>= 1;
+	}
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+
+	tmp &= 0x3FFFFFFF;
+	while (tmp) {
+		parity ^= (tmp & 1);
+		tmp >>= 1;
+	}
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+
+	tmp &= 0x3FFFFFFF;
+	tmp ^= tmp >> 16;
+	tmp ^= tmp >> 8;
+	tmp ^= tmp >> 4;
+	tmp ^= tmp >> 2;
+	tmp ^= tmp >> 1;
+	parity = tmp & 1;
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+
+	tmp &= 0x3FFFFFFF;
+	for (i = 0; i < 27; i++) {
+		parity += (tmp >> i) & 1;
+	}
+	return parity & 1;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+
+	tmp &= 0x3FFFFFFF;
+	parity = tmp & 1;
+	tmp >>= 1;
+	while (tmp) {
+		parity ^= (tmp & 1);
+		tmp >>= 1;
+	}
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity;
+
+	tmp &= 0x3FFFFFFF;
+	tmp = tmp ^ (tmp >> 1);
+	tmp = tmp ^ (tmp >> 2);
+	tmp = tmp ^ (tmp >> 4);
+	tmp = tmp ^ (tmp >> 8);
+	tmp = tmp ^ (tmp >> 16);
+	parity = tmp & 1;
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+
+	tmp &= 0x3FFFFFFF;
+	for (i = 0; i < 27; i++) {
+		if (tmp & (1 << i))
+			parity ^= 1;
+	}
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+
+	tmp &= 0x3FFFFFFF;
+	tmp = (tmp & 0x55555555) + ((tmp >> 1) & 0x55555555);
+	tmp = (tmp & 0x33333333) + ((tmp >> 2) & 0x33333333);
+	tmp = (tmp & 0x0F0F0F0F) + ((tmp >> 4) & 0x0F0F0F0F);
+	tmp = (tmp & 0x00FF00FF) + ((tmp >> 8) & 0x00FF00FF);
+	tmp = (tmp & 0x0000FFFF) + ((tmp >> 16) & 0x0000FFFF);
+	parity = tmp & 1;
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+	int i;
+
+	tmp &= 0x3FFFFFFF;
+	for (i = 0; i < 27; i++) {
+		parity ^= (tmp >> i) & 1;
+	}
+	return parity;
+}
+
+
+
+static unsigned int iec958_parity(unsigned int data)
+{
+	unsigned int tmp = data >> 4;
+	unsigned int parity = 0;
+
+	tmp &= 0x3FFFFFFF;
+	tmp ^= tmp >> 1;
+	tmp ^= tmp >> 2;
+	tmp ^= tmp >> 4;
+	tmp ^= tmp >> 8;
+	tmp ^= tmp >> 16;
+	parity = tmp & 1;
+	return parity;
+}

@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Reference: divides a half-precision-like float by 2 by decrementing exponent.
+    // Handles zero by ensuring exponent doesn't underflow below zero.
+    // The exponent is in bits 52-62, with bias handled implicitly.
+    // Subtracting 1<<52 adjusts for the implicit leading 1 in normalized numbers.
+    // The mask and shift extract exponent, decrement, and reapply.
+    // Zero case: if exponent was 0, result remains 0 due to masking.
+    uint32_t t;
+    x -= (uint64_t)1 << 52;
+    t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+int main(){
+    fpr_half(0);
+}

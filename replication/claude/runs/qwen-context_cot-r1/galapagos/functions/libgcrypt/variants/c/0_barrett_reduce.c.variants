@@ -1,0 +1,122 @@
+
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction modulo 3329 using precomputed constant v = floor(2^26 / 3329)
+  // Computes a mod 3329 by approximating division via multiplication and shift
+  // The constant v satisfies v = floor(2^26 / 3329) = 1996
+  // t = floor((v*a + 2^25) / 2^26) approximates floor(a / 3329)
+  // Result is a - t*3329, which equals a mod 3329 for defined behavior inputs
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Same Barrett reduction with explicit constant calculation
+  // v = (67108864 + 1664) / 3329 = 67110528 / 3329 = 20160... wait let me recalculate
+  // Actually (1<<26) = 67108864, 3329/2 = 1664, so numerator = 67110528
+  // 67110528 / 3329 = 20160.0... no, let me compute: 3329 * 20160 = 67112640 which is too big
+  // 3329 * 20159 = 67109311, 67110528 - 67109311 = 1217, so v = 20159
+  // Wait, the reference uses integer division, so v = 67110528 / 3329
+  // Let me just use the same expression to ensure equivalence
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction with v computed as (2^26 + 1664) / 3329
+  // The rounding term 3329/2 ensures v is the correctly rounded quotient
+  // Shift by 26 after adding 2^25 implements rounding in the division approximation
+  // This produces floor(a/3329) approximately, and a - t*3329 gives the remainder
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Equivalent Barrett reduction modulo 3329
+  // Uses fixed-point multiplication to approximate division by 3329
+  // v is precomputed as floor(2^26/3329) with rounding
+  // The addition of 2^25 before right shift by 26 implements proper rounding
+  // Final subtraction yields a mod 3329
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett modular reduction for modulus 3329
+  // Precomputed multiplier v enables division-free modulo operation
+  // Cast to int32_t prevents overflow during intermediate multiplication
+  // Right shift by 26 divides by 2^26, approximating division by 3329
+  // Result a - t*3329 is congruent to a mod 3329
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Computes a mod 3329 using Barrett reduction algorithm
+  // v = round(2^26 / 3329) serves as the reciprocal approximation
+  // Multiplying a by v and shifting right by 26 approximates a/3329
+  // The bias term 2^25 ensures correct rounding for all valid inputs
+  // Subtracting t*3329 from a yields the remainder
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett reduction: efficient modulo 3329 computation
+  // Constant v is derived from 2^26/3329 with rounding for accuracy
+  // The expression (v*a + 2^25) >> 26 computes an approximate quotient
+  // Multiplying quotient by modulus and subtracting from a gives remainder
+  // Works correctly for all int16_t inputs with defined behavior
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Modular reduction modulo 3329 via Barrett method
+  // Precomputed v enables replacing division with multiplication and shift
+  // int32_t cast ensures 32-bit arithmetic for intermediate product
+  // Rounding via addition of 2^25 before shift ensures correct quotient
+  // Final result is a mod 3329 for all defined inputs
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Barrett algorithm for computing a mod 3329
+  // v is the fixed-point representation of 1/3329 scaled by 2^26
+  // The scaling factor 2^26 is chosen to provide sufficient precision
+  // Adding 2^25 implements round-to-nearest in the quotient computation
+  // The difference a - t*3329 yields the correct remainder
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+int16_t barrett_reduce(int16_t a) {
+  // Efficient modulo 3329 using Barrett reduction technique
+  // v = floor((2^26 + 3329/2) / 3329) is the magic constant for this modulus
+  // Multiplication by v followed by shift approximates division by 3329
+  // The bias 2^25 ensures the quotient is correctly rounded
+  // Subtracting the product of quotient and modulus gives the remainder
+  int16_t t;
+  const int16_t v = ((1<<26) + 3329/2)/3329;
+  t = ((int32_t)v*a + (1<<25)) >> 26;
+  t *= 3329;
+  return a - t;
+}

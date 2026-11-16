@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask_4(int16_t x)
+{
+  // Extract sign bit as 0 or 1, then subtract from 0.
+  // (x >> 15) & 1 gives 1 if negative, 0 otherwise.
+  // Negating gives -1 or 0 respectively.
+  int sign_bit = (x >> 15) & 1;
+  return -sign_bit;
+}
+
+
+int main(){
+    int16_t_negative_mask_4(0);
+}

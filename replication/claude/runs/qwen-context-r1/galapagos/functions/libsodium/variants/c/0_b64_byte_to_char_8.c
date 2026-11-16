@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int b64_byte_to_char(unsigned int x)
+{
+    int r = 0;
+    if (x < 26)
+        r = 'A' + x;
+    else if (x < 52)
+        r = 'a' + (x - 26);
+    else if (x < 62)
+        r = '0' + (x - 52);
+    else if (x == 62)
+        r = '+';
+    else if (x == 63)
+        r = '/';
+    return r;
+}
+
+
+int main(){
+    b64_byte_to_char(0);
+}

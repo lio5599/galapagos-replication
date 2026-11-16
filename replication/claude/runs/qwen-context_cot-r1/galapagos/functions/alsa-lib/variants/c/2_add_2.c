@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static inline unsigned int add(unsigned int a, unsigned int b)
+{
+	// Equivalent: compute sum and check if it is less than a.
+	// In unsigned arithmetic, a + b < a iff overflow occurred.
+	unsigned int sum = a + b;
+	if (sum < a)
+		return 4294967295U;
+	return sum;
+}
+
+
+int main(){
+    add(0,0);
+}

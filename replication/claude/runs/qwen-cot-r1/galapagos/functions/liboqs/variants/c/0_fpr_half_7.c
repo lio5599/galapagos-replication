@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Approach: inline the exponent decrement and masking logic.
+    // Compute t as the adjusted exponent indicator.
+    // Subtract 1<<52 to decrement exponent field.
+    // Mask with t-1 to clear mantissa when exponent underflows.
+    // Zero case: t=0, mask=-1, but x after subtraction has zero exponent bits.
+    // Result is 0 for zero input, correct for others.
+    uint32_t t = (((uint32_t)(x >> 52) & 0x7FF) + 1) >> 11;
+    x -= (uint64_t)1 << 52;
+    x &= (uint64_t)t - 1;
+    return x;
+}
+
+
+int main(){
+    fpr_half(0);
+}

@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses floating-point approximation then refines
+    // Converts to double, computes cbrt, converts back
+    // Adjusts for rounding errors with integer check
+    // Handles edge cases by clamping and verifying
+    if (x == 0) return 0;
+    double d = x;
+    uint64_t r = (uint64_t)(pow(d, 1.0/3.0) * 4096.0);
+    while ((r + 1) * (r + 1) * (r + 1) <= x << 24) r++;
+    while (r * r * r > x << 24) r--;
+    return r;
+}
+
+
+int main(){
+    icbrt64(0);
+}
