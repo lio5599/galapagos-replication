@@ -1,0 +1,8 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch on the nonnegative range instead of extracting a bit.
+  // Zero and 32767 return 0; all negatives, including -32768, return -1.
+  if (x >= 0)
+    return 0;
+  return -1;
+}

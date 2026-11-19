@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Evaluates the positive-t triangle directly in signed input coordinates.
+    // The central interval returns v; the two outer ramps meet zero at +/-2*t.
+    // Equality at +/-t stays on the central interval with the same value.
+    // For nonpositive t, restore the input sign to the reference's 2*t result.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int limit = 2 * t;
+    if (t <= 0)
+        return v < 0 ? -limit : limit;
+    if (v >= 0) {
+        if (v <= t)
+            return v;
+        return v < limit ? limit - v : 0;
+    }
+    if (v >= -t)
+        return v;
+    return v > -limit ? -limit - v : 0;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

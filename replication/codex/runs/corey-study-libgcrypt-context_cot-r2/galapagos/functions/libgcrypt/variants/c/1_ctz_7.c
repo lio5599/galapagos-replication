@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Skip whole zero bytes, then count zero bits within the first nonzero byte.
+ // The skipped byte widths and remaining bits sum to the lowest set index.
+ // Handling zero first ensures both loops terminate and returns 64.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & 0xFFULL) == 0)
+ {
+  r += 8;
+  in >>= 8;
+ }
+ while ((in & 1) == 0)
+ {
+  ++r;
+  in >>= 1;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

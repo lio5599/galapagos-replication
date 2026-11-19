@@ -1,0 +1,17 @@
+int ctz(uint64_t in)
+{
+ // For nonzero input, XOR with its predecessor sets the low t+1 bits.
+ // Shifting once leaves t set bits, where t is the trailing-zero count.
+ // Clear one set bit per iteration; handle zero explicitly.
+ uint64_t bits;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ bits = (in ^ (uint64_t)(in - UINT64_C(1))) >> 1;
+ while (bits != 0)
+ {
+  bits &= bits - UINT64_C(1);
+  ++r;
+ }
+ return r;
+}

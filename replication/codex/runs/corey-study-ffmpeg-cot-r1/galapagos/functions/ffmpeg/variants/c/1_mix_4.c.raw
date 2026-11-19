@@ -1,0 +1,20 @@
+static int mix(int c0, int c1)
+{
+    // Counts complete groups of three in the nonnegative blue and green sums.
+    // The leftover 0, 1, or 2 is discarded, exactly matching integer division.
+    // Zero and maximum components work identically; signed red is unchanged.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int b = 0;
+    int g = 0;
+    while (blue >= 3) {
+        blue -= 3;
+        ++b;
+    }
+    while (green >= 3) {
+        green -= 3;
+        ++g;
+    }
+    return (red / 3) * 1024 + g * 32 + b;
+}

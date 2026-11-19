@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Computes the reciprocal product using 20159 = 32768 - 12609.
+  // Even the larger initial product fits int32_t at both input extremes.
+  // The same biased numerator and narrowing give the reference result.
+  int32_t numerator = (int32_t)a * 32768;
+  numerator -= (int32_t)a * 12609;
+  int16_t t = (numerator + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

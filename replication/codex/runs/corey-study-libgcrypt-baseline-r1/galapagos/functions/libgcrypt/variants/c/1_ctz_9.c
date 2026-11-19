@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+    int i;
+    int r = 0;
+
+    for (i = 63; i >= 0; --i)
+        r = (r + 1) * (1 - (int)((in >> i) & (uint64_t)1));
+
+    return r;
+}
+
+
+int main(){
+    ctz(0);
+}

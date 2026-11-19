@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // All-ones masks select unsigned order for positives and reverse it
+    // for negatives, then select the sign of x when signs differ.
+    // All arithmetic is unsigned, and identical encodings return zero.
+    uint64_t sx = x >> 63;
+    uint64_t sy = y >> 63;
+    uint64_t negative_mask = (uint64_t)0 - sx;
+    uint64_t different_mask = (uint64_t)0 - (sx ^ sy);
+    uint64_t same_result = ((uint64_t)(x < y) & ~negative_mask)
+        | ((uint64_t)(x > y) & negative_mask);
+
+    return (int)((same_result & ~different_mask) | (sx & different_mask));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

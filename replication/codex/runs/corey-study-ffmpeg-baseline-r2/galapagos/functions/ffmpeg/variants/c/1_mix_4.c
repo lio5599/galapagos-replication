@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    int first[3];
+    int second[3];
+    int i;
+
+    first[0] = c0 & 0x001F;
+    first[1] = (c0 & 0x03E0) >> 5;
+    first[2] = c0 >> 10;
+
+    second[0] = c1 & 0x001F;
+    second[1] = (c1 & 0x03E0) >> 5;
+    second[2] = c1 >> 10;
+
+    for (i = 0; i < 3; ++i)
+        first[i] = (2 * first[i] + second[i]) / 3;
+
+    return first[2] * 1024 + first[1] * 32 + first[0];
+}
+
+
+int main(){
+    mix(0,0);
+}

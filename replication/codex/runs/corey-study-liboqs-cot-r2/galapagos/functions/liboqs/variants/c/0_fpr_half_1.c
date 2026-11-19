@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Select between zero and the decremented encoding using the original exponent.
+    // Unsigned subtraction wraps exactly as in the reference.
+    // A zero exponent always selects zero, regardless of sign or fraction.
+    uint64_t exponent = (x >> 52) & 0x7FF;
+    return exponent ? x - ((uint64_t)1 << 52) : (uint64_t)0;
+}
+
+
+int main(){
+    fpr_half(0);
+}

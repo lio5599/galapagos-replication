@@ -1,0 +1,8 @@
+{
+    "compiled": false,
+    "function_name": "1_ctz",
+    "variant_name": "libgcrypt",
+    "project": "libgcrypt",
+    "python_error_trace": "Traceback (most recent call last):\n  File \"/home/cbh/galapagos-corey-runs/corey-study-libgcrypt-context-r1/scripts/tests/usecase.py\", line 58, in original_compare\n    await variant.compile(variant_shadow) # raises exception on fail\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cbh/galapagos-corey-runs/corey-study-libgcrypt-context-r1/scripts/usecases/case.py\", line 563, in compile\n    self.replace_bc(cwd)\n  File \"/home/cbh/galapagos-corey-runs/corey-study-libgcrypt-context-r1/scripts/usecases/case.py\", line 455, in replace_bc\n    subprocess.check_output([\n  File \"/usr/lib/python3.12/subprocess.py\", line 466, in check_output\n    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['opt', '-strip-debug', '/home/cbh/galapagos-corey-runs/corey-study-libgcrypt-context-r1/functions/libgcrypt/variants/c/1_ctz_4.bc', '-o', '/home/cbh/galapagos-corey-runs/corey-study-libgcrypt-context-r1/functions/libgcrypt/variants/c/1_ctz_4.bc']' returned non-zero exit status 1.\n",
+    "python_error_msg": "Command '['opt', '-strip-debug', '/home/cbh/galapagos-corey-runs/corey-study-libgcrypt-context-r1/functions/libgcrypt/variants/c/1_ctz_4.bc', '-o', '/home/cbh/galapagos-corey-runs/corey-study-libgcrypt-context-r1/functions/libgcrypt/variants/c/1_ctz_4.bc']' returned non-zero exit status 1."
+}

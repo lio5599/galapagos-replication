@@ -1,0 +1,24 @@
+int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit; its index is the trailing-zero count.
+ // Each mask tests one binary digit of that index.
+ // Handle zero separately because it has no set-bit index.
+ uint64_t bit;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ bit = in & ((uint64_t)0 - in);
+ if ((bit & 0xAAAAAAAAAAAAAAAAULL) != 0)
+  r += 1;
+ if ((bit & 0xCCCCCCCCCCCCCCCCULL) != 0)
+  r += 2;
+ if ((bit & 0xF0F0F0F0F0F0F0F0ULL) != 0)
+  r += 4;
+ if ((bit & 0xFF00FF00FF00FF00ULL) != 0)
+  r += 8;
+ if ((bit & 0xFFFF0000FFFF0000ULL) != 0)
+  r += 16;
+ if ((bit & 0xFFFFFFFF00000000ULL) != 0)
+  r += 32;
+ return r;
+}

@@ -36,7 +36,10 @@ $names = @($all.PSObject.Properties[$Dataset].Value)
 if ($names.Count -ne 3) { throw "Expected exactly three reference functions for $Dataset" }
 $plan = @(foreach ($rep in 1..3) {
     foreach ($condition in 'baseline','context','cot','context_cot') {
-        [pscustomobject]@{ condition = $condition; run = "$batch-$condition-r$rep" }
+        $runName = "$batch-$condition-r$rep"
+        if ($runName -eq 'corey-study-liboqs-baseline-r2') { $runName += '-recheck' }
+        if ($runName -eq 'corey-study-liboqs-cot-r3') { $runName += '-retry' }
+        [pscustomobject]@{ condition = $condition; run = $runName }
     }
 })
 Write-Host "$Dataset : $($names -join ', ')"

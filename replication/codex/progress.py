@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import time
 
 
@@ -83,6 +84,12 @@ def run_stage(command, cwd, log, run, stage, expected, idle_warning=600, poll_in
                             latest_event = json.loads(line.split(' ', 1)[1])
                             with event_path.open('a', encoding='utf-8') as events:
                                 events.write(json.dumps(dict(observed_at=utc(), **latest_event)) + '\n')
+                            if latest_event.get('action') == 'variant_build_removed':
+                                print(
+                                    f"{latest_event['function']} variant {latest_event['variant']} complete: "
+                                    "result saved, build copy removed.",
+                                    flush=True,
+                                )
                         except json.JSONDecodeError:
                             pass
                 rc = proc.poll()
@@ -93,7 +100,11 @@ def run_stage(command, cwd, log, run, stage, expected, idle_warning=600, poll_in
                     warning='No log, result, CPU or disk activity; inspect this stage' if quiet >= idle_warning else None,
                     descendant_processes=nproc, process_cpu_ticks=cpu, process_disk_bytes=io,
                     expected_variants=expected, log=str(log), exit_code=rc, **counters)
-                write_json(state_path, state)
+                try:
+                    write_json(state_path, state)
+                except PermissionError as exc:
+                    # A Windows reader can temporarily block replacement on /mnt/c.
+                    print(f"Could not update progress: {exc}", file=sys.stderr, flush=True)
                 if rc is not None:
                     return rc
                 time.sleep(poll_interval)

@@ -1,0 +1,7 @@
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t magnitude = x & (((uint64_t)1 << 63) - 1);
+    if (magnitude < ((uint64_t)1 << 52)) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}

@@ -1,0 +1,9 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    if ((x >> 63) != (y >> 63)) {
+        return (int)(x >> 63);
+    }
+    if (x >> 63) {
+        return x > y;
+    }
+    return x < y;
+}

@@ -1,0 +1,140 @@
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    if (sx) {
+        return x > y;
+    }
+    return x < y;
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+
+    return (sx && !sy)
+        || (!sx && !sy && x < y)
+        || (sx && sy && x > y);
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    if (x >> 63) {
+        return (y >> 63) ? x > y : 1;
+    }
+    return (y >> 63) ? 0 : x < y;
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t sign = (uint64_t)1 << 63;
+    uint64_t kx = (x & sign) ? ~x : (x ^ sign);
+    uint64_t ky = (y & sign) ? ~y : (y ^ sign);
+
+    return kx < ky;
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t sign = (uint64_t)1 << 63;
+    uint64_t mx = (uint64_t)0 - (x >> 63);
+    uint64_t my = (uint64_t)0 - (y >> 63);
+
+    x ^= mx | sign;
+    y ^= my | sign;
+    return x < y;
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & mask;
+    uint64_t ay = y & mask;
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+
+    return sx != sy ? sx : (sx ? ax > ay : ax < ay);
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+    int same_sign_result = (x != y) & ((x < y) ^ sx);
+
+    return (different & sx) | ((different ^ 1) & same_sign_result);
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & mask;
+    uint64_t ay = y & mask;
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+    int forward = (int)((ax - ay) >> 63);
+    int reverse = (int)((ay - ax) >> 63);
+    int same = forward ^ ((forward ^ reverse) & sx);
+
+    return same ^ ((same ^ sx) & different);
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t dxy = x - y;
+    uint64_t dyx = y - x;
+    int less = (int)(((~x & y) | (~(x ^ y) & dxy)) >> 63);
+    int greater = (int)(((~y & x) | (~(x ^ y) & dyx)) >> 63);
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+
+    return different ? sx : (sx ? greater : less);
+}
+```
+
+```c
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t sign = (uint64_t)1 << 63;
+    uint64_t kx = (x >> 63) ? ~x : x + sign;
+    uint64_t ky = (y >> 63) ? ~y : y + sign;
+    uint64_t hx = kx >> 32;
+    uint64_t hy = ky >> 32;
+    uint64_t low_mask = ((uint64_t)1 << 32) - 1;
+
+    return (hx < hy)
+        || ((hx == hy) && ((kx & low_mask) < (ky & low_mask)));
+}
+```

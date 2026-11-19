@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Handle differing signs directly and use subtraction only for equal signs.
+    // Equal-sign encodings differ by at most 2^63 minus one.
+    // Thus the unsigned difference's top bit detects strict order, even at equality.
+    if ((x ^ y) >> 63) {
+        return (int)(x >> 63);
+    }
+    uint64_t difference = (x >> 63) ? y - x : x - y;
+    return (int)(difference >> 63);
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Skip zero nibbles, then look up the count in the first nonzero nibble.
+ // Each skipped nibble contributes exactly four trailing zeros.
+ // Handle zero first to avoid an endless scan.
+ static const unsigned char counts[16] =
+ {
+  4, 0, 1, 0, 2, 0, 1, 0,
+  3, 0, 1, 0, 2, 0, 1, 0
+ };
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & 15) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ return r + counts[in & 15];
+}
+
+
+int main(){
+    ctz(0);
+}

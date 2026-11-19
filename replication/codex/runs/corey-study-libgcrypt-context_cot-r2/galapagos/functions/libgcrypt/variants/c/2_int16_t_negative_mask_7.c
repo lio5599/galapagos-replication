@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // The comparison yields 1 for nonnegative x and 0 for negative x.
+  // Subtracting 1 maps these to the reference's 0 and -1.
+  // No arithmetic on x occurs, so both endpoints are safe.
+  return (x >= 0) - 1;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

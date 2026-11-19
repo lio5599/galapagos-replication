@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // For equal signs, reverse strict order by XOR only when encodings differ.
+    // The inequality guard ensures equal negative encodings still return zero.
+    // Differing signs use the first sign bit, including for zero encodings.
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+    int same_sign_result = (x < y) ^ (sx & (x != y));
+    return different ? sx : same_sign_result;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

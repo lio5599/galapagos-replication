@@ -1,0 +1,14 @@
+static int mix(int c0, int c1)
+{
+    // Stores the weighted component sums in an array and divides them uniformly.
+    // Blue and green are nonnegative; signed red division truncates as originally.
+    // The original red shifts and final reconstruction order are preserved.
+    int components[3];
+    int i;
+    components[0] = 2 * (c0 & 31) + (c1 & 31);
+    components[1] = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    components[2] = 2 * (c0 >> 10) + (c1 >> 10);
+    for (i = 0; i < 3; ++i)
+        components[i] /= 3;
+    return components[2] * 1024 + components[1] * 32 + components[0];
+}

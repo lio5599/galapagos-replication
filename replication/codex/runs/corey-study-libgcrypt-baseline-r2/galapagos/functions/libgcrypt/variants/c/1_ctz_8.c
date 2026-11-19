@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+    static const unsigned char trailing[16] = {
+        4, 0, 1, 0, 2, 0, 1, 0,
+        3, 0, 1, 0, 2, 0, 1, 0
+    };
+    int r;
+
+    for (r = 0; r < 64; r += 4) {
+        unsigned int nibble = (unsigned int)(in & 15);
+
+        if (nibble != 0)
+            return r + trailing[nibble];
+
+        in >>= 4;
+    }
+
+    return 64;
+}
+
+
+int main(){
+    ctz(0);
+}

@@ -1,0 +1,111 @@
+int16_t barrett_reduce(int16_t a) {
+  // Subtracts 3329 times the rounded fixed-point quotient, with int16_t narrowing.
+  // The reference reciprocal is exactly 20159.
+  // Keeping both narrowing steps preserves behavior at the input extremes.
+  int16_t t;
+  t = ((int32_t)20159 * a + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Separates the product, rounding bias, and quotient calculation.
+  // All int32_t intermediates fit for every int16_t input.
+  // The quotient and multiple are narrowed exactly as in the reference.
+  int32_t product = (int32_t)20159 * a;
+  int32_t biased = product + 33554432;
+  int16_t t = biased >> 26;
+  t = (int16_t)((int32_t)t * 3329);
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Uses 20159 = 20160 - 1 to calculate the same numerator.
+  // Multiplication and subtraction fit int32_t even at both input extremes.
+  // The shift and subsequent narrowing match the reference.
+  int32_t numerator = (int32_t)a * 20160;
+  numerator -= a;
+  numerator += 33554432;
+  int16_t t = numerator >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Splits the reciprocal into 20000 + 159.
+  // Both products and their biased sum fit int32_t for every input.
+  // Identical quotient and multiple narrowing preserve edge cases.
+  int32_t numerator = (int32_t)a * 20000;
+  numerator += (int32_t)a * 159;
+  int16_t t = (numerator + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Splits the reciprocal into 16384 + 3775 and adds the bias first.
+  // Every intermediate fits int32_t throughout the int16_t input range.
+  // The final numerator and both narrowing steps equal the reference.
+  int32_t numerator = 33554432 + (int32_t)a * 16384;
+  numerator += (int32_t)a * 3775;
+  int16_t t = numerator >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Computes the reciprocal product using 20159 = 32768 - 12609.
+  // Even the larger initial product fits int32_t at both input extremes.
+  // The same biased numerator and narrowing give the reference result.
+  int32_t numerator = (int32_t)a * 32768;
+  numerator -= (int32_t)a * 12609;
+  int16_t t = (numerator + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Uses 20159 = 64 * 315 - 1 without shifting a negative operand.
+  // Each multiplication and the biased numerator fit int32_t for all inputs.
+  // Quotient and multiple narrowing remain identical to the reference.
+  int32_t numerator = (int32_t)a * 315;
+  numerator = numerator * 64 - a;
+  int16_t t = (numerator + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Calculates the same quotient but expands 3329 as 3328 + 1.
+  // The expanded product fits int32_t before its int16_t narrowing.
+  // Preserving that narrowing also handles the extreme quotient values.
+  int16_t t = ((int32_t)20159 * a + 33554432) >> 26;
+  int32_t multiple = (int32_t)t * 3328 + t;
+  t = (int16_t)multiple;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Stages the rounding using arithmetic right shifts, as in the reference.
+  // floor((p + 2^25)/2^26) equals floor((floor(p/2^25) + 1)/2).
+  // This identity includes negative products and exact rounding boundaries.
+  // All intermediates fit, and both int16_t narrowing steps are retained.
+  int32_t product = (int32_t)20159 * a;
+  int32_t coarse = product >> 25;
+  int16_t t = (coarse + 1) >> 1;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Emulates the reference arithmetic right shift using an unsigned shift.
+  // For a negative numerator, unsigned conversion adds 2^32.
+  // Subtracting 64 after shifting by 26 removes that contribution exactly.
+  // All intermediates fit, and the reference narrowing is preserved.
+  int32_t numerator = (int32_t)20159 * a + 33554432;
+  int32_t quotient = (int32_t)((uint32_t)numerator >> 26);
+  quotient -= numerator < 0 ? 64 : 0;
+  int16_t t = (int16_t)quotient;
+  t *= 3329;
+  return a - t;
+}

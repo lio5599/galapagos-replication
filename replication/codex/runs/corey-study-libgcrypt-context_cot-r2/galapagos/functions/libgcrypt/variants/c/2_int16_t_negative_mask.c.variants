@@ -1,0 +1,86 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // The reference returns -1 for negative x and 0 otherwise.
+  // The comparison yields 1 exactly for negative inputs; negate it.
+  // This includes INT16_MIN, zero, and INT16_MAX without overflow.
+  return -(x < 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Select the reference's two possible results directly.
+  // All negative inputs, including INT16_MIN, select -1.
+  // Zero and all positive inputs select 0.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch on the sign without performing arithmetic on x.
+  // Nonnegative inputs return 0; every negative input returns -1.
+  // Both endpoints and zero are handled by the same sign test.
+  if (x >= 0)
+    return 0;
+  return -1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Conversion to uint16_t maps negatives into 32768 through 65535.
+  // Division by 32768 therefore yields the reference's sign bit.
+  // Negating that 0 or 1 is safe, including at both endpoints.
+  uint16_t u = x;
+  return -(int)(u / 32768u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // After unsigned conversion, bit 15 is set exactly for negatives.
+  // Testing that bit produces 0 or 1, which is safely negated.
+  // Zero and both signed endpoints retain their expected results.
+  uint16_t u = x;
+  return -((u & 32768u) != 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion preserves the reference's sign bit.
+  // Flipping bit 15 and shifting gives 1 for nonnegative x, else 0.
+  // Subtracting 1 yields 0 or -1, safely including both endpoints.
+  uint16_t u = x;
+  return (int)((u ^ 32768u) >> 15) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // The unsigned conversion is below 32768 exactly when x is nonnegative.
+  // The comparison yields 1 for that range and 0 for negative inputs.
+  // Subtracting 1 handles zero and both endpoints without overflow.
+  uint16_t u = x;
+  return (u < 32768u) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // The comparison yields 1 for nonnegative x and 0 for negative x.
+  // Subtracting 1 maps these to the reference's 0 and -1.
+  // No arithmetic on x occurs, so both endpoints are safe.
+  return (x >= 0) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Widening before adding maps the full input range to 0 through 65535.
+  // Division yields 0 for negative x and 1 for nonnegative x.
+  // Subtracting 1 gives the mask; all arithmetic fits in long.
+  return (int)(((long)x + 32768L) / 32768L) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Widening and subtracting maps inputs to -65535 through 0.
+  // The numerator is at most -32768 exactly for negative inputs.
+  // Division truncates toward zero, yielding -1 or 0 as required.
+  // All intermediate values fit in long, including at both endpoints.
+  return (int)(((long)x - 32767L) / 32768L);
+}

@@ -1,0 +1,13 @@
+int.h>
+
+static int ctz(uint64_t in)
+{
+    uint64_t bits = (in & ((uint64_t)0 - in)) - (uint64_t)1;
+    int r = 0;
+
+    while (bits != 0) {
+        bits &= bits - (uint64_t)1;
+        ++r;
+    }
+    return r;
+}

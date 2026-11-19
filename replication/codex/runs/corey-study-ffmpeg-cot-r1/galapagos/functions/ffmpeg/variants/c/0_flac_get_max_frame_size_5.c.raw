@@ -1,0 +1,16 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Jumps to a shared trailer step after the stereo payload calculation.
+    // Exactly one original payload expression is evaluated.
+    // Addition order and signed division remain identical for edge cases.
+    int count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        goto trailer;
+    }
+    count += (ch * bps * blocksize + 7) / 8;
+trailer:
+    count += 2;
+    return count;
+}

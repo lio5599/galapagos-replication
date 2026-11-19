@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // After unsigned conversion, precisely the negative inputs exceed 32767.
+  // Negating that comparison gives the reference mask.
+  // Zero, -32768, and 32767 all fall on the correct side.
+  return -((uint16_t)x > 32767u);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Add the radix-2^31 quotients and the carry from the two remainders.
+    // A wrapped 64-bit sum changes this quotient by 2^33.
+    // Narrowing to 32 bits discards that difference, including overflow cases.
+    uint64_t mask = (uint64_t)0x7FFFFFFF;
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & mask) * p;
+    uint64_t carry = ((z & mask) + (w & mask)) >> 31;
+    uint32_t q = (uint32_t)((z >> 31) + (w >> 31) + carry);
+    uint32_t d = q - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

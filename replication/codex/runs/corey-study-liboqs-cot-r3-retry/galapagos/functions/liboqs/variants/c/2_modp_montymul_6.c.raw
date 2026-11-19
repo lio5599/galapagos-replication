@@ -1,0 +1,14 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Add radix-2^31 quotients and the carry from the low 31-bit remainders.
+    // A 64-bit sum overflow would change this quotient by 2^33 only.
+    // The uint32_t cast discards that difference, so even overflow cases agree.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t carry = ((z & (uint64_t)0x7FFFFFFF)
+        + (w & (uint64_t)0x7FFFFFFF)) >> 31;
+    uint32_t t = (uint32_t)((z >> 31) + (w >> 31) + carry);
+    uint32_t d = t - p;
+
+    d += p & -(d >> 31);
+    return d;
+}

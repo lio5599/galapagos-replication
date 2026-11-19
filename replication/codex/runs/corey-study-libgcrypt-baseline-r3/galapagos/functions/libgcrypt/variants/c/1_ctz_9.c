@@ -1,0 +1,33 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+    uint64_t isolated;
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    isolated = in & (UINT64_C(0) - in);
+
+    if (isolated & UINT64_C(0xAAAAAAAAAAAAAAAA))
+        r += 1;
+    if (isolated & UINT64_C(0xCCCCCCCCCCCCCCCC))
+        r += 2;
+    if (isolated & UINT64_C(0xF0F0F0F0F0F0F0F0))
+        r += 4;
+    if (isolated & UINT64_C(0xFF00FF00FF00FF00))
+        r += 8;
+    if (isolated & UINT64_C(0xFFFF0000FFFF0000))
+        r += 16;
+    if (isolated & UINT64_C(0xFFFFFFFF00000000))
+        r += 32;
+
+    return r;
+}
+
+
+int main(){
+    ctz(0);
+}

@@ -96,7 +96,34 @@ def main():
     p = scripts / "usecases/case.py"
     lines = p.read_text().splitlines()
     lines = ["CLONE_PATH = " + repr(str(dest / "build-copies")) if x.startswith("CLONE_PATH = ") else x for x in lines]
-    p.write_text("\n".join(lines) + "\n")
+    case_text = "\n".join(lines) + "\n"
+    if "ffmpeg" in selection:
+        marker = '            "--cc=clang",\n'
+        if case_text.count(marker) != 1:
+            raise RuntimeError("Could not locate the FFmpeg configure flags")
+        case_text = case_text.replace(marker, marker + '            "--disable-doc",\n', 1)
+        patches.append("case.py: disable FFmpeg documentation generation for Texinfo compatibility")
+    stale_path = "variant_path = cwd.replace('/build', '')"
+    if case_text.count(stale_path) != 1:
+        raise RuntimeError("Could not locate the CMake variant path rewrite")
+    case_text = case_text.replace(
+        stale_path, "variant_path = os.path.dirname(cwd) if self.name == 'liboqs' else cwd", 1
+    )
+    patches.append("case.py: use the variant source directory when relocating CMake paths")
+    if 'libgcrypt' in selection:
+        marker = '        os.sync()\n        return tmp_folder'
+        if case_text.count(marker) != 1:
+            raise RuntimeError('Could not locate the Galapagos shadow-copy hook')
+        case_text = case_text.replace(marker, '''        if self.name == "libgcrypt" and name == "libgcrypt":
+            # The submodule gitfile's relative path breaks when copied here.
+            gitdir = subprocess.check_output(["git", "rev-parse", "--absolute-git-dir"],
+                                             cwd=src, text=True).strip()
+            with open(os.path.join(tmp_folder, ".git"), "w") as gitfile:
+                gitfile.write("gitdir: " + gitdir + "\\n")
+        os.sync()
+        return tmp_folder''', 1)
+        patches.append('libgcrypt: retain pinned Git metadata in reference copy so autogen computes a nonempty version')
+    p.write_text(case_text)
     (dest / "build-copies").mkdir()
     patches.append("case.py: per-run build-copy directory; prevents stale builds across conditions")
     p = scripts / "tests/usecase.py"
@@ -135,6 +162,46 @@ def main():
 
 '''
     text = text.replace(marker, tracked + marker, 1)
+    if "ffmpeg" in selection:
+        shadow_hook = "        variant_shadow = await variant.shadow(original_folder)\n"
+        save_hook = "            save(result)\n"
+        if text.count(shadow_hook) != 1 or text.count(save_hook) != 1:
+            raise RuntimeError("Could not locate the Galapagos variant cleanup hooks")
+        text = text.replace(shadow_hook, shadow_hook + "        test_task = None\n        tasks = []\n", 1)
+        text = text.replace("pass_test = asyncio.create_task(tracked_tests(variant, variant_shadow))",
+                            "test_task = asyncio.create_task(tracked_tests(variant, variant_shadow))", 1)
+        text = text.replace("pass_test, msg = await pass_test", "pass_test, msg = await test_task", 1)
+        text = text.replace(save_hook, save_hook + '''
+            if LIBRARY == "ffmpeg":
+                # Drain readers before releasing the private build, even after a failed check.
+                pending = [task for _, _, task in tasks]
+                if test_task is not None:
+                    pending.append(test_task)
+                await asyncio.gather(*pending, return_exceptions=True)
+                clone_root = os.path.realpath(CLONE_PATH)
+                target = os.path.abspath(variant_shadow)
+                reference = os.path.realpath(original_folder)
+                if (os.path.dirname(target) != clone_root
+                        or os.path.realpath(target) != target or target == reference
+                        or not os.path.basename(target).startswith("ffmpeg-")):
+                    raise RuntimeError(f"Unexpected FFmpeg variant build path: {target}")
+                progress_event("remove_variant_build", variant)
+                shutil.rmtree(target)
+                progress_event("variant_build_removed", variant)
+''', 1)
+        patches.append("tests/usecase.py: remove each FFmpeg variant build after saving its result and draining checks")
+    if 'libgcrypt' in selection:
+        marker = '        await original_uc.compile(shadow_original, configure_project=True)'
+        if text.count(marker) != 1:
+            raise RuntimeError('Could not locate the Galapagos reference-build hook')
+        text = text.replace(marker, marker + '''
+        if LIBRARY == "libgcrypt":
+            progress_event("reference_test_suite")
+            reference_ok, detail = await original_uc.run_tests(shadow_original)
+            if not reference_ok:
+                raise RuntimeError(f"Unmodified libgcrypt failed its test suite: {detail}")
+            print("Unmodified libgcrypt passed its test suite; proceeding to variants.", flush=True)''', 1)
+        patches.append('libgcrypt: require unmodified reference to pass the same test suite before validating variants')
     p.write_text(text)
     patches.append('tests/usecase.py: flushed progress events before build/test/verification; same check calls')
     patches.append(f"tests/usecase.py: bound existing variant concurrency to {args.jobs}; checks unchanged")

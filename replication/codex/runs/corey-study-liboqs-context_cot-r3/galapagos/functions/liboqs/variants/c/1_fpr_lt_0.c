@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // The reference compares encodings with negatives first and negative order reversed.
+    // Different signs are ordered by the sign of x.
+    // Equal signs use unsigned order, reversed for negatives; equality returns zero.
+    if ((x >> 63) != (y >> 63)) {
+        return (int)(x >> 63);
+    }
+    if (x >> 63) {
+        return x > y;
+    }
+    return x < y;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

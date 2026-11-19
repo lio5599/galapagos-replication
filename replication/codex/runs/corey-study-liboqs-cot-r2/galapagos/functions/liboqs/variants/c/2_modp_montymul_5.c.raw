@@ -1,0 +1,14 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Performs the 64-bit addition using two 32-bit limbs and a carry.
+    // The shifted result uses bit 31 of the low limb and the high limb.
+    // Truncating the high limb reproduces 64-bit wraparound exactly,
+    // and the final correction retains the reference's edge-case behavior.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    uint64_t low = (uint64_t)(uint32_t)z + (uint32_t)w;
+    uint32_t high = (uint32_t)((z >> 32) + (w >> 32) + (low >> 32));
+    uint32_t t = ((uint32_t)low >> 31) | (uint32_t)((uint64_t)high << 1);
+    uint32_t d = t - p;
+    d += p & (0U - (d >> 31));
+    return d;
+}

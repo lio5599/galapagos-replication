@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Clear zero exponents before performing any arithmetic.
+    // Adding the unsigned additive inverse of 2^52 equals the reference subtraction.
+    // Every other exponent, including all ones, keeps the resulting bit pattern.
+    if ((x & ((uint64_t)0x7FF << 52)) == 0)
+        return 0;
+    return x + (~((uint64_t)1 << 52) + (uint64_t)1);
+}

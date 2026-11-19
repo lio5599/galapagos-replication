@@ -1,0 +1,16 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes each absolute value by adding its sign mask before complementing.
+    // The reference excludes minimum-int absolute values, so these additions are safe.
+    // The gate, distance subtraction, and final sign restoration are unchanged.
+    int s2, s1 = v >> 31;
+    v = (v + s1) ^ s1;
+    v *= v < 2 * t;
+    v -= t;
+    s2 = v >> 31;
+    v = (v + s2) ^ s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}

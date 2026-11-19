@@ -1,0 +1,188 @@
+Results will be in /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/out/ffmpeg
+DEBUG:asyncio:Using selector: EpollSelector
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": null, "variant": null, "action": "build_reference_project"}
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/tests/../../use_cases/ffmpeg
+Copying /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/tests/../../use_cases/ffmpeg to /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+INFO:root:No change provided
+INFO:root:Calling configure
+INFO:root:Running ./configure --cc=clang --disable-doc --extra-cflags="-save-temps=obj -fno-strict-aliasing"
+/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+Compiled in 368.96s
+INFO:root:Pipeline for variants of flac_get_max_frame_size /home/diogo/galapagos-clones/ffmpeg/libavcodec/flacenc.c
+INFO:root:Pipeline for variants of mix /home/diogo/galapagos-clones/ffmpeg/libavcodec/4xm.c
+INFO:root:Pipeline for variants of vp5_adjust /home/diogo/galapagos-clones/ffmpeg/libavcodec/vp56dsp.c
+INFO:root:Variants to check 30
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+Copying /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg to /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+Compiled in 2.68s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+Copying /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg to /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+Compiled in 2.69s
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffprobe_g /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffprobe_g
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffmpeg /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffmpeg
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffplay /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffplay
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffmpeg_g /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffmpeg_g
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffprobe /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffprobe
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffplay_g /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffplay_g
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffprobe_g /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffprobe_g
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffmpeg /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffmpeg
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffplay /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffplay
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffmpeg_g /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffmpeg_g
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffprobe /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffprobe
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/ffplay_g /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffplay_g
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+Mismatch /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+Tested in 458.67s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "equivalence_check"}
+DEBUG:root:Creating debug folder
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmp4a99xps7 and /tmp/tmph5rs6538 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpk9rcopl8
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpd3iljyet
+INFO:root:Alive verifier for: /tmp/tmp4a99xps7 /tmp/tmph5rs6538
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/verifier/debug/flacenc.bccmp/FailedToProve/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+Tested in 455.88s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmp1jhimmv8 and /tmp/tmpikbhk1er to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmput263ckx
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp46kdbzpg
+INFO:root:Alive verifier for: /tmp/tmp1jhimmv8 /tmp/tmpikbhk1er
+INFO:root:Calling alive for /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/verifier/debug/flacenc.bccmp/Ok/flacenc.bc.alive.txt
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+Copying /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg to /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c
+Compiled in 2.67s
+Shadowing /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg
+Copying /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg to /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c
+Parsing original bitcode /home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c
+Compiled in 2.56s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "variant_build_removed"}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/tests/usecase.py", line 244, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/tests/usecase.py", line 241, in main
+    results = await asyncio.gather(*tasks)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/tests/usecase.py", line 162, in compare
+    return await original_compare(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-baseline-r1-bounded/scripts/tests/usecase.py", line 146, in original_compare
+    await asyncio.gather(*pending, return_exceptions=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/tasks.py", line 831, in gather
+    fut = ensure_future(arg, loop=loop)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/tasks.py", line 689, in ensure_future
+    raise TypeError('An asyncio.Future, a coroutine or an awaitable '
+TypeError: An asyncio.Future, a coroutine or an awaitable is required

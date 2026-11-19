@@ -1,0 +1,12 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & mask;
+    uint64_t ay = y & mask;
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+    unsigned less = (unsigned)((ax - ay) >> 63);
+    unsigned greater = (unsigned)((ay - ax) >> 63);
+
+    return (int)(((sx ^ sy) & sx)
+        | ((1U ^ sx ^ sy) & ((less & (sx ^ 1U)) | (greater & sx))));
+}

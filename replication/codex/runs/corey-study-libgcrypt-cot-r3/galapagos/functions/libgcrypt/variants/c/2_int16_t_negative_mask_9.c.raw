@@ -1,0 +1,9 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion puts negative inputs in the upper 16-bit half.
+  // Adding 32768 makes bit 16 equal to 1 exactly for those inputs.
+  // The sum is at most 98303 and fits unsigned long; shifting gives 0 or 1.
+  // Negation produces the required mask for zero and both endpoints too.
+  unsigned long u = (uint16_t)x;
+  return -(int)((u + 32768ul) >> 16);
+}

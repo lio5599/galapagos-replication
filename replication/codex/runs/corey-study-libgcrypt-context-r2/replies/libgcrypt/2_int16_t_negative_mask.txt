@@ -1,0 +1,78 @@
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  return -(x < 0);
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  return x < 0 ? -1 : 0;
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  if (x >= 0)
+    return 0;
+  return -1;
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  uint16_t u = x;
+  return -(int)(u / 32768u);
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  uint16_t u = x;
+  return -(u > 32767u);
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  uint16_t u = x;
+  return (u & 0x8000u) ? -1 : 0;
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  uint16_t u = x;
+  return (int)((u ^ 0x8000u) >> 15) - 1;
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  uint16_t u = x;
+  return (int)((65535u - u) / 32768u) - 1;
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  unsigned long u = (uint16_t)x;
+  return -(int)((u * 2UL) >> 16);
+}
+```
+
+```c
+static int int16_t_negative_mask (int16_t x)
+{
+  uint16_t u = x;
+  return -(int)((u & 0x8000u) / 0x8000u);
+}
+```

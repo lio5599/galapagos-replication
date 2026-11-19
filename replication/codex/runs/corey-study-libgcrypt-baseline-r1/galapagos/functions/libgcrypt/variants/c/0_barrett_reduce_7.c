@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  int32_t r = ((int32_t)a + 1664) % 3329;
+  if (r < 0)
+    r += 3329;
+  return (int16_t)(r - 1664);
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

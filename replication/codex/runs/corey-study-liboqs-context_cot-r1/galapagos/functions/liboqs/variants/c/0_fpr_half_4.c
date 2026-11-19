@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // XOR detects whether the decremented exponent differs from 2047.
+    // Only original exponent zero becomes 2047; its entire result is cleared.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t different = ((y >> 52) & 0x7FF) ^ 0x7FF;
+    return y & ((uint64_t)0 - (uint64_t)(different != 0));
+}
+
+
+int main(){
+    fpr_half(0);
+}

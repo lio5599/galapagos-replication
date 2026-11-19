@@ -1,0 +1,16 @@
+static int mix(int c0, int c1)
+{
+    // Replaces doubling with addition and packs the disjoint low component fields.
+    // Averaged blue and green lie in 0 through 31, so their fields cannot overlap.
+    // The nonnegative green shift is safe; red still uses signed multiplication.
+    // Adding the packed low fields preserves results even when red is negative.
+    int blue = c0 & 31;
+    int green = (c0 & 0x03E0) >> 5;
+    int red = c0 >> 10;
+    int low;
+    blue = (blue + blue + (c1 & 31)) / 3;
+    green = (green + green + ((c1 & 0x03E0) >> 5)) / 3;
+    red = (red + red + (c1 >> 10)) / 3;
+    low = (green << 5) | blue;
+    return red * 1024 + low;
+}

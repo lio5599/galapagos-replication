@@ -1,0 +1,9 @@
+int16_t barrett_reduce(int16_t a) {
+  // Positive biased division computes floor((a + 1664) / 3329) plus ten.
+  // Subtracting ten gives the quotient selecting the centered remainder.
+  // This equals the reference quotient throughout the int16_t domain.
+  // Wide products avoid narrow overflow even when the quotient is ten.
+  int32_t x = a;
+  int32_t q = (x + 34954) / 3329 - 10;
+  return (int16_t)(x - q * 3329);
+}

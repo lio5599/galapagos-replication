@@ -1,0 +1,12 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Extract unsigned less-than from the borrow bit of unsigned subtraction.
+    // For equal-sign negatives, invert it only when the operands differ.
+    // Different signs select x's sign, preserving the signed-zero ordering.
+    uint64_t d = x - y;
+    uint64_t borrow = ((~x & y) | (~(x ^ y) & d)) >> 63;
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned different = (unsigned)((x ^ y) >> 63);
+    unsigned same_result = (unsigned)borrow
+        ^ (sx & (unsigned)(x != y));
+    return (int)((different & sx) | ((1U ^ different) & same_result));
+}

@@ -1,0 +1,9 @@
+static uint64_t fpr_half(uint64_t x) {
+    // The exponent is at most 2047, so unsigned e minus one has its top bit
+    // set exactly when e is zero. Turn that bit into a clearing mask.
+    // Unsigned wraparound is defined, including for either sign of zero.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t zero = (e - (uint64_t)1) >> 63;
+    uint64_t mask = zero - (uint64_t)1;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}

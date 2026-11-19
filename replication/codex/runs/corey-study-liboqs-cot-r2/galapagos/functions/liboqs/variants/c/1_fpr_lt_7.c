@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Combine the three disjoint cases that make the comparison true.
+    // Negative versus positive always wins; same-sign order reverses for negatives.
+    // Strict comparisons reject equal encodings, while opposite zeros use signs.
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+
+    return (sx && !sy)
+        || (!sx && !sy && x < y)
+        || (sx && sy && x > y);
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

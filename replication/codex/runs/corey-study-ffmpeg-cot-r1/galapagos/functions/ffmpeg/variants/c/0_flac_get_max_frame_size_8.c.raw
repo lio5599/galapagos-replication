@@ -1,0 +1,24 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Splits the overhead and payload expressions into ordered integer steps.
+    // Each step follows the original grouping without algebraic reassociation.
+    // Thus zero, negative, and other defined inputs retain identical results.
+    int count = 16;
+    int overhead = 7 + bps;
+    int payload;
+    overhead += 7;
+    overhead /= 8;
+    count += ch * overhead;
+    if (ch == 2) {
+        payload = 2 * bps;
+        payload += 1;
+    } else {
+        payload = ch * bps;
+    }
+    payload *= blocksize;
+    payload += 7;
+    payload /= 8;
+    count += payload;
+    count += 2;
+    return count;
+}

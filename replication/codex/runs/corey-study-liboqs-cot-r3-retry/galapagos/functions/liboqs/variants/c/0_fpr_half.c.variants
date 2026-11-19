@@ -1,0 +1,102 @@
+static uint64_t fpr_half(uint64_t x) {
+    // The reference returns zero for a zero exponent field; otherwise it subtracts 2^52.
+    // Test the original 11-bit exponent before subtracting.
+    // Both signed zeros and all subnormal encodings become zero.
+    // Every other encoding, including infinity and NaN, is decremented exactly.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FFU;
+    if (e == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // After subtraction, the exponent is 2047 exactly when it was originally zero.
+    // Detect that wrapped field and return zero, regardless of sign or fraction.
+    // All other encodings retain the complete subtraction result.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint32_t e = (uint32_t)(y >> 52) & 0x7FFU;
+    return e == 0x7FFU ? (uint64_t)0 : y;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Convert a nonzero original exponent into an all-ones unsigned mask.
+    // The mask preserves subtraction for every nonzero exponent encoding.
+    // A zero exponent clears every bit, including the sign and fraction.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FFU;
+    uint64_t mask = (uint64_t)0 - (uint64_t)(e != 0);
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Multiply the unsigned subtraction result by the exponent's nonzero indicator.
+    // Multiplication by one preserves all bits; multiplication by zero clears them.
+    // Thus zero-exponent encodings vanish and all others match the reference.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FFU;
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y * (uint64_t)(e != 0);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For a nonzero exponent, subtraction changes only the exponent field.
+    // Preserve the sign and fraction and insert the decremented exponent.
+    // Handle every zero-exponent encoding separately to avoid borrowing into the sign.
+    uint64_t exponent_mask = (uint64_t)0x7FF << 52;
+    uint64_t e = (x & exponent_mask) >> 52;
+    if (e == 0) {
+        return 0;
+    }
+    return (x & ~exponent_mask) | ((e - 1) << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // XOR the old and decremented exponent fields to identify bits to toggle.
+    // A nonzero exponent decrements without affecting the sign or fraction.
+    // Return zero for the entire zero-exponent class, including subnormals.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    if (e == 0) {
+        return 0;
+    }
+    return x ^ ((e ^ (e - 1)) << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Adding the unsigned additive inverse of 2^52 implements the same subtraction.
+    // Test the exponent directly through its bit mask.
+    // All zero-exponent encodings return zero; other encodings keep the modular sum.
+    if ((x & ((uint64_t)0x7FF << 52)) == 0) {
+        return 0;
+    }
+    return x + (~((uint64_t)1 << 52) + (uint64_t)1);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // The exponent ranges from zero through 2047.
+    // Adding 2047 and shifting by 11 gives zero only for exponent zero, else one.
+    // Negating that indicator creates the mask that selects the subtraction result.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    uint64_t keep = (e + 2047) >> 11;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)0 - keep);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Unsigned e minus one has its top bit set only when the 11-bit exponent is zero.
+    // Subtracting one from that top bit gives zero or an all-ones mask.
+    // This clears all zero-exponent encodings and preserves subtraction otherwise.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    uint64_t zero = (e - (uint64_t)1) >> 63;
+    return (x - ((uint64_t)1 << 52)) & (zero - (uint64_t)1);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Propagate any set exponent bit down to bit zero.
+    // The resulting low bit indicates precisely whether the exponent was nonzero.
+    // Its unsigned negation preserves subtraction or clears the entire encoding.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FFU;
+    e |= e >> 8;
+    e |= e >> 4;
+    e |= e >> 2;
+    e |= e >> 1;
+    return (x - ((uint64_t)1 << 52))
+        & ((uint64_t)0 - (uint64_t)(e & 1U));
+}

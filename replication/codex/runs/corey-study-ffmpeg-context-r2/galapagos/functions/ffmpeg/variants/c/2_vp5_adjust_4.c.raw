@@ -1,0 +1,11 @@
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int twice = 2 * t;
+
+    a *= a < twice;
+    a = a <= t ? a : twice - a;
+
+    return (a + sign) ^ sign;
+}

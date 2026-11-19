@@ -1,0 +1,10 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Combine three mutually exclusive cases that produce a true result.
+    // These are negative versus nonnegative, ascending positives, and descending negatives.
+    // Equal encodings satisfy none of the cases.
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    return (sx & (sy ^ 1))
+        | ((sx ^ 1) & (sy ^ 1) & (int)(x < y))
+        | (sx & sy & (int)(x > y));
+}

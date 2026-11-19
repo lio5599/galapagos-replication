@@ -1,0 +1,122 @@
+int16_t barrett_reduce(int16_t a) {
+  // The reference subtracts 3329 times a rounded approximate quotient from a.
+  // Its reciprocal constant evaluates to 20159.
+  // The numerator fits in int32_t for every int16_t input.
+  // Preserve both int16_t conversions, including endpoint wraparound.
+  int16_t t;
+  t = ((int32_t)20159 * a + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Replace multiplication by 20159 with multiplication by 20160 minus a.
+  // Both the intermediate product and rounded numerator fit in int32_t.
+  // The quotient and subsequent int16_t conversions remain unchanged.
+  int16_t t;
+  int32_t x = (int32_t)20160 * a - a;
+  t = (x + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Split 20159 into 16384 plus 3775 using distributivity.
+  // All products and sums fit in int32_t, even at either input endpoint.
+  // Identical rounding and narrowing preserve the reference result.
+  int16_t t;
+  int32_t x = (int32_t)16384 * a + (int32_t)3775 * a;
+  t = (x + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Use 20159 equals 315 times 64 minus 1.
+  // Multiplication rather than left shift also handles negative inputs.
+  // Every intermediate fits in int32_t; rounding and narrowing are unchanged.
+  int16_t t;
+  int32_t x = (int32_t)a * 315;
+  x = x * 64 - a;
+  t = (x + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Increment the input before multiplication and compensate in the bias.
+  // Expanding the expression gives exactly 20159 times a plus 33554432.
+  // The increment and product fit in int32_t for every int16_t input.
+  // Preserve the reference's quotient rounding and int16_t conversions.
+  int16_t t;
+  int32_t x = (int32_t)a + 1;
+  t = (20159 * x + (33554432 - 20159)) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Translate the input to the nonnegative range before multiplication.
+  // Subtracting the translated bias restores the exact reference numerator.
+  // The largest product is 20159 times 65535, which fits in int32_t.
+  // The final shift and narrowing operations match the reference.
+  int16_t t;
+  int32_t x = (int32_t)a + 32768;
+  x = 20159 * x - ((int32_t)20159 * 32768 - 33554432);
+  t = x >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Add ten whole quotient units before shifting, then subtract ten.
+  // The biased numerator is nonnegative and fits in int32_t for all inputs.
+  // Shifting therefore computes the same rounded quotient without a negative shift.
+  // Preserve the reference's subsequent int16_t conversions.
+  int16_t t;
+  int32_t x = (int32_t)20159 * a + 33554432;
+  t = ((x + 671088640) >> 26) - 10;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Replace the arithmetic shift with division rounded toward negative infinity.
+  // For a negative numerator, subtract divisor minus one before C division.
+  // This correction fits in int32_t and handles exact multiples correctly.
+  // The quotient and both int16_t conversions match the reference.
+  int16_t t;
+  int32_t x = (int32_t)20159 * a + 33554432;
+  if (x < 0)
+    x -= 67108863;
+  t = x / 67108864;
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Reflect the numerator using floor(x/d) equals -1 minus floor((-x-1)/d).
+  // This identity includes negative values and exact multiples of the divisor.
+  // Negation and subtraction fit in int32_t throughout the input range.
+  // Use the reference's signed-shift semantics and preserve its narrowing.
+  int16_t t;
+  int32_t x = (int32_t)20159 * a + 33554432;
+  t = -1 - ((-x - 1) >> 26);
+  t *= 3329;
+  return a - t;
+}
+
+int16_t barrett_reduce(int16_t a) {
+  // Compute the quotient from the input magnitude using nonnegative shifts.
+  // For negative inputs, bias by 33554431 before negating the quotient.
+  // The one-unit bias adjustment exactly preserves the reference's rounding.
+  // Promotion before negation safely handles -32768; narrowing is unchanged.
+  int16_t t;
+  int32_t x = a;
+  if (x < 0)
+    t = -((20159 * (-x) + 33554431) >> 26);
+  else
+    t = (20159 * x + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}

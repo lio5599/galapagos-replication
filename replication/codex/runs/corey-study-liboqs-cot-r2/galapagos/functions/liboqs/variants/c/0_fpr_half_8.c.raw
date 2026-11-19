@@ -1,0 +1,9 @@
+static uint64_t fpr_half(uint64_t x) {
+    // After subtraction, exponent 2047 occurs exactly when the original exponent was zero.
+    // Detect that wrapped exponent directly and clear the entire encoding.
+    // Every other resulting exponent is retained, regardless of sign or fraction.
+    uint64_t result = x - ((uint64_t)1 << 52);
+    if ((result & ((uint64_t)0x7FF << 52)) == ((uint64_t)0x7FF << 52))
+        result = 0;
+    return result;
+}

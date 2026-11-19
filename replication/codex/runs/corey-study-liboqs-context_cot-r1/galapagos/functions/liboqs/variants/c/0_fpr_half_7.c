@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Unsigned negation sets the top bit for every nonzero 11-bit exponent.
+    // The resulting flag selects the subtraction or clears the entire encoding.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t keep = (e | ((uint64_t)0 - e)) >> 63;
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y & ((uint64_t)0 - keep);
+}
+
+
+int main(){
+    fpr_half(0);
+}

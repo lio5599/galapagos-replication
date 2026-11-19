@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Expands the expression into its three triangular segments for t > 0.
+    // At a == t both segments give t; at a == 2*t the result is zero.
+    // For t <= 0 the reference's gate is always zero, yielding 2*t.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+    if (t <= 0)
+        r = 2 * t;
+    else if (a < t)
+        r = a;
+    else if (a < 2 * t)
+        r = 2 * t - a;
+    else
+        r = 0;
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

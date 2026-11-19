@@ -1,0 +1,82 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // The reference returns -1 for negative x and 0 otherwise.
+  // Comparison produces 1 exactly for negative inputs; negation gives -1.
+  // Zero and both int16_t endpoints are handled without arithmetic on x.
+  return -(x < 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Select the required mask directly according to the sign of x.
+  // Zero selects 0, and every negative value, including -32768, selects -1.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch on negativity and return the corresponding constant.
+  // No arithmetic on x is needed, so zero and both endpoints are safe.
+  if (x < 0)
+    return -1;
+  return 0;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // The comparison is 1 for nonnegative inputs and 0 for negative inputs.
+  // Subtracting 1 therefore gives 0 or -1, including at both endpoints.
+  return (x >= 0) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Conversion maps negative inputs to 32768 through 65535.
+  // Nonnegative inputs remain 0 through 32767, so the test identifies sign.
+  // Negating its Boolean result handles zero and both endpoints exactly.
+  return -((uint16_t)x > 32767u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion preserves the reference's 16-bit representation.
+  // Division by 32768 yields 0 for nonnegative x and 1 for negative x.
+  // The quotient is safely converted to int and negated, even at endpoints.
+  return -(int)((uint16_t)x / 32768u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // After unsigned conversion, bit 15 is set exactly when x is negative.
+  // Testing that bit gives 0 or 1, whose negation is the required mask.
+  // Zero has that bit clear; -32768 and every other negative have it set.
+  return -(((uint16_t)x & 0x8000u) != 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion gives the same value used by the reference.
+  // XOR changes only the lower 15 bits, which the shift then discards.
+  // Bit 15 is unchanged for all inputs, including zero and both endpoints.
+  uint16_t u = x;
+  return -(int)((u ^ 0x7fffu) >> 15);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // XOR inverts all 16 bits of the converted value.
+  // The shifted result is 1 for nonnegative x and 0 for negative x.
+  // Subtracting 1 gives the required mask, including zero and endpoints.
+  uint16_t u = (uint16_t)x ^ 0xffffu;
+  return (int)(u >> 15) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion puts negative inputs in the upper 16-bit half.
+  // Adding 32768 makes bit 16 equal to 1 exactly for those inputs.
+  // The sum is at most 98303 and fits unsigned long; shifting gives 0 or 1.
+  // Negation produces the required mask for zero and both endpoints too.
+  unsigned long u = (uint16_t)x;
+  return -(int)((u + 32768ul) >> 16);
+}

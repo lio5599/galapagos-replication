@@ -1,0 +1,15 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Tests the non-stereo case first without changing either calculation.
+    // The final addition is performed directly in the return expression.
+    // All intermediate arithmetic and truncation match the reference.
+    int count = 16;
+
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch != 2) {
+        count += (ch * bps * blocksize + 7) / 8;
+    } else {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    }
+    return count + 2;
+}

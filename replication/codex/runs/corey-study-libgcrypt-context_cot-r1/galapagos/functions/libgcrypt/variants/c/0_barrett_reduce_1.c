@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Separates the product, rounding bias, and quotient calculation.
+  // All int32_t intermediates fit for every int16_t input.
+  // The quotient and multiple are narrowed exactly as in the reference.
+  int32_t product = (int32_t)20159 * a;
+  int32_t biased = product + 33554432;
+  int16_t t = biased >> 26;
+  t = (int16_t)((int32_t)t * 3329);
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

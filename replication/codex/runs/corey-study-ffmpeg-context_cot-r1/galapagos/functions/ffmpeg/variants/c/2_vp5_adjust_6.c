@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Forms the absolute distance by selecting the subtraction's operand order.
+    // The selected distance equals the reference's second absolute value.
+    // Both thresholds of either sign and equality at the gate are preserved.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    a *= a < 2 * t;
+    if (a < t)
+        d = t - a;
+    else
+        d = a - t;
+    a = t - d;
+    return negative ? -a : a;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

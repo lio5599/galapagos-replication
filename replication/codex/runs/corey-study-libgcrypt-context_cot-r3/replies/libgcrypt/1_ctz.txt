@@ -1,0 +1,202 @@
+static int ctz(uint64_t in)
+{
+ // The reference counts trailing zero bits, returning 64 for zero.
+ // Shift away each low zero bit until a one appears.
+ // Handle zero separately so the loop always terminates.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & 1) == 0)
+ {
+  ++r;
+  in >>= 1;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Examine bits from least to most significant.
+ // The first set bit's index is the trailing-zero count.
+ // If no bit is set, return 64; all shifts are below 64.
+ int i;
+ for (i = 0; i < 64; ++i)
+ {
+  if (((in >> i) & 1) != 0)
+   return i;
+ }
+ return 64;
+}
+
+static int ctz(uint64_t in)
+{
+ // Keep a flag that remains one only before the first set bit.
+ // Each zero in that initial run contributes one to the result.
+ // For zero, the flag remains one for all 64 iterations.
+ int i, r = 0, pending = 1;
+ for (i = 0; i < 64; ++i)
+ {
+  pending &= (int)(((in >> i) & 1) ^ 1);
+  r += pending;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Skip zero low halves using successively smaller blocks.
+ // Each skipped block adds its width to the trailing-zero count.
+ // Zero is handled separately; a nonzero input leaves a set bit.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ if ((in & 0xFFFFFFFFULL) == 0)
+ {
+  r += 32;
+  in >>= 32;
+ }
+ if ((in & 0xFFFFULL) == 0)
+ {
+  r += 16;
+  in >>= 16;
+ }
+ if ((in & 0xFFULL) == 0)
+ {
+  r += 8;
+  in >>= 8;
+ }
+ if ((in & 0xFULL) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ if ((in & 3) == 0)
+ {
+  r += 2;
+  in >>= 2;
+ }
+ return r + (int)((in & 1) == 0);
+}
+
+static int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit using unsigned modular subtraction.
+ // Subtracting one gives exactly as many ones as trailing zeros.
+ // For zero, the mask becomes all ones, giving a count of 64.
+ uint64_t bit = in & ((uint64_t)0 - in);
+ uint64_t mask = bit - (uint64_t)1;
+ int i, r = 0;
+ for (i = 0; i < 64; ++i)
+ {
+  r += (int)(mask & 1);
+  mask >>= 1;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Spread every set bit toward the most significant end.
+ // The resulting zero bits are exactly the original trailing zeros.
+ // Zero stays zero, so counting complemented bits returns 64.
+ uint64_t mask;
+ int i, r = 0;
+ in |= in << 1;
+ in |= in << 2;
+ in |= in << 4;
+ in |= in << 8;
+ in |= in << 16;
+ in |= in << 32;
+ mask = ~in;
+ for (i = 0; i < 64; ++i)
+ {
+  r += (int)(mask & 1);
+  mask >>= 1;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Skip whole zero nibbles, then the remaining low zero bits.
+ // Each shift adds precisely the number of discarded zero bits.
+ // The explicit zero case prevents an endless nibble scan.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & 15) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ while ((in & 1) == 0)
+ {
+  ++r;
+  in >>= 1;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Skip zero bytes, then locate the first one within the low byte.
+ // The skipped byte widths and final bit index give the count.
+ // Zero returns 64 directly; the final byte is otherwise nonzero.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & 255) == 0)
+ {
+  r += 8;
+  in >>= 8;
+ }
+ if ((in & 15) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ if ((in & 3) == 0)
+ {
+  r += 2;
+  in >>= 2;
+ }
+ return r + (int)((in & 1) == 0);
+}
+
+static int ctz(uint64_t in)
+{
+ // A low-bit prefix is zero exactly when it precedes the first one.
+ // Left shifting discards all bits outside each tested prefix.
+ // Count zero prefixes of lengths 1 through 64, including all for zero.
+ int i, r = 0;
+ for (i = 0; i < 64; ++i)
+ {
+  r += (in << (63 - i)) == 0;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit; its index is the trailing-zero count.
+ // Each mask tests one binary digit of that index.
+ // Handle zero separately because it has no set-bit index.
+ uint64_t bit;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ bit = in & ((uint64_t)0 - in);
+ if ((bit & 0xAAAAAAAAAAAAAAAAULL) != 0)
+  r += 1;
+ if ((bit & 0xCCCCCCCCCCCCCCCCULL) != 0)
+  r += 2;
+ if ((bit & 0xF0F0F0F0F0F0F0F0ULL) != 0)
+  r += 4;
+ if ((bit & 0xFF00FF00FF00FF00ULL) != 0)
+  r += 8;
+ if ((bit & 0xFFFF0000FFFF0000ULL) != 0)
+  r += 16;
+ if ((bit & 0xFFFFFFFF00000000ULL) != 0)
+  r += 32;
+ return r;
+}

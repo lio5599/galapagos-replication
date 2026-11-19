@@ -1,0 +1,123 @@
+
+static int mix(int c0, int c1)
+{
+    int blue = ((c0 & 31) * 2 + (c1 & 31)) / 3;
+    int green = (((c0 & 992) * 2 + (c1 & 992)) >> 5) / 3;
+    int red = ((c0 >> 10) * 2 + (c1 >> 10)) / 3;
+    return red * 1024 + green * 32 + blue;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int blue = (c0 & 31) + (c0 & 31) + (c1 & 31);
+    int green = ((c0 & 992) + (c0 & 992) + (c1 & 992)) >> 5;
+    int red = (c0 >> 10) + (c0 >> 10) + (c1 >> 10);
+    return (red / 3 * 32 + green / 3) * 32 + blue / 3;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int b0 = c0 & 31, b1 = c1 & 31;
+    int g0 = (c0 & 992) >> 5, g1 = (c1 & 992) >> 5;
+    int r0 = c0 >> 10, r1 = c1 >> 10;
+    return ((2 * r0 + r1) / 3) * 1024
+         + ((2 * g0 + g1) / 3) * 32
+         + (2 * b0 + b1) / 3;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    return ((2 * (c0 >> 10) + (c1 >> 10)) / 3) * 1024
+         + ((2 * ((c0 & 992) / 32) + (c1 & 992) / 32) / 3) * 32
+         + (2 * (c0 & 31) + (c1 & 31)) / 3;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int result = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    result *= 32;
+    result += (2 * ((c0 & 992) >> 5) + ((c1 & 992) >> 5)) / 3;
+    result *= 32;
+    result += (2 * (c0 & 31) + (c1 & 31)) / 3;
+    return result;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int a[3] = {c0 & 31, (c0 & 992) >> 5, c0 >> 10};
+    int b[3] = {c1 & 31, (c1 & 992) >> 5, c1 >> 10};
+    int weights[3] = {1, 32, 1024};
+    int result = 0;
+    int i;
+    for (i = 0; i < 3; ++i)
+        result += ((2 * a[i] + b[i]) / 3) * weights[i];
+    return result;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int channels[3];
+    int result = 0;
+    int i;
+    channels[0] = 2 * (c0 & 31) + (c1 & 31);
+    channels[1] = (2 * (c0 & 992) + (c1 & 992)) >> 5;
+    channels[2] = 2 * (c0 >> 10) + (c1 >> 10);
+    for (i = 2; i >= 0; --i)
+        result = result * 32 + channels[i] / 3;
+    return result;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 992) + (c1 & 992)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = (blue - blue % 3) / 3;
+    green = (green - green % 3) / 3;
+    red = (red - red % 3) / 3;
+    return red * 1024 + green * 32 + blue;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int blue = ((c0 & 31) << 1) + (c1 & 31);
+    int green = (((c0 & 992) << 1) + (c1 & 992)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int lower = ((green / 3) << 5) | (blue / 3);
+    return (red / 3) * 1024 + lower;
+}
+
+
+
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 992) + (c1 & 992)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int result = (red / 3) * 1024;
+    while (green >= 3) {
+        result += 32;
+        green -= 3;
+    }
+    while (blue >= 3) {
+        ++result;
+        blue -= 3;
+    }
+    return result;
+}

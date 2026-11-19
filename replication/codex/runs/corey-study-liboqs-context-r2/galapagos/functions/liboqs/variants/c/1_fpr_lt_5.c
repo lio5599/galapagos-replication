@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t kx = x ^ ((x >> 63) ? 0 : mask);
+    uint64_t ky = y ^ ((y >> 63) ? 0 : mask);
+
+    return kx > ky;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

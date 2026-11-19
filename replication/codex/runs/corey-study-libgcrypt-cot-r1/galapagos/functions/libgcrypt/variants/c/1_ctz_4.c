@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Subtracting one from the isolated lowest bit makes the lower bits ones.
+ // Their population count equals the number of trailing zeros.
+ // For zero, unsigned wraparound produces 64 ones, hence a result of 64.
+ uint64_t bits = (in & (UINT64_C(0) - in)) - UINT64_C(1);
+ int r = 0;
+ while (bits != 0)
+ {
+  bits &= bits - UINT64_C(1);
+  ++r;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

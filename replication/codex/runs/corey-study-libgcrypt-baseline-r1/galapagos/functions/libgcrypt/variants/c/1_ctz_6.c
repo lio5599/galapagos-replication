@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+    uint64_t x = (in & ((uint64_t)0 - in)) - (uint64_t)1;
+
+    x -= (x >> 1) & 0x5555555555555555ULL;
+    x = (x & 0x3333333333333333ULL)
+      + ((x >> 2) & 0x3333333333333333ULL);
+    x = (x + (x >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+    x += x >> 8;
+    x += x >> 16;
+    x += x >> 32;
+
+    return (int)(x & (uint64_t)0x7F);
+}
+
+
+int main(){
+    ctz(0);
+}

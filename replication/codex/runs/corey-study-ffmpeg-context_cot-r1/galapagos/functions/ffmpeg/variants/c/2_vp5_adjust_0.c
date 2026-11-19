@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Computes sign(v) times t minus the absolute distance from t of the gated magnitude.
+    // The magnitude is kept only when it is less than 2*t; otherwise it becomes zero.
+    // Negations are safe wherever the reference's corresponding absolute values are defined.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    a = a < 2 * t ? a : 0;
+    d = a - t;
+    d = d < 0 ? -d : d;
+    a = t - d;
+    return negative ? -a : a;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

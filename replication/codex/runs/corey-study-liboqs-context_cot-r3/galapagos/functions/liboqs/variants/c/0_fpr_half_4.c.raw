@@ -1,0 +1,7 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Adding the unsigned additive inverse of 2^52 equals subtracting 2^52.
+    // Original zero-exponent inputs are explicitly cleared, including signed ones.
+    uint64_t exponent = x & ((uint64_t)0x7FF << 52);
+    uint64_t decrement = ~((uint64_t)1 << 52) + (uint64_t)1;
+    return exponent != 0 ? x + decrement : 0;
+}

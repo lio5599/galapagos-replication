@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Complementing the input and masking with input minus one
+ // produces one set bit for each original trailing zero.
+ // For zero, unsigned subtraction produces 64 set bits.
+ // Clear one set bit per iteration to count them.
+ uint64_t bits = ~in & (in - (uint64_t)1);
+ int r = 0;
+ while (bits != 0)
+ {
+  bits &= bits - (uint64_t)1;
+  r++;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

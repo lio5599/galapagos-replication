@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Rebuild the encoding with its exponent reduced by one.
+    // A nonzero exponent prevents borrowing into the sign, leaving other bits intact.
+    // Explicitly return zero for all zero-exponent inputs, as the reference does.
+    uint64_t exponent = (x >> 52) & 0x7FF;
+    uint64_t exponent_mask = (uint64_t)0x7FF << 52;
+    if (exponent == 0)
+        return 0;
+    return (x & ~exponent_mask) | ((exponent - 1) << 52);
+}
+
+
+int main(){
+    fpr_half(0);
+}

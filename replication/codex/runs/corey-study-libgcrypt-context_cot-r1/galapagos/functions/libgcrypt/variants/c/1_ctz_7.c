@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Isolate the least significant set bit using unsigned negation.
+ // Each mask tests one binary digit of that bit's position.
+ // Their weighted sum is the trailing-zero count; zero returns 64.
+ uint64_t bit;
+ int r;
+ if (in == 0)
+  return 64;
+ bit = in & ((uint64_t)0 - in);
+ r = ((bit & 0xAAAAAAAAAAAAAAAAULL) != 0);
+ r += 2 * ((bit & 0xCCCCCCCCCCCCCCCCULL) != 0);
+ r += 4 * ((bit & 0xF0F0F0F0F0F0F0F0ULL) != 0);
+ r += 8 * ((bit & 0xFF00FF00FF00FF00ULL) != 0);
+ r += 16 * ((bit & 0xFFFF0000FFFF0000ULL) != 0);
+ r += 32 * ((bit & 0xFFFFFFFF00000000ULL) != 0);
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

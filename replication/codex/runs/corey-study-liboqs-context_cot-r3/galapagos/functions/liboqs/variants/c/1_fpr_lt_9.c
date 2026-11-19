@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Unsigned ascending order already handles two nonnegative encodings.
+    // For unequal encodings, invert it whenever either sign bit is set.
+    // This reverses negative order and fixes differing signs; guard equality explicitly.
+    int ascending = x < y;
+    int either_negative = (int)((x | y) >> 63);
+    return (int)(x != y) & (ascending ^ either_negative);
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

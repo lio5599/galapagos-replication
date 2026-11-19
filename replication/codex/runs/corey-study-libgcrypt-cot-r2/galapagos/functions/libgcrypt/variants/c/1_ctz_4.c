@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit using unsigned subtraction.
+ // Each mask identifies one binary digit of that bit's index.
+ // The index equals the trailing-zero count; zero returns 64.
+ uint64_t bit;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ bit = in & (uint64_t)(UINT64_C(0) - in);
+ if (bit & UINT64_C(0xaaaaaaaaaaaaaaaa))
+  r |= 1;
+ if (bit & UINT64_C(0xcccccccccccccccc))
+  r |= 2;
+ if (bit & UINT64_C(0xf0f0f0f0f0f0f0f0))
+  r |= 4;
+ if (bit & UINT64_C(0xff00ff00ff00ff00))
+  r |= 8;
+ if (bit & UINT64_C(0xffff0000ffff0000))
+  r |= 16;
+ if (bit & UINT64_C(0xffffffff00000000))
+  r |= 32;
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

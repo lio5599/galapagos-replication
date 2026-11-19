@@ -1,0 +1,13 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    return ((x ^ y) >> 63)
+        ? (int)(x >> 63)
+        : ((x >> 63) ? x > y : x < y);
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

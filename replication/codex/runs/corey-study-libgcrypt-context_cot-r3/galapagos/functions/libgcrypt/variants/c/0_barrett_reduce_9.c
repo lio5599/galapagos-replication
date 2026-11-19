@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Compute the quotient from the input magnitude using nonnegative shifts.
+  // For negative inputs, bias by 33554431 before negating the quotient.
+  // The one-unit bias adjustment exactly preserves the reference's rounding.
+  // Promotion before negation safely handles -32768; narrowing is unchanged.
+  int16_t t;
+  int32_t x = a;
+  if (x < 0)
+    t = -((20159 * (-x) + 33554431) >> 26);
+  else
+    t = (20159 * x + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

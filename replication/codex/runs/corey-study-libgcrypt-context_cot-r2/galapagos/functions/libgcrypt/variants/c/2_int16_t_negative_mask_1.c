@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Select the reference's two possible results directly.
+  // All negative inputs, including INT16_MIN, select -1.
+  // Zero and all positive inputs select 0.
+  return x < 0 ? -1 : 0;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

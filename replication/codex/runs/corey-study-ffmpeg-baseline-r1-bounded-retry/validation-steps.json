@@ -1,0 +1,43 @@
+[
+  {
+    "step": "ffmpeg-split_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "split_variants.py",
+      "c",
+      "ffmpeg"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "ffmpeg-template_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "template_variants.py",
+      "c",
+      "ffmpeg"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "ffmpeg-compile_variants",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "compile_variants.py",
+      "c",
+      "ffmpeg"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "ffmpeg-usecase",
+    "command": [
+      "/home/cbh/galapagos-venv/bin/python3",
+      "-m",
+      "tests.usecase",
+      "ffmpeg",
+      "c"
+    ],
+    "exit_code": 0
+  }
+]

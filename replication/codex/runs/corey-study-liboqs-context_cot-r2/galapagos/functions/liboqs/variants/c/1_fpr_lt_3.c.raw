@@ -1,0 +1,12 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Begin with unsigned order and reverse its direction for two negatives.
+    // For different signs, replace that result with the sign of x.
+    // Using a separate greater-than comparison preserves equality.
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    int lt = (int)(x < y);
+    int gt = (int)(x > y);
+    int same_result = lt ^ ((lt ^ gt) & sx);
+
+    return same_result ^ ((same_result ^ sx) & (sx ^ sy));
+}

@@ -1,0 +1,13 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Subtract p by adding its 32-bit complement and one, modulo 2^32.
+    // Select the original or corrected difference with complementary masks.
+    // Explicit casts preserve subtraction underflow and correction overflow.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t t = (uint32_t)((z + w) >> 31);
+    uint32_t d = (uint32_t)((uint64_t)t + (uint32_t)~p + 1);
+    uint32_t mask = (uint32_t)(0 - (d >> 31));
+    uint32_t corrected = (uint32_t)((uint64_t)d + p);
+
+    return (d & (uint32_t)~mask) | (corrected & mask);
+}

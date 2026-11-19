@@ -1,0 +1,119 @@
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    if ((x ^ y) >> 63) {
+        return (int)(x >> 63);
+    }
+    return (x >> 63) ? (x > y) : (x < y);
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+
+    return (sx != sy) ? (int)sx : (sx ? (y < x) : (x < y));
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t sign = (uint64_t)1 << 63;
+    uint64_t kx = x ^ ((0 - (x >> 63)) | sign);
+    uint64_t ky = y ^ ((0 - (y >> 63)) | sign);
+
+    return kx < ky;
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t sign = (uint64_t)1 << 63;
+
+    x = (x & sign) ? ~x : (x | sign);
+    y = (y & sign) ? ~y : (y | sign);
+    return x < y;
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    int different = sx ^ sy;
+
+    return (different & sx)
+         | ((different ^ 1) & (sx ^ 1) & (x < y))
+         | ((different ^ 1) & sx & (x > y));
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+    int same_sign_lt = (x < y) ^ (sx & (x != y));
+
+    return same_sign_lt ^ ((same_sign_lt ^ sx) & different);
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    switch ((unsigned)((x >> 63) * 2 + (y >> 63))) {
+    case 0:
+        return x < y;
+    case 1:
+        return 0;
+    case 2:
+        return 1;
+    default:
+        return x > y;
+    }
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t sx = x >> 63;
+    uint64_t different = (x ^ y) >> 63;
+    uint64_t forward = (x - y) >> 63;
+    uint64_t reverse = (y - x) >> 63;
+
+    return (int)((different & sx)
+               | ((different ^ 1)
+                  & ((forward & (sx ^ 1)) | (reverse & sx))));
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t magnitude = ((uint64_t)1 << 63) - 1;
+    uint64_t mx = x & magnitude;
+    uint64_t my = y & magnitude;
+
+    if (x >> 63) {
+        return !(y >> 63) || mx > my;
+    }
+    return !(y >> 63) && mx < my;
+}
+
+
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t difference = x ^ y;
+    uint64_t bit = (uint64_t)1 << 63;
+
+    if (difference == 0) {
+        return 0;
+    }
+    if (difference & bit) {
+        return (int)(x >> 63);
+    }
+
+    do {
+        bit >>= 1;
+    } while (!(difference & bit));
+
+    return (x >> 63) ? ((x & bit) != 0) : ((y & bit) != 0);
+}

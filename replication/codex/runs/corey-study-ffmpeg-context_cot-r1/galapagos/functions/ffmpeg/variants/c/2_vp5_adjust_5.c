@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Keeps the magnitude calculation and restores the sign with complement then subtract.
+    // For a negative original input this computes negation; otherwise it is unchanged.
+    // Negating minimum int is already excluded by the reference's final addition.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2 * t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    return (v ^ s1) - s1;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

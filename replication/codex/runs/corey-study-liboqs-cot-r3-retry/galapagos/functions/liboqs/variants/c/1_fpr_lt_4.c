@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // For matching signs, unsigned differences have their top bit set exactly when less.
+    // Matching-sign encodings differ by less than 2 to the power 63.
+    // Compute both directions to handle equality; mixed signs use x's sign directly.
+    // All subtraction is unsigned, including extreme encodings.
+    uint64_t sx = x >> 63;
+    uint64_t different = (x ^ y) >> 63;
+    uint64_t forward = (x - y) >> 63;
+    uint64_t reverse = (y - x) >> 63;
+    uint64_t same_result = forward ^ ((forward ^ reverse) & sx);
+
+    return (int)((different & sx) | ((different ^ 1) & same_result));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Mark the bits below the lowest set bit, then count them in parallel.
+ // Successive sums combine counts in pairs, nibbles, bytes, and words.
+ // Zero produces an all-ones mask whose population count is 64.
+ uint64_t x = (in & ((uint64_t)0 - in)) - (uint64_t)1;
+ x -= (x >> 1) & 0x5555555555555555ULL;
+ x = (x & 0x3333333333333333ULL)
+   + ((x >> 2) & 0x3333333333333333ULL);
+ x = (x + (x >> 4)) & 0x0f0f0f0f0f0f0f0fULL;
+ x += x >> 8;
+ x += x >> 16;
+ x += x >> 32;
+ return (int)(x & 0x7f);
+}
+
+
+int main(){
+    ctz(0);
+}

@@ -1,0 +1,9 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion sets bit 15 exactly for negative inputs.
+  // Toggling it places exactly those inputs below 32768.
+  // Negating the comparison gives -1 for negatives and 0 otherwise.
+  // The same test covers zero and both endpoints without overflow.
+  uint16_t u = x;
+  return -((u ^ 0x8000u) < 0x8000u);
+}

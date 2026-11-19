@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // The reference computes a modulo 3329, centered in [-1664, 1664].
+  // Its reciprocal approximation selects the nearest multiple for every int16_t.
+  // Correct the signed remainder into that interval, including at both endpoints.
+  int32_t r = (int32_t)a % 3329;
+  if (r > 1664)
+    r -= 3329;
+  if (r < -1664)
+    r += 3329;
+  return (int16_t)r;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

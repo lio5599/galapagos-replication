@@ -1,0 +1,19 @@
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int delta;
+    int mask;
+    int result;
+
+    if (magnitude >= 2 * t)
+        magnitude = 0;
+
+    delta = magnitude - t;
+    mask = -(delta < 0);
+    delta = (delta ^ mask) - mask;
+    result = t - delta;
+
+    mask = -negative;
+    return (result + mask) ^ mask;
+}

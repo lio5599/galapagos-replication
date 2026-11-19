@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // The lowest set bit minus one has one bit for each trailing zero.
+ // For zero, unsigned wraparound instead produces 64 one bits.
+ // Parallel population counting sums those bits without external calls.
+ uint64_t bits = (uint64_t)((in & (uint64_t)(0ULL - in)) - 1ULL);
+ bits = bits - ((bits >> 1) & 0x5555555555555555ULL);
+ bits = (bits & 0x3333333333333333ULL)
+      + ((bits >> 2) & 0x3333333333333333ULL);
+ bits = (bits + (bits >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+ bits = bits + (bits >> 8);
+ bits = bits + (bits >> 16);
+ bits = bits + (bits >> 32);
+ return (int)(bits & 0x7FULL);
+}
+
+
+int main(){
+    ctz(0);
+}

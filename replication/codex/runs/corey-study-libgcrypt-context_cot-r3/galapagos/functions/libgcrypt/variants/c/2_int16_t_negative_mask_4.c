@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion maps negative inputs into 32768 through 65535.
+  // Division yields 1 precisely for those inputs, including the minimum.
+  // Negation gives -1 for negative inputs and 0 otherwise.
+  uint16_t u = x;
+  return -(int)(u / 32768u);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

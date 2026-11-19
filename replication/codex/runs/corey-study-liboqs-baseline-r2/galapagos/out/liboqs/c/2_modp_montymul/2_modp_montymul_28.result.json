@@ -1,0 +1,8 @@
+{
+    "compiled": false,
+    "function_name": "2_modp_montymul",
+    "variant_name": "liboqs",
+    "project": "liboqs",
+    "python_error_trace": "Traceback (most recent call last):\n  File \"/home/cbh/galapagos-corey-runs/corey-study-liboqs-baseline-r2/scripts/tests/usecase.py\", line 58, in original_compare\n    await variant.compile(variant_shadow) # raises exception on fail\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cbh/galapagos-corey-runs/corey-study-liboqs-baseline-r2/scripts/usecases/case.py\", line 619, in compile\n    raise e\n  File \"/home/cbh/galapagos-corey-runs/corey-study-liboqs-baseline-r2/scripts/usecases/case.py\", line 606, in compile\n    ch = subprocess.check_output(LIBRARY_INFO[self.name][\"make\"], cwd=cwd, env={**os.environ}, stderr=subprocess.STDOUT)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 466, in check_output\n    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['make', '-j4']' returned non-zero exit status 2.\n",
+    "python_error_msg": "Command '['make', '-j4']' returned non-zero exit status 2."
+}

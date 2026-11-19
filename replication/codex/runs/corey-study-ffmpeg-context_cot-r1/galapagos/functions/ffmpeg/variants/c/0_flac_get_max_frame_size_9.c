@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes the selected payload before accumulating the independent overhead.
+    // Reordering these side-effect-free terms is safe whenever the reference is defined.
+    // The final expression explicitly preserves the original addition grouping.
+    int payload;
+    int overhead;
+
+    if (ch == 2) {
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        payload = (ch * bps * blocksize + 7) / 8;
+    }
+    overhead = ch * ((7 + bps + 7) / 8);
+    return ((16 + overhead) + payload) + 2;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

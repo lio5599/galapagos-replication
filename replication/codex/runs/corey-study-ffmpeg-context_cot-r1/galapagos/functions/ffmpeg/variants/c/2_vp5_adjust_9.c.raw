@@ -1,0 +1,18 @@
+static int vp5_adjust(int v, int t)
+{
+    // Nonpositive thresholds always reject the magnitude and produce signed 2*t.
+    // Positive thresholds give the original value up to t, then a reflected magnitude.
+    // Magnitudes at or above 2*t give zero; excluded overflow inputs impose no requirement.
+    int twice = 2 * t;
+    int a;
+    int result;
+    if (t <= 0)
+        return v < 0 ? -twice : twice;
+    a = v < 0 ? -v : v;
+    if (a >= twice)
+        return 0;
+    if (a <= t)
+        return v;
+    result = twice - a;
+    return v < 0 ? -result : result;
+}

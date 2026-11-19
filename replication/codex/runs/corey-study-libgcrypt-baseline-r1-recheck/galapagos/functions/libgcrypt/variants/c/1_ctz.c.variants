@@ -1,0 +1,178 @@
+
+static int ctz(uint64_t in)
+{
+    int i;
+
+    for (i = 0; i < 64; ++i)
+        if ((in >> i) & (uint64_t)1)
+            return i;
+
+    return 64;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    while ((in & (uint64_t)1) == 0) {
+        in >>= 1;
+        ++r;
+    }
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t mask = 1;
+    int r = 0;
+
+    while (mask != 0 && (in & mask) == 0) {
+        mask <<= 1;
+        ++r;
+    }
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    if ((in & (uint64_t)0xFFFFFFFF) == 0) {
+        r += 32;
+        in >>= 32;
+    }
+    if ((in & (uint64_t)0xFFFF) == 0) {
+        r += 16;
+        in >>= 16;
+    }
+    if ((in & (uint64_t)0xFF) == 0) {
+        r += 8;
+        in >>= 8;
+    }
+    if ((in & (uint64_t)0xF) == 0) {
+        r += 4;
+        in >>= 4;
+    }
+    if ((in & (uint64_t)3) == 0) {
+        r += 2;
+        in >>= 2;
+    }
+
+    return r + ((in & (uint64_t)1) == 0);
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t bit;
+
+    if (in == 0)
+        return 64;
+
+    bit = in & ((uint64_t)0 - in);
+
+    return ((bit & 0xAAAAAAAAAAAAAAAAULL) != 0)
+         + 2 * ((bit & 0xCCCCCCCCCCCCCCCCULL) != 0)
+         + 4 * ((bit & 0xF0F0F0F0F0F0F0F0ULL) != 0)
+         + 8 * ((bit & 0xFF00FF00FF00FF00ULL) != 0)
+         + 16 * ((bit & 0xFFFF0000FFFF0000ULL) != 0)
+         + 32 * ((bit & 0xFFFFFFFF00000000ULL) != 0);
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t below = (in & ((uint64_t)0 - in)) - (uint64_t)1;
+    int r = 0;
+
+    while (below != 0) {
+        below &= below - (uint64_t)1;
+        ++r;
+    }
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t x = (in & ((uint64_t)0 - in)) - (uint64_t)1;
+
+    x -= (x >> 1) & 0x5555555555555555ULL;
+    x = (x & 0x3333333333333333ULL)
+      + ((x >> 2) & 0x3333333333333333ULL);
+    x = (x + (x >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+    x += x >> 8;
+    x += x >> 16;
+    x += x >> 32;
+
+    return (int)(x & (uint64_t)0x7F);
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    static const unsigned char table[16] = {
+        4, 0, 1, 0, 2, 0, 1, 0,
+        3, 0, 1, 0, 2, 0, 1, 0
+    };
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    while ((in & (uint64_t)15) == 0) {
+        r += 4;
+        in >>= 4;
+    }
+
+    return r + table[in & (uint64_t)15];
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int r = 64;
+
+    if (in != 0) {
+        r = 0;
+        while (in % (uint64_t)2 == 0) {
+            in /= (uint64_t)2;
+            ++r;
+        }
+    }
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int i;
+    int r = 0;
+
+    for (i = 63; i >= 0; --i)
+        r = (r + 1) * (1 - (int)((in >> i) & (uint64_t)1));
+
+    return r;
+}

@@ -1,0 +1,174 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes sign(v) times t minus the absolute distance from t of the gated magnitude.
+    // The magnitude is kept only when it is less than 2*t; otherwise it becomes zero.
+    // Negations are safe wherever the reference's corresponding absolute values are defined.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    a = a < 2 * t ? a : 0;
+    d = a - t;
+    d = d < 0 ? -d : d;
+    a = t - d;
+    return negative ? -a : a;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Uses explicit branches for both absolute values and the magnitude gate.
+    // Negative thresholds retain the same arithmetic rather than being clamped.
+    // Every negation is valid on the reference's defined input domain.
+    int negative = v < 0;
+    if (negative)
+        v = -v;
+    if (!(v < 2 * t))
+        v = 0;
+    v -= t;
+    if (v < 0)
+        v = -v;
+    v = t - v;
+    if (negative)
+        v = -v;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Retains the reference's sign masks and absolute-value operations.
+    // A conditional selection replaces multiplication by the zero-or-one gate.
+    // All signed arithmetic and its edge cases otherwise remain unchanged.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v = v < 2 * t ? v : 0;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // For sign masks zero and minus one, subtracting the mask adds its low bit.
+    // The final addition of the mask likewise subtracts its low bit.
+    // These substitutions preserve each intermediate value and overflow boundary.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v += s1 & 1;
+    v *= v < 2 * t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v += s2 & 1;
+    v = t - v;
+    v -= s1 & 1;
+    v ^= s1;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Computes each absolute value by adding its sign mask before complementing.
+    // The reference excludes minimum-int absolute values, so these additions are safe.
+    // The gate, distance subtraction, and final sign restoration are unchanged.
+    int s2, s1 = v >> 31;
+    v = (v + s1) ^ s1;
+    v *= v < 2 * t;
+    v -= t;
+    s2 = v >> 31;
+    v = (v + s2) ^ s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Keeps the magnitude calculation and restores the sign with complement then subtract.
+    // For a negative original input this computes negation; otherwise it is unchanged.
+    // Negating minimum int is already excluded by the reference's final addition.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v *= v < 2 * t;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    return (v ^ s1) - s1;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Forms the absolute distance by selecting the subtraction's operand order.
+    // The selected distance equals the reference's second absolute value.
+    // Both thresholds of either sign and equality at the gate are preserved.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    a *= a < 2 * t;
+    if (a < t)
+        d = t - a;
+    else
+        d = a - t;
+    a = t - d;
+    return negative ? -a : a;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Expands t minus absolute value of a-t into its two linear branches.
+    // After gating, a is nonnegative; the selected branch has no additional overflow.
+    // For negative t the gate yields zero and the result before sign restoration is 2*t.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int result;
+    if (a >= twice)
+        a = 0;
+    result = a <= t ? a : twice - a;
+    return negative ? -result : result;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Handles a rejected magnitude directly as t minus absolute value of t.
+    // That value is zero for nonnegative t and 2*t for negative t.
+    // Accepted magnitudes use the original distance formula, including equality at t.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int result;
+    if (a >= twice) {
+        result = t < 0 ? twice : 0;
+    } else {
+        int d = a - t;
+        result = t - (d < 0 ? -d : d);
+    }
+    return negative ? -result : result;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Nonpositive thresholds always reject the magnitude and produce signed 2*t.
+    // Positive thresholds give the original value up to t, then a reflected magnitude.
+    // Magnitudes at or above 2*t give zero; excluded overflow inputs impose no requirement.
+    int twice = 2 * t;
+    int a;
+    int result;
+    if (t <= 0)
+        return v < 0 ? -twice : twice;
+    a = v < 0 ? -v : v;
+    if (a >= twice)
+        return 0;
+    if (a <= t)
+        return v;
+    result = twice - a;
+    return v < 0 ? -result : result;
+}

@@ -1,0 +1,140 @@
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes the reference's radix-2^31 reduction and bit-31-controlled correction.
+    // A branch replaces the correction mask, testing the same wrapped difference.
+    // Unsigned wraparound is preserved, including for unrestricted input values.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    if (d >> 31) {
+        d = (uint32_t)((uint64_t)d + p);
+    }
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Multiplication by the top bit replaces the conditional correction mask.
+    // That bit is exactly zero or one; the final cast preserves 32-bit wraparound.
+    // The product, wrapped sum, and subtraction otherwise match the reference.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    return (uint32_t)((uint64_t)d + (uint64_t)p * (d >> 31));
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Reduce both factors modulo 2^31 before computing the correction factor.
+    // Discarded bits cannot affect the low 31 product bits, even on overflow.
+    // The remaining operations retain the reference's exact wraparound behavior.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t q = ((z & (uint64_t)0x7FFFFFFF)
+        * (p0i & (uint32_t)0x7FFFFFFF)) & (uint64_t)0x7FFFFFFF;
+    uint64_t w = q * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Split a into 16-bit limbs to form the same exact 64-bit product.
+    // Both partial products and their sum fit, including at maximum inputs.
+    // Reduction and correction are unchanged, preserving every edge case.
+    uint64_t z = (uint64_t)(a & (uint32_t)0xFFFF) * b
+        + (((uint64_t)(a >> 16) * b) << 16);
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Split p into 16-bit limbs when forming the correction product.
+    // The partial products sum exactly to q times p and fit in 64 bits.
+    // Subsequent wrapping and the bit-31 test match the reference for all inputs.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t q = (z * p0i) & (uint64_t)0x7FFFFFFF;
+    uint64_t w = q * (p & (uint32_t)0xFFFF)
+        + ((q * (p >> 16)) << 16);
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Add z and w in 32-bit limbs, explicitly propagating the low-limb carry.
+    // Truncating the high limb reproduces 64-bit overflow exactly.
+    // Combining bits 31 through 62 gives the reference's truncated quotient.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t low_sum = (uint64_t)(uint32_t)z + (uint32_t)w;
+    uint32_t low = (uint32_t)low_sum;
+    uint32_t high = (uint32_t)((z >> 32) + (w >> 32)
+        + (low_sum >> 32));
+    uint32_t t = (low >> 31) | (uint32_t)((uint64_t)high << 1);
+    uint32_t d = t - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Add radix-2^31 quotients and the carry from the low 31-bit remainders.
+    // A 64-bit sum overflow would change this quotient by 2^33 only.
+    // The uint32_t cast discards that difference, so even overflow cases agree.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t carry = ((z & (uint64_t)0x7FFFFFFF)
+        + (w & (uint64_t)0x7FFFFFFF)) >> 31;
+    uint32_t t = (uint32_t)((z >> 31) + (w >> 31) + carry);
+    uint32_t d = t - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Use XOR for carry-free addition and twice AND for the carry contribution.
+    // This identity holds modulo 2^64, including a carry beyond the top bit.
+    // The shift, truncation, and final correction therefore remain identical.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t sum = (z ^ w) + ((z & w) << 1);
+    uint32_t d = (uint32_t)(sum >> 31) - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Split p0i into 16-bit limbs to compute only the low 31 product bits.
+    // The shifted upper-limb term needs only the low 15 bits of z.
+    // All intermediate terms fit; masking yields the same factor for all inputs.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t q = ((z & (uint64_t)0x7FFFFFFF)
+        * (p0i & (uint32_t)0xFFFF)
+        + (((z & (uint64_t)0x7FFF) * (p0i >> 16)) << 16))
+        & (uint64_t)0x7FFFFFFF;
+    uint64_t w = q * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Subtract p by adding its 32-bit complement and one, modulo 2^32.
+    // Select the original or corrected difference with complementary masks.
+    // Explicit casts preserve subtraction underflow and correction overflow.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t t = (uint32_t)((z + w) >> 31);
+    uint32_t d = (uint32_t)((uint64_t)t + (uint32_t)~p + 1);
+    uint32_t mask = (uint32_t)(0 - (d >> 31));
+    uint32_t corrected = (uint32_t)((uint64_t)d + p);
+
+    return (d & (uint32_t)~mask) | (corrected & mask);
+}

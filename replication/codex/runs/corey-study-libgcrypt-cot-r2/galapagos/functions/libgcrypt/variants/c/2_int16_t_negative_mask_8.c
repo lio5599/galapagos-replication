@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Widening before adding maps the input range into 0 through 65535.
+  // Division gives 0 for negatives and 1 for nonnegatives.
+  // Subtracting 1 gives the mask; long safely holds all intermediates.
+  return (int)(((long)x + 32768L) / 32768L) - 1;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

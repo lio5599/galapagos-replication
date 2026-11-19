@@ -1,0 +1,36 @@
+{
+  "path": "/home/cbh/galapagos-corey-runs/corey-study-ffmpeg-context-r1",
+  "selection": {
+    "ffmpeg": [
+      "flac_get_max_frame_size",
+      "mix",
+      "vp5_adjust"
+    ]
+  },
+  "original_indices": {
+    "ffmpeg": [
+      0,
+      1,
+      2
+    ]
+  },
+  "patches": [
+    "split_variants.py: skip unselected reference indices; preserve original indices",
+    "template_variants.py: skip unselected reference indices; preserve original indices",
+    "compile_variants.py: skip unselected reference indices; preserve original indices",
+    "case.py: disable FFmpeg documentation generation for Texinfo compatibility",
+    "case.py: use the variant source directory when relocating CMake paths",
+    "case.py: per-run build-copy directory; prevents stale builds across conditions",
+    "tests/usecase.py: remove each FFmpeg variant build after saving its result and draining checks",
+    "tests/usecase.py: flushed progress events before build/test/verification; same check calls",
+    "tests/usecase.py: bound existing variant concurrency to 2; checks unchanged"
+  ],
+  "base": "/home/cbh/galapagos-replication",
+  "source_run": "/mnt/c/COMS6650/FinalProject/replication/codex/runs/corey-study-ffmpeg-context-r1",
+  "concurrency": 2,
+  "source_revision": "1188d2708a3a1bf36e956bc4891372223bbe02f2",
+  "metadata_sha256": {
+    "ffmpeg": "9e0df1ebaffa428c507d5f7f81ebd15c0567ad89a8ca0899aaffce4fcfdffbb6"
+  },
+  "note": "No generated body edits; no automatic repair or regeneration"
+}

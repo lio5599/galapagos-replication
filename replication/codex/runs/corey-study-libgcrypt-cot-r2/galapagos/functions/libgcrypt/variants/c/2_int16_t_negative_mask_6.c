@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion preserves the reference's high-bit test.
+  // Masking isolates bit 15, which is set exactly for negative inputs.
+  // The comparison and negation yield -1 or 0 even at both limits.
+  uint16_t u = x;
+  return -((u & 0x8000u) != 0);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

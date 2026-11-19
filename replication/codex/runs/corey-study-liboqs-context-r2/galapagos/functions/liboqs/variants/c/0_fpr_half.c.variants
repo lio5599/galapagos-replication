@@ -1,0 +1,107 @@
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    if ((x & UINT64_C(0x7FF0000000000000)) == 0)
+        return 0;
+    return x - (UINT64_C(1) << 52);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    return e ? x - UINT64_C(0x0010000000000000) : UINT64_C(0);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t keep = (uint64_t)((x >> 52 & UINT64_C(0x7FF)) != 0);
+    return (x - (UINT64_C(1) << 52)) & (UINT64_C(0) - keep);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t keep = (uint64_t)((x & UINT64_C(0x7FF0000000000000)) != 0);
+    return (x + UINT64_C(0xFFF0000000000000)) * keep;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x - (UINT64_C(1) << 52);
+    if (((y >> 52) & UINT64_C(0x7FF)) == UINT64_C(0x7FF))
+        y = 0;
+    return y;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x + UINT64_C(0xFFF0000000000000);
+    uint64_t zero = (uint64_t)(
+        (y & UINT64_C(0x7FF0000000000000)) ==
+        UINT64_C(0x7FF0000000000000));
+    return y & (zero - UINT64_C(1));
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    uint64_t keep = (e + UINT64_C(0x7FF)) >> 11;
+    return (x - UINT64_C(0x0010000000000000)) &
+           (UINT64_C(0) - keep);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x - UINT64_C(0x0010000000000000);
+    uint64_t clear = UINT64_C(0) - (uint64_t)(
+        (x & UINT64_C(0x7FF0000000000000)) == 0);
+    return y ^ (y & clear);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    if (e == 0)
+        return 0;
+    return (x & UINT64_C(0x800FFFFFFFFFFFFF)) |
+           ((e - UINT64_C(1)) << 52);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t hi = (uint32_t)(x >> 32);
+    uint32_t lo = (uint32_t)x;
+
+    if ((hi & UINT32_C(0x7FF00000)) == 0)
+        return 0;
+
+    hi = (uint32_t)(hi - UINT32_C(0x00100000));
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}

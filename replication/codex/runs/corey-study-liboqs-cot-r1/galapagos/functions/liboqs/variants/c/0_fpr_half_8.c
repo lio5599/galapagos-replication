@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Dispatch on the original exponent instead of constructing a bit mask.
+    // Exponent zero includes both zeros and all subnormals, which become zero.
+    // All other encodings receive the reference's unsigned subtraction.
+    switch ((x >> 52) & 0x7FF) {
+        case 0:
+            return 0;
+        default:
+            return x - ((uint64_t)1 << 52);
+    }
+}
+
+
+int main(){
+    fpr_half(0);
+}

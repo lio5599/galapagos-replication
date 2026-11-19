@@ -1,0 +1,8 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion sets bit 15 exactly for negative inputs.
+  // XOR flips that bit, and shifting extracts its opposite value.
+  // Subtracting 1 yields -1 for negatives and 0 otherwise, at all limits.
+  uint16_t u = x;
+  return (int)((u ^ 0x8000u) >> 15) - 1;
+}

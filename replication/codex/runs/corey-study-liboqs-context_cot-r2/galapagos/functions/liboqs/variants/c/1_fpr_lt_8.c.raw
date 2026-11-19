@@ -1,0 +1,14 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // With equal signs, unsigned differences have their top bit set exactly
+    // when the corresponding strict comparison holds: magnitudes differ
+    // by less than 2 to the power 63. Negatives use the reverse difference.
+    // Different signs use the sign of x; equality makes both differences zero.
+    uint64_t sx = x >> 63;
+    uint64_t sy = y >> 63;
+    uint64_t different = sx ^ sy;
+    uint64_t forward = (x - y) >> 63;
+    uint64_t reverse = (y - x) >> 63;
+    uint64_t same_result = (forward & (sx ^ 1)) | (reverse & sx);
+
+    return (int)((different & sx) | ((different ^ 1) & same_result));
+}

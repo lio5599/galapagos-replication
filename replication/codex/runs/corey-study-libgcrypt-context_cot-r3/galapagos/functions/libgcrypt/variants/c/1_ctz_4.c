@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit using unsigned modular subtraction.
+ // Subtracting one gives exactly as many ones as trailing zeros.
+ // For zero, the mask becomes all ones, giving a count of 64.
+ uint64_t bit = in & ((uint64_t)0 - in);
+ uint64_t mask = bit - (uint64_t)1;
+ int i, r = 0;
+ for (i = 0; i < 64; ++i)
+ {
+  r += (int)(mask & 1);
+  mask >>= 1;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

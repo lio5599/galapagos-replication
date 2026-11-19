@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Scan downward, replacing the result whenever a set bit is found.
+ // The final replacement is the lowest set bit's index.
+ // With no set bits, the initial result of 64 is preserved.
+ int i, r = 64;
+ for (i = 63; i >= 0; --i)
+ {
+  if (((in >> i) & 1) != 0)
+   r = i;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

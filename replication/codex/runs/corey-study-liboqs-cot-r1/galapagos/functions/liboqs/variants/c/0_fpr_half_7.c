@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Split the input into two words; subtracting 2^52 changes only the high word.
+    // A nonzero exponent allows subtracting 2^20 there without borrowing.
+    // Clear zero-exponent inputs completely, and otherwise retain the low word.
+    uint32_t hi = (uint32_t)(x >> 32);
+    uint32_t lo = (uint32_t)x;
+    if (((hi >> 20) & 0x7FF) == 0) {
+        return 0;
+    }
+    hi -= (uint32_t)1 << 20;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+
+int main(){
+    fpr_half(0);
+}

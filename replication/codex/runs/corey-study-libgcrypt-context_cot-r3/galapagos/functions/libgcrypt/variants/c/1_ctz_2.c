@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Keep a flag that remains one only before the first set bit.
+ // Each zero in that initial run contributes one to the result.
+ // For zero, the flag remains one for all 64 iterations.
+ int i, r = 0, pending = 1;
+ for (i = 0; i < 64; ++i)
+ {
+  pending &= (int)(((in >> i) & 1) ^ 1);
+  r += pending;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

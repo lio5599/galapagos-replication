@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Truncating division gives a remainder with magnitude below 3329.
+  // Comparison flags correct either noncentered tail by one modulus.
+  // The centered representative matches the reference for every input.
+  // All intermediates fit int32_t, including at both int16_t endpoints.
+  int32_t x = a;
+  int32_t q = x / 3329;
+  int32_t r = x - q * 3329;
+  r += 3329 * ((r < -1664) - (r > 1664));
+  return (int16_t)r;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

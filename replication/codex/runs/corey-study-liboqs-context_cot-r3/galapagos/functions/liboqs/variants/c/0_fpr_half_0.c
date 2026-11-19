@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Subtract 2^52 modulo 2^64, returning zero if the original exponent is zero.
+    // Subtraction makes the exponent 2047 exactly when it was originally zero.
+    // Testing the original exponent therefore matches every reference input.
+    if (((x >> 52) & 0x7FF) == 0)
+        return 0;
+    return x - ((uint64_t)1 << 52);
+}
+
+
+int main(){
+    fpr_half(0);
+}

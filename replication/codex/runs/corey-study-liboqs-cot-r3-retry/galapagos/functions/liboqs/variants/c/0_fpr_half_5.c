@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // XOR the old and decremented exponent fields to identify bits to toggle.
+    // A nonzero exponent decrements without affecting the sign or fraction.
+    // Return zero for the entire zero-exponent class, including subnormals.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    if (e == 0) {
+        return 0;
+    }
+    return x ^ ((e ^ (e - 1)) << 52);
+}
+
+
+int main(){
+    fpr_half(0);
+}

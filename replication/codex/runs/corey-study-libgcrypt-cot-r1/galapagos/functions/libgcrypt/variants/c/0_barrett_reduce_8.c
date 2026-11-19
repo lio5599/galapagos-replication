@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Use the reference reciprocal, replacing arithmetic shift with floor division.
+  // Correct truncating division only when a negative numerator has a remainder.
+  // Widening the modulus product avoids intermediate int16_t narrowing.
+  // Since 20159*3329 equals 2^26+447, rounding is exact over all int16_t inputs.
+  int32_t x = (int32_t)a;
+  int32_t n = 20159 * x + 33554432;
+  int32_t q = n / 67108864;
+  if (n < 0 && n % 67108864 != 0)
+    --q;
+  return (int16_t)(x - q * 3329);
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

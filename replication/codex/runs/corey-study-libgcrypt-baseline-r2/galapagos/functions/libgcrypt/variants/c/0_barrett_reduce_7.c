@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  int32_t r = (int32_t)a + 1664;
+  if (r < 0)
+    r += 33290;
+  if (r >= 26632)
+    r -= 26632;
+  if (r >= 13316)
+    r -= 13316;
+  if (r >= 6658)
+    r -= 6658;
+  if (r >= 3329)
+    r -= 3329;
+  return (int16_t)(r - 1664);
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

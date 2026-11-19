@@ -1,0 +1,192 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes the frame-size bound from overhead, channels, depth, and block size.
+    // Names the overhead and payload terms while preserving arithmetic order.
+    // Signed division and the stereo special case are unchanged for all defined inputs.
+    int count;
+    int overhead;
+    int payload;
+
+    overhead = ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        payload = (ch * bps * blocksize + 7) / 8;
+    }
+
+    count = 16;
+    count += overhead;
+    count += payload;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses a conditional expression to select the original payload calculation.
+    // Only the selected operand is evaluated, preserving branch-specific behavior.
+    // Arithmetic grouping and signed division remain unchanged, including negatives.
+    int count = 16;
+
+    count += ch * ((7 + bps + 7) / 8);
+    count += (ch == 2)
+        ? ((2 * bps + 1) * blocksize + 7) / 8
+        : (ch * bps * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Tests the non-stereo case first without changing either calculation.
+    // The final addition is performed directly in the return expression.
+    // All intermediate arithmetic and truncation match the reference.
+    int count = 16;
+
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch != 2) {
+        count += (ch * bps * blocksize + 7) / 8;
+    } else {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    }
+    return count + 2;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses a switch to select precisely the same stereo and default branches.
+    // Each calculation retains the original grouping and signed division.
+    // The accumulated additions occur in the same order for all defined inputs.
+    int count = 16;
+
+    count += ch * ((7 + bps + 7) / 8);
+    switch (ch) {
+    case 2:
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        break;
+    default:
+        count += (ch * bps * blocksize + 7) / 8;
+        break;
+    }
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Returns early for stereo after performing the original additions.
+    // Other channels follow the original default calculation.
+    // No arithmetic is reassociated, so negative and boundary inputs are preserved.
+    int count = 16;
+
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        count += 2;
+        return count;
+    }
+
+    count += (ch * bps * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Separates the branch-dependent bit rate from the common payload calculation.
+    // The rate is exactly the left operand of the original blocksize multiplication.
+    // Multiplication, rounding adjustment, and signed division keep their original order.
+    int count = 16;
+    int rate;
+
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        rate = 2 * bps + 1;
+    } else {
+        rate = ch * bps;
+    }
+    count += (rate * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Expands the overhead calculation into its original individual operations.
+    // The two additions of seven remain separate to preserve intermediate semantics.
+    // Payload arithmetic and signed division are unchanged for every defined input.
+    int count = 16;
+    int overhead = 7 + bps;
+
+    overhead = overhead + 7;
+    overhead = overhead / 8;
+    overhead = ch * overhead;
+    count += overhead;
+
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Expands each payload numerator into the same sequence of signed operations.
+    // The shared division still truncates toward zero, including for negative values.
+    // Overhead and final additions retain the reference order and defined behavior.
+    int count = 16;
+    int payload;
+
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        payload = 2 * bps;
+        payload += 1;
+        payload *= blocksize;
+        payload += 7;
+    } else {
+        payload = ch * bps;
+        payload *= blocksize;
+        payload += 7;
+    }
+    payload /= 8;
+    count += payload;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses successive local values instead of mutating a single accumulator.
+    // Each value corresponds to one original accumulation step.
+    // Exact grouping and signed division preserve all reference-defined edge cases.
+    int base = 16;
+    int with_overhead = base + ch * ((7 + bps + 7) / 8);
+    int with_payload;
+
+    if (ch == 2) {
+        with_payload = with_overhead + ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        with_payload = with_overhead + (ch * bps * blocksize + 7) / 8;
+    }
+    return with_payload + 2;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes the selected payload before accumulating the independent overhead.
+    // Reordering these side-effect-free terms is safe whenever the reference is defined.
+    // The final expression explicitly preserves the original addition grouping.
+    int payload;
+    int overhead;
+
+    if (ch == 2) {
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        payload = (ch * bps * blocksize + 7) / 8;
+    }
+    overhead = ch * ((7 + bps + 7) / 8);
+    return ((16 + overhead) + payload) + 2;
+}

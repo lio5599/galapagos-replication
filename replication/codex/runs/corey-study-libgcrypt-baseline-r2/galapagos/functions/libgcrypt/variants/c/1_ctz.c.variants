@@ -1,0 +1,203 @@
+
+static int ctz(uint64_t in)
+{
+    int r = 0;
+
+    while (r < 64 && ((in >> r) & 1) == 0)
+        ++r;
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    while ((in & 1) == 0) {
+        in >>= 1;
+        ++r;
+    }
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t mask = 1;
+    int r;
+
+    for (r = 0; r < 64; ++r) {
+        if (in & mask)
+            return r;
+        mask <<= 1;
+    }
+
+    return 64;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    if ((in & 0xFFFFFFFFULL) == 0) {
+        r += 32;
+        in >>= 32;
+    }
+    if ((in & 0xFFFFULL) == 0) {
+        r += 16;
+        in >>= 16;
+    }
+    if ((in & 0xFFULL) == 0) {
+        r += 8;
+        in >>= 8;
+    }
+    if ((in & 0xFULL) == 0) {
+        r += 4;
+        in >>= 4;
+    }
+    if ((in & 3) == 0) {
+        r += 2;
+        in >>= 2;
+    }
+
+    return r + ((in & 1) == 0);
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t bits = (in & (uint64_t)(~in + 1)) - 1;
+    int r = 0;
+
+    while (bits != 0) {
+        bits &= bits - 1;
+        ++r;
+    }
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t bits = (uint64_t)(in - 1) & ~in;
+
+    bits -= (bits >> 1) & 0x5555555555555555ULL;
+    bits = (bits & 0x3333333333333333ULL)
+         + ((bits >> 2) & 0x3333333333333333ULL);
+    bits = (bits + (bits >> 4)) & 0x0F0F0F0F0F0F0F0FULL;
+    bits += bits >> 8;
+    bits += bits >> 16;
+    bits += bits >> 32;
+
+    return (int)(bits & 0x7F);
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int r = 64;
+    int i;
+
+    for (i = 63; i >= 0; --i) {
+        if ((in >> i) & 1)
+            r = i;
+    }
+
+    return r;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    while ((in & 15) == 0) {
+        in >>= 4;
+        r += 4;
+    }
+
+    switch (in & 15) {
+    case 8:
+        return r + 3;
+    case 4:
+    case 12:
+        return r + 2;
+    case 2:
+    case 6:
+    case 10:
+    case 14:
+        return r + 1;
+    default:
+        return r;
+    }
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    static const unsigned char trailing[16] = {
+        4, 0, 1, 0, 2, 0, 1, 0,
+        3, 0, 1, 0, 2, 0, 1, 0
+    };
+    int r;
+
+    for (r = 0; r < 64; r += 4) {
+        unsigned int nibble = (unsigned int)(in & 15);
+
+        if (nibble != 0)
+            return r + trailing[nibble];
+
+        in >>= 4;
+    }
+
+    return 64;
+}
+
+
+
+static int ctz(uint64_t in)
+{
+    uint64_t bit;
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    bit = in & (uint64_t)(~in + 1);
+
+    if (bit & 0xAAAAAAAAAAAAAAAAULL)
+        r += 1;
+    if (bit & 0xCCCCCCCCCCCCCCCCULL)
+        r += 2;
+    if (bit & 0xF0F0F0F0F0F0F0F0ULL)
+        r += 4;
+    if (bit & 0xFF00FF00FF00FF00ULL)
+        r += 8;
+    if (bit & 0xFFFF0000FFFF0000ULL)
+        r += 16;
+    if (bit & 0xFFFFFFFF00000000ULL)
+        r += 32;
+
+    return r;
+}

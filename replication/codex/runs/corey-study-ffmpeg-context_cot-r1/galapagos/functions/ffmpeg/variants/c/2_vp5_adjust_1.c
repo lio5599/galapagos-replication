@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Uses explicit branches for both absolute values and the magnitude gate.
+    // Negative thresholds retain the same arithmetic rather than being clamped.
+    // Every negation is valid on the reference's defined input domain.
+    int negative = v < 0;
+    if (negative)
+        v = -v;
+    if (!(v < 2 * t))
+        v = 0;
+    v -= t;
+    if (v < 0)
+        v = -v;
+    v = t - v;
+    if (negative)
+        v = -v;
+    return v;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

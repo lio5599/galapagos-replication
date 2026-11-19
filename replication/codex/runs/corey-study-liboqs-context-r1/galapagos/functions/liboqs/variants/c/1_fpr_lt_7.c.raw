@@ -1,0 +1,14 @@
+int.h>
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & mask;
+    uint64_t ay = y & mask;
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+    int forward = (int)((ax - ay) >> 63);
+    int reverse = (int)((ay - ax) >> 63);
+    int same = forward ^ ((forward ^ reverse) & sx);
+
+    return same ^ ((same ^ sx) & different);
+}

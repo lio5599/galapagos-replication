@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Map positive magnitudes to themselves and negatives to minus one minus magnitude.
+    // These signed keys increase in the required order, including opposite zeros.
+    // Masked magnitudes fit in int64_t, and every subtraction stays in range.
+    // Equal encodings produce equal keys and therefore return false.
+    uint64_t mask = (UINT64_C(1) << 63) - UINT64_C(1);
+    int64_t kx = (int64_t)(x & mask);
+    int64_t ky = (int64_t)(y & mask);
+
+    if (x >> 63) {
+        kx = -INT64_C(1) - kx;
+    }
+    if (y >> 63) {
+        ky = -INT64_C(1) - ky;
+    }
+    return kx < ky;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

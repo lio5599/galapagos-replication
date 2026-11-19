@@ -1,0 +1,43 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Skip zero blocks using successively smaller power-of-two sizes.
+ // Each skipped block adds exactly its width to the zero count.
+ // Zero is handled separately; the final bit distinguishes 0 from 1.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ if ((in & 0xFFFFFFFFULL) == 0)
+ {
+  r += 32;
+  in >>= 32;
+ }
+ if ((in & 0xFFFFULL) == 0)
+ {
+  r += 16;
+  in >>= 16;
+ }
+ if ((in & 0xFFULL) == 0)
+ {
+  r += 8;
+  in >>= 8;
+ }
+ if ((in & 0xFULL) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ if ((in & 3) == 0)
+ {
+  r += 2;
+  in >>= 2;
+ }
+ return r + (int)((in & 1) == 0);
+}
+
+
+int main(){
+    ctz(0);
+}

@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int twice = 2 * t;
+    int r = twice;
+
+    if (t > 0) {
+        r = 0;
+        if (a < twice) {
+            r = a;
+            if (a > t)
+                r = twice - a;
+        }
+    }
+
+    return (r + sign) ^ sign;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

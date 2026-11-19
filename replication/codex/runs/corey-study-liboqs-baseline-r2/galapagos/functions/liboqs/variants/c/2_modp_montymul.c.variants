@@ -1,0 +1,139 @@
+#include <stdint.h>
+
+#ifndef MODP_MONTYMUL_VARIANT
+#define MODP_MONTYMUL_VARIANT 1
+#endif
+
+#if MODP_MONTYMUL_VARIANT == 1
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    if (d >> 31) {
+        d += p;
+    }
+    return d;
+}
+
+#elif MODP_MONTYMUL_VARIANT == 2
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint32_t m = (uint32_t)(z * p0i) & UINT32_C(0x7FFFFFFF);
+    uint32_t d = (uint32_t)((z + (uint64_t)m * p) >> 31) - p;
+
+    return d + p * (d >> 31);
+}
+
+#elif MODP_MONTYMUL_VARIANT == 3
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t m = (z * p0i) % UINT64_C(0x80000000);
+    uint32_t t = (uint32_t)((z + m * p) >> 31);
+    uint32_t d = t - p;
+
+    return (d & UINT32_C(0x80000000)) ? t : d;
+}
+
+#elif MODP_MONTYMUL_VARIANT == 4
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t t = (uint32_t)((z + w) >> 31);
+    uint32_t d = t - p;
+    uint32_t mask = UINT32_C(0) - (d >> 31);
+
+    return (t & mask) | (d & ~mask);
+}
+
+#elif MODP_MONTYMUL_VARIANT == 5
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t t = (uint32_t)((z + w) >> 31);
+    uint32_t d = t - p;
+    uint32_t mask = UINT32_C(0) - (d >> 31);
+
+    return d ^ ((d ^ t) & mask);
+}
+
+#elif MODP_MONTYMUL_VARIANT == 6
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t m = ((z & UINT64_C(0x7FFFFFFF))
+                  * (p0i & UINT32_C(0x7FFFFFFF)))
+                 & UINT64_C(0x7FFFFFFF);
+    uint64_t sum = z + m * p;
+    uint32_t d = (uint32_t)(sum >> 31) - p;
+
+    return d + (p & (UINT32_C(0) - (d >> 31)));
+}
+
+#elif MODP_MONTYMUL_VARIANT == 7
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t m = z * p0i;
+    uint64_t w;
+    uint32_t d;
+
+    m &= UINT64_C(0x7FFFFFFF);
+    w = (m * (p & UINT32_C(0xFFFF)))
+        + ((m * (p >> 16)) << 16);
+    z += w;
+    d = (uint32_t)(z / UINT64_C(0x80000000)) - p;
+
+    return d + ((d >> 31) ? p : UINT32_C(0));
+}
+
+#elif MODP_MONTYMUL_VARIANT == 8
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint64_t low = (uint64_t)(uint32_t)z + (uint32_t)w;
+    uint32_t high = (uint32_t)(z >> 32)
+                    + (uint32_t)(w >> 32)
+                    + (uint32_t)(low >> 32);
+    uint32_t t = (high << 1) | ((uint32_t)low >> 31);
+    uint32_t d = t - p;
+
+    return d + (p & (UINT32_C(0) - (d >> 31)));
+}
+
+#elif MODP_MONTYMUL_VARIANT == 9
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)(a & UINT32_C(0xFFFF)) * b
+                 + (((uint64_t)(a >> 16) * b) << 16);
+    uint64_t m = ((uint64_t)(uint32_t)z * p0i)
+                 & UINT64_C(0x7FFFFFFF);
+    uint64_t sum = z + m * p;
+    uint32_t d = (uint32_t)(sum >> 31) - p;
+
+    return d - (p & ((d >> 31) - UINT32_C(1))) + p;
+}
+
+#elif MODP_MONTYMUL_VARIANT == 10
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint64_t low = (z & UINT64_C(0x7FFFFFFF))
+                   + (w & UINT64_C(0x7FFFFFFF));
+    uint32_t t = (uint32_t)((z >> 31) + (w >> 31) + (low >> 31));
+    uint32_t d = t - p;
+    uint32_t correction = p & (UINT32_C(0) - (d >> 31));
+
+    return d + correction;
+}
+
+#else
+#error "MODP_MONTYMUL_VARIANT must be between 1 and 10"
+#endif

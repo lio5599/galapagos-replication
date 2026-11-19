@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // The reference returns -1 for negative x and 0 otherwise.
+  // The comparison produces 1 exactly for negative values.
+  // Negation gives the required mask, including at both limits and zero.
+  return -(x < 0);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

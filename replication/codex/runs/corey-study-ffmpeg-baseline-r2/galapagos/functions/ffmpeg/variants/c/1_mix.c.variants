@@ -1,0 +1,161 @@
+#ifndef MIX_IMPLEMENTATION
+#define MIX_IMPLEMENTATION 1
+#endif
+
+#if MIX_IMPLEMENTATION == 1
+
+static int mix(int c0, int c1)
+{
+    int blue = ((c0 & 31) * 2 + (c1 & 31)) / 3;
+    int green = (((c0 & 992) * 2 + (c1 & 992)) >> 5) / 3;
+    int red = ((c0 >> 10) * 2 + (c1 >> 10)) / 3;
+    return red * 1024 + green * 32 + blue;
+}
+
+#elif MIX_IMPLEMENTATION == 2
+
+static int mix(int c0, int c1)
+{
+    int blue0 = c0 & 0x001F;
+    int blue1 = c1 & 0x001F;
+    int green0 = (c0 & 0x03E0) >> 5;
+    int green1 = (c1 & 0x03E0) >> 5;
+    int red0 = c0 >> 10;
+    int red1 = c1 >> 10;
+
+    return ((red0 + red0 + red1) / 3) * 1024
+         + ((green0 + green0 + green1) / 3) * 32
+         + (blue0 + blue0 + blue1) / 3;
+}
+
+#elif MIX_IMPLEMENTATION == 3
+
+static int mix(int c0, int c1)
+{
+    return ((2 * (c0 >> 10) + (c1 >> 10)) / 3) * 1024
+         + ((2 * ((c0 & 0x03E0) >> 5)
+                 + ((c1 & 0x03E0) >> 5)) / 3) * 32
+         + (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+}
+
+#elif MIX_IMPLEMENTATION == 4
+
+static int mix(int c0, int c1)
+{
+    int channels[3];
+
+    channels[0] = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    channels[1] = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    channels[2] = 2 * (c0 >> 10) + (c1 >> 10);
+
+    channels[0] /= 3;
+    channels[1] /= 3;
+    channels[2] /= 3;
+
+    return channels[2] * 1024 + channels[1] * 32 + channels[0];
+}
+
+#elif MIX_IMPLEMENTATION == 5
+
+static int mix(int c0, int c1)
+{
+    int first[3];
+    int second[3];
+    int i;
+
+    first[0] = c0 & 0x001F;
+    first[1] = (c0 & 0x03E0) >> 5;
+    first[2] = c0 >> 10;
+
+    second[0] = c1 & 0x001F;
+    second[1] = (c1 & 0x03E0) >> 5;
+    second[2] = c1 >> 10;
+
+    for (i = 0; i < 3; ++i)
+        first[i] = (2 * first[i] + second[i]) / 3;
+
+    return first[2] * 1024 + first[1] * 32 + first[0];
+}
+
+#elif MIX_IMPLEMENTATION == 6
+
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = 2 * (c0 & 0x03E0) + (c1 & 0x03E0);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+
+    return (red / 3) * 1024 + (green / 96) * 32 + blue / 3;
+}
+
+#elif MIX_IMPLEMENTATION == 7
+
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+
+    blue = (blue - blue % 3) / 3;
+    green = (green - green % 3) / 3;
+    red = (red - red % 3) / 3;
+
+    return red * 1024 + green * 32 + blue;
+}
+
+#elif MIX_IMPLEMENTATION == 8
+
+static int mix(int c0, int c1)
+{
+    int result = ((2 * (c0 >> 10) + (c1 >> 10)) / 3) * 1024;
+
+    result += ((2 * ((c0 & 0x03E0) / 32)
+                   + ((c1 & 0x03E0) / 32)) / 3) * 32;
+    result += (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+
+    return result;
+}
+
+#elif MIX_IMPLEMENTATION == 9
+
+static int mix(int c0, int c1)
+{
+    int blue = (c0 & 0x001F) << 1;
+    int green = (c0 & 0x03E0) << 1;
+    int red = (c0 >> 10) * 2;
+
+    blue += c1 & 0x001F;
+    green += c1 & 0x03E0;
+    red += c1 >> 10;
+
+    return (red / 3) * 1024
+         + ((green >> 5) / 3) * 32
+         + blue / 3;
+}
+
+#elif MIX_IMPLEMENTATION == 10
+
+static int mix(int c0, int c1)
+{
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int blue_out = 0;
+    int green_out = 0;
+
+    while (blue >= 3) {
+        blue -= 3;
+        ++blue_out;
+    }
+
+    while (green >= 3) {
+        green -= 3;
+        ++green_out;
+    }
+
+    return (red / 3) * 1024 + green_out * 32 + blue_out;
+}
+
+#else
+#error MIX_IMPLEMENTATION must be between 1 and 10
+#endif

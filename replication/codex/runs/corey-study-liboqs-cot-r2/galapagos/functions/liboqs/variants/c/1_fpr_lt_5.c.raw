@@ -1,0 +1,13 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Transform to increasing unsigned keys, then compare their 32-bit halves.
+    // Lexicographic high-half/low-half order equals full unsigned comparison.
+    // Equal keys return false, and the keys keep the two zero signs distinct.
+    uint64_t kx = (x >> 63) ? ~x : (x ^ (UINT64_C(1) << 63));
+    uint64_t ky = (y >> 63) ? ~y : (y ^ (UINT64_C(1) << 63));
+    uint32_t hx = (uint32_t)(kx >> 32);
+    uint32_t hy = (uint32_t)(ky >> 32);
+    uint32_t lx = (uint32_t)kx;
+    uint32_t ly = (uint32_t)ky;
+
+    return (hx < hy) || ((hx == hy) && (lx < ly));
+}

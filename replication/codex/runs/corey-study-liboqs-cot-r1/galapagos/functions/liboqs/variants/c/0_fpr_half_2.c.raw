@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Convert a nonzero original exponent into an all-ones unsigned mask.
+    // The mask preserves the subtraction result or clears every bit.
+    // Zero exponents are cleared regardless of their sign or fraction.
+    uint64_t keep = (uint64_t)(((x >> 52) & 0x7FF) != 0);
+    uint64_t mask = (uint64_t)0 - keep;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}

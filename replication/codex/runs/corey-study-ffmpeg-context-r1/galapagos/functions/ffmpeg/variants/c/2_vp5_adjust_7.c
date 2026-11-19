@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int magnitude = (v ^ sign) - sign;
+    int distance;
+
+    if (magnitude >= 2 * t)
+        magnitude = 0;
+
+    if (magnitude >= t)
+        distance = magnitude - t;
+    else
+        distance = t - magnitude;
+
+    return ((t - distance) + sign) ^ sign;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

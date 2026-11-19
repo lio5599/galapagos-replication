@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Examine bit positions from least to most significant.
+ // The first set bit's position equals the trailing-zero count.
+ // If no bit is set, all 64 positions are zero.
+ int i;
+ for (i = 0; i < 64; i++)
+ {
+  if (((in >> i) & 1) != 0)
+   return i;
+ }
+ return 64;
+}
+
+
+int main(){
+    ctz(0);
+}

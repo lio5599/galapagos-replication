@@ -1,0 +1,104 @@
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    if ((x & ((uint64_t)0x7FF << 52)) == 0)
+        return 0;
+    return x - ((uint64_t)1 << 52);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    return ((x >> 52) & 0x7FF) != 0
+        ? x - ((uint64_t)1 << 52)
+        : (uint64_t)0;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t mask = (uint64_t)0 - (uint64_t)(e != 0);
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x - ((uint64_t)1 << 52);
+    if (((y >> 52) & 0x7FF) == 0x7FF)
+        y = 0;
+    return y;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t e = (y >> 52) & 0x7FF;
+    return y & ((uint64_t)(e == 0x7FF) - (uint64_t)1);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t nonzero = (e + 0x7FF) >> 11;
+    return (x - ((uint64_t)1 << 52)) &
+           ((uint64_t)0 - nonzero);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t nonzero = (e | ((uint64_t)0 - e)) >> 63;
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y & ((uint64_t)0 - nonzero);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & 0x7FF;
+    if (e == 0)
+        return 0;
+    return (x & ~((uint64_t)0x7FF << 52)) |
+           ((e - (uint64_t)1) << 52);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x + UINT64_C(0xFFF0000000000000);
+    uint64_t t = (((y >> 52) & 0x7FF) + 1) >> 11;
+    return y & (t - (uint64_t)1);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t zero = (e - (uint64_t)1) >> 63;
+    uint64_t mask = zero - (uint64_t)1;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}

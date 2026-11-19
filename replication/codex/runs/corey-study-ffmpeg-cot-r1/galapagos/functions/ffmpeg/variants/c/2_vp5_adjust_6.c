@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Keeps the reference's absolute-value and sign-restoration bit operations.
+    // A conditional replaces multiplication by the zero-or-one gate.
+    // The inner absolute value is evaluated by a branch instead of a mask.
+    // Strict gating preserves endpoints and the nonpositive-t behavior.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int s = v >> 31;
+    int a = (v ^ s) - s;
+    int d, r;
+    a = a < 2 * t ? a : 0;
+    d = a - t;
+    if (d < 0)
+        d = -d;
+    r = t - d;
+    r += s;
+    return r ^ s;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

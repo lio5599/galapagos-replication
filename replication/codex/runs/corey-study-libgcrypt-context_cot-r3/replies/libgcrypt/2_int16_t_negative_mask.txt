@@ -1,0 +1,86 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // The reference returns -1 for negative x and 0 otherwise.
+  // The comparison yields exactly 1 or 0, including at both endpoints.
+  return -(x < 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Select the reference's result directly from the sign of x.
+  // Zero and all positive values return 0; all negative values return -1.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch on negativity instead of extracting the unsigned high bit.
+  // This includes the minimum negative value and treats zero as nonnegative.
+  if (x < 0)
+    return -1;
+  return 0;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Nonnegativity yields 1 for zero or positive x and 0 for negative x.
+  // Subtracting 1 therefore gives exactly 0 or -1, without overflow.
+  return (x >= 0) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion maps negative inputs into 32768 through 65535.
+  // Division yields 1 precisely for those inputs, including the minimum.
+  // Negation gives -1 for negative inputs and 0 otherwise.
+  uint16_t u = x;
+  return -(int)(u / 32768u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // After unsigned conversion, bit 15 is set exactly for negative x.
+  // Normalize that bit to 1 before negating, so zero and endpoints work.
+  uint16_t u = x;
+  return -((u & 0x8000u) != 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Subtracting the unsigned representation from 65535 flips its 16 bits.
+  // The resulting high bit is 1 for nonnegative x and 0 for negative x.
+  // Subtracting 1 maps those cases to 0 and -1, including both endpoints.
+  uint16_t u = x;
+  uint16_t inverted = 65535u - u;
+  return (int)(inverted >> 15) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Extract the same 0-or-1 high bit as the reference.
+  // XOR with 1 reverses it; subtracting 1 gives the original bit's negative.
+  // All arithmetic is on 0 and 1, so zero and endpoints are safe.
+  uint16_t u = x;
+  int bit = (int)(u >> 15);
+  return (bit ^ 1) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // First extract the unsigned high byte, whose range is 0 through 255.
+  // Dividing by 128 extracts bit 15 of the original representation.
+  // Negation matches the reference for every input, including endpoints.
+  uint16_t u = x;
+  int high_byte = (int)(u >> 8);
+  return -(high_byte / 128);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion places negative inputs at or above 32768.
+  // Adding 32768 then shifting by 16 detects precisely that range.
+  // Unsigned long holds the maximum sum 98303 without overflow.
+  // Negating the resulting 0 or 1 handles zero and both endpoints.
+  unsigned long u = (uint16_t)x;
+  return -(int)((u + 32768UL) >> 16);
+}

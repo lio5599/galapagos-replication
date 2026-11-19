@@ -1,0 +1,12 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // The reference orders sign-magnitude encodings, with negatives first.
+    // Equal-sign positives ascend; equal-sign negatives descend.
+    // Equality is false, and negative zero precedes positive zero.
+    if ((x >> 63) != (y >> 63)) {
+        return (int)(x >> 63);
+    }
+    if (x >> 63) {
+        return x > y;
+    }
+    return x < y;
+}

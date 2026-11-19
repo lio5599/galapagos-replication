@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion preserves the reference's 16-bit representation.
+  // Division by 32768 yields 0 for nonnegative x and 1 for negative x.
+  // The quotient is safely converted to int and negated, even at endpoints.
+  return -(int)((uint16_t)x / 32768u);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

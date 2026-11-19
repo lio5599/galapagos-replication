@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Convert each encoding into an ascending unsigned ordering key.
+    // Complement negatives and flip the sign bit of positives.
+    // Keys are unique, with negative zero immediately before positive zero.
+    uint64_t sign = (uint64_t)1 << 63;
+    uint64_t kx = (x >> 63) ? ~x : (x ^ sign);
+    uint64_t ky = (y >> 63) ? ~y : (y ^ sign);
+    return kx < ky;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

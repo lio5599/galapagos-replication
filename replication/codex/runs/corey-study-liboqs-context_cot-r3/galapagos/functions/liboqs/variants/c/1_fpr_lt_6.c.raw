@@ -1,0 +1,14 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Remove the sign bits and compare the remaining encoding fields.
+    // Different signs use x's sign; negative fields are compared in reverse.
+    // Identical fields with equal signs return zero, including zero encodings.
+    uint64_t low = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & low;
+    uint64_t ay = y & low;
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    if (sx != sy) {
+        return sx;
+    }
+    return sx ? ax > ay : ax < ay;
+}

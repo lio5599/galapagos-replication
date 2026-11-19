@@ -1,0 +1,9 @@
+static uint64_t fpr_half(uint64_t x) {
+    // After subtraction, adding one to the eleven-bit exponent yields a carry
+    // exactly when the reference clears its result.
+    // XOR with an all-ones value converts the negated carry into the same mask.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t carry = (((y >> 52) & (uint64_t)0x7FF) + (uint64_t)1) >> 11;
+    uint64_t mask = ((uint64_t)0 - carry) ^ ~(uint64_t)0;
+    return y & mask;
+}

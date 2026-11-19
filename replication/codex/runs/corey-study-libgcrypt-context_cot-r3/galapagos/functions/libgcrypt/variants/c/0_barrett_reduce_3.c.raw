@@ -1,0 +1,11 @@
+int16_t barrett_reduce(int16_t a) {
+  // Use 20159 equals 315 times 64 minus 1.
+  // Multiplication rather than left shift also handles negative inputs.
+  // Every intermediate fits in int32_t; rounding and narrowing are unchanged.
+  int16_t t;
+  int32_t x = (int32_t)a * 315;
+  x = x * 64 - a;
+  t = (x + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}

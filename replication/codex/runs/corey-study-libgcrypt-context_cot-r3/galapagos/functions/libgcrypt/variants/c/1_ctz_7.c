@@ -1,0 +1,33 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Skip zero bytes, then locate the first one within the low byte.
+ // The skipped byte widths and final bit index give the count.
+ // Zero returns 64 directly; the final byte is otherwise nonzero.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & 255) == 0)
+ {
+  r += 8;
+  in >>= 8;
+ }
+ if ((in & 15) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ if ((in & 3) == 0)
+ {
+  r += 2;
+  in >>= 2;
+ }
+ return r + (int)((in & 1) == 0);
+}
+
+
+int main(){
+    ctz(0);
+}

@@ -1,0 +1,11 @@
+int16_t barrett_reduce(int16_t a) {
+  // Apply reciprocal rounding to the magnitude using an unsigned right shift.
+  // Reciprocal error is below 0.000066, less than the nearest half-step gap.
+  // Thus the quotient is exact throughout the int16_t range, including -32768.
+  // Centered reduction is odd, so restoring the sign matches the reference.
+  int32_t x = (int32_t)a;
+  uint32_t magnitude = (uint32_t)(x < 0 ? -x : x);
+  uint32_t q = (20159u * magnitude + 33554432u) >> 26;
+  int32_t r = (int32_t)magnitude - (int32_t)q * 3329;
+  return (int16_t)(x < 0 ? -r : r);
+}

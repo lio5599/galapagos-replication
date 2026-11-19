@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int.h>
+
+static int ctz(uint64_t in)
+{
+    uint64_t x = in;
+    int r = 0;
+    int i;
+
+    x |= x << 1;
+    x |= x << 2;
+    x |= x << 4;
+    x |= x << 8;
+    x |= x << 16;
+    x |= x << 32;
+
+    for (i = 0; i < 64; ++i) {
+        r += (int)((x & 1) ^ 1);
+        x >>= 1;
+    }
+    return r;
+}
+
+
+int main(){
+    ctz(0);
+}

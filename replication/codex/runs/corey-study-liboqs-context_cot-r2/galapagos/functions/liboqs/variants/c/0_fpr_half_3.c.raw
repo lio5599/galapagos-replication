@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Detect the all-ones exponent after the unsigned subtraction.
+    // Negating this zero-or-one flag and complementing gives the reference mask.
+    // This also clears every input whose original exponent was zero.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t clear = (uint64_t)(((y >> 52) & (uint64_t)0x7FF) == (uint64_t)0x7FF);
+    return y & ~((uint64_t)0 - clear);
+}

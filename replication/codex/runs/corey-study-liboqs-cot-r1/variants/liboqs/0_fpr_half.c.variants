@@ -1,0 +1,103 @@
+static uint64_t fpr_half(uint64_t x) {
+    // The reference returns zero for exponent field zero, otherwise x minus 2^52.
+    // Test the original exponent before subtracting to avoid exponent wraparound.
+    // This matches every bit pattern, including signed zeros, subnormals, and NaNs.
+    if (((x >> 52) & 0x7FF) == 0) {
+        return 0;
+    }
+    return x - ((uint64_t)1 << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Subtract first, then detect the wrapped exponent as in the reference.
+    // The resulting exponent is all ones exactly when the original was zero.
+    // Return zero in that case, discarding the sign and fraction as required.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    if (((y >> 52) & 0x7FF) == 0x7FF) {
+        return 0;
+    }
+    return y;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Convert a nonzero original exponent into an all-ones unsigned mask.
+    // The mask preserves the subtraction result or clears every bit.
+    // Zero exponents are cleared regardless of their sign or fraction.
+    uint64_t keep = (uint64_t)(((x >> 52) & 0x7FF) != 0);
+    uint64_t mask = (uint64_t)0 - keep;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // The exponent is at most 2047, so unsigned e minus one has its top bit
+    // set exactly when e is zero. Turn that bit into a clearing mask.
+    // Unsigned wraparound is defined, including for either sign of zero.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t zero = (e - (uint64_t)1) >> 63;
+    uint64_t mask = zero - (uint64_t)1;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For a nonzero exponent, e OR its unsigned negation has the top bit set.
+    // Negating that bit produces an all-ones mask; exponent zero produces zero.
+    // Applying the mask reproduces the reference for all input bit patterns.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t keep = (e | ((uint64_t)0 - e)) >> 63;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)0 - keep);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Multiply the unsigned subtraction result by a zero-or-one predicate.
+    // A zero exponent clears the result, including signed subnormal inputs.
+    // Every other exponent keeps the exact subtraction, even for NaNs.
+    uint64_t keep = (uint64_t)(((x >> 52) & 0x7FF) != 0);
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y * keep;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // After subtraction, the masked exponent is either below the all-ones
+    // field or equal to it. Equality means the original exponent was zero.
+    // Select zero only in that case, matching all signs and fraction values.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t field = y & ((uint64_t)0x7FF << 52);
+    return field < ((uint64_t)0x7FF << 52) ? y : (uint64_t)0;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Split the input into two words; subtracting 2^52 changes only the high word.
+    // A nonzero exponent allows subtracting 2^20 there without borrowing.
+    // Clear zero-exponent inputs completely, and otherwise retain the low word.
+    uint32_t hi = (uint32_t)(x >> 32);
+    uint32_t lo = (uint32_t)x;
+    if (((hi >> 20) & 0x7FF) == 0) {
+        return 0;
+    }
+    hi -= (uint32_t)1 << 20;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Dispatch on the original exponent instead of constructing a bit mask.
+    // Exponent zero includes both zeros and all subnormals, which become zero.
+    // All other encodings receive the reference's unsigned subtraction.
+    switch ((x >> 52) & 0x7FF) {
+        case 0:
+            return 0;
+        default:
+            return x - ((uint64_t)1 << 52);
+    }
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For nonzero exponents, decrementing the field preserves sign and fraction.
+    // Reassemble those fields explicitly instead of subtracting from the input.
+    // Handle exponent zero first; maximal exponents are decremented normally.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t exponent_mask = (uint64_t)0x7FF << 52;
+    if (e == 0) {
+        return 0;
+    }
+    return (x & ~exponent_mask) | ((e - (uint64_t)1) << 52);
+}

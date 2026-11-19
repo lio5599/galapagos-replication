@@ -1,0 +1,15 @@
+int16_t barrett_reduce(int16_t a) {
+  // Process all seventeen bits of the positive biased input by long division.
+  // Each step doubles a remainder and adds a bit, needing at most one subtraction.
+  // The invariant keeps r in [0, 3328] with no overflowing intermediates.
+  // Removing the 1664 bias yields the reference result for all int16_t inputs.
+  int32_t x = (int32_t)a + 34954;
+  int32_t r = 0;
+  int bit;
+  for (bit = 16; bit >= 0; --bit) {
+    r = r * 2 + ((x >> bit) & 1);
+    if (r >= 3329)
+      r -= 3329;
+  }
+  return (int16_t)(r - 1664);
+}

@@ -1,0 +1,8 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Shifting the converted value extracts a 0 or 1 sign bit.
+  // Multiplication by -1 turns that bit into the reference mask.
+  // The multiplication is exact for every input, including endpoints.
+  uint16_t u = x;
+  return (int)(u >> 15) * -1;
+}

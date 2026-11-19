@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Split the encoding into its low 52 bits and its upper 12 bits.
+    // For a nonzero exponent, decrementing the upper part exactly subtracts 2^52.
+    // Testing its low 11 bits clears all zero-exponent inputs, including negative ones.
+    uint64_t low_mask = ((uint64_t)1 << 52) - 1;
+    uint64_t upper = x >> 52;
+    uint64_t lower = x & low_mask;
+    if ((upper & 0x7FF) == 0)
+        return 0;
+    return ((upper - 1) << 52) | lower;
+}
+
+
+int main(){
+    fpr_half(0);
+}

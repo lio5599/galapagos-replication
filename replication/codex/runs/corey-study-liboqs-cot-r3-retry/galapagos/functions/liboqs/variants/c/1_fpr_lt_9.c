@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Resolve different signs, then scan the remaining bits from most significant downward.
+    // The first differing bit determines unsigned order, reversed for negative encodings.
+    // No differing bit means equality; signed zeros are resolved by their signs.
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+    uint64_t bit;
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    for (bit = (uint64_t)1 << 62; bit != 0; bit >>= 1) {
+        if ((x ^ y) & bit) {
+            return (int)((unsigned)((x & bit) == 0) ^ sx);
+        }
+    }
+    return 0;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

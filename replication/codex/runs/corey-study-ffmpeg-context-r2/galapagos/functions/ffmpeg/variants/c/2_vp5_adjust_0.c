@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int d = (a < 2 * t ? a : 0) - t;
+    int mask = d >> 31;
+    int r = t - ((d ^ mask) - mask);
+    return (r + sign) ^ sign;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

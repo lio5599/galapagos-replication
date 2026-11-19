@@ -1,0 +1,95 @@
+static uint64_t fpr_half(uint64_t x) {
+    // The reference subtracts 2^52 modulo 2^64, or returns zero if the original exponent is zero.
+    // Subtraction makes the exponent all ones exactly when it was zero.
+    // Testing the original exponent also handles either sign and every fraction.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return e != 0 ? y : (uint64_t)0;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Compute the reference subtraction, then inspect its exponent.
+    // An all-ones exponent makes the reference mask zero; otherwise it preserves x.
+    // Unsigned subtraction preserves wraparound for all input bit patterns.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t e = (y >> 52) & (uint64_t)0x7FF;
+    return e == (uint64_t)0x7FF ? (uint64_t)0 : y;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // A nonzero original exponent produces an all-ones unsigned mask.
+    // A zero exponent produces a zero mask, regardless of sign or fraction.
+    // The masked subtraction therefore matches the reference on every input.
+    uint64_t keep = (uint64_t)((x & ((uint64_t)0x7FF << 52)) != 0);
+    uint64_t mask = (uint64_t)0 - keep;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Detect the all-ones exponent after the unsigned subtraction.
+    // Negating this zero-or-one flag and complementing gives the reference mask.
+    // This also clears every input whose original exponent was zero.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t clear = (uint64_t)(((y >> 52) & (uint64_t)0x7FF) == (uint64_t)0x7FF);
+    return y & ~((uint64_t)0 - clear);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Multiplication by a zero-or-one flag either clears or preserves the result.
+    // The flag is zero exactly when the original exponent is zero.
+    // Both arithmetic operations are unsigned, including any subtraction wraparound.
+    uint64_t keep = (uint64_t)(((x >> 52) & (uint64_t)0x7FF) != 0);
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y * keep;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For a nonzero exponent, subtraction changes only the exponent field.
+    // Rebuild that field while retaining the sign and fraction unchanged.
+    // A zero exponent is explicitly cleared, including nonzero fractions.
+    uint64_t exponent_mask = (uint64_t)0x7FF << 52;
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    if (e == 0)
+        return 0;
+    return (x & ~exponent_mask) | ((e - (uint64_t)1) << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For the eleven-bit exponent, e OR its unsigned negation has its top bit
+    // set exactly when e is nonzero. Expand that bit into a full-width mask.
+    // Zero exponents are cleared; all other inputs retain the reference subtraction.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    uint64_t keep = (e | ((uint64_t)0 - e)) >> 63;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)0 - keep);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // After subtraction, adding one to the eleven-bit exponent yields a carry
+    // exactly when the reference clears its result.
+    // XOR with an all-ones value converts the negated carry into the same mask.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t carry = (((y >> 52) & (uint64_t)0x7FF) + (uint64_t)1) >> 11;
+    uint64_t mask = ((uint64_t)0 - carry) ^ ~(uint64_t)0;
+    return y & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Clear zero exponents before performing any arithmetic.
+    // Adding the unsigned additive inverse of 2^52 equals the reference subtraction.
+    // Every other exponent, including all ones, keeps the resulting bit pattern.
+    if ((x & ((uint64_t)0x7FF << 52)) == 0)
+        return 0;
+    return x + (~((uint64_t)1 << 52) + (uint64_t)1);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Subtracting 2^52 subtracts 2^20 from the upper word and leaves the lower word.
+    // Test the original exponent in the upper word to clear every zero-exponent input.
+    // For nonzero exponents there is no borrow into the sign bit.
+    uint32_t hi = (uint32_t)(x >> 32);
+    uint32_t lo = (uint32_t)x;
+    if ((hi & (uint32_t)0x7FF00000) == 0)
+        return 0;
+    hi -= (uint32_t)0x00100000;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}

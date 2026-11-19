@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+    uint64_t mx = x & (((uint64_t)1 << 63) - 1);
+    uint64_t my = y & (((uint64_t)1 << 63) - 1);
+
+    return (sx > sy)
+        || ((sx == sy) && ((sx && (mx > my)) || (!sx && (mx < my))));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

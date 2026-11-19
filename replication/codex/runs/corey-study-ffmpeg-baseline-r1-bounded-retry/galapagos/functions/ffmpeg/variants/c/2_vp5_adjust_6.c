@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int limit = 2 * t;
+    int r;
+
+    a *= a < limit;
+    r = a < t ? a : limit - a;
+    return (r + sign) ^ sign;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

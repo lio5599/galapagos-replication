@@ -1,0 +1,13 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // The reference compares sign-magnitude encodings, with negative zero below positive zero.
+    // Different signs put the negative encoding first; equal signs use
+    // unsigned order for positives and reversed order for negatives.
+    // Equal encodings are never less than themselves.
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    return sx ? (x > y) : (x < y);
+}

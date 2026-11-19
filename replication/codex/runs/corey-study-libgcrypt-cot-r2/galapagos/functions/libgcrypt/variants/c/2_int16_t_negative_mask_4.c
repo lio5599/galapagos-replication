@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion maps negatives into 32768 through 65535.
+  // Nonnegative values remain in 0 through 32767.
+  // Division therefore gives 1 or 0, including at every boundary.
+  uint16_t u = x;
+  return -(int)(u / 32768u);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

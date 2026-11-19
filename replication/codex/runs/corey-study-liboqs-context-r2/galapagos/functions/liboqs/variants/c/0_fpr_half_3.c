@@ -1,0 +1,12 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t keep = (uint64_t)((x & UINT64_C(0x7FF0000000000000)) != 0);
+    return (x + UINT64_C(0xFFF0000000000000)) * keep;
+}
+
+
+int main(){
+    fpr_half(0);
+}

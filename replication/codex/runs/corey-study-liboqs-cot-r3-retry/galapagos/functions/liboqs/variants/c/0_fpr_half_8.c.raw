@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Unsigned e minus one has its top bit set only when the 11-bit exponent is zero.
+    // Subtracting one from that top bit gives zero or an all-ones mask.
+    // This clears all zero-exponent encodings and preserves subtraction otherwise.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    uint64_t zero = (e - (uint64_t)1) >> 63;
+    return (x - ((uint64_t)1 << 52)) & (zero - (uint64_t)1);
+}

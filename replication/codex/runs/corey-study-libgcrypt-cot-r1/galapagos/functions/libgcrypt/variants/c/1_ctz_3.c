@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Unsigned subtraction isolates the lowest set bit when ANDed with in.
+ // Its base-two exponent is exactly the trailing-zero count.
+ // Zero is returned as 64 before computing that exponent.
+ uint64_t low;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ low = in & (UINT64_C(0) - in);
+ while (low > 1)
+ {
+  low >>= 1;
+  ++r;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

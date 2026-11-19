@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // The reference subtracts 2^52 modulo 2^64, or returns zero if the original exponent is zero.
+    // Subtraction makes the exponent all ones exactly when it was zero.
+    // Testing the original exponent also handles either sign and every fraction.
+    uint64_t e = (x >> 52) & (uint64_t)0x7FF;
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return e != 0 ? y : (uint64_t)0;
+}
+
+
+int main(){
+    fpr_half(0);
+}

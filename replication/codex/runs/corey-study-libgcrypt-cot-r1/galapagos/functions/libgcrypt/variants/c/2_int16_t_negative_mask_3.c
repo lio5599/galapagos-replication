@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Conversion to uint16_t maps negatives into 32768 through 65535.
+  // Division by 32768 yields 1 for negatives and 0 otherwise.
+  // Conversion to int before negation safely produces -1 or 0.
+  return -(int)((uint16_t)x / 32768u);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

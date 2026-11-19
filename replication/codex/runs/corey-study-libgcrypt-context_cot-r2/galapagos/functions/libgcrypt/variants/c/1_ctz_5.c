@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Subtracting one from the isolated lowest bit marks all lower bits.
+ // Counting those marked bits gives the trailing-zero count.
+ // For zero, unsigned wraparound marks all 64 bits.
+ uint64_t bits = (uint64_t)((in & (uint64_t)(0ULL - in)) - 1ULL);
+ int r = 0;
+ int i;
+ for (i = 0; i < 64; ++i)
+ {
+  r += (int)(bits & 1);
+  bits >>= 1;
+ }
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // After unsigned conversion, bit 15 is set exactly for negative x.
+  // Testing that bit gives 1 or 0, which negation maps to -1 or 0.
+  // Zero and both extremes have the required bit state.
+  uint16_t u = x;
+  return -((u & 0x8000u) != 0);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

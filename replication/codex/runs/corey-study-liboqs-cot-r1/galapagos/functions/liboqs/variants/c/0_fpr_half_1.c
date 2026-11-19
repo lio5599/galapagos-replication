@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Subtract first, then detect the wrapped exponent as in the reference.
+    // The resulting exponent is all ones exactly when the original was zero.
+    // Return zero in that case, discarding the sign and fraction as required.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    if (((y >> 52) & 0x7FF) == 0x7FF) {
+        return 0;
+    }
+    return y;
+}
+
+
+int main(){
+    fpr_half(0);
+}

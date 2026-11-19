@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Splits the reciprocal into 20000 + 159.
+  // Both products and their biased sum fit int32_t for every input.
+  // Identical quotient and multiple narrowing preserve edge cases.
+  int32_t numerator = (int32_t)a * 20000;
+  numerator += (int32_t)a * 159;
+  int16_t t = (numerator + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

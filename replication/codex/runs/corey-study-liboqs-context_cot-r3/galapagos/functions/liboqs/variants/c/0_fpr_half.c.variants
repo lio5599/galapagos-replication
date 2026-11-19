@@ -1,0 +1,87 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Subtract 2^52 modulo 2^64, returning zero if the original exponent is zero.
+    // Subtraction makes the exponent 2047 exactly when it was originally zero.
+    // Testing the original exponent therefore matches every reference input.
+    if (((x >> 52) & 0x7FF) == 0)
+        return 0;
+    return x - ((uint64_t)1 << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Perform the unsigned subtraction first, including its wraparound.
+    // The reference clears the result exactly when its exponent is 2047.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return ((y >> 52) & 0x7FF) == 0x7FF ? 0 : y;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // A nonzero original exponent produces an all-one mask.
+    // An original zero exponent produces a zero mask, regardless of other bits.
+    uint64_t keep = (uint64_t)(((x >> 52) & 0x7FF) != 0);
+    uint64_t mask = (uint64_t)0 - keep;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Multiply the wrapped subtraction by either zero or one.
+    // The zero case is exactly the original zero-exponent case cleared by reference.
+    uint64_t keep = (uint64_t)((x & ((uint64_t)0x7FF << 52)) != 0);
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y * keep;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Adding the unsigned additive inverse of 2^52 equals subtracting 2^52.
+    // Original zero-exponent inputs are explicitly cleared, including signed ones.
+    uint64_t exponent = x & ((uint64_t)0x7FF << 52);
+    uint64_t decrement = ~((uint64_t)1 << 52) + (uint64_t)1;
+    return exponent != 0 ? x + decrement : 0;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For nonzero exponents, subtraction decrements only the exponent field.
+    // Preserve the sign and fraction while replacing that field.
+    // Zero exponents are cleared, so no borrow into the sign must be preserved.
+    uint64_t exponent_mask = (uint64_t)0x7FF << 52;
+    uint64_t exponent = (x >> 52) & 0x7FF;
+    if (exponent == 0)
+        return 0;
+    return (x & ~exponent_mask) | ((exponent - 1) << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // After subtraction, exponent 2047 identifies exactly the cleared cases.
+    // Negating that indicator and complementing gives the required keep mask.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t clear = (uint64_t)(((y >> 52) & 0x7FF) == 0x7FF);
+    return y & ~((uint64_t)0 - clear);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Adding one to the updated exponent carries at bit 11 only for exponent 2047.
+    // Invert that one-bit indicator and negate it to retain or clear every bit.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t clear = (((y >> 52) & 0x7FF) + 1) >> 11;
+    uint64_t mask = (uint64_t)0 - (clear ^ (uint64_t)1);
+    return y & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // The exponent is at most 2047, so its unsigned negation has bit 63 set
+    // exactly when the exponent is nonzero.
+    // Expand that bit to a mask; zero exponents clear all sign and fraction bits.
+    uint64_t exponent = (x >> 52) & 0x7FF;
+    uint64_t keep = (exponent | ((uint64_t)0 - exponent)) >> 63;
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y & ((uint64_t)0 - keep);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // The updated exponent lies between zero and 2047.
+    // Subtracting 2047 wraps with bit 63 set exactly when it is below 2047.
+    // That bit selects the same retained results as the reference mask.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t exponent = (y >> 52) & 0x7FF;
+    uint64_t keep = (exponent - (uint64_t)0x7FF) >> 63;
+    return y & ((uint64_t)0 - keep);
+}

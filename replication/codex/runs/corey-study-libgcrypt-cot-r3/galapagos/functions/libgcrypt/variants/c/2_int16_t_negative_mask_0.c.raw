@@ -1,0 +1,7 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // The reference returns -1 for negative x and 0 otherwise.
+  // Comparison produces 1 exactly for negative inputs; negation gives -1.
+  // Zero and both int16_t endpoints are handled without arithmetic on x.
+  return -(x < 0);
+}

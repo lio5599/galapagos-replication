@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Selects between the shifted value and its wrapped difference from p.
+    // Adding p back to that difference recovers the shifted value modulo 2^32.
+    // A full-width mask selects using exactly the reference's top-bit test,
+    // so even unusual parameters and wraparound cases remain equivalent.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    uint32_t t = (uint32_t)((z + w) >> 31);
+    uint32_t d = t - p;
+    uint32_t mask = (uint32_t)(0U - (d >> 31));
+    return (d & (uint32_t)~mask) | (t & mask);
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

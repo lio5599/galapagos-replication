@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // Unsigned negation isolates the lowest set bit when ANDed with in.
+ // Each mask identifies one binary digit of that bit's index.
+ // Their weighted sum is the trailing-zero count; zero returns 64.
+ uint64_t bit;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ bit = in & ((uint64_t)0 - in);
+ if ((bit & 0xffffffff00000000ULL) != 0)
+  r += 32;
+ if ((bit & 0xffff0000ffff0000ULL) != 0)
+  r += 16;
+ if ((bit & 0xff00ff00ff00ff00ULL) != 0)
+  r += 8;
+ if ((bit & 0xf0f0f0f0f0f0f0f0ULL) != 0)
+  r += 4;
+ if ((bit & 0xccccccccccccccccULL) != 0)
+  r += 2;
+ if ((bit & 0xaaaaaaaaaaaaaaaaULL) != 0)
+  r += 1;
+ return r;
+}
+
+
+int main(){
+    ctz(0);
+}

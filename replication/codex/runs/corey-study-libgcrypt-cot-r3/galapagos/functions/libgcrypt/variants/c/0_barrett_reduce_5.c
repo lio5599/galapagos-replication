@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Repeatedly add or subtract the modulus until the value is centered.
+  // Each step preserves congruence and moves toward [-1664, 1664].
+  // The unique centered result is exactly the reference result.
+  // At most ten iterations are needed, including at either input endpoint.
+  int32_t r = a;
+  while (r > 1664)
+    r -= 3329;
+  while (r < -1664)
+    r += 3329;
+  return (int16_t)r;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

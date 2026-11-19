@@ -1,0 +1,10 @@
+static uint64_t fpr_half(uint64_t x) {
+    // For nonzero exponents, subtraction decrements only the exponent field.
+    // Preserve the sign and fraction while replacing that field.
+    // Zero exponents are cleared, so no borrow into the sign must be preserved.
+    uint64_t exponent_mask = (uint64_t)0x7FF << 52;
+    uint64_t exponent = (x >> 52) & 0x7FF;
+    if (exponent == 0)
+        return 0;
+    return (x & ~exponent_mask) | ((exponent - 1) << 52);
+}

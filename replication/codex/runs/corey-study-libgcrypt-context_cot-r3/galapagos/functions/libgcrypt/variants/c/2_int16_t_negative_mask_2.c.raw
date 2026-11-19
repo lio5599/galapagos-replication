@@ -1,0 +1,8 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch on negativity instead of extracting the unsigned high bit.
+  // This includes the minimum negative value and treats zero as nonnegative.
+  if (x < 0)
+    return -1;
+  return 0;
+}

@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // The updated exponent lies between zero and 2047.
+    // Subtracting 2047 wraps with bit 63 set exactly when it is below 2047.
+    // That bit selects the same retained results as the reference mask.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t exponent = (y >> 52) & 0x7FF;
+    uint64_t keep = (exponent - (uint64_t)0x7FF) >> 63;
+    return y & ((uint64_t)0 - keep);
+}
+
+
+int main(){
+    fpr_half(0);
+}

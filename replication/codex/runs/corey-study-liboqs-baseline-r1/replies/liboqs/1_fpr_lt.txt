@@ -1,0 +1,127 @@
+```c
+/* Alternative 1 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    if ((x >> 63) != (y >> 63)) {
+        return (int)(x >> 63);
+    }
+    if (x >> 63) {
+        return x > y;
+    }
+    return x < y;
+}
+```
+
+```c
+/* Alternative 2 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    return ((x ^ y) >> 63)
+        ? (int)(x >> 63)
+        : ((x >> 63) ? x > y : x < y);
+}
+```
+
+```c
+/* Alternative 3 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+
+    return (sx && !sy)
+        || (!sx && !sy && x < y)
+        || (sx && sy && x > y);
+}
+```
+
+```c
+/* Alternative 4 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t sign = (uint64_t)1 << 63;
+    uint64_t kx = (x & sign) ? ~x : (x ^ sign);
+    uint64_t ky = (y & sign) ? ~y : (y ^ sign);
+
+    return kx < ky;
+}
+```
+
+```c
+/* Alternative 5 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t sign = (uint64_t)1 << 63;
+    uint64_t kx = x ^ (((uint64_t)0 - (x >> 63)) | sign);
+    uint64_t ky = y ^ (((uint64_t)0 - (y >> 63)) | sign);
+
+    return kx < ky;
+}
+```
+
+```c
+/* Alternative 6 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+    int same_result = ((x < y) ^ sx) & (x != y);
+
+    return (different & sx) | ((different ^ 1) & same_result);
+}
+```
+
+```c
+/* Alternative 7 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & mask;
+    uint64_t ay = y & mask;
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+    unsigned less = (unsigned)((ax - ay) >> 63);
+    unsigned greater = (unsigned)((ay - ax) >> 63);
+
+    return (int)(((sx ^ sy) & sx)
+        | ((1U ^ sx ^ sy) & ((less & (sx ^ 1U)) | (greater & sx))));
+}
+```
+
+```c
+/* Alternative 8 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t select = (uint64_t)0 - (x >> 63);
+    uint64_t a = (x & ~select) | (y & select);
+    uint64_t b = (y & ~select) | (x & select);
+    int different = (int)((x ^ y) >> 63);
+
+    return (different & (int)(x >> 63))
+        | ((different ^ 1) & (a < b));
+}
+```
+
+```c
+/* Alternative 9 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    uint32_t hx = (uint32_t)(x >> 32);
+    uint32_t hy = (uint32_t)(y >> 32);
+    uint32_t lx = (uint32_t)x;
+    uint32_t ly = (uint32_t)y;
+
+    if ((hx >> 31) != (hy >> 31)) {
+        return (int)(hx >> 31);
+    }
+    if (hx >> 31) {
+        return (hx > hy) || (hx == hy && lx > ly);
+    }
+    return (hx < hy) || (hx == hy && lx < ly);
+}
+```
+
+```c
+/* Alternative 10 */
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    int order = (x > y) - (x < y);
+
+    if (sx != sy) {
+        return sx;
+    }
+    return order * (1 - 2 * sx) < 0;
+}
+```

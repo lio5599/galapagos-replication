@@ -1,0 +1,11 @@
+int16_t barrett_reduce(int16_t a) {
+  // Increment the input before multiplication and compensate in the bias.
+  // Expanding the expression gives exactly 20159 times a plus 33554432.
+  // The increment and product fit in int32_t for every int16_t input.
+  // Preserve the reference's quotient rounding and int16_t conversions.
+  int16_t t;
+  int32_t x = (int32_t)a + 1;
+  t = (20159 * x + (33554432 - 20159)) >> 26;
+  t *= 3329;
+  return a - t;
+}

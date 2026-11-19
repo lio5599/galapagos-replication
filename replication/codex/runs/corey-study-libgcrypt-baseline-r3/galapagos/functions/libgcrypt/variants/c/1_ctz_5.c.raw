@@ -1,0 +1,14 @@
+int ctz(uint64_t in)
+{
+    uint64_t bits = ~in & (in - UINT64_C(1));
+
+    bits -= (bits >> 1) & UINT64_C(0x5555555555555555);
+    bits = (bits & UINT64_C(0x3333333333333333))
+         + ((bits >> 2) & UINT64_C(0x3333333333333333));
+    bits = (bits + (bits >> 4)) & UINT64_C(0x0F0F0F0F0F0F0F0F);
+    bits += bits >> 8;
+    bits += bits >> 16;
+    bits += bits >> 32;
+
+    return (int)(bits & UINT64_C(0x7F));
+}

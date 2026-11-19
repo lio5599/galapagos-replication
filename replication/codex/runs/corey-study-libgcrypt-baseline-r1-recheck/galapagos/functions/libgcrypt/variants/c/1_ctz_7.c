@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+    static const unsigned char table[16] = {
+        4, 0, 1, 0, 2, 0, 1, 0,
+        3, 0, 1, 0, 2, 0, 1, 0
+    };
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    while ((in & (uint64_t)15) == 0) {
+        r += 4;
+        in >>= 4;
+    }
+
+    return r + table[in & (uint64_t)15];
+}
+
+
+int main(){
+    ctz(0);
+}

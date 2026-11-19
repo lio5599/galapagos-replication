@@ -1,0 +1,12 @@
+int ctz(uint64_t in)
+{
+    int r = 0;
+    if (in == 0)
+        return 64;
+
+    while ((in & 1) == 0) {
+        ++r;
+        in >>= 1;
+    }
+    return r;
+}

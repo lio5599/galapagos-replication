@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Expands t minus absolute value of a-t into its two linear branches.
+    // After gating, a is nonnegative; the selected branch has no additional overflow.
+    // For negative t the gate yields zero and the result before sign restoration is 2*t.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int result;
+    if (a >= twice)
+        a = 0;
+    result = a <= t ? a : twice - a;
+    return negative ? -result : result;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    uint64_t select = (uint64_t)0 - (x >> 63);
+    uint64_t a = (x & ~select) | (y & select);
+    uint64_t b = (y & ~select) | (x & select);
+    int different = (int)((x ^ y) >> 63);
+
+    return (different & (int)(x >> 63))
+        | ((different ^ 1) & (a < b));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

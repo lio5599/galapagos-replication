@@ -1,0 +1,11 @@
+int16_t barrett_reduce(int16_t a) {
+  // Reflect the numerator using floor(x/d) equals -1 minus floor((-x-1)/d).
+  // This identity includes negative values and exact multiples of the divisor.
+  // Negation and subtraction fit in int32_t throughout the input range.
+  // Use the reference's signed-shift semantics and preserve its narrowing.
+  int16_t t;
+  int32_t x = (int32_t)20159 * a + 33554432;
+  t = -1 - ((-x - 1) >> 26);
+  t *= 3329;
+  return a - t;
+}

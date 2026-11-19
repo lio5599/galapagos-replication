@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Select sign order when signs differ, otherwise select encoding order.
+    // Negative encodings use reversed order; both comparisons are strict.
+    // This preserves equality and distinguishes the two zero encodings.
+    uint64_t different = (x ^ y) >> 63;
+    return different ? (int)(x >> 63)
+                     : ((x >> 63) ? (x > y) : (x < y));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

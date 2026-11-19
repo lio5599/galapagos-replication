@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Detect a nonzero exponent using the high bit of its unsigned negation.
+    // The OR has its high bit set exactly when the extracted exponent is nonzero.
+    // Expanding that bit into a mask handles all zero-exponent and special encodings.
+    uint64_t exponent = (x >> 52) & 0x7FF;
+    uint64_t keep = (exponent | ((uint64_t)0 - exponent)) >> 63;
+    uint64_t result = x - ((uint64_t)1 << 52);
+    return result & ((uint64_t)0 - keep);
+}
+
+
+int main(){
+    fpr_half(0);
+}

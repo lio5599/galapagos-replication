@@ -1,0 +1,14 @@
+int ctz(uint64_t in)
+{
+ // Subtracting one from the isolated lowest set bit marks all lower bits.
+ // Clearing one marked bit per iteration counts the trailing zeros.
+ // For zero, unsigned subtraction produces 64 set bits, giving 64.
+ uint64_t bits = (in & ((uint64_t)0 - in)) - (uint64_t)1;
+ int r = 0;
+ while (bits != 0)
+ {
+  bits &= bits - (uint64_t)1;
+  ++r;
+ }
+ return r;
+}

@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion gives the same value used by the reference.
+  // XOR changes only the lower 15 bits, which the shift then discards.
+  // Bit 15 is unchanged for all inputs, including zero and both endpoints.
+  uint16_t u = x;
+  return -(int)((u ^ 0x7fffu) >> 15);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

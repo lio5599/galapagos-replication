@@ -1,0 +1,7 @@
+int16_t barrett_reduce(int16_t a) {
+  // Add ten moduli and the centering offset before taking a remainder.
+  // The dividend ranges from 2186 to 67721, so its remainder is nonnegative.
+  // Subtracting 1664 yields the reference's centered residue for every input.
+  int32_t x = (int32_t)a + 34954;
+  return (int16_t)(x % 3329 - 1664);
+}

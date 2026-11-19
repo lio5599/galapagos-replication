@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // After subtraction, the exponent is 2047 exactly when it was originally zero.
+    // Detect that wrapped field and return zero, regardless of sign or fraction.
+    // All other encodings retain the complete subtraction result.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint32_t e = (uint32_t)(y >> 52) & 0x7FFU;
+    return e == 0x7FFU ? (uint64_t)0 : y;
+}

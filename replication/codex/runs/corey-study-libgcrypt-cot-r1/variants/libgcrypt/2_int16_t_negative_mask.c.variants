@@ -1,0 +1,88 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // The reference returns -1 for negative x and 0 otherwise.
+  // The comparison yields 1 exactly when x is negative.
+  // Negation gives the required result, including zero and both extremes.
+  return -(x < 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Select the result directly according to the sign of x.
+  // Zero and positive values return 0; all negative values return -1.
+  // No arithmetic on x can overflow, including at its minimum value.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // The comparison yields 1 for nonnegative x and 0 for negative x.
+  // Subtracting 1 maps these to 0 and -1, respectively.
+  // This also handles zero and both representable extremes.
+  return (x >= 0) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Conversion to uint16_t maps negatives into 32768 through 65535.
+  // Division by 32768 yields 1 for negatives and 0 otherwise.
+  // Conversion to int before negation safely produces -1 or 0.
+  return -(int)((uint16_t)x / 32768u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // After unsigned conversion, bit 15 is set exactly for negative x.
+  // Testing that bit gives 1 or 0, which negation maps to -1 or 0.
+  // Zero and both extremes have the required bit state.
+  uint16_t u = x;
+  return -((u & 0x8000u) != 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion places negatives above 32767.
+  // Nonnegative values remain at or below 32767, including zero.
+  // Negating the comparison therefore works across the entire range.
+  uint16_t u = x;
+  return -(u > 32767u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Adding 32768 in long maps the input range to 0 through 65535.
+  // Division yields 0 for negatives and 1 for nonnegative values.
+  // Subtracting 1 gives -1 or 0; long safely holds every intermediate.
+  long biased = (long)x + 32768L;
+  return (int)(biased / 32768L) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion maps negatives into the upper half of the range.
+  // Doubling then dividing by 65536 extracts that half's indicator.
+  // Unsigned long holds even 131070, so both extremes are handled safely.
+  // Converting the indicator to int before negation gives -1 or 0.
+  unsigned long u = (uint16_t)x;
+  return -(int)((u * 2UL) / 65536UL);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion sets bit 15 exactly for negative inputs.
+  // Toggling it places exactly those inputs below 32768.
+  // Negating the comparison gives -1 for negatives and 0 otherwise.
+  // The same test covers zero and both endpoints without overflow.
+  uint16_t u = x;
+  return -((u ^ 0x8000u) < 0x8000u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch directly on whether x is negative.
+  // Every negative value, including the minimum, returns -1.
+  // Zero and every positive value return 0 without any arithmetic on x.
+  if (x < 0)
+    return -1;
+  return 0;
+}

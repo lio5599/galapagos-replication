@@ -1,0 +1,9 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Extract the same 0-or-1 high bit as the reference.
+  // XOR with 1 reverses it; subtracting 1 gives the original bit's negative.
+  // All arithmetic is on 0 and 1, so zero and endpoints are safe.
+  uint16_t u = x;
+  int bit = (int)(u >> 15);
+  return (bit ^ 1) - 1;
+}

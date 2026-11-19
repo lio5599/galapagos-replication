@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int direction = v < 0 ? -1 : 1;
+    int magnitude = v * direction;
+    int delta;
+
+    magnitude *= magnitude < 2 * t;
+    delta = magnitude - t;
+    delta *= delta < 0 ? -1 : 1;
+
+    return (t - delta) * direction;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

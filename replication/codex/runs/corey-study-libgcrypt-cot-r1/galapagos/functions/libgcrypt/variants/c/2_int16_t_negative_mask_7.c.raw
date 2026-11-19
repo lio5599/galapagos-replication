@@ -1,0 +1,9 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion maps negatives into the upper half of the range.
+  // Doubling then dividing by 65536 extracts that half's indicator.
+  // Unsigned long holds even 131070, so both extremes are handled safely.
+  // Converting the indicator to int before negation gives -1 or 0.
+  unsigned long u = (uint16_t)x;
+  return -(int)((u * 2UL) / 65536UL);
+}

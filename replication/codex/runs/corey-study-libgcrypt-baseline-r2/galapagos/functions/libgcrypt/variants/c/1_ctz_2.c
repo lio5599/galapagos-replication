@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+    uint64_t mask = 1;
+    int r;
+
+    for (r = 0; r < 64; ++r) {
+        if (in & mask)
+            return r;
+        mask <<= 1;
+    }
+
+    return 64;
+}
+
+
+int main(){
+    ctz(0);
+}

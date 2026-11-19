@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Adding the unsigned additive inverse of 2^52 performs the same modular subtraction.
+    // Testing the original exponent clears all zero-exponent encodings without exceptions.
+    uint64_t decrement = ~((uint64_t)1 << 52) + (uint64_t)1;
+    uint64_t y = x + decrement;
+    uint64_t clear = (uint64_t)((x & ((uint64_t)0x7FF << 52)) == 0);
+    return y & (clear - (uint64_t)1);
+}
+
+
+int main(){
+    fpr_half(0);
+}

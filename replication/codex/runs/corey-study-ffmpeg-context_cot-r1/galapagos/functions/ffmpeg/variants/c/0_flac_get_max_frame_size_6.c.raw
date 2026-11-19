@@ -1,0 +1,21 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Expands the overhead calculation into its original individual operations.
+    // The two additions of seven remain separate to preserve intermediate semantics.
+    // Payload arithmetic and signed division are unchanged for every defined input.
+    int count = 16;
+    int overhead = 7 + bps;
+
+    overhead = overhead + 7;
+    overhead = overhead / 8;
+    overhead = ch * overhead;
+    count += overhead;
+
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        count += (ch * bps * blocksize + 7) / 8;
+    }
+    count += 2;
+    return count;
+}

@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+ // The complemented input AND its predecessor marks trailing zeros.
+ // For zero, unsigned subtraction makes this mask all 64 ones.
+ // Parallel population counting therefore returns the answer even for zero.
+ uint64_t x = ~in & (uint64_t)(in - UINT64_C(1));
+ x -= (x >> 1) & UINT64_C(0x5555555555555555);
+ x = (x & UINT64_C(0x3333333333333333))
+     + ((x >> 2) & UINT64_C(0x3333333333333333));
+ x = (x + (x >> 4)) & UINT64_C(0x0f0f0f0f0f0f0f0f);
+ x += x >> 8;
+ x += x >> 16;
+ x += x >> 32;
+ return (int)(x & UINT64_C(0x7f));
+}
+
+
+int main(){
+    ctz(0);
+}

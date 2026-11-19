@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Compute multiplication by 20159 as multiplication by 20160 minus a.
+  // Neither the multiplication nor subtraction overflows int32_t.
+  // The remaining operations preserve all boundary behavior.
+  int32_t product = (int32_t)20160 * a - a;
+  int16_t t = (product + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

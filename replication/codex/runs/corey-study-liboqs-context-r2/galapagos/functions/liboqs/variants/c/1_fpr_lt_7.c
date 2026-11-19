@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned different = (unsigned)((x ^ y) >> 63);
+    unsigned forward = (unsigned)((x - y) >> 63);
+    unsigned reverse = (unsigned)((y - x) >> 63);
+    unsigned same_sign_result = forward ^ ((forward ^ reverse) & sx);
+
+    return (int)(same_sign_result
+        ^ ((same_sign_result ^ sx) & different));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

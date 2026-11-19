@@ -1,0 +1,209 @@
+static int ctz(uint64_t in)
+{
+ // The reference counts trailing zero bits, returning 64 for zero.
+ // Scan from the least significant bit and stop at the first one.
+ // If no bit is set, all 64 positions are counted.
+ int r;
+ for (r = 0; r < 64; ++r)
+ {
+  if ((in >> r) & 1)
+   break;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Discard low zero bits until the least significant bit is one.
+ // Each shift accounts for one trailing zero; zero returns 64.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & 1) == 0)
+ {
+  ++r;
+  in >>= 1;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Move a single-bit mask upward, counting unset low positions.
+ // After testing bit 63, unsigned wraparound ends the scan.
+ // Thus zero counts all 64 bits without an out-of-range shift.
+ uint64_t mask = 1;
+ int r = 0;
+ while (mask != 0 && (in & mask) == 0)
+ {
+  ++r;
+  mask <<= 1;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Skip zero low blocks of decreasing power-of-two sizes.
+ // The remaining nonzero value locates the first set bit exactly.
+ // Handle zero separately because it has 64 trailing zeros.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ if ((in & UINT64_C(0xffffffff)) == 0)
+ {
+  r += 32;
+  in >>= 32;
+ }
+ if ((in & UINT64_C(0xffff)) == 0)
+ {
+  r += 16;
+  in >>= 16;
+ }
+ if ((in & UINT64_C(0xff)) == 0)
+ {
+  r += 8;
+  in >>= 8;
+ }
+ if ((in & UINT64_C(0xf)) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ if ((in & UINT64_C(3)) == 0)
+ {
+  r += 2;
+  in >>= 2;
+ }
+ if ((in & 1) == 0)
+  ++r;
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // Isolate the lowest set bit using unsigned subtraction.
+ // Each mask identifies one binary digit of that bit's index.
+ // The index equals the trailing-zero count; zero returns 64.
+ uint64_t bit;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ bit = in & (uint64_t)(UINT64_C(0) - in);
+ if (bit & UINT64_C(0xaaaaaaaaaaaaaaaa))
+  r |= 1;
+ if (bit & UINT64_C(0xcccccccccccccccc))
+  r |= 2;
+ if (bit & UINT64_C(0xf0f0f0f0f0f0f0f0))
+  r |= 4;
+ if (bit & UINT64_C(0xff00ff00ff00ff00))
+  r |= 8;
+ if (bit & UINT64_C(0xffff0000ffff0000))
+  r |= 16;
+ if (bit & UINT64_C(0xffffffff00000000))
+  r |= 32;
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // For nonzero input, XOR with its predecessor sets the low t+1 bits.
+ // Shifting once leaves t set bits, where t is the trailing-zero count.
+ // Clear one set bit per iteration; handle zero explicitly.
+ uint64_t bits;
+ int r = 0;
+ if (in == 0)
+  return 64;
+ bits = (in ^ (uint64_t)(in - UINT64_C(1))) >> 1;
+ while (bits != 0)
+ {
+  bits &= bits - UINT64_C(1);
+  ++r;
+ }
+ return r;
+}
+
+static int ctz(uint64_t in)
+{
+ // The complemented input AND its predecessor marks trailing zeros.
+ // For zero, unsigned subtraction makes this mask all 64 ones.
+ // Parallel population counting therefore returns the answer even for zero.
+ uint64_t x = ~in & (uint64_t)(in - UINT64_C(1));
+ x -= (x >> 1) & UINT64_C(0x5555555555555555);
+ x = (x & UINT64_C(0x3333333333333333))
+     + ((x >> 2) & UINT64_C(0x3333333333333333));
+ x = (x + (x >> 4)) & UINT64_C(0x0f0f0f0f0f0f0f0f);
+ x += x >> 8;
+ x += x >> 16;
+ x += x >> 32;
+ return (int)(x & UINT64_C(0x7f));
+}
+
+static int ctz(uint64_t in)
+{
+ // Skip zero nibbles, then classify the first nonzero nibble.
+ // Its lowest set bit adds zero through three to the skipped count.
+ // Zero is handled separately so the skipping loop always terminates.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ while ((in & UINT64_C(15)) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ switch ((unsigned int)(in & UINT64_C(15)))
+ {
+  case 8:
+   return r + 3;
+  case 4:
+  case 12:
+   return r + 2;
+  case 2:
+  case 6:
+  case 10:
+  case 14:
+   return r + 1;
+  default:
+   return r;
+ }
+}
+
+static int ctz(uint64_t in)
+{
+ // Binary-search the position of the lowest set bit.
+ // A nonzero low prefix places it below the midpoint; otherwise above.
+ // Zero returns 64 separately; every tested shift is between 1 and 63.
+ int low = 0;
+ int high = 63;
+ if (in == 0)
+  return 64;
+ while (low < high)
+ {
+  int mid = low + (high - low) / 2;
+  uint64_t mask = (UINT64_C(1) << (mid + 1)) - UINT64_C(1);
+  if ((in & mask) != 0)
+   high = mid;
+  else
+   low = mid + 1;
+ }
+ return low;
+}
+
+static int ctz(uint64_t in)
+{
+ // Spread every set bit toward higher positions, leaving low zeros intact.
+ // Afterwards only the original trailing-zero positions remain zero.
+ // Count all zero bits; zero stays zero and therefore returns 64.
+ int i;
+ int r = 0;
+ in |= in << 1;
+ in |= in << 2;
+ in |= in << 4;
+ in |= in << 8;
+ in |= in << 16;
+ in |= in << 32;
+ for (i = 0; i < 64; ++i)
+  r += (int)(((in >> i) & UINT64_C(1)) ^ UINT64_C(1));
+ return r;
+}

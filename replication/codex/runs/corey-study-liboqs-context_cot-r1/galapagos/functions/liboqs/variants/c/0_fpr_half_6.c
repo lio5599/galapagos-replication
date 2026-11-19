@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // For a nonzero exponent, decrementing it preserves the sign and fraction.
+    // Reassemble those fields directly; zero exponents must instead return zero.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t other = x & ~((uint64_t)0x7FF << 52);
+    if (e == 0)
+        return (uint64_t)0;
+    return other | ((e - 1) << 52);
+}
+
+
+int main(){
+    fpr_half(0);
+}

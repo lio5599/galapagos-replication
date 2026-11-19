@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Convert a nonzero original exponent into an all-ones unsigned mask.
+    // The mask preserves subtraction for every nonzero exponent encoding.
+    // A zero exponent clears every bit, including the sign and fraction.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FFU;
+    uint64_t mask = (uint64_t)0 - (uint64_t)(e != 0);
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+
+int main(){
+    fpr_half(0);
+}

@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Retains the reference's sign masks and absolute-value operations.
+    // A conditional selection replaces multiplication by the zero-or-one gate.
+    // All signed arithmetic and its edge cases otherwise remain unchanged.
+    int s2, s1 = v >> 31;
+    v ^= s1;
+    v -= s1;
+    v = v < 2 * t ? v : 0;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

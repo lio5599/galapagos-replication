@@ -1,0 +1,85 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // The reference returns -1 for negative x and 0 otherwise.
+  // The comparison produces 1 exactly for negative values.
+  // Negation gives the required mask, including at both limits and zero.
+  return -(x < 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Select the mask directly according to the sign of x.
+  // All negative values, including -32768, yield -1.
+  // Zero and all positive values yield 0.
+  return x < 0 ? -1 : 0;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch on whether x is nonnegative.
+  // Zero and 32767 return 0; every negative value returns -1.
+  // No arithmetic on x is needed, so -32768 is safe.
+  if (x >= 0)
+    return 0;
+  return -1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // The comparison is 0 for negative x and 1 otherwise.
+  // Subtracting 1 produces -1 or 0 respectively.
+  // This also handles zero and both int16_t limits without overflow.
+  return (x >= 0) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion maps negatives into 32768 through 65535.
+  // Nonnegative values remain in 0 through 32767.
+  // Division therefore gives 1 or 0, including at every boundary.
+  uint16_t u = x;
+  return -(int)(u / 32768u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // After unsigned conversion, precisely the negative inputs exceed 32767.
+  // Negating that comparison gives the reference mask.
+  // Zero, -32768, and 32767 all fall on the correct side.
+  return -((uint16_t)x > 32767u);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion preserves the reference's high-bit test.
+  // Masking isolates bit 15, which is set exactly for negative inputs.
+  // The comparison and negation yield -1 or 0 even at both limits.
+  uint16_t u = x;
+  return -((u & 0x8000u) != 0);
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // As in the reference, shifting the unsigned value extracts bit 15.
+  // Its value is 1 for negatives and 0 for nonnegatives.
+  // Multiplication by -1 is safe for both values, including edge inputs.
+  uint16_t u = x;
+  return (int)(u >> 15) * -1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Widening before adding maps the input range into 0 through 65535.
+  // Division gives 0 for negatives and 1 for nonnegatives.
+  // Subtracting 1 gives the mask; long safely holds all intermediates.
+  return (int)(((long)x + 32768L) / 32768L) - 1;
+}
+
+static int int16_t_negative_mask (int16_t x)
+{
+  // Unsigned conversion sets bit 15 exactly for negative inputs.
+  // XOR flips that bit, and shifting extracts its opposite value.
+  // Subtracting 1 yields -1 for negatives and 0 otherwise, at all limits.
+  uint16_t u = x;
+  return (int)((u ^ 0x8000u) >> 15) - 1;
+}

@@ -1,0 +1,187 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes sign-restored t - abs((abs(v) < 2*t ? abs(v) : 0) - t).
+    // Branches replace the reference's two absolute-value operations.
+    // Zero is treated as nonnegative; equality at 2*t selects zero.
+    // Nonpositive t also selects zero before the inner subtraction.
+    // Equivalence assumes arithmetic signed right shift and no undefined
+    // signed arithmetic in the reference, including its negation of INT_MIN.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d, r;
+    if (a >= 2 * t)
+        a = 0;
+    d = a - t;
+    if (d < 0)
+        d = -d;
+    r = t - d;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Conditional expressions implement the same absolute values and gate.
+    // The strict comparison preserves the reference's boundary at 2*t.
+    // For nonpositive t the gate is zero, giving 2*t before sign restoration.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int x = a < 2 * t ? a : 0;
+    int d = x - t;
+    int r = t - (d < 0 ? -d : d);
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Expands the expression into its three triangular segments for t > 0.
+    // At a == t both segments give t; at a == 2*t the result is zero.
+    // For t <= 0 the reference's gate is always zero, yielding 2*t.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+    if (t <= 0)
+        r = 2 * t;
+    else if (a < t)
+        r = a;
+    else if (a < 2 * t)
+        r = 2 * t - a;
+    else
+        r = 0;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Early returns select the same triangular segments without a final fold.
+    // The rising segment returns v itself, including zero and a == t.
+    // The endpoint a == 2*t and all larger magnitudes return zero.
+    // Nonpositive t gives sign-restored 2*t, as in the reference.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a, r;
+    if (t <= 0) {
+        r = 2 * t;
+        return negative ? -r : r;
+    }
+    a = negative ? -v : v;
+    if (a <= t)
+        return v;
+    if (a >= 2 * t)
+        return 0;
+    r = 2 * t - a;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // For positive t, the triangle is max(0, min(a, 2*t - a)).
+    // Its minimum switches at a == t and reaches zero at a == 2*t.
+    // Nonpositive t must instead retain the reference's 2*t result.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+    if (t <= 0) {
+        r = 2 * t;
+    } else {
+        int descending = 2 * t - a;
+        r = a < descending ? a : descending;
+        if (r < 0)
+            r = 0;
+    }
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // For positive t, clamp t - abs(a - t) to zero outside the triangle.
+    // This equals the gated reference even when a is at or beyond 2*t.
+    // Zero and a == t produce zero and t respectively before sign restoration.
+    // Nonpositive t is handled separately because its reference result is 2*t.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+    if (t <= 0) {
+        r = 2 * t;
+    } else {
+        int distance = a - t;
+        if (distance < 0)
+            distance = -distance;
+        r = t - distance;
+        if (r < 0)
+            r = 0;
+    }
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Keeps the reference's absolute-value and sign-restoration bit operations.
+    // A conditional replaces multiplication by the zero-or-one gate.
+    // The inner absolute value is evaluated by a branch instead of a mask.
+    // Strict gating preserves endpoints and the nonpositive-t behavior.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int s = v >> 31;
+    int a = (v ^ s) - s;
+    int d, r;
+    a = a < 2 * t ? a : 0;
+    d = a - t;
+    if (d < 0)
+        d = -d;
+    r = t - d;
+    r += s;
+    return r ^ s;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Keeps the reference's gate multiplication and inner absolute-value mask.
+    // Branches replace only the outer absolute value and sign restoration.
+    // Thus zero, the strict 2*t boundary, and nonpositive t follow the same gate.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d, s, r;
+    a *= a < 2 * t;
+    d = a - t;
+    s = d >> 31;
+    d = (d ^ s) - s;
+    r = t - d;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // After the original gate, t - abs(x - t) is x when x <= t.
+    // Otherwise it is 2*t - x, eliminating the second absolute value.
+    // Equality at either threshold is preserved; t <= 0 gives x == 0.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int x = a < 2 * t ? a : 0;
+    int r = x <= t ? x : 2 * t - x;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Evaluates the positive-t triangle directly in signed input coordinates.
+    // The central interval returns v; the two outer ramps meet zero at +/-2*t.
+    // Equality at +/-t stays on the central interval with the same value.
+    // For nonpositive t, restore the input sign to the reference's 2*t result.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int limit = 2 * t;
+    if (t <= 0)
+        return v < 0 ? -limit : limit;
+    if (v >= 0) {
+        if (v <= t)
+            return v;
+        return v < limit ? limit - v : 0;
+    }
+    if (v >= -t)
+        return v;
+    return v > -limit ? -limit - v : 0;
+}

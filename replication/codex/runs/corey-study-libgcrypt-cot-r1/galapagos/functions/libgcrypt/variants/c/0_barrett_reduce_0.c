@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // The reference computes the residue modulo 3329 in the range -1664 to 1664.
+  // Signed remainder followed by centering gives that unique residue.
+  // Widening keeps all operations safe, including for a equal to -32768.
+  int32_t r = (int32_t)a % 3329;
+  if (r > 1664)
+    r -= 3329;
+  else if (r < -1664)
+    r += 3329;
+  return (int16_t)r;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

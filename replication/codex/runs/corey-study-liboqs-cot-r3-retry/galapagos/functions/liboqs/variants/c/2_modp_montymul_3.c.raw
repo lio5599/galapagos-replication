@@ -1,0 +1,12 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Split a into 16-bit limbs to form the same exact 64-bit product.
+    // Both partial products and their sum fit, including at maximum inputs.
+    // Reduction and correction are unchanged, preserving every edge case.
+    uint64_t z = (uint64_t)(a & (uint32_t)0xFFFF) * b
+        + (((uint64_t)(a >> 16) * b) << 16);
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+
+    d += p & -(d >> 31);
+    return d;
+}

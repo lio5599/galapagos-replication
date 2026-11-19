@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Adding ten moduli preserves the residue and makes every input positive.
+  // Ordinary remainder can then be centered with a single correction.
+  // The biased range is 522 through 66057, safely inside int32_t.
+  int32_t r = ((int32_t)a + 33290) % 3329;
+  if (r > 1664)
+    r -= 3329;
+  return (int16_t)r;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

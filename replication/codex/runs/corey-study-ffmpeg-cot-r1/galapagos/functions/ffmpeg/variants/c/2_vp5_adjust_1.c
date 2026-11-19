@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Conditional expressions implement the same absolute values and gate.
+    // The strict comparison preserves the reference's boundary at 2*t.
+    // For nonpositive t the gate is zero, giving 2*t before sign restoration.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int x = a < 2 * t ? a : 0;
+    int d = x - t;
+    int r = t - (d < 0 ? -d : d);
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

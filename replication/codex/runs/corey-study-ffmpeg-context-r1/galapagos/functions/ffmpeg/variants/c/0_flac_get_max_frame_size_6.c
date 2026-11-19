@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    int count = 16;
+    int header = 7 + bps;
+    int payload;
+
+    header += 7;
+    header /= 8;
+    header *= ch;
+    count += header;
+
+    payload = (ch == 2) ? (2 * bps + 1) : (ch * bps);
+    payload = payload * blocksize + 7;
+    count += payload / 8;
+    return count + 2;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

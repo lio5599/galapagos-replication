@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Expresses the calculation as one explicitly grouped return expression.
+    // The conditional evaluates only the applicable original payload formula.
+    // Grouping preserves addition order and signed truncation for edge cases
+    // wherever the reference arithmetic is defined.
+    return ((16 + ch * ((7 + bps + 7) / 8))
+            + ((ch == 2)
+                ? ((2 * bps + 1) * blocksize + 7) / 8
+                : (ch * bps * blocksize + 7) / 8))
+           + 2;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

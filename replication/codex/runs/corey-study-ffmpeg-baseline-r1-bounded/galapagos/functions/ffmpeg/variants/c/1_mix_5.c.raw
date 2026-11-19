@@ -1,0 +1,11 @@
+static int mix(int c0, int c1)
+{
+    int a[3] = {c0 & 31, (c0 & 992) >> 5, c0 >> 10};
+    int b[3] = {c1 & 31, (c1 & 992) >> 5, c1 >> 10};
+    int weights[3] = {1, 32, 1024};
+    int result = 0;
+    int i;
+    for (i = 0; i < 3; ++i)
+        result += ((2 * a[i] + b[i]) / 3) * weights[i];
+    return result;
+}

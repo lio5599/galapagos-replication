@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Branch on negativity and return the corresponding constant.
+  // No arithmetic on x is needed, so zero and both endpoints are safe.
+  if (x < 0)
+    return -1;
+  return 0;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

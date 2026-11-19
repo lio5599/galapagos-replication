@@ -1,0 +1,12 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Replaces the final mask with a branch on the same top bit.
+    // The test is on the wrapped difference, not an unsigned comparison.
+    // Thus underflow, overflow, and arbitrary parameter values retain
+    // exactly the reference behavior.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & 0x7FFFFFFFULL) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    if (d >> 31)
+        d += p;
+    return d;
+}

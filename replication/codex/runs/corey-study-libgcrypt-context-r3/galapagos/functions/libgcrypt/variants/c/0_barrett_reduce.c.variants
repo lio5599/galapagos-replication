@@ -1,0 +1,111 @@
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int16_t t;
+  t = ((int32_t)20159 * a + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  const int16_t v = ((1 << 26) + 3329 / 2) / 3329;
+  int32_t n = (int32_t)a * v;
+  n += 33554432;
+  int16_t t = n >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = (int32_t)a * 20159 + 16777216;
+  int16_t t = (n + 16777216) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = (int32_t)a * 20160 - a;
+  int16_t t = (n + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = (int32_t)a * 20000 + (int32_t)a * 159;
+  int16_t t = (n + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = (int32_t)a * 16384 + (int32_t)a * 3775;
+  int16_t t = (n + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = ((int32_t)a * 63) * 320 - a;
+  int16_t t = (n + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = 33554432 - (int32_t)a * (-20159);
+  int16_t t = n >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int64_t n = (int64_t)a * 20159 + 33554432;
+  int16_t t = n >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+
+#include <stdint.h>
+
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = (int32_t)a * 20159 + 33554432;
+  n >>= 13;
+  int16_t t = n >> 13;
+  t *= 3329;
+  return a - t;
+}

@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Propagate any set exponent bit down to bit zero.
+    // The resulting low bit indicates precisely whether the exponent was nonzero.
+    // Its unsigned negation preserves subtraction or clears the entire encoding.
+    uint32_t e = (uint32_t)(x >> 52) & 0x7FFU;
+    e |= e >> 8;
+    e |= e >> 4;
+    e |= e >> 2;
+    e |= e >> 1;
+    return (x - ((uint64_t)1 << 52))
+        & ((uint64_t)0 - (uint64_t)(e & 1U));
+}
+
+
+int main(){
+    fpr_half(0);
+}

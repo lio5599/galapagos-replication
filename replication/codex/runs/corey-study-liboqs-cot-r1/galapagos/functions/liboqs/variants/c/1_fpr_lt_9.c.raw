@@ -1,0 +1,18 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Inspect bytes from most significant to least for equal-sign values.
+    // The first unequal byte determines order, reversed for negatives.
+    // No unequal byte means equality; different signs include signed zeros.
+    unsigned sx = (unsigned)(x >> 63);
+    int shift;
+    if (sx != (unsigned)(y >> 63)) {
+        return (int)sx;
+    }
+    for (shift = 56; shift >= 0; shift -= 8) {
+        unsigned bx = (unsigned)((x >> shift) & 255U);
+        unsigned by = (unsigned)((y >> shift) & 255U);
+        if (bx != by) {
+            return sx ? bx > by : bx < by;
+        }
+    }
+    return 0;
+}

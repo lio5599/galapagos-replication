@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int ctz(uint64_t in)
+{
+    int r = 0;
+
+    if (in == 0)
+        return 64;
+
+    while ((in & UINT64_C(0xF)) == 0) {
+        r += 4;
+        in >>= 4;
+    }
+
+    switch ((unsigned int)(in & UINT64_C(0xF))) {
+    case 1: case 3: case 5: case 7:
+    case 9: case 11: case 13: case 15:
+        return r;
+    case 2: case 6: case 10: case 14:
+        return r + 1;
+    case 4: case 12:
+        return r + 2;
+    default:
+        return r + 3;
+    }
+}
+
+
+int main(){
+    ctz(0);
+}

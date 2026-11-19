@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  // Recover the truncating-division remainder by multiplying the quotient.
+  // Boolean corrections move it into the reference's centered interval.
+  // Each comparison contributes zero or one; all arithmetic fits int32_t.
+  // Strict comparisons preserve the valid boundary residues -1664 and 1664.
+  int32_t x = a;
+  int32_t r = x - (x / 3329) * 3329;
+  r -= 3329 * (r > 1664);
+  r += 3329 * (r < -1664);
+  return (int16_t)r;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

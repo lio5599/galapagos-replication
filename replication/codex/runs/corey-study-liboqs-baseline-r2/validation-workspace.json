@@ -1,0 +1,33 @@
+{
+  "path": "/home/cbh/galapagos-corey-runs/corey-study-liboqs-baseline-r2",
+  "selection": {
+    "liboqs": [
+      "fpr_half",
+      "fpr_lt",
+      "modp_montymul"
+    ]
+  },
+  "original_indices": {
+    "liboqs": [
+      0,
+      1,
+      2
+    ]
+  },
+  "patches": [
+    "split_variants.py: skip unselected reference indices; preserve original indices",
+    "template_variants.py: skip unselected reference indices; preserve original indices",
+    "compile_variants.py: skip unselected reference indices; preserve original indices",
+    "case.py: per-run build-copy directory; prevents stale builds across conditions",
+    "tests/usecase.py: flushed progress events before build/test/verification; same check calls",
+    "tests/usecase.py: bound existing variant concurrency to 2; checks unchanged"
+  ],
+  "base": "/home/cbh/galapagos-replication",
+  "source_run": "/mnt/c/COMS6650/FinalProject/replication/codex/runs/corey-study-liboqs-baseline-r2",
+  "concurrency": 2,
+  "source_revision": "1188d2708a3a1bf36e956bc4891372223bbe02f2",
+  "metadata_sha256": {
+    "liboqs": "41de16881827a717277594011e553829d08d19a2b900a2a744a689e3d758c645"
+  },
+  "note": "No generated body edits; no automatic repair or regeneration"
+}

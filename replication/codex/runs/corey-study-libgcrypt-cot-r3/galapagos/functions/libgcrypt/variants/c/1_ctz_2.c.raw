@@ -1,0 +1,35 @@
+int ctz(uint64_t in)
+{
+ // Skip zero blocks of successively smaller sizes.
+ // Each skipped block contributes its width to the trailing-zero count.
+ // Zero is handled explicitly; otherwise the remaining low bit is located.
+ int r = 0;
+ if (in == 0)
+  return 64;
+ if ((in & 0xffffffffULL) == 0)
+ {
+  r += 32;
+  in >>= 32;
+ }
+ if ((in & 0xffffULL) == 0)
+ {
+  r += 16;
+  in >>= 16;
+ }
+ if ((in & 0xffULL) == 0)
+ {
+  r += 8;
+  in >>= 8;
+ }
+ if ((in & 0xfULL) == 0)
+ {
+  r += 4;
+  in >>= 4;
+ }
+ if ((in & 3) == 0)
+ {
+  r += 2;
+  in >>= 2;
+ }
+ return r + ((in & 1) == 0);
+}

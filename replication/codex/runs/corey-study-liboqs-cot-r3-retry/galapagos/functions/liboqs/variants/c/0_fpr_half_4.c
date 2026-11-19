@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // For a nonzero exponent, subtraction changes only the exponent field.
+    // Preserve the sign and fraction and insert the decremented exponent.
+    // Handle every zero-exponent encoding separately to avoid borrowing into the sign.
+    uint64_t exponent_mask = (uint64_t)0x7FF << 52;
+    uint64_t e = (x & exponent_mask) >> 52;
+    if (e == 0) {
+        return 0;
+    }
+    return (x & ~exponent_mask) | ((e - 1) << 52);
+}
+
+
+int main(){
+    fpr_half(0);
+}

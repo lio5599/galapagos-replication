@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+    int32_t product = (int32_t)a * 20159;
+    int32_t quotient = product >> 26;
+    int32_t remainder = product - quotient * 67108864;
+    quotient += (remainder + 33554432) >> 26;
+    int16_t t = (int16_t)quotient;
+    t *= 3329;
+    return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

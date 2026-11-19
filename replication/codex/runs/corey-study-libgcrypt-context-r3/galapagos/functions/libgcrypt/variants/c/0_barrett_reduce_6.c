@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int16_t barrett_reduce(int16_t a) {
+  int32_t n = ((int32_t)a * 63) * 320 - a;
+  int16_t t = (n + 33554432) >> 26;
+  t *= 3329;
+  return a - t;
+}
+
+
+int main(){
+    barrett_reduce(0);
+}

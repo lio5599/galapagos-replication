@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Build monotone unsigned keys without conditional expressions.
+    // The XOR mask is all ones for negatives and just the sign bit for positives.
+    // The mapping is bijective, preserving equality and distinguishing signed zeros.
+    uint64_t sign = (uint64_t)1 << 63;
+    uint64_t mx = ((uint64_t)0 - (x >> 63)) | sign;
+    uint64_t my = ((uint64_t)0 - (y >> 63)) | sign;
+
+    return (x ^ mx) < (y ^ my);
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

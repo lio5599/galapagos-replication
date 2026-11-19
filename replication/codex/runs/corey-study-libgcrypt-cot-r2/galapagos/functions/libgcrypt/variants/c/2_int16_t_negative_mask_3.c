@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // The comparison is 0 for negative x and 1 otherwise.
+  // Subtracting 1 produces -1 or 0 respectively.
+  // This also handles zero and both int16_t limits without overflow.
+  return (x >= 0) - 1;
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

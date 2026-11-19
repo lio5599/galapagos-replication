@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int int16_t_negative_mask (int16_t x)
+{
+  // Widening and subtracting maps inputs to -65535 through 0.
+  // The numerator is at most -32768 exactly for negative inputs.
+  // Division truncates toward zero, yielding -1 or 0 as required.
+  // All intermediate values fit in long, including at both endpoints.
+  return (int)(((long)x - 32767L) / 32768L);
+}
+
+
+int main(){
+    int16_t_negative_mask(0);
+}

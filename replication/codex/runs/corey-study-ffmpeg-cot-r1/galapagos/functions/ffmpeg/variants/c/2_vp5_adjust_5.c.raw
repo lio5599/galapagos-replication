@@ -1,0 +1,22 @@
+static int vp5_adjust(int v, int t)
+{
+    // For positive t, clamp t - abs(a - t) to zero outside the triangle.
+    // This equals the gated reference even when a is at or beyond 2*t.
+    // Zero and a == t produce zero and t respectively before sign restoration.
+    // Nonpositive t is handled separately because its reference result is 2*t.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+    if (t <= 0) {
+        r = 2 * t;
+    } else {
+        int distance = a - t;
+        if (distance < 0)
+            distance = -distance;
+        r = t - distance;
+        if (r < 0)
+            r = 0;
+    }
+    return negative ? -r : r;
+}

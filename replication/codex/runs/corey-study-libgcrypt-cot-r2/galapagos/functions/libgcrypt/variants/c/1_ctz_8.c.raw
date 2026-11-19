@@ -1,0 +1,20 @@
+int ctz(uint64_t in)
+{
+ // Binary-search the position of the lowest set bit.
+ // A nonzero low prefix places it below the midpoint; otherwise above.
+ // Zero returns 64 separately; every tested shift is between 1 and 63.
+ int low = 0;
+ int high = 63;
+ if (in == 0)
+  return 64;
+ while (low < high)
+ {
+  int mid = low + (high - low) / 2;
+  uint64_t mask = (UINT64_C(1) << (mid + 1)) - UINT64_C(1);
+  if ((in & mask) != 0)
+   high = mid;
+  else
+   low = mid + 1;
+ }
+ return low;
+}

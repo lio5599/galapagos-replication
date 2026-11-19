@@ -1,0 +1,8 @@
+static int int16_t_negative_mask (int16_t x)
+{
+  // Adding 32768 in long maps the input range to 0 through 65535.
+  // Division yields 0 for negatives and 1 for nonnegative values.
+  // Subtracting 1 gives -1 or 0; long safely holds every intermediate.
+  long biased = (long)x + 32768L;
+  return (int)(biased / 32768L) - 1;
+}

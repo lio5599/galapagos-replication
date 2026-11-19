@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Multiply the wrapped subtraction by either zero or one.
+    // The zero case is exactly the original zero-exponent case cleared by reference.
+    uint64_t keep = (uint64_t)((x & ((uint64_t)0x7FF << 52)) != 0);
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return y * keep;
+}
+
+
+int main(){
+    fpr_half(0);
+}

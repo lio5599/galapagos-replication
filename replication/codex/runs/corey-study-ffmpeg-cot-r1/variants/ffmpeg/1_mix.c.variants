@@ -1,0 +1,186 @@
+static int mix(int c0, int c1)
+{
+    // Computes the component-wise 2:1 weighted average, truncating division by 3.
+    // Extracting green before weighting gives the same nonnegative sum.
+    // Red retains the original signed shifts and division, including negative inputs.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return (red / 3) * 1024 + (green / 3) * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Stores the weighted component sums in an array and divides them uniformly.
+    // Blue and green are nonnegative; signed red division truncates as originally.
+    // The original red shifts and final reconstruction order are preserved.
+    int components[3];
+    int i;
+    components[0] = 2 * (c0 & 31) + (c1 & 31);
+    components[1] = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    components[2] = 2 * (c0 >> 10) + (c1 >> 10);
+    for (i = 0; i < 3; ++i)
+        components[i] /= 3;
+    return components[2] * 1024 + components[1] * 32 + components[0];
+}
+
+static int mix(int c0, int c1)
+{
+    // Splits each nonnegative input component into quotient and remainder modulo 3.
+    // The remainder contribution supplies exactly the missing quotient carry.
+    // This includes component endpoints 0 and 31; signed red is unchanged.
+    int b0 = c0 & 31;
+    int b1 = c1 & 31;
+    int g0 = (c0 & 0x03E0) >> 5;
+    int g1 = (c1 & 0x03E0) >> 5;
+    int blue = 2 * (b0 / 3) + b1 / 3 + (2 * (b0 % 3) + b1 % 3) / 3;
+    int green = 2 * (g0 / 3) + g1 / 3 + (2 * (g0 % 3) + g1 % 3) / 3;
+    int red = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    return red * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // Uses an exact bounded reciprocal for blue and green division.
+    // For every n from 0 through 93, floor(n * 171 / 512) equals floor(n / 3).
+    // The largest product is 15903, safe even with 16-bit int.
+    // Red keeps signed division, preserving negative-input behavior.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = (blue * 171) >> 9;
+    green = (green * 171) >> 9;
+    return (red / 3) * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // Counts complete groups of three in the nonnegative blue and green sums.
+    // The leftover 0, 1, or 2 is discarded, exactly matching integer division.
+    // Zero and maximum components work identically; signed red is unchanged.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int b = 0;
+    int g = 0;
+    while (blue >= 3) {
+        blue -= 3;
+        ++b;
+    }
+    while (green >= 3) {
+        green -= 3;
+        ++g;
+    }
+    return (red / 3) * 1024 + g * 32 + b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Greedily subtracts 3 times descending powers of two to form each quotient.
+    // Blue and green sums are at most 93, so quotient bits 16 through 1 suffice.
+    // Remainders below 3 are discarded, including at both range endpoints.
+    // Signed red retains the original operations.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int b = 0;
+    int g = 0;
+    int bit;
+    for (bit = 16; bit != 0; bit >>= 1) {
+        int threshold = 3 * bit;
+        if (blue >= threshold) {
+            blue -= threshold;
+            b += bit;
+        }
+        if (green >= threshold) {
+            green -= threshold;
+            g += bit;
+        }
+    }
+    return (red / 3) * 1024 + g * 32 + b;
+}
+
+static int mix(int c0, int c1)
+{
+    // Implements division by counting signed groups of three for every component.
+    // Positive sums decrease and negative sums increase toward zero.
+    // Stopping between -2 and 2 exactly implements truncation toward zero.
+    // No negation of a potentially minimum signed value is needed.
+    int sums[3];
+    int quotients[3] = { 0, 0, 0 };
+    int i;
+    sums[0] = 2 * (c0 & 31) + (c1 & 31);
+    sums[1] = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    sums[2] = 2 * (c0 >> 10) + (c1 >> 10);
+    for (i = 0; i < 3; ++i) {
+        while (sums[i] >= 3) {
+            sums[i] -= 3;
+            ++quotients[i];
+        }
+        while (sums[i] <= -3) {
+            sums[i] += 3;
+            --quotients[i];
+        }
+    }
+    return quotients[2] * 1024 + quotients[1] * 32 + quotients[0];
+}
+
+static int mix(int c0, int c1)
+{
+    // Performs weighting and reconstruction in long, which is at least as wide as int.
+    // Input red shifts still occur in int, preserving their implementation's behavior.
+    // Signed division has the same truncation; nonnegative green extraction is exact.
+    // Whenever the reference is defined, its result fits int and the cast is exact.
+    long blue = 2L * (c0 & 31) + (c1 & 31);
+    long green = 2L * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    long red = 2L * (c0 >> 10) + (c1 >> 10);
+    return (int)((red / 3) * 1024L + (green / 3) * 32L + blue / 3);
+}
+
+static int mix(int c0, int c1)
+{
+    // Replaces doubling with addition and packs the disjoint low component fields.
+    // Averaged blue and green lie in 0 through 31, so their fields cannot overlap.
+    // The nonnegative green shift is safe; red still uses signed multiplication.
+    // Adding the packed low fields preserves results even when red is negative.
+    int blue = c0 & 31;
+    int green = (c0 & 0x03E0) >> 5;
+    int red = c0 >> 10;
+    int low;
+    blue = (blue + blue + (c1 & 31)) / 3;
+    green = (green + green + ((c1 & 0x03E0) >> 5)) / 3;
+    red = (red + red + (c1 >> 10)) / 3;
+    low = (green << 5) | blue;
+    return red * 1024 + low;
+}
+
+static int mix(int c0, int c1)
+{
+    // Uses binary long division by three for the two nonnegative component sums.
+    // Seven input bits cover every possible sum from 0 through 93.
+    // Each step keeps a remainder below 3, producing the exact quotient.
+    // Zero and endpoint sums are handled naturally; signed red remains unchanged.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int b = 0;
+    int g = 0;
+    int br = 0;
+    int gr = 0;
+    int bit;
+    for (bit = 6; bit >= 0; --bit) {
+        br = 2 * br + ((blue >> bit) & 1);
+        gr = 2 * gr + ((green >> bit) & 1);
+        b *= 2;
+        g *= 2;
+        if (br >= 3) {
+            br -= 3;
+            ++b;
+        }
+        if (gr >= 3) {
+            gr -= 3;
+            ++g;
+        }
+    }
+    return (red / 3) * 1024 + g * 32 + b;
+}

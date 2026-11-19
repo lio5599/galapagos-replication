@@ -1,0 +1,19 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Resolve signs first, then compare the upper and lower 32-bit portions.
+    // Lexicographic portion comparisons reproduce unsigned order, reversed for negatives.
+    // Equal upper portions defer to strict lower comparisons, including full equality.
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+    uint64_t hx = x >> 32;
+    uint64_t hy = y >> 32;
+    uint64_t lx = x & (uint64_t)0xFFFFFFFF;
+    uint64_t ly = y & (uint64_t)0xFFFFFFFF;
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    if (hx != hy) {
+        return sx ? (hx > hy) : (hx < hy);
+    }
+    return sx ? (lx > ly) : (lx < ly);
+}

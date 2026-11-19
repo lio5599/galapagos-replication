@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // After the original gate, t - abs(x - t) is x when x <= t.
+    // Otherwise it is 2*t - x, eliminating the second absolute value.
+    // Equality at either threshold is preserved; t <= 0 gives x == 0.
+    // Assumes arithmetic signed right shift and defined reference arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int x = a < 2 * t ? a : 0;
+    int r = x <= t ? x : 2 * t - x;
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}
