@@ -1,0 +1,17 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Stores the selected payload size before adding it to the accumulator.
+    // Each expression and accumulator update preserves the original grouping.
+    // Signed division remains identical for zero and negative operands.
+    int count = 16;
+    int payload;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        payload = (ch * bps * blocksize + 7) / 8;
+    }
+    count += payload;
+    count += 2;
+    return count;
+}

@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses one temporary for the channel contribution and then the payload.
+    // Updating the running total follows the original sequence of additions.
+    // Both payload formulas and signed divisions are unchanged for all defined inputs.
+    int count = 16;
+    int contribution = ch * ((7 + bps + 7) / 8);
+
+    count = count + contribution;
+    contribution = (ch == 2)
+        ? ((2 * bps + 1) * blocksize + 7) / 8
+        : (ch * bps * blocksize + 7) / 8;
+    count = count + contribution;
+    return count + 2;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

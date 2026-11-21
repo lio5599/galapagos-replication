@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Select the result directly with nested conditional expressions.
+    // Outside the cutoff, the reference gives zero for nonnegative t and 2*t otherwise.
+    // Inside the cutoff, the two linear pieces agree at the peak and preserve zero.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r = a >= 2 * t
+          ? (t < 0 ? 2 * t : 0)
+          : (a <= t ? a : 2 * t - a);
+
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

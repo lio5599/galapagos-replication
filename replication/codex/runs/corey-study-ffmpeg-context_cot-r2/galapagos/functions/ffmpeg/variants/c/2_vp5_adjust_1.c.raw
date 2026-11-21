@@ -1,0 +1,11 @@
+static int vp5_adjust(int v, int t)
+{
+    // Conditional expressions replace the reference's sign-mask operations.
+    // The strict gate and subtraction order preserve threshold boundaries.
+    // This also retains the reference's behavior for zero and negative t.
+    int a = v < 0 ? -v : v;
+    int b = a < 2 * t ? a : 0;
+    int d = b - t;
+    int r = t - (d < 0 ? -d : d);
+    return v < 0 ? -r : r;
+}

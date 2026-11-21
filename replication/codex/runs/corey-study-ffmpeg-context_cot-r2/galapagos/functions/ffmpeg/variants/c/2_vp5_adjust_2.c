@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Retains both reference absolute-value transformations.
+    // A conditional selection replaces multiplication by a Boolean.
+    // The final sign restoration and all boundary cases remain unchanged.
+    int s1 = v >> 31;
+    int a = (v ^ s1) - s1;
+    int b = a < 2 * t ? a : 0;
+    int d = b - t;
+    int s2 = d >> 31;
+    int r = t - ((d ^ s2) - s2);
+    return (r + s1) ^ s1;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

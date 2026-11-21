@@ -1,0 +1,16 @@
+static int mix(int c0, int c1)
+{
+    // The reference averages each channel with weights 2:1, truncating division by 3.
+    // Extracting channels first preserves the masked blue and green values.
+    // Red remains unmasked, with the original signed shift and division behavior.
+    // Zero and maximum channel values use the same arithmetic as the reference.
+    int b0 = c0 & 0x001F;
+    int b1 = c1 & 0x001F;
+    int g0 = (c0 & 0x03E0) >> 5;
+    int g1 = (c1 & 0x03E0) >> 5;
+    int r0 = c0 >> 10;
+    int r1 = c1 >> 10;
+    return ((2 * r0 + r1) / 3) * 1024
+         + ((2 * g0 + g1) / 3) * 32
+         + (2 * b0 + b1) / 3;
+}

@@ -1,0 +1,15 @@
+static int mix(int c0, int c1)
+{
+    // Divide the magnitude of a negative red sum and restore its sign.
+    // This explicitly reproduces signed division's truncation toward zero.
+    // Shifting red inputs by ten bounds their weighted sum safely away from the minimum int.
+    // Thus negation is safe; masked channels and reconstruction match the reference at all endpoints.
+    int blue = (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+    int green = (2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5)) / 3;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    if (red < 0)
+        red = -((-red) / 3);
+    else
+        red = red / 3;
+    return red * 1024 + green * 32 + blue;
+}

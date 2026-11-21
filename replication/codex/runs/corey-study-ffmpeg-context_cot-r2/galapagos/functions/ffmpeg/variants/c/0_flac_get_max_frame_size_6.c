@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Selects the payload numerator before performing the common division.
+    // The conditional evaluates only the numerator used by the original branch.
+    // Division by eight remains signed division, including for negative numerators.
+    int count = 16;
+    int numerator;
+
+    count += ch * ((7 + bps + 7) / 8);
+    numerator = (ch == 2)
+        ? (2 * bps + 1) * blocksize + 7
+        : ch * bps * blocksize + 7;
+    count += numerator / 8;
+    count += 2;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

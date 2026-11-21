@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Divides the packed green sum by 96 instead of shifting then dividing.
+    // That sum is nonnegative and divisible by 32, so the quotient is identical.
+    // Blue and signed red retain the reference arithmetic for every input.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int packed_green = 2 * (c0 & 0x03E0) + (c1 & 0x03E0);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + packed_green / 96 * 32 + blue / 3;
+}
+
+
+int main(){
+    mix(0,0);
+}

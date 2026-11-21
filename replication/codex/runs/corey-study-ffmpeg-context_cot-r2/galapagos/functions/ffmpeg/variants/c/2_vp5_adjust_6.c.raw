@@ -1,0 +1,15 @@
+static int vp5_adjust(int v, int t)
+{
+    // An all-zero or all-one mask implements the Boolean magnitude gate.
+    // Branching implements the second absolute value without changing its input.
+    // Original sign-mask restoration preserves zero and negative thresholds.
+    int s1 = v >> 31;
+    int a = (v ^ s1) - s1;
+    int keep = -(a < 2 * t);
+    int d = (a & keep) - t;
+    int r;
+    if (d < 0)
+        d = -d;
+    r = t - d;
+    return (r + s1) ^ s1;
+}

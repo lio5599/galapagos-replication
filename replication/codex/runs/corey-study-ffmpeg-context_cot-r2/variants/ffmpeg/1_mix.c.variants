@@ -1,0 +1,128 @@
+static int mix(int c0, int c1)
+{
+    // Computes the component-wise 2:1 weighted mix, truncating each division by 3.
+    // Extracting green before weighting is exact because its mask is aligned.
+    // Red retains the original signed shifts and division, including negatives.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Replaces doubling with addition of identical extracted components.
+    // The extracted ranges keep these additions within signed integer bounds.
+    // Signed red shifts and truncation toward zero remain unchanged.
+    int b0 = c0 & 0x001F;
+    int b1 = c1 & 0x001F;
+    int g0 = (c0 & 0x03E0) >> 5;
+    int g1 = (c1 & 0x03E0) >> 5;
+    int r0 = c0 >> 10;
+    int r1 = c1 >> 10;
+    int blue = b0 + b0 + b1;
+    int green = g0 + g0 + g1;
+    int red = r0 + r0 + r1;
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Forms each weighted sum as the first component plus the pair's sum.
+    // All intermediate sums fit because masking or shifting bounds the inputs.
+    // Negative red values still use the original signed division.
+    int b0 = c0 & 31;
+    int g0 = (c0 & 992) >> 5;
+    int r0 = c0 >> 10;
+    int blue = b0 + (b0 + (c1 & 31));
+    int green = g0 + (g0 + ((c1 & 992) >> 5));
+    int red = r0 + (r0 + (c1 >> 10));
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Divides the packed green sum by 96 instead of shifting then dividing.
+    // That sum is nonnegative and divisible by 32, so the quotient is identical.
+    // Blue and signed red retain the reference arithmetic for every input.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int packed_green = 2 * (c0 & 0x03E0) + (c1 & 0x03E0);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + packed_green / 96 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Uses the identity 2*a+b = 3*a+(b-a) for each extracted component.
+    // Masking and shifting bound every intermediate, including signed red.
+    // Division is still performed only after forming the exact weighted sum.
+    int b0 = c0 & 31;
+    int b1 = c1 & 31;
+    int g0 = (c0 & 992) >> 5;
+    int g1 = (c1 & 992) >> 5;
+    int r0 = c0 >> 10;
+    int r1 = c1 >> 10;
+    int blue = 3 * b0 + (b1 - b0);
+    int green = 3 * g0 + (g1 - g0);
+    int red = 3 * r0 + (r1 - r0);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Computes the same three quotients and accumulates their contributions.
+    // Accumulation follows the reference's addition order.
+    // No masks, signed shifts, or negative-division semantics are changed.
+    int blue = (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+    int green = ((2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5) / 3;
+    int red = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    int result = red * 1024;
+    result += green * 32;
+    result += blue;
+    return result;
+}
+
+static int mix(int c0, int c1)
+{
+    // Packs the component quotients using a base-32 nested expression.
+    // Expanding the expression gives the reference's weighted contributions.
+    // Intermediate ranges fit, and multiplication remains valid for negative red.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return ((red / 3) * 32 + green / 3) * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Doubles masked blue and green with left shifts of nonnegative values.
+    // Their small ranges make these shifts defined and identical to doubling.
+    // Red keeps multiplication, avoiding any left shift of a negative value.
+    int blue = ((c0 & 0x001F) << 1) + (c1 & 0x001F);
+    int green = (((c0 & 0x03E0) << 1) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Replaces the green right shift with division by 32.
+    // The packed green sum is nonnegative, so both operations agree exactly.
+    // Signed red arithmetic and all final truncations remain unchanged.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) / 32;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Scales the nonnegative blue and green quotients before combining with red.
+    // Green's quotient is at most 31, so its left shift is defined.
+    // The low contribution is bounded, preserving the result even for negative red.
+    int blue = (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+    int green = ((2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5) / 3;
+    int red = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    int low = (green << 5) + blue;
+    return red * 1024 + low;
+}

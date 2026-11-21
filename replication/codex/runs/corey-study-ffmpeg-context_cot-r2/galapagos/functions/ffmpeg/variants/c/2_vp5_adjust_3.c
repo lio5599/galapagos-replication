@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Uses the alternate absolute-value identity (x + sign) XOR sign.
+    // Restores the original sign with the complementary XOR/subtract identity.
+    // Their intermediates are representable on every reference-defined input.
+    // The original gate is retained, including for negative thresholds.
+    int s1 = v >> 31;
+    int a = (v + s1) ^ s1;
+    int d;
+    int s2;
+    int r;
+    a *= a < 2 * t;
+    d = a - t;
+    s2 = d >> 31;
+    r = t - ((d + s2) ^ s2);
+    return (r ^ s1) - s1;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

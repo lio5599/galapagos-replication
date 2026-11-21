@@ -1,0 +1,13 @@
+static int mix(int c0, int c1)
+{
+    // For every integer n from zero through 93, floor(n * 171 / 512) equals floor(n / 3).
+    // Blue and green weighted sums lie in that range, so multiplication and shifting are exact.
+    // The largest product is 15903, which fits even the minimum required int range.
+    // Red uses the reference signed division, preserving negative-input behavior.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = (blue * 171) >> 9;
+    green = (green * 171) >> 9;
+    return red / 3 * 1024 + green * 32 + blue;
+}

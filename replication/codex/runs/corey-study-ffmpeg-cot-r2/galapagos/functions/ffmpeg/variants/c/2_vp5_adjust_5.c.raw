@@ -1,0 +1,19 @@
+static int vp5_adjust(int v, int t)
+{
+    // Use a branch for the cutoff while retaining both sign-mask transformations.
+    // Clearing at equality matches the strict comparison in the reference.
+    // The unchanged distance calculation also preserves zero and negative thresholds.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int s1 = v >> 31;
+    int s2;
+
+    v = (v ^ s1) - s1;
+    if (v >= 2 * t)
+        v = 0;
+    v -= t;
+    s2 = v >> 31;
+    v = (v ^ s2) - s2;
+    v = t - v;
+
+    return (v + s1) ^ s1;
+}

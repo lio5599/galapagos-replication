@@ -1,0 +1,14 @@
+static int mix(int c0, int c1)
+{
+    // Remove each weighted sum's remainder before dividing by three.
+    // The identity n = 3 * (n / 3) + n % 3 preserves truncation even for negative red.
+    // Masked sums range from zero through 93; red keeps the original signed shifts.
+    // Remainder removal does not overflow, and reconstruction matches the reference order.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = (blue - blue % 3) / 3;
+    green = (green - green % 3) / 3;
+    red = (red - red % 3) / 3;
+    return red * 1024 + green * 32 + blue;
+}

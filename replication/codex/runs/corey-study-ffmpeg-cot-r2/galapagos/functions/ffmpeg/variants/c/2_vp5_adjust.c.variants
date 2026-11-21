@@ -1,0 +1,194 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes sign-restored triangular folding of abs(v), or sign-restored 2*t when t < 0.
+    // For positive t, the magnitude rises to t, falls to zero at 2*t, then stays zero.
+    // Explicit branches cover zero, both boundaries, and nonpositive thresholds.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (t <= 0)
+        r = 2 * t;
+    else if (a >= 2 * t)
+        r = 0;
+    else if (a <= t)
+        r = a;
+    else
+        r = 2 * t - a;
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Replace sign-mask absolute values with conditional absolute values.
+    // Gating the magnitude first preserves the reference's distance-from-t calculation.
+    // Zero and cutoff equality are gated correctly; negative t produces 2*t before sign restoration.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    int r;
+
+    a = a < 2 * t ? a : 0;
+    d = a - t;
+    r = t - (d < 0 ? -d : d);
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // After gating, expand t - abs(a - t) into its two linear branches.
+    // At a == t both branches agree; at the cutoff the gated value becomes zero.
+    // For negative t the gated zero selects 2*t, including when the input is zero.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int s = v >> 31;
+    int a = (v ^ s) - s;
+    int r;
+
+    a = a < 2 * t ? a : 0;
+    r = a <= t ? a : 2 * t - a;
+
+    return (r + s) ^ s;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Select the result directly with nested conditional expressions.
+    // Outside the cutoff, the reference gives zero for nonnegative t and 2*t otherwise.
+    // Inside the cutoff, the two linear pieces agree at the peak and preserve zero.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r = a >= 2 * t
+          ? (t < 0 ? 2 * t : 0)
+          : (a <= t ? a : 2 * t - a);
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Keep the reference's multiplicative gate, then reflect values above t.
+    // This reflection is exactly t - abs(a - t), including equality at t.
+    // At or beyond 2*t the gate yields zero; negative t then reflects zero to 2*t.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r = a * (a < 2 * t);
+
+    if (r > t)
+        r = 2 * t - r;
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Use a branch for the cutoff while retaining both sign-mask transformations.
+    // Clearing at equality matches the strict comparison in the reference.
+    // The unchanged distance calculation also preserves zero and negative thresholds.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int s1 = v >> 31;
+    int s2;
+
+    v = (v ^ s1) - s1;
+    if (v >= 2 * t)
+        v = 0;
+    v -= t;
+    s2 = v >> 31;
+    v = (v ^ s2) - s2;
+    v = t - v;
+
+    return (v + s1) ^ s1;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Test the rising segment first, then the falling segment, using early returns.
+    // The first segment is possible only for nonnegative t and includes the peak.
+    // Remaining inputs give zero unless t is negative, when the reference gives signed 2*t.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (a <= t)
+        return v;
+
+    if (a < 2 * t) {
+        r = 2 * t - a;
+        return negative ? -r : r;
+    }
+
+    r = t < 0 ? 2 * t : 0;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Handle nonpositive thresholds separately, then measure distance from the peak.
+    // Within the positive cutoff, abs(t - a) equals the reference's abs(a - t).
+    // Explicit cutoff handling preserves zero at equality and for all larger magnitudes.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    int r;
+
+    if (t <= 0) {
+        r = 2 * t;
+    } else {
+        if (a >= 2 * t)
+            return 0;
+        d = t - a;
+        r = t - (d >= 0 ? d : -d);
+    }
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Express the reference as sequential conditional negations and a cutoff branch.
+    // Each conditional negation replaces the corresponding sign-mask absolute value.
+    // The strict cutoff, zero input, and nonpositive thresholds retain their original behavior.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+
+    if (negative)
+        v = -v;
+    if (v >= 2 * t)
+        v = 0;
+    v -= t;
+    if (v < 0)
+        v = -v;
+    v = t - v;
+    if (negative)
+        v = -v;
+
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // For positive t, reflect magnitudes above the peak and clamp negative results to zero.
+    // Computing the reflection as t - (a - t) avoids explicitly doubling positive t.
+    // The peak and cutoff are exact; nonpositive t separately produces the reference's 2*t.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (t <= 0) {
+        r = t + t;
+    } else {
+        r = a <= t ? a : t - (a - t);
+        if (r < 0)
+            r = 0;
+    }
+
+    return negative ? -r : r;
+}

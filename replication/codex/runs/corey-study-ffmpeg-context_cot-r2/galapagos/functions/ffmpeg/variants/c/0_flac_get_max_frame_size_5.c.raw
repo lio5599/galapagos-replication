@@ -1,0 +1,17 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Represents each successive accumulated total with a separate variable.
+    // Each addition has the same operands as the corresponding original addition.
+    // This preserves results wherever the original signed operations are defined.
+    int header = 16 + ch * ((7 + bps + 7) / 8);
+    int payload;
+    int subtotal;
+
+    if (ch == 2) {
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        payload = (ch * bps * blocksize + 7) / 8;
+    }
+    subtotal = header + payload;
+    return subtotal + 2;
+}

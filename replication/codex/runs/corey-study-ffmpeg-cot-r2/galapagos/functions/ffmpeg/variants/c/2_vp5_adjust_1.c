@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Replace sign-mask absolute values with conditional absolute values.
+    // Gating the magnitude first preserves the reference's distance-from-t calculation.
+    // Zero and cutoff equality are gated correctly; negative t produces 2*t before sign restoration.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    int r;
+
+    a = a < 2 * t ? a : 0;
+    d = a - t;
+    r = t - (d < 0 ? -d : d);
+
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

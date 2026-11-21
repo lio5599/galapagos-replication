@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // After gating, the fold is a below t and 2*t - a otherwise.
+    // This identity includes negative t, for which the gated a is zero.
+    // Original sign-mask operations handle normalization and restoration.
+    // The selected fold expression stays representable on defined inputs.
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int twice = 2 * t;
+    int r;
+    a = a < twice ? a : 0;
+    if (a < t)
+        r = a;
+    else
+        r = twice - a;
+    return (r + sign) ^ sign;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

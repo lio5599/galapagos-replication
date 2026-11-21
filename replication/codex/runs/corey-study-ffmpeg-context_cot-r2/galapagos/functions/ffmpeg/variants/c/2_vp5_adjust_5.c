@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Nonpositive thresholds always reject the nonnegative magnitude.
+    // Their folded result is exactly 2*t, including zero.
+    // Positive thresholds produce the usual triangular piecewise result.
+    // Sign restoration is safe wherever the reference is defined.
+    int twice = 2 * t;
+    int a;
+    int r;
+    if (t <= 0)
+        return v < 0 ? -twice : twice;
+    a = v < 0 ? -v : v;
+    if (a >= twice)
+        return 0;
+    r = a <= t ? a : twice - a;
+    return v < 0 ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Count complete groups of three in the nonnegative blue and green weighted sums.
+    // Repeated subtraction computes their integer quotients, including zero and 93.
+    // Red keeps the reference signed shifts and division rather than using this unsigned-style loop.
+    // The final channel scaling and addition order are unchanged.
+    int blue_sum = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green_sum = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int blue = 0;
+    int green = 0;
+    while (blue_sum >= 3) {
+        blue_sum -= 3;
+        ++blue;
+    }
+    while (green_sum >= 3) {
+        green_sum -= 3;
+        ++green;
+    }
+    return red / 3 * 1024 + green * 32 + blue;
+}
+
+
+int main(){
+    mix(0,0);
+}

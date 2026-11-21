@@ -1,0 +1,17 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Stores successive accumulator states in separate local variables.
+    // This preserves the original addition grouping rather than combining constants.
+    // The same selected payload and signed division cover all defined edge cases.
+    int initial = 16;
+    int with_header = initial + ch * ((7 + bps + 7) / 8);
+    int with_payload;
+    int result;
+    if (ch == 2) {
+        with_payload = with_header + ((2 * bps + 1) * blocksize + 7) / 8;
+    } else {
+        with_payload = with_header + (ch * bps * blocksize + 7) / 8;
+    }
+    result = with_payload + 2;
+    return result;
+}

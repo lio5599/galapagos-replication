@@ -1,0 +1,175 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes the sign-restored value t - abs((abs(v) < 2*t ? abs(v) : 0) - t).
+    // Branches implement both absolute values and the magnitude gate.
+    // Negative thresholds are preserved rather than treated as zero.
+    // All negations are valid whenever the reference has defined behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    int r;
+    if (a >= 2 * t)
+        a = 0;
+    d = a - t;
+    if (d < 0)
+        d = -d;
+    r = t - d;
+    if (negative)
+        r = -r;
+    return r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Conditional expressions replace the reference's sign-mask operations.
+    // The strict gate and subtraction order preserve threshold boundaries.
+    // This also retains the reference's behavior for zero and negative t.
+    int a = v < 0 ? -v : v;
+    int b = a < 2 * t ? a : 0;
+    int d = b - t;
+    int r = t - (d < 0 ? -d : d);
+    return v < 0 ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Retains both reference absolute-value transformations.
+    // A conditional selection replaces multiplication by a Boolean.
+    // The final sign restoration and all boundary cases remain unchanged.
+    int s1 = v >> 31;
+    int a = (v ^ s1) - s1;
+    int b = a < 2 * t ? a : 0;
+    int d = b - t;
+    int s2 = d >> 31;
+    int r = t - ((d ^ s2) - s2);
+    return (r + s1) ^ s1;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Uses the alternate absolute-value identity (x + sign) XOR sign.
+    // Restores the original sign with the complementary XOR/subtract identity.
+    // Their intermediates are representable on every reference-defined input.
+    // The original gate is retained, including for negative thresholds.
+    int s1 = v >> 31;
+    int a = (v + s1) ^ s1;
+    int d;
+    int s2;
+    int r;
+    a *= a < 2 * t;
+    d = a - t;
+    s2 = d >> 31;
+    r = t - ((d + s2) ^ s2);
+    return (r ^ s1) - s1;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Expands the gated fold into its three piecewise regions.
+    // A rejected magnitude produces t - abs(t), not always zero.
+    // Equality at either boundary matches the reference exactly.
+    // Selected arithmetic is representable on reference-defined inputs.
+    int a = v < 0 ? -v : v;
+    int twice = 2 * t;
+    int r;
+    if (a >= twice)
+        r = t < 0 ? twice : 0;
+    else if (a <= t)
+        r = a;
+    else
+        r = twice - a;
+    return v < 0 ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Nonpositive thresholds always reject the nonnegative magnitude.
+    // Their folded result is exactly 2*t, including zero.
+    // Positive thresholds produce the usual triangular piecewise result.
+    // Sign restoration is safe wherever the reference is defined.
+    int twice = 2 * t;
+    int a;
+    int r;
+    if (t <= 0)
+        return v < 0 ? -twice : twice;
+    a = v < 0 ? -v : v;
+    if (a >= twice)
+        return 0;
+    r = a <= t ? a : twice - a;
+    return v < 0 ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // An all-zero or all-one mask implements the Boolean magnitude gate.
+    // Branching implements the second absolute value without changing its input.
+    // Original sign-mask restoration preserves zero and negative thresholds.
+    int s1 = v >> 31;
+    int a = (v ^ s1) - s1;
+    int keep = -(a < 2 * t);
+    int d = (a & keep) - t;
+    int r;
+    if (d < 0)
+        d = -d;
+    r = t - d;
+    return (r + s1) ^ s1;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Branches normalize and restore the input sign.
+    // The central fold uses the reference's exact bitwise absolute value.
+    // Keeping Boolean multiplication preserves every threshold boundary.
+    // No additional overflowing arithmetic is introduced on defined inputs.
+    int negative = v < 0;
+    int a = v;
+    int d;
+    int sign;
+    int r;
+    if (negative)
+        a = -a;
+    a *= a < 2 * t;
+    d = a - t;
+    sign = d >> 31;
+    d = (d ^ sign) - sign;
+    r = t - d;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // After gating, the fold is a below t and 2*t - a otherwise.
+    // This identity includes negative t, for which the gated a is zero.
+    // Original sign-mask operations handle normalization and restoration.
+    // The selected fold expression stays representable on defined inputs.
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int twice = 2 * t;
+    int r;
+    a = a < twice ? a : 0;
+    if (a < t)
+        r = a;
+    else
+        r = twice - a;
+    return (r + sign) ^ sign;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Writes the gated fold as a minus twice the positive part of a - t.
+    // Two separate subtractions avoid overflowing an intermediate doubling.
+    // This matters at the lowest defined negative threshold.
+    // Normalization and restoration agree with the reference on defined inputs.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int d;
+    int r;
+    if (!(a < 2 * t))
+        a = 0;
+    d = a - t;
+    if (d < 0)
+        d = 0;
+    r = a - d;
+    r -= d;
+    return negative ? -r : r;
+}

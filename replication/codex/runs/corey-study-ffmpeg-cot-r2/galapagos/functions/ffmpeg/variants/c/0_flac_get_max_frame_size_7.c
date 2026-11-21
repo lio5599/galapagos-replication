@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes payload bits first, then applies the original bias and division.
+    // Each intermediate corresponds to an original signed-int operation.
+    // Zero and negative values therefore follow the same truncation rules.
+    int count = 16;
+    int payload;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        payload = 2 * bps;
+        payload += 1;
+    } else {
+        payload = ch * bps;
+    }
+    payload *= blocksize;
+    payload += 7;
+    payload /= 8;
+    count += payload;
+    count += 2;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

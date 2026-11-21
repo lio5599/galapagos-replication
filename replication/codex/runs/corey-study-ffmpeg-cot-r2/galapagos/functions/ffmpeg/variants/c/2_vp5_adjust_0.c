@@ -1,0 +1,29 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Computes sign-restored triangular folding of abs(v), or sign-restored 2*t when t < 0.
+    // For positive t, the magnitude rises to t, falls to zero at 2*t, then stays zero.
+    // Explicit branches cover zero, both boundaries, and nonpositive thresholds.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (t <= 0)
+        r = 2 * t;
+    else if (a >= 2 * t)
+        r = 0;
+    else if (a <= t)
+        r = a;
+    else
+        r = 2 * t - a;
+
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

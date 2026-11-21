@@ -1,0 +1,20 @@
+static int vp5_adjust(int v, int t)
+{
+    // For positive t, reflect magnitudes above the peak and clamp negative results to zero.
+    // Computing the reflection as t - (a - t) avoids explicitly doubling positive t.
+    // The peak and cutoff are exact; nonpositive t separately produces the reference's 2*t.
+    // Equivalence applies wherever the reference has defined 32-bit int behavior.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (t <= 0) {
+        r = t + t;
+    } else {
+        r = a <= t ? a : t - (a - t);
+        if (r < 0)
+            r = 0;
+    }
+
+    return negative ? -r : r;
+}

@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Forms each weighted sum as the first component plus the pair's sum.
+    // All intermediate sums fit because masking or shifting bounds the inputs.
+    // Negative red values still use the original signed division.
+    int b0 = c0 & 31;
+    int g0 = (c0 & 992) >> 5;
+    int r0 = c0 >> 10;
+    int blue = b0 + (b0 + (c1 & 31));
+    int green = g0 + (g0 + ((c1 & 992) >> 5));
+    int red = r0 + (r0 + (c1 >> 10));
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+
+int main(){
+    mix(0,0);
+}

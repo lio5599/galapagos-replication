@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Scales the nonnegative blue and green quotients before combining with red.
+    // Green's quotient is at most 31, so its left shift is defined.
+    // The low contribution is bounded, preserving the result even for negative red.
+    int blue = (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+    int green = ((2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5) / 3;
+    int red = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    int low = (green << 5) + blue;
+    return red * 1024 + low;
+}
+
+
+int main(){
+    mix(0,0);
+}

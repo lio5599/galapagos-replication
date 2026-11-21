@@ -1,0 +1,194 @@
+static int mix(int c0, int c1)
+{
+    // The reference averages each channel with weights 2:1, truncating division by 3.
+    // Extracting channels first preserves the masked blue and green values.
+    // Red remains unmasked, with the original signed shift and division behavior.
+    // Zero and maximum channel values use the same arithmetic as the reference.
+    int b0 = c0 & 0x001F;
+    int b1 = c1 & 0x001F;
+    int g0 = (c0 & 0x03E0) >> 5;
+    int g1 = (c1 & 0x03E0) >> 5;
+    int r0 = c0 >> 10;
+    int r1 = c1 >> 10;
+    return ((2 * r0 + r1) / 3) * 1024
+         + ((2 * g0 + g1) / 3) * 32
+         + (2 * b0 + b1) / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Adding each first channel twice is equivalent to multiplying it by two.
+    // Masked channels are nonnegative and at most 31, so their sums cannot overflow.
+    // Red retains the reference shifts, signed division, and output evaluation order.
+    // This also preserves behavior for negative inputs wherever the reference is defined.
+    int blue = c0 & 0x001F;
+    int green = (c0 & 0x03E0) >> 5;
+    int red = c0 >> 10;
+    blue = blue + blue + (c1 & 0x001F);
+    green = green + green + ((c1 & 0x03E0) >> 5);
+    red = red + red + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Arrays hold the extracted channels, and a loop applies the same weighted average.
+    // Extracting green before averaging is exact because its masked bits are multiples of 32.
+    // Red is not masked; negative values keep the original signed shift and truncation.
+    // Reconstruction keeps the reference order, including at channel endpoints.
+    int first[3];
+    int second[3];
+    int averaged[3];
+    int i;
+    first[0] = c0 & 0x001F;
+    first[1] = (c0 & 0x03E0) >> 5;
+    first[2] = c0 >> 10;
+    second[0] = c1 & 0x001F;
+    second[1] = (c1 & 0x03E0) >> 5;
+    second[2] = c1 >> 10;
+    for (i = 0; i < 3; ++i)
+        averaged[i] = (2 * first[i] + second[i]) / 3;
+    return averaged[2] * 1024 + averaged[1] * 32 + averaged[0];
+}
+
+static int mix(int c0, int c1)
+{
+    // Process red, green, and blue in a loop and accumulate their scaled averages.
+    // Each branch extracts exactly the channel used by the reference.
+    // Red uses signed division unchanged; masked channels include the full 0 through 31 range.
+    // Accumulation follows the reference order wherever its arithmetic is defined.
+    int result = 0;
+    int channel;
+    for (channel = 2; channel >= 0; --channel) {
+        int a;
+        int b;
+        int scale;
+        if (channel == 2) {
+            a = c0 >> 10;
+            b = c1 >> 10;
+            scale = 1024;
+        } else if (channel == 1) {
+            a = (c0 & 0x03E0) >> 5;
+            b = (c1 & 0x03E0) >> 5;
+            scale = 32;
+        } else {
+            a = c0 & 0x001F;
+            b = c1 & 0x001F;
+            scale = 1;
+        }
+        result += ((2 * a + b) / 3) * scale;
+    }
+    return result;
+}
+
+static int mix(int c0, int c1)
+{
+    // Split nonnegative blue and green inputs into quotients and remainders modulo three.
+    // The quotient contributions are exact integers; the combined remainders supply the carry.
+    // This identity covers every masked value, including zero and 31.
+    // Red retains the reference expression so negative signed division is unchanged.
+    int b0 = c0 & 0x001F;
+    int b1 = c1 & 0x001F;
+    int g0 = (c0 & 0x03E0) >> 5;
+    int g1 = (c1 & 0x03E0) >> 5;
+    int blue = 2 * (b0 / 3) + b1 / 3
+             + (2 * (b0 % 3) + b1 % 3) / 3;
+    int green = 2 * (g0 / 3) + g1 / 3
+              + (2 * (g0 % 3) + g1 % 3) / 3;
+    int red = (2 * (c0 >> 10) + (c1 >> 10)) / 3;
+    return red * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // Remove each weighted sum's remainder before dividing by three.
+    // The identity n = 3 * (n / 3) + n % 3 preserves truncation even for negative red.
+    // Masked sums range from zero through 93; red keeps the original signed shifts.
+    // Remainder removal does not overflow, and reconstruction matches the reference order.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = (blue - blue % 3) / 3;
+    green = (green - green % 3) / 3;
+    red = (red - red % 3) / 3;
+    return red * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // For every integer n from zero through 93, floor(n * 171 / 512) equals floor(n / 3).
+    // Blue and green weighted sums lie in that range, so multiplication and shifting are exact.
+    // The largest product is 15903, which fits even the minimum required int range.
+    // Red uses the reference signed division, preserving negative-input behavior.
+    int blue = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = (blue * 171) >> 9;
+    green = (green * 171) >> 9;
+    return red / 3 * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // Count complete groups of three in the nonnegative blue and green weighted sums.
+    // Repeated subtraction computes their integer quotients, including zero and 93.
+    // Red keeps the reference signed shifts and division rather than using this unsigned-style loop.
+    // The final channel scaling and addition order are unchanged.
+    int blue_sum = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    int green_sum = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int blue = 0;
+    int green = 0;
+    while (blue_sum >= 3) {
+        blue_sum -= 3;
+        ++blue;
+    }
+    while (green_sum >= 3) {
+        green_sum -= 3;
+        ++green;
+    }
+    return red / 3 * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // Binary search finds the largest quotient whose triple does not exceed each masked sum.
+    // Sums are in zero through 93, so the half-open quotient interval zero through 32 suffices.
+    // This gives exact division by three at both endpoints and for every remainder.
+    // Red and final reconstruction retain the reference signed arithmetic.
+    int sums[2];
+    int quotients[2];
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int i;
+    sums[0] = 2 * (c0 & 0x001F) + (c1 & 0x001F);
+    sums[1] = 2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5);
+    for (i = 0; i < 2; ++i) {
+        int low = 0;
+        int high = 32;
+        while (high - low > 1) {
+            int middle = (low + high) / 2;
+            if (3 * middle <= sums[i])
+                low = middle;
+            else
+                high = middle;
+        }
+        quotients[i] = low;
+    }
+    return red / 3 * 1024 + quotients[1] * 32 + quotients[0];
+}
+
+static int mix(int c0, int c1)
+{
+    // Divide the magnitude of a negative red sum and restore its sign.
+    // This explicitly reproduces signed division's truncation toward zero.
+    // Shifting red inputs by ten bounds their weighted sum safely away from the minimum int.
+    // Thus negation is safe; masked channels and reconstruction match the reference at all endpoints.
+    int blue = (2 * (c0 & 0x001F) + (c1 & 0x001F)) / 3;
+    int green = (2 * ((c0 & 0x03E0) >> 5) + ((c1 & 0x03E0) >> 5)) / 3;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    if (red < 0)
+        red = -((-red) / 3);
+    else
+        red = red / 3;
+    return red * 1024 + green * 32 + blue;
+}
