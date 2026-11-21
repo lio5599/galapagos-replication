@@ -1,0 +1,22 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes sign(v) times a triangular response for positive t; otherwise sign(v) times 2*t.
+    // Here sign(v) is -1 for negative v and +1 otherwise.
+    // The triangle is a for a <= t, 2*t-a for t < a < 2*t, and zero beyond.
+    // Equivalence assumes 32-bit int, arithmetic right shifts, and defined reference arithmetic.
+    // In particular, the reference has signed overflow for INT_MIN input or overflowing 2*t.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (t <= 0)
+        r = 2 * t;
+    else if (a <= t)
+        r = a;
+    else if (a < 2 * t)
+        r = 2 * t - a;
+    else
+        r = 0;
+
+    return negative ? -r : r;
+}

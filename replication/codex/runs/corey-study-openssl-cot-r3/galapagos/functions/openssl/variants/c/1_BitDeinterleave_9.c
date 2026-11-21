@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Add one and then subtract one using unsigned 64-bit arithmetic.
+    // Modular wraparound cancels even at UINT64_MAX, restoring every input.
+    uint64_t incremented = Ai + UINT64_C(1);
+    return incremented - UINT64_C(1);
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

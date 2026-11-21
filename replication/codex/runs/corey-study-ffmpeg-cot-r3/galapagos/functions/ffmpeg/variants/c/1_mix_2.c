@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int mix(int c0, int c1)
+{
+    // Store the two bounded channels in arrays and average them in a loop.
+    // Each numerator is between 0 and 93, so all intermediate values fit.
+    // The red calculation and final addition order match the reference.
+    // This also preserves signed-red truncation for negative inputs.
+    int a[2] = { c0 & 31, (c0 & 0x03E0) >> 5 };
+    int b[2] = { c1 & 31, (c1 & 0x03E0) >> 5 };
+    int average[2];
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int i;
+    for (i = 0; i < 2; ++i)
+        average[i] = (a[i] + a[i] + b[i]) / 3;
+    return red / 3 * 1024 + average[1] * 32 + average[0];
+}
+
+
+int main(){
+    mix(0,0);
+}

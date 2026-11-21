@@ -1,0 +1,8 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Divide the input into two disjoint 32-bit portions and add them.
+    // Their sum equals Ai and cannot overflow, even for the maximum input.
+    uint64_t low = Ai & 0xFFFFFFFFULL;
+    uint64_t high = Ai & 0xFFFFFFFF00000000ULL;
+    return high + low;
+}

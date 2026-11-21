@@ -1,0 +1,127 @@
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    return sx ? (x > y) : (x < y);
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    if ((x ^ y) >> 63) {
+        return (int)(x >> 63);
+    }
+    if (x >> 63) {
+        return y < x;
+    }
+    return x < y;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t sign = (uint64_t)1 << 63;
+    uint64_t kx = (x & sign) ? ~x : (x ^ sign);
+    uint64_t ky = (y & sign) ? ~y : (y ^ sign);
+
+    return kx < ky;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t sign = (uint64_t)1 << 63;
+    uint64_t mx = (uint64_t)0 - (x >> 63);
+    uint64_t my = (uint64_t)0 - (y >> 63);
+
+    return (x ^ (mx | sign)) < (y ^ (my | sign));
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    int different = sx ^ sy;
+
+    return (different & sx)
+         | ((different ^ 1) & (sx ^ 1) & (x < y))
+         | ((different ^ 1) & sx & (x > y));
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    int sx = (int)(x >> 63);
+    int different = (int)((x ^ y) >> 63);
+    int same_sign_result = (x < y) ^ (sx & (x != y));
+
+    return same_sign_result
+         ^ ((same_sign_result ^ sx) & different);
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    const uint64_t sign = (uint64_t)1 << 63;
+
+    if (x & sign) {
+        return !(y & sign) || x > y;
+    }
+    return !(y & sign) && x < y;
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    unsigned signs = (unsigned)((x >> 63) * 2 + (y >> 63));
+
+    switch (signs) {
+        case 0:
+            return x < y;
+        case 1:
+            return 0;
+        case 2:
+            return 1;
+        default:
+            return x > y;
+    }
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+    uint64_t magnitude_x = x & (((uint64_t)1 << 63) - 1);
+    uint64_t magnitude_y = y & (((uint64_t)1 << 63) - 1);
+
+    return (sx > sy)
+        || ((sx == sy)
+            && (sx ? magnitude_x > magnitude_y
+                   : magnitude_x < magnitude_y));
+}
+```
+
+```c
+static int fpr_lt(uint64_t x, uint64_t y) {
+    unsigned sx = (unsigned)(x >> 63);
+
+    if ((x ^ y) >> 63) {
+        return (int)sx;
+    }
+
+    for (unsigned bit = 63; bit != 0; ) {
+        uint64_t mask = (uint64_t)1 << --bit;
+
+        if ((x ^ y) & mask) {
+            return sx ? ((x & mask) != 0) : ((y & mask) != 0);
+        }
+    }
+    return 0;
+}
+```

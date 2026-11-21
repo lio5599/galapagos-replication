@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t e = (uint32_t)(x >> 52) & UINT32_C(0x7FF);
+    uint32_t nonzero = (e + UINT32_C(0x7FF)) >> 11;
+    uint64_t mask = UINT64_C(0) - (uint64_t)nonzero;
+    return (x - UINT64_C(0x0010000000000000)) & mask;
+}
+
+
+int main(){
+    fpr_half(0);
+}

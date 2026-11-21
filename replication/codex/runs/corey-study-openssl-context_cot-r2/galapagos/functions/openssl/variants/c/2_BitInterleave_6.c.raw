@@ -1,0 +1,9 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Extract and recombine the disjoint lower and upper 32-bit halves.
+    // Both shifts are within range and every original bit is preserved.
+    uint64_t low = Ai & (uint64_t)0xffffffffULL;
+    uint64_t high = Ai >> 32;
+    return (high << 32) | low;
+}

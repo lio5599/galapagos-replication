@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Selects the stereo case with a switch instead of an if statement.
+    // The default case covers every other signed channel value.
+    // Contributions and their accumulation are otherwise identical.
+    int count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    switch (ch) {
+    case 2:
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        break;
+    default:
+        count += (ch * bps * blocksize + 7) / 8;
+        break;
+    }
+    count += 2;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

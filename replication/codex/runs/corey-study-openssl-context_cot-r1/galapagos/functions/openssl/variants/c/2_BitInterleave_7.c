@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Separate even-positioned and odd-positioned bits, then recombine.
+    // The masks cover all 64 bits without overlap, including at endpoints.
+    uint64_t even = Ai & 0x5555555555555555ULL;
+    uint64_t odd = Ai & 0xAAAAAAAAAAAAAAAAULL;
+    return even | odd;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

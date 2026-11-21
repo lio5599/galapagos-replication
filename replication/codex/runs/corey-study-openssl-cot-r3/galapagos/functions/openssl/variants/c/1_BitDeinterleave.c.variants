@@ -1,0 +1,76 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged because its branch is never taken.
+    // Returning Ai directly preserves every bit, including zero and UINT64_MAX.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Copy the input into an identically typed local variable.
+    // The reference is the identity function, so this preserves every input.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // XOR with zero leaves every bit unchanged.
+    // This matches the reference for all inputs, including both extreme values.
+    return Ai ^ UINT64_C(0);
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // OR with zero neither sets nor clears any input bit.
+    // Thus every input is returned unchanged, exactly as in the reference.
+    return Ai | UINT64_C(0);
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Mask with 64 one bits to retain every bit of the input.
+    // This is the reference's identity operation, including at zero and maximum.
+    return Ai & UINT64_MAX;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Complement every bit twice, restoring its original value.
+    // No input bits are lost, so this matches the reference for every input.
+    return (uint64_t)~(uint64_t)~Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Extract the lower and upper 32-bit halves, then reassemble them unchanged.
+    // The halves cover all 64 bits, preserving every input and both extremes.
+    uint32_t lo = (uint32_t)Ai;
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Rotate left by one bit, then rotate right by one bit.
+    // The inverse rotations restore all bits, including either endpoint bit.
+    uint64_t rotated = (Ai << 1) | (Ai >> 63);
+    return (rotated >> 1) | (rotated << 63);
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // XOR twice with the same fixed pattern, canceling every bit toggle.
+    // This returns the original input for all patterns, as the reference does.
+    uint64_t mask = UINT64_C(0xA5A5A5A5A5A5A5A5);
+    uint64_t toggled = Ai ^ mask;
+    return toggled ^ mask;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Add one and then subtract one using unsigned 64-bit arithmetic.
+    // Modular wraparound cancels even at UINT64_MAX, restoring every input.
+    uint64_t incremented = Ai + UINT64_C(1);
+    return incremented - UINT64_C(1);
+}

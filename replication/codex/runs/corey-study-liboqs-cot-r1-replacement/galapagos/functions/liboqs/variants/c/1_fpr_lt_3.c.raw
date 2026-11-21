@@ -1,0 +1,11 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Build ordered keys by complementing negatives and toggling positive signs.
+    // The unsigned subtraction's final borrow is exactly the strict key comparison.
+    // Equal keys produce no borrow; all arithmetic wraps without signed overflow.
+    uint64_t high = (uint64_t)1 << 63;
+    uint64_t a = (x >> 63) ? ~x : (x ^ high);
+    uint64_t b = (y >> 63) ? ~y : (y ^ high);
+    uint64_t d = a - b;
+
+    return (int)(((~a & b) | (~(a ^ b) & d)) >> 63);
+}

@@ -1,0 +1,9 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Extract the lower and upper 32-bit halves and reassemble them.
+    // The halves retain every bit and occupy disjoint output positions.
+    // This is the reference's identity mapping for every possible input.
+    uint32_t lo = (uint32_t)Ai;
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}

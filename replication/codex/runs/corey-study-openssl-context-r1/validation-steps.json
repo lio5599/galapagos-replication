@@ -1,0 +1,43 @@
+[
+  {
+    "step": "openssl-split_variants",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "split_variants.py",
+      "c",
+      "openssl"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "openssl-template_variants",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "template_variants.py",
+      "c",
+      "openssl"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "openssl-compile_variants",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "compile_variants.py",
+      "c",
+      "openssl"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "openssl-usecase",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "-m",
+      "tests.usecase",
+      "openssl",
+      "c"
+    ],
+    "exit_code": 0
+  }
+]

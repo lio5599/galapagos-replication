@@ -1,0 +1,21 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses a do-while loop for the same 22 digit-extraction steps.
+    // The last step uses shift zero before the loop terminates.
+    // Identical trial and remainder arithmetic covers every uint64_t input.
+    uint64_t r = 0;
+    int s = 63;
+
+    do {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+        s -= 3;
+    } while (s >= 0);
+
+    return r << 12;
+}

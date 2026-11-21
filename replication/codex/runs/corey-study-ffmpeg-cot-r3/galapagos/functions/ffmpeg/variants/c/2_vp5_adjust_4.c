@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Replace the reference's Boolean multiplication with an all-zero or all-one mask.
+    // Retain its bitwise absolute values and use the equivalent XOR/subtract sign restore.
+    // The strict gate preserves the 2*t boundary and the behavior for nonpositive t.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int d;
+    int mask;
+    int r;
+
+    a &= -(a < 2 * t);
+    d = a - t;
+    mask = d >> 31;
+    r = t - ((d ^ mask) - mask);
+
+    return (r ^ sign) - sign;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

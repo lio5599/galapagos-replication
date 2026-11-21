@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Increment modulo 2 to the power of 64, then undo the increment.
+    // uint64_t conversion preserves the intended modular intermediate.
+    // Even all ones wraps to zero and then returns to its original value.
+    uint64_t incremented = (uint64_t)(Ai + 1ULL);
+    return (uint64_t)(incremented - 1ULL);
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

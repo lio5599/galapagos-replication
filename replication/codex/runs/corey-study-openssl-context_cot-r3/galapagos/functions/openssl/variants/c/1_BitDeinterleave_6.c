@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns the original input.
+    // Complementary masks partition all 64 bits without changing positions.
+    // Their union restores every input, including zero and all ones.
+    uint64_t even = Ai & (uint64_t)0x5555555555555555ULL;
+    uint64_t odd = Ai & (uint64_t)0xaaaaaaaaaaaaaaaaULL;
+    return even | odd;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

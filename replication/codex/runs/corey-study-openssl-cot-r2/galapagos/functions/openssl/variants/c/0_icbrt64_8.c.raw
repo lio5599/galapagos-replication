@@ -1,0 +1,26 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Exponential search brackets the root, then binary search finishes.
+    // Division gives exact cube comparisons without overflowing products.
+    // The upper bound reaches at most 4194304, so doubling is also safe.
+    // Zero returns directly; all positive uint64_t inputs share the same search.
+    uint64_t lo = 0;
+    uint64_t hi = 1;
+
+    if (x == 0)
+        return 0;
+
+    while (hi <= x / hi / hi) {
+        lo = hi;
+        hi <<= 1;
+    }
+
+    while (hi - lo > 1) {
+        uint64_t m = lo + (hi - lo) / 2;
+        if (m <= x / m / m)
+            lo = m;
+        else
+            hi = m;
+    }
+    return lo << 12;
+}

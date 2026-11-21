@@ -1,0 +1,8 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Separate the lowest bit from the remaining upper 63 bits.
+    // Restoring their positions loses no bits and matches every input.
+    uint64_t upper = Ai >> 1;
+    uint64_t lowest = Ai & (uint64_t)1;
+    return (upper << 1) | lowest;
+}

@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Use the reference's restoring steps while maintaining the root square.
+    // Doubling multiplies the square by four; incrementing adds 2*r+1.
+    // Thus 3*(square+r)+1 is exactly the reference's trial difference.
+    // Its comparison guards the shifted subtraction, including at both extremes.
+    uint64_t r = 0;
+    uint64_t square = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t difference;
+        r <<= 1;
+        square <<= 2;
+        difference = 3 * (square + r) + 1;
+
+        if ((x >> s) >= difference) {
+            x -= difference << s;
+            square += 2 * r + 1;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

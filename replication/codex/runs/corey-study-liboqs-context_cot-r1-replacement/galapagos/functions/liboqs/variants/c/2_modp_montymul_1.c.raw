@@ -1,0 +1,12 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Truncating z before the masked multiplication preserves its low 31 bits.
+    // The full z is retained for the wrapping sum.
+    // The subtraction and correction match the reference for every input.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t m = ((uint64_t)(uint32_t)z * (uint64_t)p0i)
+        & (uint64_t)0x7FFFFFFF;
+    uint64_t w = m * (uint64_t)p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}

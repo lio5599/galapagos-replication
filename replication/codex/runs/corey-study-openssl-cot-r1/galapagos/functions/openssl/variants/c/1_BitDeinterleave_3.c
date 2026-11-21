@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Complement each bit twice to recover the original value.
+    // The intermediate uint64_t preserves the full bit pattern.
+    // This matches the reference for every input, including all zeros or ones.
+    uint64_t inverted = (uint64_t)~Ai;
+    return (uint64_t)~inverted;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

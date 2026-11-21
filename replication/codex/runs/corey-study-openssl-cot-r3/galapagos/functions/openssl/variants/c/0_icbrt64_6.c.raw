@@ -1,0 +1,25 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Ternary partitioning narrows an inclusive interval containing the root.
+    // Two cube comparisons discard regions that cannot contain the largest fit.
+    // Candidates never exceed 2642245, so their cubes cannot overflow.
+    // Each iteration shrinks the interval, including at zero and maximum input.
+    uint64_t lo = 0;
+    uint64_t hi = 2642245;
+
+    while (lo < hi) {
+        uint64_t third = (hi - lo) / 3;
+        uint64_t a = lo + third;
+        uint64_t b = hi - third;
+
+        if (b * b * b <= x) {
+            lo = b;
+        } else if (a * a * a <= x) {
+            lo = a;
+            hi = b - 1;
+        } else {
+            hi = a - 1;
+        }
+    }
+    return lo << 12;
+}

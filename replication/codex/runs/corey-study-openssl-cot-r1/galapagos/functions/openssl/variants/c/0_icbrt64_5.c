@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Integer Newton iteration starts above every possible cube root.
+    // Each update decreases an overestimate without crossing below the floor root.
+    // A nondecreasing update therefore identifies the exact floor root.
+    // Zero is handled separately; divisions and the update sum cannot overflow.
+    uint64_t r = (uint64_t)1 << 22;
+
+    if (x == 0)
+        return 0;
+
+    for (;;) {
+        uint64_t next = (2 * r + x / r / r) / 3;
+        if (next >= r)
+            return r << 12;
+        r = next;
+    }
+}
+
+
+int main(){
+    icbrt64(0);
+}

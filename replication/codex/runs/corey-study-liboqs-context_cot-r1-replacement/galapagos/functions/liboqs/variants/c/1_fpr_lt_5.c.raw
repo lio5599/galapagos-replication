@@ -1,0 +1,15 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Handle differing signs directly, then subtract in the required direction.
+    // Same-sign encodings differ by less than two to the power of 63,
+    // so the unsigned difference's top bit detects strict order, including equality.
+    uint64_t sx = x >> 63;
+    uint64_t sy = y >> 63;
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    if (sx != 0) {
+        return (int)((y - x) >> 63);
+    }
+    return (int)((x - y) >> 63);
+}

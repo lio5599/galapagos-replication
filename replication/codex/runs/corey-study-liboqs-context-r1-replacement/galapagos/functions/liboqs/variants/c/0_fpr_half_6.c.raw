@@ -1,0 +1,6 @@
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    uint64_t zero = (e - UINT64_C(1)) >> 63;
+    uint64_t mask = zero - UINT64_C(1);
+    return (x - (UINT64_C(1) << 52)) & mask;
+}

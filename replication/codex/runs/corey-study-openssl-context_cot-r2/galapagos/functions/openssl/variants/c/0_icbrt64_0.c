@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Returns floor(cuberoot(x)) multiplied by 4096.
+    // Expanding the trial polynomial preserves every reference iteration.
+    // The same shifts and comparisons cover zero and UINT64_MAX.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * (r * r + r) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

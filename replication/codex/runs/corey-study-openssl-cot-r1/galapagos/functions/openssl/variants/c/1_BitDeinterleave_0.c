@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged.
+    // Its constant-false condition skips all bit manipulation.
+    // Returning Ai preserves every input, including zero and all ones.
+    return Ai;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

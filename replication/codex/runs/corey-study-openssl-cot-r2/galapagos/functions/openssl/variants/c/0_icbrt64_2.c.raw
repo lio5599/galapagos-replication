@@ -1,0 +1,16 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Construct the root greedily from its highest possible bit downward.
+    // A bit is retained exactly when the candidate cube does not exceed x.
+    // Positive-candidate division avoids overflow even for rejected roots.
+    // All 22 root bits are tested, handling zero and UINT64_MAX exactly.
+    uint64_t r = 0;
+    uint64_t bit;
+
+    for (bit = (uint64_t)1 << 21; bit != 0; bit >>= 1) {
+        uint64_t candidate = r | bit;
+        if (candidate <= x / candidate / candidate)
+            r = candidate;
+    }
+    return r << 12;
+}

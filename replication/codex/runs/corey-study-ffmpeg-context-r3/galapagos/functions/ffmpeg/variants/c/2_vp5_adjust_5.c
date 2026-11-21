@@ -1,0 +1,22 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int selected = magnitude < 2 * t ? magnitude : 0;
+    int result;
+
+    if (selected >= t)
+        result = 2 * t - selected;
+    else
+        result = selected;
+
+    return negative ? -result : result;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

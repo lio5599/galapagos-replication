@@ -1,0 +1,26 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Search an inclusive interval using upper midpoints.
+    // For positive mid, mid <= x / mid / mid is exactly mid cubed <= x.
+    // Division avoids overflow, and every tested midpoint is nonzero.
+    // The bounds include every possible root, including zero and the maximum.
+    uint64_t lo = 0;
+    uint64_t hi = 2642245;
+
+    while (lo < hi) {
+        uint64_t mid = lo + (hi - lo + 1) / 2;
+        if (mid <= x / mid / mid)
+            lo = mid;
+        else
+            hi = mid - 1;
+    }
+    return lo << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

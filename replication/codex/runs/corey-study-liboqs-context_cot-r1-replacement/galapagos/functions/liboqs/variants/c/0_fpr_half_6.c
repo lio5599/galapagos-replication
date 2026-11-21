@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Add the unsigned additive inverse of 2^52 instead of subtracting it.
+    // Complementing 2^52 minus one constructs that inverse modulo 2^64.
+    // The original exponent test reproduces the reference's complete clearing.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t y = x + ~(((uint64_t)1 << 52) - (uint64_t)1);
+    return e != 0 ? y : (uint64_t)0;
+}
+
+
+int main(){
+    fpr_half(0);
+}

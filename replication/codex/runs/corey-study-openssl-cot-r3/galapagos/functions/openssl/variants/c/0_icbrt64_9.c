@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Greedily construct the root using exact split-word cube multiplication.
+    // high contains the cube above bit 31; values above 32 bits signal overflow.
+    // Only representable cubes not exceeding x are accepted.
+    // All partial products fit, and 22 candidate bits cover every uint64_t input.
+    uint64_t r = 0;
+    uint64_t bit;
+    const uint64_t mask = 0xffffffffULL;
+
+    for (bit = (uint64_t)1 << 21; bit != 0; bit >>= 1) {
+        uint64_t candidate = r | bit;
+        uint64_t square = candidate * candidate;
+        uint64_t low = (square & mask) * candidate;
+        uint64_t high = (square >> 32) * candidate + (low >> 32);
+
+        if (high <= mask) {
+            uint64_t cube = (high << 32) | (low & mask);
+            if (cube <= x)
+                r = candidate;
+        }
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

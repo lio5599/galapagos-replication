@@ -1,0 +1,8 @@
+static uint64_t fpr_half(uint64_t x) {
+    // The decremented exponent is all ones exactly when the original was zero.
+    // Subtracting one from that predicate gives either zero or an all-ones mask.
+    // This preserves the subtraction for every other bit pattern.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t clear = (uint64_t)(((y >> 52) & 0x7FF) == 0x7FF);
+    return y & (clear - (uint64_t)1);
+}

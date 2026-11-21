@@ -1,0 +1,106 @@
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    if ((x & UINT64_C(0x7FF0000000000000)) == 0)
+        return 0;
+    return x - (UINT64_C(1) << 52);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    return e ? x - UINT64_C(0x0010000000000000) : UINT64_C(0);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t mask = UINT64_C(0) -
+        (uint64_t)((x & UINT64_C(0x7FF0000000000000)) != 0);
+    return (x - (UINT64_C(1) << 52)) & mask;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x - (UINT64_C(1) << 52);
+    uint64_t e = (y >> 52) & UINT64_C(0x7FF);
+    return e == UINT64_C(0x7FF) ? UINT64_C(0) : y;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x + UINT64_C(0xFFF0000000000000);
+    uint64_t keep = (uint64_t)(
+        (y & UINT64_C(0x7FF0000000000000)) !=
+        UINT64_C(0x7FF0000000000000));
+    return y * keep;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint32_t e = (uint32_t)(x >> 52) & UINT32_C(0x7FF);
+    uint32_t nonzero = (e + UINT32_C(0x7FF)) >> 11;
+    uint64_t mask = UINT64_C(0) - (uint64_t)nonzero;
+    return (x - UINT64_C(0x0010000000000000)) & mask;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    uint64_t zero = (e - UINT64_C(1)) >> 63;
+    uint64_t mask = zero - UINT64_C(1);
+    return (x - (UINT64_C(1) << 52)) & mask;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    uint64_t nonzero = (e | (UINT64_C(0) - e)) >> 63;
+    uint64_t y = x - (UINT64_C(1) << 52);
+    return y & (UINT64_C(0) - nonzero);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    if (e == 0)
+        return 0;
+    return (x & UINT64_C(0x800FFFFFFFFFFFFF)) |
+           ((e - UINT64_C(1)) << 52);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x - UINT64_C(0x0010000000000000);
+    uint64_t e = (y >> 52) & UINT64_C(0x7FF);
+    uint64_t clear_mask = UINT64_C(0) -
+        ((e + UINT64_C(1)) >> 11);
+    return y ^ (y & clear_mask);
+}

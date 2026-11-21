@@ -1,0 +1,43 @@
+[
+  {
+    "step": "liboqs-split_variants",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "split_variants.py",
+      "c",
+      "liboqs"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "liboqs-template_variants",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "template_variants.py",
+      "c",
+      "liboqs"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "liboqs-compile_variants",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "compile_variants.py",
+      "c",
+      "liboqs"
+    ],
+    "exit_code": 0
+  },
+  {
+    "step": "liboqs-usecase",
+    "command": [
+      "/home/cbhei/galapagos-venv/bin/python3",
+      "-m",
+      "tests.usecase",
+      "liboqs",
+      "c"
+    ],
+    "exit_code": 0
+  }
+]

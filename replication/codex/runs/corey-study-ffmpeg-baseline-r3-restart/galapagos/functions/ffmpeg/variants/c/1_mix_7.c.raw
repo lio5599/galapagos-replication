@@ -1,0 +1,12 @@
+static int mix(int c0, int c1)
+{
+    unsigned int blue = 2u * (unsigned int)(c0 & 31)
+                     + (unsigned int)(c1 & 31);
+    unsigned int green = 2u * (unsigned int)((c0 & 992) >> 5)
+                      + (unsigned int)((c1 & 992) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+
+    return (red / 3) * 1024
+         + (int)(green / 3u) * 32
+         + (int)(blue / 3u);
+}

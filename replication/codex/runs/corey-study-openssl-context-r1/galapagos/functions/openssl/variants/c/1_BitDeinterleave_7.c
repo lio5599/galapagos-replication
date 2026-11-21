@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t hi = Ai >> 32;
+    uint64_t lo = Ai & UINT64_C(0xFFFFFFFF);
+    return (hi << 32) | lo;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

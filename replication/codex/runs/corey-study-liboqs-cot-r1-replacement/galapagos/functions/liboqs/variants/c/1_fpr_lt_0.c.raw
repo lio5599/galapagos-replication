@@ -1,0 +1,15 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // The reference compares encodings in ascending positive and reversed negative order.
+    // Different signs put the negative encoding first, including negative zero.
+    // Equal encodings compare false; no floating-point interpretation is needed.
+    uint64_t sx = x >> 63;
+    uint64_t sy = y >> 63;
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    if (sx != 0) {
+        return x > y;
+    }
+    return x < y;
+}

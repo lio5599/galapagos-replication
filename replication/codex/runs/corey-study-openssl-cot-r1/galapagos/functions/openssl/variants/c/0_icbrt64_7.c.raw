@@ -1,0 +1,29 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // The input bit length supplies a strict power-of-two upper root bound.
+    // Binary search then finds the greatest feasible root below that bound.
+    // Division tests cubes exactly without multiplication overflow.
+    // Zero returns directly; the largest bound is only 2 to the power 22.
+    uint64_t t = x;
+    uint64_t lo = 0;
+    uint64_t hi;
+    unsigned int bits = 0;
+
+    if (x == 0)
+        return 0;
+
+    while (t != 0) {
+        ++bits;
+        t >>= 1;
+    }
+    hi = (uint64_t)1 << ((bits + 2) / 3);
+
+    while (hi - lo > 1) {
+        uint64_t mid = lo + (hi - lo) / 2;
+        if (mid <= x / mid / mid)
+            lo = mid;
+        else
+            hi = mid;
+    }
+    return lo << 12;
+}

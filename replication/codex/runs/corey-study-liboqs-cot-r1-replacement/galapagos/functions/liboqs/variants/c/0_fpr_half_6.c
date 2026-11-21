@@ -1,0 +1,19 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Adding the unsigned additive inverse of 2^52 performs the same subtraction.
+    // A switch on the original exponent handles the reference's clearing case.
+    // Sign and fraction never affect that case, even for non-finite encodings.
+    switch ((x >> 52) & UINT64_C(0x7FF)) {
+    case 0:
+        return 0;
+    default:
+        return x + UINT64_C(0xFFF0000000000000);
+    }
+}
+
+
+int main(){
+    fpr_half(0);
+}

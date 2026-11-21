@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR with the same mask twice restores every original bit.
+    // This identity holds for all inputs, including zero and all ones.
+    uint64_t mask = 0xA5A5A5A5A5A5A5A5ULL;
+    uint64_t result = Ai ^ mask;
+    return result ^ mask;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

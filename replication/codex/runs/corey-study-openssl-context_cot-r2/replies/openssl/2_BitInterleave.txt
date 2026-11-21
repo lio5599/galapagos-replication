@@ -1,0 +1,80 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged because its branch is disabled.
+    // Returning Ai directly preserves every input, including zero and the maximum.
+    return Ai;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The disabled branch makes the reference an identity function.
+    // A same-type copy preserves all 64 bits for every input.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // XOR with zero preserves every bit, including for boundary inputs.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // OR with zero preserves every bit for all inputs.
+    return Ai | (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Adding zero preserves every value without overflow, including the maximum.
+    return Ai + (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Complementing twice restores every bit, including all-zero and all-one inputs.
+    return ~(~Ai);
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Extract and recombine the disjoint lower and upper 32-bit halves.
+    // Both shifts are within range and every original bit is preserved.
+    uint64_t low = Ai & (uint64_t)0xffffffffULL;
+    uint64_t high = Ai >> 32;
+    return (high << 32) | low;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // XOR with the same mask twice restores every bit for every input.
+    uint64_t mask = (uint64_t)0xa5a5a5a5a5a5a5a5ULL;
+    uint64_t result = Ai ^ mask;
+    return result ^ mask;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Rotating by 32 bits twice restores the original 64-bit word.
+    // Unsigned shifts by 32 are defined for every input.
+    uint64_t rotated = (Ai << 32) | (Ai >> 32);
+    return (rotated << 32) | (rotated >> 32);
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Complementary masks partition all bits into even and odd positions.
+    // Reuniting these disjoint parts preserves every input, including boundaries.
+    uint64_t even = Ai & (uint64_t)0x5555555555555555ULL;
+    uint64_t odd = Ai & (uint64_t)0xaaaaaaaaaaaaaaaaULL;
+    return even | odd;
+}

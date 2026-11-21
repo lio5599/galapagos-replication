@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    uint64_t different = (x ^ y) >> 63;
+    uint64_t masked_y = y & (different - (uint64_t)1);
+    int forward = (int)((x - masked_y) >> 63);
+    int reverse = (int)((masked_y - x) >> 63);
+    int both_negative = (int)((x & y) >> 63);
+
+    return forward ^ ((forward ^ reverse) & both_negative);
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

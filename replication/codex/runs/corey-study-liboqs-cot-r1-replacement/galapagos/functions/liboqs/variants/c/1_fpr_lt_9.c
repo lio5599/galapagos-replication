@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Compare ordered keys lexicographically in eight-bit chunks, highest first.
+    // Complementing negatives reverses them; positive keys occupy the upper half.
+    // Shifts avoid byte-order dependence, and identical keys return false.
+    uint64_t high = (uint64_t)1 << 63;
+    uint64_t a = (x >> 63) ? ~x : (x ^ high);
+    uint64_t b = (y >> 63) ? ~y : (y ^ high);
+    int shift;
+
+    for (shift = 56; shift >= 0; shift -= 8) {
+        uint64_t ca = (a >> shift) & (uint64_t)255;
+        uint64_t cb = (b >> shift) & (uint64_t)255;
+
+        if (ca != cb) {
+            return ca < cb;
+        }
+    }
+    return 0;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

@@ -1,0 +1,17 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes the maximum FLAC frame size from fixed overhead and channel data.
+    // Names the two variable contributions without changing their arithmetic.
+    // Signed division and intermediate operations match all defined edge cases.
+    int header = ch * ((7 + bps + 7) / 8);
+    int payload;
+    int count = 16;
+    count += header;
+    if (ch == 2)
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        payload = (ch * bps * blocksize + 7) / 8;
+    count += payload;
+    count += 2;
+    return count;
+}

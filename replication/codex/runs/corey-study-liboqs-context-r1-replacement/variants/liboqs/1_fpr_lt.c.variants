@@ -1,0 +1,140 @@
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    unsigned sx = (unsigned)(x >> 63);
+    unsigned sy = (unsigned)(y >> 63);
+
+    if (sx != sy)
+        return (int)sx;
+    if (sx)
+        return x > y;
+    return x < y;
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    return ((x ^ y) >> 63)
+        ? (int)(x >> 63)
+        : ((x >> 63) ? (x > y) : (x < y));
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    int different = sx ^ sy;
+
+    return (different & sx)
+        | ((different ^ 1)
+           & (((sx ^ 1) & (x < y)) | (sx & (x > y))));
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    uint64_t different = (x ^ y) >> 63;
+    uint64_t masked_y = y & (different - (uint64_t)1);
+    int forward = (int)((x - masked_y) >> 63);
+    int reverse = (int)((masked_y - x) >> 63);
+    int both_negative = (int)((x & y) >> 63);
+
+    return forward ^ ((forward ^ reverse) & both_negative);
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    uint64_t sign_bit = (uint64_t)1 << 63;
+    uint64_t mx = ((uint64_t)0 - (x >> 63)) | sign_bit;
+    uint64_t my = ((uint64_t)0 - (y >> 63)) | sign_bit;
+
+    return (x ^ mx) < (y ^ my);
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    uint64_t sign_bit = (uint64_t)1 << 63;
+    uint64_t kx = (x & sign_bit) ? ~x : (x | sign_bit);
+    uint64_t ky = (y & sign_bit) ? ~y : (y | sign_bit);
+
+    return kx < ky;
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    uint64_t magnitude_mask = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & magnitude_mask;
+    uint64_t ay = y & magnitude_mask;
+
+    return (sx > sy)
+        || ((sx == sy) && (sx ? (ax > ay) : (ax < ay)));
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+
+    if (sx != sy)
+        return sx;
+    return ((x < y) ^ sx) & (x != y);
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    uint64_t sx = x >> 63;
+    uint64_t different = (x ^ y) >> 63;
+    uint64_t forward = (x - y) >> 63;
+    uint64_t reverse = (y - x) >> 63;
+    uint64_t same_sign_result = forward ^ ((forward ^ reverse) & sx);
+
+    return (int)((different & sx)
+        | ((different ^ (uint64_t)1) & same_sign_result));
+}
+
+
+
+#include <stdint.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    uint64_t sign_bit = (uint64_t)1 << 63;
+
+    if (x < sign_bit)
+        return (y < sign_bit) && (x < y);
+    return (y < sign_bit) || (x > y);
+}

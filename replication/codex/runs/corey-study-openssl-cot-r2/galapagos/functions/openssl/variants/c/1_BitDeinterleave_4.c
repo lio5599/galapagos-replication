@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // AND with a 64-bit all-one mask preserves the reference's unchanged input.
+    // Casting the complemented zero produces the full uint64_t mask.
+    // Every bit is retained for all inputs, including the boundary values.
+    const uint64_t mask = (uint64_t)~(uint64_t)0;
+    return Ai & mask;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

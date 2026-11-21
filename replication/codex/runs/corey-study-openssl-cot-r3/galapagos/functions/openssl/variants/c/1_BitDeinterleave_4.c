@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Mask with 64 one bits to retain every bit of the input.
+    // This is the reference's identity operation, including at zero and maximum.
+    return Ai & UINT64_MAX;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

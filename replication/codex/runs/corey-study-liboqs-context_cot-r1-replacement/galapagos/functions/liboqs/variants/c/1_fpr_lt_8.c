@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Exclude equality before reversing a strict comparison by XOR.
+    // For unequal same-sign encodings, reversal is exactly logical negation.
+    // Opposite signs, including signed zeros, are ordered directly by sign.
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+
+    if (x == y) {
+        return 0;
+    }
+    if (sx != sy) {
+        return sx;
+    }
+    return (int)(x < y) ^ sx;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

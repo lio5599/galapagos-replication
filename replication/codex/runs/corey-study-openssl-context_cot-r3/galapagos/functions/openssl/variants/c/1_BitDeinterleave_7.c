@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference is the identity function.
+    // Swapping the two 32-bit halves twice restores every original bit.
+    // All shifts have valid counts, including for boundary input values.
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

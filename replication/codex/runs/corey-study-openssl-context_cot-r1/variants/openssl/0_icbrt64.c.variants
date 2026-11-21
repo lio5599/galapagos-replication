@@ -1,0 +1,216 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes floor(cube_root(x)) multiplied by 4096.
+    // Reorders the trial increment without changing its value.
+    // Intermediate products fit in uint64_t for every input.
+    // The original comparisons and remainder updates preserve all edge cases.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        r <<= 1;
+        b = r * (r + 1) * 3 + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses an iteration counter to generate the same 22 shift positions.
+    // Each iteration performs exactly the reference digit and remainder update.
+    // Shifts range from 63 through 0, including for zero and UINT64_MAX.
+    uint64_t r = 0;
+    unsigned int i;
+
+    for (i = 0; i < 22; ++i) {
+        unsigned int s = 63 - 3 * i;
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Expresses the reference loop as a while loop.
+    // The shift sequence, trial values, and accepted digits are unchanged.
+    // No shift occurs after s becomes negative, so all inputs remain defined.
+    uint64_t r = 0;
+    int s = 63;
+
+    while (s >= 0) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r += 1;
+        }
+        s -= 3;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses a do-while loop for the same 22 digit-extraction steps.
+    // The last step uses shift zero before the loop terminates.
+    // Identical trial and remainder arithmetic covers every uint64_t input.
+    uint64_t r = 0;
+    int s = 63;
+
+    do {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+        s -= 3;
+    } while (s >= 0);
+
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Expands the trial polynomial to 3*r*r + 3*r + 1.
+    // Unsigned arithmetic gives the same trial value as the factored form.
+    // Failed trials skip the update; successful trials match the reference.
+    // The shift sequence and final scaling are unchanged for all inputs.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * r + 3 * r + 1;
+        if ((x >> s) < b)
+            continue;
+        x -= b << s;
+        ++r;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Replaces the conditional update with an unsigned all-zero or all-one mask.
+    // The comparison produces exactly the reference acceptance bit.
+    // Masked subtraction and bit addition reproduce both branches for all inputs.
+    // Every shift count is valid, and unsigned left shifts remain defined.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        uint64_t take;
+        uint64_t mask;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        take = (x >> s) >= b;
+        mask = (uint64_t)0 - take;
+        x -= (b << s) & mask;
+        r += take;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses a zero-or-one multiplier to select the remainder subtraction.
+    // Multiplication by the acceptance bit matches the reference conditional.
+    // The same bit increments the root, including at exact cube boundaries.
+    // Unsigned arithmetic and valid shift counts cover the full input range.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        uint64_t take;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        take = (x >> s) >= b;
+        x -= take * (b << s);
+        r += take;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes the trial before doubling the previous root.
+    // Substituting twice the old root gives 12*r*r + 6*r + 1.
+    // This equals the reference trial, so all comparisons and updates agree.
+    // The equivalence holds across the entire unsigned input range.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b = 12 * r * r + 6 * r + 1;
+        r <<= 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Builds the doubled root in a temporary before committing each digit.
+    // Both branches assign exactly the root produced by the reference step.
+    // The remainder changes only on acceptance, preserving all boundary cases.
+    // Multiplication by 4096 equals the reference final unsigned shift.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t next = r + r;
+        uint64_t b = 3 * next * (next + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r = next + 1;
+        } else {
+            r = next;
+        }
+    }
+    return r * 4096;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Separates the final shift-zero step from the preceding 21 steps.
+    // Its comparison uses x directly because shifting by zero changes nothing.
+    // The final remainder update is omitted because it cannot affect the result.
+    // Root extraction and scaling therefore agree for every input.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+
+    for (s = 63; s > 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    r <<= 1;
+    b = 3 * r * (r + 1) + 1;
+    if (x >= b)
+        ++r;
+    return r << 12;
+}

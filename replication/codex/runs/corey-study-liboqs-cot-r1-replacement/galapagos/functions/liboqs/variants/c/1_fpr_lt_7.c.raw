@@ -1,0 +1,19 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // With matching signs, the highest differing bit determines unsigned order.
+    // Its direction is reversed for negatives; different signs use x's sign.
+    // Equality is handled before scanning, including identical zero encodings.
+    uint64_t different = x ^ y;
+    uint64_t bit = (uint64_t)1 << 62;
+    int sx = (int)(x >> 63);
+
+    if ((different >> 63) != 0) {
+        return sx;
+    }
+    if (different == 0) {
+        return 0;
+    }
+    while ((different & bit) == 0) {
+        bit >>= 1;
+    }
+    return ((x & bit) == 0) ^ sx;
+}

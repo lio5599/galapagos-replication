@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // Test the original exponent directly instead of testing after subtraction.
+    // A zero exponent is precisely the case the reference clears entirely.
+    // Every other input receives the same unsigned subtraction.
+    uint64_t e = (x >> 52) & 0x7FF;
+    return e == 0 ? (uint64_t)0 : x - ((uint64_t)1 << 52);
+}
+
+
+int main(){
+    fpr_half(0);
+}

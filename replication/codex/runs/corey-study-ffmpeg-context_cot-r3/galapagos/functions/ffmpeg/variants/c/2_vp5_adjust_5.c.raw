@@ -1,0 +1,17 @@
+static int vp5_adjust(int v, int t)
+{
+    // Implement the Boolean gate with an all-zero or all-one bit mask.
+    // The mask keeps exactly the same magnitude as the reference multiplication.
+    // The absolute-value folds and sign restoration otherwise remain unchanged.
+    int s1 = v >> 31;
+    int s2;
+    int keep;
+    v = (v ^ s1) - s1;
+    keep = -(v < 2 * t);
+    v &= keep;
+    v -= t;
+    s2 = v >> 31;
+    v = (v ^ s2) - s2;
+    v = t - v;
+    return (v + s1) ^ s1;
+}

@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Computes a signed triangular adjustment for positive t and signed 2*t otherwise.
+    // First obtain the magnitude, apply the reference's gate and fold, then restore sign.
+    // All arithmetic is safe whenever the reference has defined behavior,
+    // including zero and negative thresholds.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int b, r;
+    if (a >= 2 * t)
+        a = 0;
+    b = a - t;
+    if (b < 0)
+        b = -b;
+    r = t - b;
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

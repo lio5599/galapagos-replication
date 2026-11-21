@@ -1,0 +1,15 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Gives each stage of accumulation its own variable.
+    // The payload numerator is selected before its common signed division.
+    // Identical intermediate arithmetic preserves every defined input result.
+    int base = 16;
+    int with_header = base + ch * ((7 + bps + 7) / 8);
+    int numerator = ch == 2
+        ? (2 * bps + 1) * blocksize + 7
+        : ch * bps * blocksize + 7;
+    int payload = numerator / 8;
+    int with_payload = with_header + payload;
+    int result = with_payload + 2;
+    return result;
+}

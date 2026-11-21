@@ -1,0 +1,9 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference leaves all input bits unchanged.
+    // Extracting and rejoining the two halves restores the original value.
+    // Both shifts are within the 64-bit width for every input.
+    uint64_t lo = Ai & (uint64_t)0xffffffffULL;
+    uint64_t hi = Ai >> 32;
+    return (hi << 32) | lo;
+}

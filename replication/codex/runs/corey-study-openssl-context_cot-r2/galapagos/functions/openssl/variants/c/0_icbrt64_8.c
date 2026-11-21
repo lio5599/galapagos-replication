@@ -1,0 +1,30 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Multiply the trial subtraction by its Boolean acceptance value.
+    // A rejected trial subtracts zero; an accepted trial matches the reference.
+    // Unsigned shifts and arithmetic remain defined for every input.
+    uint64_t r = 0;
+    unsigned int s = 63;
+
+    for (;;) {
+        uint64_t b;
+        uint64_t take;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        take = (x >> s) >= b;
+        x -= (b * take) << s;
+        r += take;
+        if (s == 0)
+            break;
+        s -= 3;
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

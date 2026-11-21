@@ -1,0 +1,90 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged.
+    // Its constant-false condition skips all bit manipulation.
+    // Returning Ai preserves every input, including zero and all ones.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Copy the input into another uint64_t and return that copy.
+    // The reference is an identity function because its branch never runs.
+    // The copy preserves all 64 bits for every input.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // XOR with zero leaves every bit unchanged.
+    // This matches the reference's skipped branch for every input,
+    // including zero, all ones, and either endpoint bit set.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Complement each bit twice to recover the original value.
+    // The intermediate uint64_t preserves the full bit pattern.
+    // This matches the reference for every input, including all zeros or ones.
+    uint64_t inverted = (uint64_t)~Ai;
+    return (uint64_t)~inverted;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Toggle a fixed set of bits twice using XOR.
+    // Each toggled bit is restored, and all other bits remain unchanged.
+    // Thus every input matches the reference, with no arithmetic overflow.
+    uint64_t mask = (uint64_t)0xA5A5A5A5A5A5A5A5ULL;
+    uint64_t toggled = Ai ^ mask;
+    return toggled ^ mask;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Increment modulo 2 to the power of 64, then undo the increment.
+    // uint64_t conversion preserves the intended modular intermediate.
+    // Even all ones wraps to zero and then returns to its original value.
+    uint64_t incremented = (uint64_t)(Ai + 1ULL);
+    return (uint64_t)(incremented - 1ULL);
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Apply unsigned modular negation twice to recover the input.
+    // Conversion to uint64_t makes each result modulo 2 to the power of 64.
+    // Zero, the top-bit-only value, and all other inputs are preserved.
+    uint64_t negated = (uint64_t)(0ULL - Ai);
+    return (uint64_t)(0ULL - negated);
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Extract the lower and upper 32-bit halves and reassemble them.
+    // The halves retain every bit and occupy disjoint output positions.
+    // This is the reference's identity mapping for every possible input.
+    uint32_t lo = (uint32_t)Ai;
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Swap the two 32-bit halves twice.
+    // Each swap is performed in unsigned arithmetic and stored in 64 bits.
+    // Two swaps restore every bit, including bits at both ends of the word.
+    uint64_t swapped = (uint64_t)((Ai << 32) | (Ai >> 32));
+    return (uint64_t)((swapped << 32) | (swapped >> 32));
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Partition the input into even-positioned and odd-positioned bits.
+    // The complementary masks cover all 64 positions without overlap.
+    // OR restores every input exactly, matching the inactive reference branch.
+    uint64_t even = Ai & (uint64_t)0x5555555555555555ULL;
+    uint64_t odd = Ai & (uint64_t)0xAAAAAAAAAAAAAAAAULL;
+    return even | odd;
+}

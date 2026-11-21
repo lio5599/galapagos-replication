@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Unsigned subtraction from zero computes negation modulo 2 to the 64th.
+    // Applying it twice restores every input, including zero and the high bit alone.
+    uint64_t negated = (uint64_t)(0ULL - Ai);
+    return (uint64_t)(0ULL - negated);
+}
+
+
+int main(){
+    BitInterleave(0);
+}

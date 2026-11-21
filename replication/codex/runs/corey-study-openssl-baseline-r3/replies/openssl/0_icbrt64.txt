@@ -1,0 +1,194 @@
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    int s = 63;
+
+    do {
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+        s -= 3;
+    } while (s >= 0);
+
+    return r << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    uint64_t remainder = 0;
+
+    for (int s = 63; s >= 0; s -= 3) {
+        remainder = (remainder << 3) | ((x >> s) & 7);
+        r <<= 1;
+
+        uint64_t delta = 3 * r * (r + 1) + 1;
+        if (remainder >= delta) {
+            remainder -= delta;
+            ++r;
+        }
+    }
+
+    return r << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t lo = 0;
+    uint64_t hi = 2642246;
+
+    while (hi - lo > 1) {
+        uint64_t mid = lo + (hi - lo) / 2;
+        uint64_t cube = mid * mid * mid;
+
+        if (cube <= x)
+            lo = mid;
+        else
+            hi = mid;
+    }
+
+    return lo << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t lo = 0;
+    uint64_t hi = (uint64_t)1 << 22;
+
+    while (hi - lo > 1) {
+        uint64_t mid = lo + (hi - lo) / 2;
+
+        if (mid <= x / mid / mid)
+            lo = mid;
+        else
+            hi = mid;
+    }
+
+    return lo << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (uint64_t bit = (uint64_t)1 << 21; bit; bit >>= 1) {
+        uint64_t candidate = r | bit;
+
+        if (candidate <= 2642245 &&
+            candidate * candidate * candidate <= x)
+            r = candidate;
+    }
+
+    return r << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (uint64_t bit = (uint64_t)1 << 21; bit; bit >>= 1) {
+        uint64_t candidate = r + bit;
+
+        if (candidate <= x / (candidate * candidate))
+            r = candidate;
+    }
+
+    return r << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    if (x == 0)
+        return 0;
+
+    uint64_t r = (uint64_t)1 << 22;
+
+    for (;;) {
+        uint64_t next = (2 * r + x / r / r) / 3;
+
+        if (next >= r)
+            return r << 12;
+
+        r = next;
+    }
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t lo = 0;
+    uint64_t hi = 2642245;
+
+    while (lo < hi) {
+        uint64_t mid = lo + (hi - lo + 1) / 2;
+
+        if (mid * mid * mid <= x)
+            lo = mid;
+        else
+            hi = mid - 1;
+    }
+
+    return lo << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t lo = 0;
+    uint64_t hi = 1;
+
+    while (hi <= x / hi / hi) {
+        lo = hi;
+        hi <<= 1;
+    }
+
+    while (hi - lo > 1) {
+        uint64_t mid = lo + (hi - lo) / 2;
+
+        if (mid <= x / mid / mid)
+            lo = mid;
+        else
+            hi = mid;
+    }
+
+    return lo << 12;
+}
+```
+
+```c
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (uint64_t place = 1000000; place; place /= 10) {
+        for (unsigned digit = 9; digit != 0; --digit) {
+            uint64_t candidate = r + digit * place;
+
+            if (candidate <= x / candidate / candidate) {
+                r = candidate;
+                break;
+            }
+        }
+    }
+
+    return r << 12;
+}
+```

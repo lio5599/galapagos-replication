@@ -1,0 +1,170 @@
+
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int delta, result;
+
+    if (magnitude >= 2 * t)
+        magnitude = 0;
+
+    delta = magnitude - t;
+    result = t - (delta < 0 ? -delta : delta);
+    return negative ? -result : result;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int magnitude = v < 0 ? -v : v;
+    int delta = (magnitude < 2 * t ? magnitude : 0) - t;
+    int result = t - (delta >= 0 ? delta : -delta);
+
+    return v >= 0 ? result : -result;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int result;
+
+    if (t < 0)
+        result = 2 * t;
+    else if (magnitude >= 2 * t)
+        result = 0;
+    else if (magnitude <= t)
+        result = magnitude;
+    else
+        result = 2 * t - magnitude;
+
+    return negative ? -result : result;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int magnitude = v < 0 ? -v : v;
+    int result;
+
+    if (magnitude < 2 * t)
+        result = magnitude > t ? 2 * t - magnitude : magnitude;
+    else
+        result = t < 0 ? 2 * t : 0;
+
+    return v < 0 ? -result : result;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int sign = v < 0 ? -1 : 1;
+    int magnitude = v * sign;
+    int result;
+
+    magnitude *= magnitude < 2 * t;
+    result = magnitude - t;
+    if (result < 0)
+        result = -result;
+
+    return sign * (t - result);
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+
+    magnitude = magnitude < 2 * t ? magnitude : 0;
+    if (magnitude > t)
+        magnitude = t - (magnitude - t);
+
+    if (negative)
+        magnitude = -magnitude;
+    return magnitude;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int delta, result;
+
+    magnitude &= -(magnitude < 2 * t);
+    delta = magnitude - t;
+    result = delta < 0 ? t + delta : t - delta;
+
+    return negative ? -result : result;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int sign = v >> 31;
+    int magnitude = (v ^ sign) - sign;
+    int delta, mask, result;
+
+    magnitude = magnitude < 2 * t ? magnitude : 0;
+    delta = magnitude - t;
+    mask = delta >> 31;
+    result = t - ((delta ^ mask) - mask);
+
+    return (result + sign) ^ sign;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int result;
+
+    if (magnitude >= 2 * t)
+        goto outside;
+    if (magnitude > t)
+        goto descending;
+
+    result = magnitude;
+    goto finish;
+
+descending:
+    result = 2 * t - magnitude;
+    goto finish;
+
+outside:
+    result = t < 0 ? 2 * t : 0;
+
+finish:
+    return negative ? -result : result;
+}
+
+
+
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int result;
+
+    switch (magnitude < 2 * t) {
+    case 0:
+        result = t - (t < 0 ? -t : t);
+        break;
+    default:
+        result = magnitude <= t ? magnitude : 2 * t - magnitude;
+        break;
+    }
+
+    return negative ? -result : result;
+}

@@ -1,0 +1,184 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes a signed triangular adjustment for positive t and signed 2*t otherwise.
+    // First obtain the magnitude, apply the reference's gate and fold, then restore sign.
+    // All arithmetic is safe whenever the reference has defined behavior,
+    // including zero and negative thresholds.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int b, r;
+    if (a >= 2 * t)
+        a = 0;
+    b = a - t;
+    if (b < 0)
+        b = -b;
+    r = t - b;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Express both absolute values and the magnitude gate with conditional expressions.
+    // The final negation equals the reference's sign restoration on its defined inputs.
+    // No positive-threshold assumption is made, so negative thresholds are preserved.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int b = (a < 2 * t ? a : 0) - t;
+    int r = t - (b < 0 ? -b : b);
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Preserve the reference's sign masks and replace only multiplication by a gate.
+    // Selecting zero or the magnitude is identical to multiplication by its comparison.
+    // Every other operation retains the reference's order, including threshold edges.
+    int s1 = v >> 31;
+    int s2;
+    v ^= s1;
+    v -= s1;
+    if (!(v < 2 * t))
+        v = 0;
+    v -= t;
+    s2 = v >> 31;
+    v ^= s2;
+    v -= s2;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Replace each mask-based absolute value with conditional negation.
+    // Keep the reference's comparison multiplication and final sign restoration.
+    // Unrepresentable absolute values already make the reference undefined.
+    int s1 = v >> 31;
+    if (v < 0)
+        v = -v;
+    v *= v < 2 * t;
+    v -= t;
+    if (v < 0)
+        v = -v;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Keep both reference magnitude folds but restore the original sign by branching.
+    // On defined reference inputs, adding minus one then complementing equals negation.
+    // Nonnegative inputs retain the folded result, even when that result is negative.
+    int s1 = v >> 31;
+    int s2;
+    v = (v ^ s1) - s1;
+    v *= v < 2 * t;
+    v -= t;
+    s2 = v >> 31;
+    v = (v ^ s2) - s2;
+    v = t - v;
+    if (s1)
+        return -v;
+    return v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Implement the Boolean gate with an all-zero or all-one bit mask.
+    // The mask keeps exactly the same magnitude as the reference multiplication.
+    // The absolute-value folds and sign restoration otherwise remain unchanged.
+    int s1 = v >> 31;
+    int s2;
+    int keep;
+    v = (v ^ s1) - s1;
+    keep = -(v < 2 * t);
+    v &= keep;
+    v -= t;
+    s2 = v >> 31;
+    v = (v ^ s2) - s2;
+    v = t - v;
+    return (v + s1) ^ s1;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Evaluate the triangular function directly instead of performing two folds.
+    // For nonpositive t the gate always clears the magnitude, yielding 2*t.
+    // For positive t the three regions yield a, 2*t-a, and zero respectively.
+    // The reference excludes overflowing magnitude and doubled-threshold arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int r;
+    if (t <= 0)
+        r = twice;
+    else if (a >= twice)
+        r = 0;
+    else if (a <= t)
+        r = a;
+    else
+        r = twice - a;
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Split first at the reference's gate, then evaluate the remaining fold directly.
+    // A cleared gate yields zero for positive t and 2*t for nonpositive t.
+    // A retained magnitude implies positive t, making both triangular branches safe.
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int twice = t + t;
+    int r;
+    if (a < twice)
+        r = a < t ? a : twice - a;
+    else
+        r = t < 0 ? twice : 0;
+    return (r + sign) ^ sign;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Fold the distance from t, then clamp the result for positive thresholds.
+    // Outside the positive triangular support the fold is negative and becomes zero.
+    // Nonpositive thresholds are handled separately because their reference result is 2*t.
+    // The distance arithmetic is representable on every defined reference input.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+    if (t <= 0) {
+        r = 2 * t;
+    } else {
+        int distance = a - t;
+        if (distance < 0)
+            distance = -distance;
+        r = t - distance;
+        if (r < 0)
+            r = 0;
+    }
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // For positive thresholds, subtract twice the excess above t from the magnitude.
+    // This gives a below the peak and 2*t-a above it, with zero beyond the gate.
+    // The excess is doubled only inside the gate, where it cannot overflow.
+    // Nonpositive thresholds explicitly retain the reference's 2*t result.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int r;
+    if (t <= 0) {
+        r = twice;
+    } else if (a >= twice) {
+        r = 0;
+    } else {
+        int excess = a > t ? a - t : 0;
+        r = a - 2 * excess;
+    }
+    return negative ? -r : r;
+}

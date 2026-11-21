@@ -1,0 +1,80 @@
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai;
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai ^ (uint64_t)0;
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai | (uint64_t)0;
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai & ~(uint64_t)0;
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return ~(~Ai);
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t hi = Ai >> 32;
+    uint64_t lo = Ai & (uint64_t)0xffffffff;
+    return (hi << 32) | lo;
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t mask = (uint64_t)0x5555555555555555ULL;
+    return (Ai & mask) | (Ai & ~mask);
+}
+
+
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = 0;
+    unsigned int i;
+
+    for (i = 0; i < 64; ++i) {
+        result |= ((Ai >> i) & (uint64_t)1) << i;
+    }
+
+    return result;
+}

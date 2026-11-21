@@ -1,0 +1,94 @@
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai ^ UINT64_C(0);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai + UINT64_C(0);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai & UINT64_MAX;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return ~~Ai;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return (Ai & UINT64_C(0x5555555555555555)) |
+           (Ai & UINT64_C(0xAAAAAAAAAAAAAAAA));
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint32_t lo = (uint32_t)Ai;
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t flipped = Ai ^ UINT64_C(0xA5A5A5A5A5A5A5A5);
+    return flipped ^ UINT64_C(0xA5A5A5A5A5A5A5A5);
+}
+
+
+
+#include <stdint.h>
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}

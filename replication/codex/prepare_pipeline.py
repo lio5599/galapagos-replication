@@ -11,7 +11,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
-from archive_run import archive
+from archive_run import archive, clean_archived_builds
 from progress import run_stage, write_json, utc
 
 
@@ -162,7 +162,7 @@ def main():
 
 '''
     text = text.replace(marker, tracked + marker, 1)
-    if "ffmpeg" in selection:
+    if selection:
         shadow_hook = "        variant_shadow = await variant.shadow(original_folder)\n"
         save_hook = "            save(result)\n"
         if text.count(shadow_hook) != 1 or text.count(save_hook) != 1:
@@ -172,7 +172,7 @@ def main():
                             "test_task = asyncio.create_task(tracked_tests(variant, variant_shadow))", 1)
         text = text.replace("pass_test, msg = await pass_test", "pass_test, msg = await test_task", 1)
         text = text.replace(save_hook, save_hook + '''
-            if LIBRARY == "ffmpeg":
+            if LIBRARY in ("alsa-lib", "ffmpeg", "libgcrypt", "liboqs", "libsodium", "openssl"):
                 # Drain readers before releasing the private build, even after a failed check.
                 pending = [task for _, _, task in tasks]
                 if test_task is not None:
@@ -183,13 +183,13 @@ def main():
                 reference = os.path.realpath(original_folder)
                 if (os.path.dirname(target) != clone_root
                         or os.path.realpath(target) != target or target == reference
-                        or not os.path.basename(target).startswith("ffmpeg-")):
-                    raise RuntimeError(f"Unexpected FFmpeg variant build path: {target}")
+                        or not os.path.basename(target).startswith(LIBRARY + "-")):
+                    raise RuntimeError(f"Unexpected variant build path: {target}")
                 progress_event("remove_variant_build", variant)
                 shutil.rmtree(target)
                 progress_event("variant_build_removed", variant)
 ''', 1)
-        patches.append("tests/usecase.py: remove each FFmpeg variant build after saving its result and draining checks")
+        patches.append("tests/usecase.py: remove each variant build after saving its result and draining checks")
     if 'libgcrypt' in selection:
         marker = '        await original_uc.compile(shadow_original, configure_project=True)'
         if text.count(marker) != 1:
@@ -249,6 +249,7 @@ def main():
         if src.exists():
             shutil.copytree(src, run / "results" / project, dirs_exist_ok=True)
     saved = archive(dest, run, selection, complete=True)
+    clean_archived_builds(dest, run, sum(len(v) for v in selection.values()) * 10)
     write_json(run / 'progress.json', dict(state='completed', stage='archived; ready for review',
         heartbeat_at=utc(), expected_variants=sum(len(v) for v in selection.values()) * 10,
         result_records=len(list((run / 'results').glob('*/c/*/*.result.json'))), archived_files=saved))

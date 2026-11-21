@@ -1,0 +1,8 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Separate the high and low 32-bit portions and recombine them unchanged.
+    // Both shifts are within range and every input bit retains its position.
+    uint64_t high = Ai >> 32;
+    uint64_t low = Ai & (uint64_t)0xffffffffULL;
+    return (high << 32) | low;
+}

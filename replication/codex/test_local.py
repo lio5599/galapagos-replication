@@ -19,6 +19,13 @@ import progress
 
 
 class IntegrityTests(unittest.TestCase):
+    def test_transport_diagnostic_is_not_tool_use(self):
+        diagnostic = {'type': 'item.completed', 'item': {'type': 'error'}}
+        message = {'type': 'item.completed', 'item': {'type': 'agent_message'}}
+        tool = {'type': 'item.completed', 'item': {'type': 'command_execution'}}
+        self.assertEqual(bridge.tool_events([diagnostic, message]), [])
+        self.assertEqual(bridge.tool_events([diagnostic, tool, message]), [tool])
+
     def test_codex_discovery_without_app_path(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp = Path(tmp)
@@ -93,6 +100,32 @@ class IntegrityTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 archive_run.archive(workspace, run, ['alsa-lib'], True)
             self.assertEqual(saved.read_text(), 'original evidence')
+
+    def test_cleanup_requires_complete_intact_archive_and_expected_workspace(self):
+        for mode in ('complete', 'partial', 'missing_records', 'tampered', 'wrong_path'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as tmp:
+                home = Path(tmp).resolve()
+                run = home / 'saved/run'
+                run.mkdir(parents=True)
+                workspace = home / 'galapagos-corey-runs/run'
+                builds = workspace / 'build-copies'
+                builds.mkdir(parents=True)
+                (builds / 'reference.bin').write_bytes(b'build')
+                result = workspace / 'scripts/out/openssl/c/function/variant.result.json'
+                result.parent.mkdir(parents=True)
+                result.write_text('{}')
+                archive_run.archive(workspace, run, ['openssl'], mode != 'partial')
+                if mode == 'tampered':
+                    (run / 'galapagos/out/openssl/c/function/variant.result.json').write_text('changed')
+                with patch.object(Path, 'home', return_value=home):
+                    if mode in ('tampered', 'wrong_path'):
+                        with self.assertRaises(ValueError):
+                            archive_run.clean_archived_builds(
+                                home / 'unexpected' if mode == 'wrong_path' else workspace, run, 1)
+                    else:
+                        archive_run.clean_archived_builds(workspace, run, 2 if mode == 'missing_records' else 1)
+                self.assertEqual(builds.exists(), mode != 'complete')
+                self.assertTrue((run / 'archive-manifest.json').is_file())
 
     def test_live_monitor_reads_events_and_records_exit(self):
         with tempfile.TemporaryDirectory() as tmp:

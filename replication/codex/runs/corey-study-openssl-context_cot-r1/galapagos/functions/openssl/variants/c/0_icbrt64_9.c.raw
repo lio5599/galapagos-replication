@@ -1,0 +1,24 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Separates the final shift-zero step from the preceding 21 steps.
+    // Its comparison uses x directly because shifting by zero changes nothing.
+    // The final remainder update is omitted because it cannot affect the result.
+    // Root extraction and scaling therefore agree for every input.
+    uint64_t r = 0;
+    uint64_t b;
+    int s;
+
+    for (s = 63; s > 0; s -= 3) {
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    r <<= 1;
+    b = 3 * r * (r + 1) + 1;
+    if (x >= b)
+        ++r;
+    return r << 12;
+}

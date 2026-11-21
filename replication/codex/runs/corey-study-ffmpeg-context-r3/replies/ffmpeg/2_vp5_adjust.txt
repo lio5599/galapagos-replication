@@ -1,0 +1,162 @@
+```c
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    if (negative)
+        v = -v;
+    if (v >= 2 * t)
+        v = 0;
+    v -= t;
+    if (v < 0)
+        v = -v;
+    v = t - v;
+    return negative ? -v : v;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    v = s1 ? -v : v;
+    v = v < 2 * t ? v : 0;
+    v -= t;
+    v = v < 0 ? -v : v;
+    v = t - v;
+    return s1 ? -v : v;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int magnitude = (v ^ s1) - s1;
+    int selected = magnitude * (magnitude < 2 * t);
+    int delta = selected - t;
+    int s2 = delta >> 31;
+    int distance = (delta ^ s2) - s2;
+    int result = t - distance;
+    return (result + s1) ^ s1;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int s2;
+    v = (v ^ s1) - s1;
+    v &= -(v < 2 * t);
+    v -= t;
+    s2 = v >> 31;
+    v = (v ^ s2) - s2;
+    v = t - v;
+    return (v + s1) ^ s1;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int s2;
+    v = (v + s1) ^ s1;
+    v *= v < 2 * t;
+    v -= t;
+    s2 = v >> 31;
+    v = (v + s2) ^ s2;
+    v = t - v;
+    return (v + s1) ^ s1;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int magnitude = negative ? -v : v;
+    int selected = magnitude < 2 * t ? magnitude : 0;
+    int result;
+
+    if (selected >= t)
+        result = 2 * t - selected;
+    else
+        result = selected;
+
+    return negative ? -result : result;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int limit = 2 * t;
+    int result;
+
+    v = (v ^ s1) - s1;
+    if (v >= limit)
+        v = 0;
+
+    result = v < t ? v : limit - v;
+    return (result + s1) ^ s1;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int delta;
+
+    v = (v ^ s1) - s1;
+    v *= v < 2 * t;
+    delta = v - t;
+
+    if (delta < 0)
+        v = t + delta;
+    else
+        v = t - delta;
+
+    return (v + s1) ^ s1;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int negative = v < 0;
+    int delta;
+    int s2;
+
+    if (negative)
+        v = -v;
+    v &= -(v < 2 * t);
+    delta = v - t;
+    s2 = delta >> 31;
+    v = t - ((delta ^ s2) - s2);
+
+    if (negative)
+        return -v;
+    return v;
+}
+```
+
+```c
+static int vp5_adjust(int v, int t)
+{
+    int s1 = v >> 31;
+    int magnitude = (v ^ s1) - s1;
+    int delta;
+    int result;
+
+    if (magnitude < 2 * t)
+        delta = magnitude - t;
+    else
+        delta = -t;
+
+    result = delta < 0 ? t + delta : t - delta;
+    return (result + s1) ^ s1;
+}
+```

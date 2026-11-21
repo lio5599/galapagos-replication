@@ -1,0 +1,1569 @@
+Results will be in /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/out/ffmpeg
+DEBUG:asyncio:Using selector: EpollSelector
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": null, "variant": null, "action": "build_reference_project"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/tests/../../use_cases/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/tests/../../use_cases/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+INFO:root:No change provided
+INFO:root:Calling configure
+INFO:root:Running ./configure --cc=clang --disable-doc --extra-cflags="-save-temps=obj -fno-strict-aliasing"
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Compiled in 186.18s
+INFO:root:Pipeline for variants of flac_get_max_frame_size /home/diogo/galapagos-clones/ffmpeg/libavcodec/flacenc.c
+INFO:root:Pipeline for variants of mix /home/diogo/galapagos-clones/ffmpeg/libavcodec/4xm.c
+INFO:root:Pipeline for variants of vp5_adjust /home/diogo/galapagos-clones/ffmpeg/libavcodec/vp56dsp.c
+INFO:root:Variants to check 30
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c
+Compiled in 1.72s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+Compiled in 1.55s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c
+Tested in 220.46s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "equivalence_check"}
+DEBUG:root:Creating debug folder
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmpzk96wt1b and /tmp/tmpl09p0579 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpy422q5kd
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpy_r9tin6
+INFO:root:Alive verifier for: /tmp/tmpzk96wt1b /tmp/tmpl09p0579
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-3-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/FailedToProve/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c
+Tested in 219.46s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmpmicxypmf and /tmp/tmpbw1t6fg3 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7rbnbijg
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3i20lcxw
+INFO:root:Alive verifier for: /tmp/tmpmicxypmf /tmp/tmpbw1t6fg3
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-5-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/FailedToProve/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "3", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "5", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c
+Compiled in 1.60s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c
+Compiled in 1.53s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/libavcodec/flacenc.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "8", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c
+Tested in 219.20s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmpgn1edxj1 and /tmp/tmpq2krwb6n to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp6vjldvum
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_wwhw8_a
+INFO:root:Alive verifier for: /tmp/tmpgn1edxj1 /tmp/tmpq2krwb6n
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-8-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/Ok/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "7", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c
+Tested in 219.38s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "7", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmp2p98ubym and /tmp/tmpbx56se1p to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_mmgzw25
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp4ss58f8n
+INFO:root:Alive verifier for: /tmp/tmp2p98ubym /tmp/tmpbx56se1p
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-7-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/Ok/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "8", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "8", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "7", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "7", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c
+Compiled in 1.61s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c
+Compiled in 1.50s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/libavcodec/flacenc.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "9", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c
+Tested in 218.20s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmp1q82kiqy and /tmp/tmpigaat5ns to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3e4gkh3m
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpr9oxulac
+INFO:root:Alive verifier for: /tmp/tmp1q82kiqy /tmp/tmpigaat5ns
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-9-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/Ok/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c
+Tested in 218.00s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmpqkxgqplb and /tmp/tmpm406z6pj to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmb0c05dq
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpa1_qm1dc
+INFO:root:Alive verifier for: /tmp/tmpqkxgqplb /tmp/tmpm406z6pj
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-6-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/Ok/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "9", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "9", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "6", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c
+Compiled in 1.56s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+Compiled in 1.51s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "0", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c
+Tested in 218.56s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmp0cshyzcl and /tmp/tmpwjvpdxsg to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpph5hemds
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpuw3gr9k5
+INFO:root:Alive verifier for: /tmp/tmp0cshyzcl /tmp/tmpwjvpdxsg
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-0-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/FailedToProve/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c
+Tested in 218.12s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmpwi461tgr and /tmp/tmprsths_2d to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmprqjderw5
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5imkcg93
+INFO:root:Alive verifier for: /tmp/tmpwi461tgr /tmp/tmprsths_2d
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-1-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/Ok/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "0", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "0", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "1", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c
+Compiled in 1.63s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/libavcodec/flacenc.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %blocksize
+i32 %0
+i32 %ch
+i32 %0
+i32 %bps
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c
+Compiled in 1.51s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/libavcodec/flacenc.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/libavcodec/flacenc.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/libavcodec/flacenc.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "4", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c
+Tested in 217.94s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmpec8i2g_g and /tmp/tmpq0815ht8 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpl0683h7i
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpbiqy8sf9
+INFO:root:Alive verifier for: /tmp/tmpec8i2g_g /tmp/tmpq0815ht8
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-4-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/FailedToProve/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "2", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c
+Tested in 218.93s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/libavcodec/flacenc.bc
+DEBUG:root:Copying /tmp/tmpyjovjc2q and /tmp/tmp_tmxqijh to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpecrxb8wa
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpyiftcjus
+INFO:root:Alive verifier for: /tmp/tmpyjovjc2q /tmp/tmp_tmxqijh
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/flacenc.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-0_flac_get_max_frame_size-2-c/libavcodec/flacenc.bc
+INFO:root:Alive flags ['--func=flac_get_max_frame_size', '--src-fn=flac_get_max_frame_size', '--tgt-fn=flac_get_max_frame_size', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/flacenc.bccmp/Ok/flacenc.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "4", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "4", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "2", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "flac_get_max_frame_size", "variant": "2", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c
+Compiled in 1.58s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c
+Compiled in 1.51s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/libavcodec/4xm.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "3", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c
+Tested in 218.16s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmp6jqi4qpt and /tmp/tmp8o780tnv to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpbyq5g5iz
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3dr04dym
+INFO:root:Alive verifier for: /tmp/tmp6jqi4qpt /tmp/tmp8o780tnv
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-3-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "6", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c
+Tested in 220.23s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmpzxbgp621 and /tmp/tmprdu2bzlk to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpg2mxp_kl
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpnbomofjd
+INFO:root:Alive verifier for: /tmp/tmpzxbgp621 /tmp/tmprdu2bzlk
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-6-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "3", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "3", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "6", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "6", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c
+Compiled in 1.53s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c
+Compiled in 1.62s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/libavcodec/4xm.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "1", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c
+Tested in 218.85s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmpvtyu6lxq and /tmp/tmp9y5y1naa to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpx58apzr_
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpbecl8zzi
+INFO:root:Alive verifier for: /tmp/tmpvtyu6lxq /tmp/tmp9y5y1naa
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-1-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "5", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c
+Tested in 218.71s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmp1b01kwme and /tmp/tmpllaqcomi to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpc4xkrptr
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp62sk8f5x
+INFO:root:Alive verifier for: /tmp/tmp1b01kwme /tmp/tmpllaqcomi
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-5-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "1", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "1", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "5", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "5", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c
+Compiled in 1.53s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c
+Compiled in 1.50s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/libavcodec/4xm.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "8", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c
+Tested in 218.56s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmpvag9vbhb and /tmp/tmpkynja9v0 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpr34fy3gd
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpuduqhgjj
+INFO:root:Alive verifier for: /tmp/tmpvag9vbhb /tmp/tmpkynja9v0
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-8-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/FailedToProve/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "0", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c
+Tested in 218.53s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmpw3b217d1 and /tmp/tmpbj2ae4gv to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpf_inz59_
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpz_1bqtv4
+INFO:root:Alive verifier for: /tmp/tmpw3b217d1 /tmp/tmpbj2ae4gv
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-0-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "8", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "8", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "0", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "0", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c
+Compiled in 1.55s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c
+Compiled in 1.48s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/libavcodec/4xm.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "4", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c
+Tested in 218.06s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmpx_zamgrn and /tmp/tmpd116m8uy to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp7s5sysrv
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpksh5ixau
+INFO:root:Alive verifier for: /tmp/tmpx_zamgrn /tmp/tmpd116m8uy
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-4-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "9", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c
+Tested in 218.66s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmpm0gt2_oa and /tmp/tmps0m6lhs6 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpngicg7mt
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmplb63seps
+INFO:root:Alive verifier for: /tmp/tmpm0gt2_oa /tmp/tmps0m6lhs6
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-9-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "4", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "4", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "9", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "9", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c
+Compiled in 1.50s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/libavcodec/4xm.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %c0
+i32 %0
+i32 %c1
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c
+Compiled in 1.46s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/libavcodec/4xm.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/libavcodec/4xm.o
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/libavcodec/4xm.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "7", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c
+Tested in 217.93s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "7", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmp8tr6ae5b and /tmp/tmps4p8fcnp to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpy7_plm_e
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5vrh3emu
+INFO:root:Alive verifier for: /tmp/tmp8tr6ae5b /tmp/tmps4p8fcnp
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-7-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "2", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c
+Tested in 218.98s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/libavcodec/4xm.bc
+DEBUG:root:Copying /tmp/tmpnnhoqu5h and /tmp/tmp542v8t01 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpotc53zqu
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmphd_0b9tx
+INFO:root:Alive verifier for: /tmp/tmpnnhoqu5h /tmp/tmp542v8t01
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/4xm.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-1_mix-2-c/libavcodec/4xm.bc
+INFO:root:Alive flags ['--func=mix', '--src-fn=mix', '--tgt-fn=mix', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/4xm.bccmp/Ok/4xm.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "7", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "7", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "2", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "mix", "variant": "2", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c
+Compiled in 1.51s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c
+Compiled in 1.41s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/libavcodec/vp56dsp.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/libavcodec/vp56dsp.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "3", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c
+Tested in 217.95s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmpm9x3o4fz and /tmp/tmpcfx5ezeq to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpgbpo1nhl
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpt1wbvdm4
+INFO:root:Alive verifier for: /tmp/tmpm9x3o4fz /tmp/tmpcfx5ezeq
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-3-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "8", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c
+Tested in 218.89s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmpb7932foz and /tmp/tmpd1heyquf to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpormmauyf
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmptsnt15id
+INFO:root:Alive verifier for: /tmp/tmpb7932foz /tmp/tmpd1heyquf
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-8-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "3", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "3", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "8", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "8", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c
+Compiled in 1.52s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c
+Compiled in 1.43s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/libavcodec/vp56dsp.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/libavcodec/vp56dsp.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "2", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c
+Tested in 218.83s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmpk7smfsva and /tmp/tmpr5lk9u2u to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpyw09ggzb
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpz4_wliu1
+INFO:root:Alive verifier for: /tmp/tmpk7smfsva /tmp/tmpr5lk9u2u
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-2-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "4", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c
+Tested in 219.08s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmpmcte96zb and /tmp/tmp0itaro54 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpjuq0b1i5
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi11_303y
+INFO:root:Alive verifier for: /tmp/tmpmcte96zb /tmp/tmp0itaro54
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-4-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "2", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "2", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "4", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "4", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c
+Compiled in 1.51s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c
+Compiled in 1.47s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/libavcodec/vp56dsp.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/libavcodec/vp56dsp.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "1", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c
+Tested in 218.64s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmpjt4sdp0x and /tmp/tmprt6urqe9 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpzmiw3ant
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpke1gbsje
+INFO:root:Alive verifier for: /tmp/tmpjt4sdp0x /tmp/tmprt6urqe9
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-1-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "9", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c
+Tested in 218.36s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmpgmmztd03 and /tmp/tmpren9bfmw to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpxw0pqshg
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpf0n0vsdh
+INFO:root:Alive verifier for: /tmp/tmpgmmztd03 /tmp/tmpren9bfmw
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-9-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "1", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "1", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "9", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "9", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c
+Compiled in 1.48s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c
+Compiled in 1.46s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/libavcodec/vp56dsp.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/libavcodec/vp56dsp.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "7", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c
+Tested in 218.23s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "7", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmp4s0_nn5n and /tmp/tmpmkqawzlu to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi1hwv6cl
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpypi8fm8p
+INFO:root:Alive verifier for: /tmp/tmp4s0_nn5n /tmp/tmpmkqawzlu
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-7-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "5", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c
+Tested in 219.31s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmprg8alx_x and /tmp/tmp5v9wsqk5 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpaje0gu00
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_dtu7yb2
+INFO:root:Alive verifier for: /tmp/tmprg8alx_x /tmp/tmp5v9wsqk5
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-5-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "7", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "7", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "5", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "5", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c
+Compiled in 1.49s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg
+Copying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/libavcodec/vp56dsp.bc
+Parsing error original: 
+Parsing error variant: 
+i32 %0
+i32 %v
+i32 %0
+i32 %t
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c
+Compiled in 1.44s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/libavcodec/vp56dsp.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/ffmpeg
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/ffplay
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffplay_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/ffplay_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffmpeg_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/ffmpeg_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe_g /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/ffprobe_g
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/ffprobe /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/ffprobe
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.o /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/libavcodec/vp56dsp.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/libavcodec/vp56dsp.bc
+INFO:root:Modified files 8
+INFO:root:Bitcodes 1
+INFO:root:Executables 6
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/libavcodec/vp56dsp.bc
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "6", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c
+Tested in 219.61s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmppqv374bs and /tmp/tmp2vl6h4mx to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpk1grbl35
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpdpcyj6xi
+INFO:root:Alive verifier for: /tmp/tmppqv374bs /tmp/tmp2vl6h4mx
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-6-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "0", "action": "test_suite"}
+INFO:root:Testing with command:['make', 'check'], cwd:/home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c
+Tested in 219.10s
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/libavcodec/vp56dsp.bc
+DEBUG:root:Copying /tmp/tmp2hqisvc0 and /tmp/tmpkq5vfctk to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3arcdb5x
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpksrq889m
+INFO:root:Alive verifier for: /tmp/tmp2hqisvc0 /tmp/tmpkq5vfctk
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg/libavcodec/vp56dsp.bc and /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/build-copies/ffmpeg-2_vp5_adjust-0-c/libavcodec/vp56dsp.bc
+INFO:root:Alive flags ['--func=vp5_adjust', '--src-fn=vp5_adjust', '--tgt-fn=vp5_adjust', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 1 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 1, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-ffmpeg-baseline-r3-restart/scripts/verifier/debug/vp56dsp.bccmp/Incorrect/vp56dsp.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "6", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "6", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "0", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "ffmpeg", "function": "vp5_adjust", "variant": "0", "action": "variant_build_removed"}

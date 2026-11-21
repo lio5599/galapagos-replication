@@ -1,0 +1,9 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Split into 32-bit halves and reassemble them in their original positions.
+    // The halves cover all bits without overlap, preserving every input.
+    // The left shift uses uint64_t, so the highest input bit is retained.
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}

@@ -66,7 +66,7 @@ python replication/codex/progress.py replication/codex/runs/RUN-NAME --watch
 
 It refreshes every five seconds and shows the current stage, function/variant, completed result records (including rejections), elapsed time, and activity. Ten minutes without observed log/result/CPU/disk progress produces a possible-stall warning. A stale heartbeat produces a separate warning that the monitor itself stopped updating. Neither proves a hang, and the viewer never kills or restarts an experiment automatically. It only reads status; opening it does not start a run. A completed run displays its final state and exits.
 
-Future validation automatically saves a full `galapagos/functions/.../variants/c` and `galapagos/out/.../c` archive under its own run directory, plus a hash manifest. Existing different evidence cannot be overwritten. The Linux workspace is retained. Even a failed stage preserves available partial outputs and is labeled incomplete. The old pilot has also been archived without rerunning it.
+Future validation automatically saves a full `galapagos/functions/.../variants/c` and `galapagos/out/.../c` archive under its own run directory, plus a hash manifest. Existing different evidence cannot be overwritten. Each private variant build is removed after its result is saved and all test/verifier readers finish. After all stages finish, reference builds are removed only when the archive has the expected result count and every archived file matches its hash. Incomplete archives retain remaining reference builds. The Linux scripts and provenance remain available. Even a failed stage preserves available partial outputs and is labeled incomplete. The old pilot has also been archived without rerunning it.
 
 ## Count saved results
 

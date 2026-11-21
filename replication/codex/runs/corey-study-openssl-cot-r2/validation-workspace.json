@@ -1,0 +1,35 @@
+{
+  "path": "/home/cbhei/galapagos-corey-runs/corey-study-openssl-cot-r2",
+  "selection": {
+    "openssl": [
+      "icbrt64",
+      "BitDeinterleave",
+      "BitInterleave"
+    ]
+  },
+  "original_indices": {
+    "openssl": [
+      0,
+      1,
+      2
+    ]
+  },
+  "patches": [
+    "split_variants.py: skip unselected reference indices; preserve original indices",
+    "template_variants.py: skip unselected reference indices; preserve original indices",
+    "compile_variants.py: skip unselected reference indices; preserve original indices",
+    "case.py: use the variant source directory when relocating CMake paths",
+    "case.py: per-run build-copy directory; prevents stale builds across conditions",
+    "tests/usecase.py: remove each variant build after saving its result and draining checks",
+    "tests/usecase.py: flushed progress events before build/test/verification; same check calls",
+    "tests/usecase.py: bound existing variant concurrency to 2; checks unchanged"
+  ],
+  "base": "/home/cbhei/galapagos-replication",
+  "source_run": "/mnt/c/COMS6650/FinalProject/galapagos-replication/replication/codex/runs/corey-study-openssl-cot-r2",
+  "concurrency": 2,
+  "source_revision": "ab9a0d7c054b84422970ec34a56fe81f2246567a",
+  "metadata_sha256": {
+    "openssl": "7addd4595aa8a910c103682fafa84341065c345bb2abdc69e59aec513a427c4d"
+  },
+  "note": "No generated body edits; no automatic repair or regeneration"
+}

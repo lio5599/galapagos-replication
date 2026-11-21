@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Subtracting from the unsigned maximum twice restores the input.
+    // Neither subtraction underflows, even at either endpoint.
+    uint64_t maximum = (uint64_t)0xffffffffffffffffULL;
+    uint64_t reflected = maximum - Ai;
+    return maximum - reflected;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

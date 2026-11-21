@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Swap the 32-bit halves twice to recover the unchanged reference result.
+    // Unsigned storage retains exactly 64 bits, preserving every input pattern.
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}
+
+
+int main(){
+    BitInterleave(0);
+}

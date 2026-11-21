@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Names the header and payload contributions before adding them.
+    // Each expression and accumulation step matches the reference.
+    // Zero and negative values retain the same signed division behavior;
+    // equivalence applies wherever the reference arithmetic is defined.
+    int count = 16;
+    int header = ch * ((7 + bps + 7) / 8);
+    int payload;
+
+    count += header;
+    if (ch == 2)
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        payload = (ch * bps * blocksize + 7) / 8;
+    count += payload;
+    count += 2;
+    return count;
+}
+
+
+int main(){
+    flac_get_max_frame_size(0,0,0);
+}

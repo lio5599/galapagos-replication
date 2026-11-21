@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses a zero-or-one multiplier to select the remainder subtraction.
+    // Multiplication by the acceptance bit matches the reference conditional.
+    // The same bit increments the root, including at exact cube boundaries.
+    // Unsigned arithmetic and valid shift counts cover the full input range.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        uint64_t take;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        take = (x >> s) >= b;
+        x -= take * (b << s);
+        r += take;
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

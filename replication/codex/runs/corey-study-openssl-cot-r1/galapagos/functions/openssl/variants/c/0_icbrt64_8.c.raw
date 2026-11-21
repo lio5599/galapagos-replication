@@ -1,0 +1,22 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Read base-eight digits and maintain the processed prefix's cube remainder.
+    // Appending a digit doubles the root and multiplies its remainder by eight.
+    // The consecutive-cube difference decides whether the next root bit is one.
+    // Remainders stay below 2 to the power 45, including at UINT64_MAX.
+    uint64_t r = 0;
+    uint64_t remainder = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t trial;
+        remainder = (remainder << 3) | ((x >> s) & 7);
+        r <<= 1;
+        trial = 3 * r * (r + 1) + 1;
+        if (remainder >= trial) {
+            remainder -= trial;
+            ++r;
+        }
+    }
+    return r << 12;
+}

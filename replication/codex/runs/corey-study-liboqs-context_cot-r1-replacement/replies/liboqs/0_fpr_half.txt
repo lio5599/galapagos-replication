@@ -1,0 +1,88 @@
+static uint64_t fpr_half(uint64_t x) {
+    // The reference subtracts 2^52 modulo 2^64, then returns zero if the original exponent field was zero.
+    // After subtraction, an all-ones exponent identifies exactly that case.
+    // All arithmetic is unsigned, including wraparound at zero.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return ((y >> 52) & 0x7FF) == 0x7FF ? (uint64_t)0 : y;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Test the original exponent directly instead of testing after subtraction.
+    // A zero exponent is precisely the case the reference clears entirely.
+    // Every other input receives the same unsigned subtraction.
+    uint64_t e = (x >> 52) & 0x7FF;
+    return e == 0 ? (uint64_t)0 : x - ((uint64_t)1 << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Convert a nonzero original exponent into an all-ones unsigned mask.
+    // A zero exponent produces a zero mask, clearing even the sign and fraction.
+    // Otherwise the mask preserves the reference's modular subtraction.
+    uint64_t mask = (uint64_t)0 - (uint64_t)(((x >> 52) & 0x7FF) != 0);
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // The decremented exponent is all ones exactly when the original was zero.
+    // Subtracting one from that predicate gives either zero or an all-ones mask.
+    // This preserves the subtraction for every other bit pattern.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t clear = (uint64_t)(((y >> 52) & 0x7FF) == 0x7FF);
+    return y & (clear - (uint64_t)1);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Use a 64-bit carry calculation for the reference's exponent test.
+    // The masked exponent plus one is at most 2048, so widening changes nothing.
+    // Only an all-ones decremented exponent yields a zero output mask.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    uint64_t t = (((y >> 52) & 0x7FF) + (uint64_t)1) >> 11;
+    return y & (t - (uint64_t)1);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Handle the original zero exponent before doing any subtraction.
+    // The reference clears all such inputs, including nonzero fraction bits.
+    // For all remaining inputs its mask is all ones.
+    if ((x & ((uint64_t)0x7FF << 52)) == 0)
+        return (uint64_t)0;
+    return x - ((uint64_t)1 << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Add the unsigned additive inverse of 2^52 instead of subtracting it.
+    // Complementing 2^52 minus one constructs that inverse modulo 2^64.
+    // The original exponent test reproduces the reference's complete clearing.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t y = x + ~(((uint64_t)1 << 52) - (uint64_t)1);
+    return e != 0 ? y : (uint64_t)0;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Split the input above the fraction and decrement that upper portion.
+    // Recombining gives subtraction by 2^52 modulo 2^64 without changing the fraction.
+    // A zero original exponent clears the entire result, just as in the reference.
+    uint64_t upper = x >> 52;
+    uint64_t fraction = x & (((uint64_t)1 << 52) - (uint64_t)1);
+    uint64_t y = ((upper - (uint64_t)1) << 52) | fraction;
+    return (upper & 0x7FF) == 0 ? (uint64_t)0 : y;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For the 11-bit exponent, e OR its unsigned negation has bit 63 set iff e is nonzero.
+    // Negating that extracted bit produces the required all-ones or zero mask.
+    // Thus zero exponents clear every bit and other inputs retain the subtraction.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t nonzero = (e | ((uint64_t)0 - e)) >> 63;
+    uint64_t mask = (uint64_t)0 - nonzero;
+    return (x - ((uint64_t)1 << 52)) & mask;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Adding 2047 to the original 11-bit exponent crosses 2048 iff it is nonzero.
+    // Shifting therefore yields exactly zero or one, with no overflow.
+    // Its unsigned negation masks the subtraction exactly as the reference does.
+    uint64_t e = (x >> 52) & 0x7FF;
+    uint64_t keep = (e + (uint64_t)2047) >> 11;
+    return (x - ((uint64_t)1 << 52)) & ((uint64_t)0 - keep);
+}

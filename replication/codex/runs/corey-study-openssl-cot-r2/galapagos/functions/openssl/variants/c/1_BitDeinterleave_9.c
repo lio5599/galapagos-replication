@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Exchange the two 32-bit halves twice to restore the original input.
+    // Thus the result matches the reference, whose conditional block is inactive.
+    // Each shift is by 32 on a 64-bit value and works for all input patterns.
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

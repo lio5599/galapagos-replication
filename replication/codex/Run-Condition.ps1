@@ -33,6 +33,9 @@ Write-Host 'Step 1: generating variants (existing matching replies are preserved
 if ($LASTEXITCODE -ne 0) { throw 'Generation stopped. Saved replies are kept; validation was not started.' }
 
 Write-Host 'Step 2: validating in Ubuntu and archiving this run.'
-& wsl -d Ubuntu -- bash /mnt/c/COMS6650/FinalProject/replication/codex/validate_run.sh $Run
+$windowsValidationPath = [System.IO.Path]::Combine($scriptFolder, 'validate_run.sh').Replace('\', '/')
+$validationPath = (& wsl -d Ubuntu-22.04 --exec /usr/bin/wslpath -a $windowsValidationPath)
+if ($LASTEXITCODE -ne 0) { throw 'Could not resolve the validation script path in Ubuntu.' }
+& wsl -d Ubuntu-22.04 --exec /bin/bash $validationPath.Trim() $Run
 if ($LASTEXITCODE -ne 0) { throw 'Validation stopped. Inspect this run progress and logs before retrying; saved evidence is retained.' }
 Write-Host "Finished. Review $scriptFolder\runs\$Run\summary.json"

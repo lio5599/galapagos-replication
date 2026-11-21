@@ -1,0 +1,9 @@
+static uint64_t fpr_half(uint64_t x) {
+    // Split the input above the fraction and decrement that upper portion.
+    // Recombining gives subtraction by 2^52 modulo 2^64 without changing the fraction.
+    // A zero original exponent clears the entire result, just as in the reference.
+    uint64_t upper = x >> 52;
+    uint64_t fraction = x & (((uint64_t)1 << 52) - (uint64_t)1);
+    uint64_t y = ((upper - (uint64_t)1) << 52) | fraction;
+    return (upper & 0x7FF) == 0 ? (uint64_t)0 : y;
+}

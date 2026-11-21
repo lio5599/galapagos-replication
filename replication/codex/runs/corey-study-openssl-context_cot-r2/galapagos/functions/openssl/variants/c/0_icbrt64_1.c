@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Index the same 22 iterations by their three-bit group number.
+    // Shift positions remain exactly 63, 60, through 0.
+    // All inputs therefore undergo the same updates and final scaling.
+    uint64_t r = 0;
+    int group;
+
+    for (group = 21; group >= 0; --group) {
+        uint64_t b;
+        int s = 3 * group;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

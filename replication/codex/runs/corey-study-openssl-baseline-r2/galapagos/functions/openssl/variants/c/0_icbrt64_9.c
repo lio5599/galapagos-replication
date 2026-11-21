@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    uint64_t cube = 0;
+    uint64_t delta = 1;
+    uint64_t second_difference = 6;
+
+    while (delta <= x - cube) {
+        cube += delta;
+        ++r;
+        delta += second_difference;
+        second_difference += 6;
+    }
+
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

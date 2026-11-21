@@ -1,0 +1,19 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Generate consecutive cubes using first and second finite differences.
+    // The first difference starts at 1; its increments are 6, 12, 18, and so on.
+    // Guard each addition with the remaining input to prevent cube overflow.
+    // The last affordable cube gives the exact root, including at both extremes.
+    uint64_t r = 0;
+    uint64_t cube = 0;
+    uint64_t difference = 1;
+    uint64_t increment = 6;
+
+    while (x - cube >= difference) {
+        cube += difference;
+        ++r;
+        difference += increment;
+        increment += 6;
+    }
+    return r << 12;
+}

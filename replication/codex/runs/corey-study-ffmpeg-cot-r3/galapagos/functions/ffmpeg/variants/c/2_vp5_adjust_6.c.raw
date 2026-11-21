@@ -1,0 +1,21 @@
+static int vp5_adjust(int v, int t)
+{
+    // Work directly on signed input, using separate positive and negative triangle branches.
+    // Negative inputs reflect the positive triangle, avoiding a shared magnitude variable.
+    // Nonpositive thresholds retain the reference's signed 2*t response, including v == 0.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int twice = 2 * t;
+
+    if (t <= 0)
+        return v < 0 ? -twice : twice;
+
+    if (v >= 0) {
+        if (v >= twice)
+            return 0;
+        return v <= t ? v : twice - v;
+    }
+
+    if (v <= -twice)
+        return 0;
+    return v >= -t ? v : -twice - v;
+}

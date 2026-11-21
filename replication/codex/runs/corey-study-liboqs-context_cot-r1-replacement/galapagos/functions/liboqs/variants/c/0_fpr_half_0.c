@@ -1,0 +1,15 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t fpr_half(uint64_t x) {
+    // The reference subtracts 2^52 modulo 2^64, then returns zero if the original exponent field was zero.
+    // After subtraction, an all-ones exponent identifies exactly that case.
+    // All arithmetic is unsigned, including wraparound at zero.
+    uint64_t y = x - ((uint64_t)1 << 52);
+    return ((y >> 52) & 0x7FF) == 0x7FF ? (uint64_t)0 : y;
+}
+
+
+int main(){
+    fpr_half(0);
+}

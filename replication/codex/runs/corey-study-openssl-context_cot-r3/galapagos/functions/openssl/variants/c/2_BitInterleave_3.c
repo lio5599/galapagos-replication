@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // OR with zero leaves every bit unchanged.
+    // No input bits are added or removed, including for zero and UINT64_MAX.
+    return Ai | (uint64_t)0;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

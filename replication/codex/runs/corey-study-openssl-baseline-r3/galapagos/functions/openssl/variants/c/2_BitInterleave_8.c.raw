@@ -1,0 +1,6 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t hi = Ai >> 32;
+    uint64_t lo = Ai & (uint64_t)0xffffffff;
+    return (hi << 32) | lo;
+}

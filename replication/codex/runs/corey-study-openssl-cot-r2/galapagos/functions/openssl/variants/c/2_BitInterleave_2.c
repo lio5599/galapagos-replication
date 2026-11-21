@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Adding zero leaves the input unchanged, just like the reference.
+    // No value changes or overflows, including zero and the maximum value.
+    return Ai + (uint64_t)0;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

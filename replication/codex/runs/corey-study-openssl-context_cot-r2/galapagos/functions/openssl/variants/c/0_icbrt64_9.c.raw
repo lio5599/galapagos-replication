@@ -1,0 +1,26 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Unroll two consecutive reference iterations into each loop pass.
+    // Eleven passes process shifts 63, 60, through 3, 0 in order.
+    // Each update is unchanged, so all inputs receive identical results.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 3; s -= 6) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> (s - 3)) >= b) {
+            x -= b << (s - 3);
+            ++r;
+        }
+    }
+    return r << 12;
+}

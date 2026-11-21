@@ -1,0 +1,21 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    uint64_t remainder = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t trial;
+
+        remainder = (remainder << 3) | ((x >> s) & 7);
+        r <<= 1;
+        trial = 3 * r * (r + 1) + 1;
+
+        if (remainder >= trial) {
+            remainder -= trial;
+            ++r;
+        }
+    }
+
+    return r << 12;
+}

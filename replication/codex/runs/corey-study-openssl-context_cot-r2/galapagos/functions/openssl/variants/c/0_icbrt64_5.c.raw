@@ -1,0 +1,19 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Skip subtraction when the reference trial would fail.
+    // The complementary comparison preserves equality as a success.
+    // Thus zero, exact cubes, and the maximum input retain their results.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) < b)
+            continue;
+        x -= b << s;
+        ++r;
+    }
+    return r << 12;
+}

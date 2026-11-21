@@ -1,0 +1,165 @@
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes the maximum FLAC frame size from fixed overhead and channel data.
+    // Names the two variable contributions without changing their arithmetic.
+    // Signed division and intermediate operations match all defined edge cases.
+    int header = ch * ((7 + bps + 7) / 8);
+    int payload;
+    int count = 16;
+    count += header;
+    if (ch == 2)
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        payload = (ch * bps * blocksize + 7) / 8;
+    count += payload;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Uses a conditional expression for the channel-dependent contribution.
+    // Only the selected expression is evaluated, as in the original branch.
+    // Arithmetic grouping and signed rounding remain unchanged.
+    int count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    count += ch == 2
+        ? ((2 * bps + 1) * blocksize + 7) / 8
+        : (ch * bps * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Reverses the branch condition and exchanges its two bodies.
+    // Each input still selects exactly the same arithmetic expression.
+    // All signed operations retain the original grouping and order.
+    int count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch != 2)
+        count += (ch * bps * blocksize + 7) / 8;
+    else
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Selects the stereo case with a switch instead of an if statement.
+    // The default case covers every other signed channel value.
+    // Contributions and their accumulation are otherwise identical.
+    int count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    switch (ch) {
+    case 2:
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        break;
+    default:
+        count += (ch * bps * blocksize + 7) / 8;
+        break;
+    }
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Returns directly from the stereo branch after adding its contribution.
+    // The final addition still follows the payload addition in both cases.
+    // No unselected payload arithmetic is evaluated, including at extremes.
+    int count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2) {
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+        return count + 2;
+    }
+    count += (ch * bps * blocksize + 7) / 8;
+    return count + 2;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Splits header arithmetic into assignments to expose each intermediate.
+    // Every addition, multiplication, and division matches the original.
+    // Negative values retain C signed division toward zero.
+    int count = 16;
+    int header = 7 + bps;
+    header += 7;
+    header /= 8;
+    header *= ch;
+    count += header;
+    if (ch == 2)
+        count += ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        count += (ch * bps * blocksize + 7) / 8;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Selects the bits per sample group before performing common payload work.
+    // Each branch preserves the original multiplication and addition grouping.
+    // Common signed division and accumulation preserve defined edge cases.
+    int count = 16;
+    int bits;
+    count += ch * ((7 + bps + 7) / 8);
+    if (ch == 2)
+        bits = 2 * bps + 1;
+    else
+        bits = ch * bps;
+    bits *= blocksize;
+    bits += 7;
+    bits /= 8;
+    count += bits;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Expresses the calculation as one explicitly grouped return expression.
+    // The conditional evaluates only the original selected payload expression.
+    // Parentheses preserve accumulation intermediates and signed rounding.
+    return ((16 + ch * ((7 + bps + 7) / 8))
+            + (ch == 2
+               ? ((2 * bps + 1) * blocksize + 7) / 8
+               : (ch * bps * blocksize + 7) / 8))
+           + 2;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Computes the independent payload before accumulating the header.
+    // Reordering these side-effect-free calculations changes no defined result.
+    // Each expression and every accumulation intermediate remains unchanged.
+    int payload;
+    int count;
+    if (ch == 2)
+        payload = ((2 * bps + 1) * blocksize + 7) / 8;
+    else
+        payload = (ch * bps * blocksize + 7) / 8;
+    count = 16;
+    count += ch * ((7 + bps + 7) / 8);
+    count += payload;
+    count += 2;
+    return count;
+}
+
+static int flac_get_max_frame_size(int blocksize, int ch, int bps)
+{
+    // Gives each stage of accumulation its own variable.
+    // The payload numerator is selected before its common signed division.
+    // Identical intermediate arithmetic preserves every defined input result.
+    int base = 16;
+    int with_header = base + ch * ((7 + bps + 7) / 8);
+    int numerator = ch == 2
+        ? (2 * bps + 1) * blocksize + 7
+        : ch * bps * blocksize + 7;
+    int payload = numerator / 8;
+    int with_payload = with_header + payload;
+    int result = with_payload + 2;
+    return result;
+}

@@ -1,0 +1,75 @@
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai ^ (uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai | (uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai & ~(uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return (uint64_t)~(uint64_t)~Ai;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai + (uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai - (uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t result = 0;
+    for (unsigned int i = 0; i < 64; ++i) {
+        result |= ((Ai >> i) & (uint64_t)1) << i;
+    }
+    return result;
+}

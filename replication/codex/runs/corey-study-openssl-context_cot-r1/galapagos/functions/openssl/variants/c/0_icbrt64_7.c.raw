@@ -1,0 +1,19 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Computes the trial before doubling the previous root.
+    // Substituting twice the old root gives 12*r*r + 6*r + 1.
+    // This equals the reference trial, so all comparisons and updates agree.
+    // The equivalence holds across the entire unsigned input range.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b = 12 * r * r + 6 * r + 1;
+        r <<= 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}

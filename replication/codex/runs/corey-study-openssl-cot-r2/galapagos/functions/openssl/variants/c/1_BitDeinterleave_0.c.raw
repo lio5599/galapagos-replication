@@ -1,0 +1,7 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged.
+    // Its if (0) block never executes, so direct return is equivalent.
+    // This preserves every uint64_t value, including zero and the maximum.
+    return Ai;
+}

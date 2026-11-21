@@ -1,0 +1,163 @@
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // The reference compares encodings in ascending positive and reversed negative order.
+    // Different signs put the negative encoding first, including negative zero.
+    // Equal encodings compare false; no floating-point interpretation is needed.
+    uint64_t sx = x >> 63;
+    uint64_t sy = y >> 63;
+
+    if (sx != sy) {
+        return (int)sx;
+    }
+    if (sx != 0) {
+        return x > y;
+    }
+    return x < y;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Combine the three cases with Boolean operations.
+    // Different signs select x's sign; matching signs select the proper direction.
+    // Strict comparisons reject equality, while opposite zero signs remain ordered.
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    int different = sx ^ sy;
+
+    return (different & sx)
+        | ((different ^ 1) & (sx ^ 1) & (x < y))
+        | ((different ^ 1) & sx & (x > y));
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Map negative encodings to complemented keys and positive ones above them.
+    // Unsigned key order reverses negatives and preserves positives.
+    // The mapping is injective, preserving equality and distinguishing signed zeros.
+    uint64_t high = (uint64_t)1 << 63;
+    uint64_t mx = (uint64_t)0 - (x >> 63);
+    uint64_t my = (uint64_t)0 - (y >> 63);
+    uint64_t kx = x ^ (mx | high);
+    uint64_t ky = y ^ (my | high);
+
+    return kx < ky;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Build ordered keys by complementing negatives and toggling positive signs.
+    // The unsigned subtraction's final borrow is exactly the strict key comparison.
+    // Equal keys produce no borrow; all arithmetic wraps without signed overflow.
+    uint64_t high = (uint64_t)1 << 63;
+    uint64_t a = (x >> 63) ? ~x : (x ^ high);
+    uint64_t b = (y >> 63) ? ~y : (y ^ high);
+    uint64_t d = a - b;
+
+    return (int)(((~a & b) | (~(a ^ b) & d)) >> 63);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Compare sign-free magnitudes, reversing the direction for two negatives.
+    // Different signs take precedence even when both magnitudes are zero.
+    // Equal magnitudes with equal signs always compare false.
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t a = x & mask;
+    uint64_t b = y & mask;
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+
+    if (sx != sy) {
+        return sx;
+    }
+    return sx ? (a > b) : (a < b);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Magnitudes are below 2^63, so subtraction's high bit detects strict order.
+    // A negative x selects the reversed subtraction when signs match.
+    // Different signs select x's sign; equality yields zero in both subtractions.
+    uint64_t mask = ((uint64_t)1 << 63) - 1;
+    uint64_t a = x & mask;
+    uint64_t b = y & mask;
+    uint64_t sx = x >> 63;
+    uint64_t different = (x ^ y) >> 63;
+    uint64_t forward = (a - b) >> 63;
+    uint64_t reverse = (b - a) >> 63;
+    uint64_t same = forward ^ ((forward ^ reverse) & sx);
+
+    return (int)((different & sx) | ((different ^ 1) & same));
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Swap operands only when both are negative to reverse their unsigned order.
+    // For different signs, invert unsigned order so the negative encoding is first.
+    // Equal operands are never inverted and therefore compare false.
+    uint64_t different = (x ^ y) >> 63;
+    uint64_t swap = (uint64_t)0 - ((x & y) >> 63);
+    uint64_t delta = (x ^ y) & swap;
+    uint64_t a = x ^ delta;
+    uint64_t b = y ^ delta;
+
+    return (int)((uint64_t)(a < b) ^ different);
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // With matching signs, the highest differing bit determines unsigned order.
+    // Its direction is reversed for negatives; different signs use x's sign.
+    // Equality is handled before scanning, including identical zero encodings.
+    uint64_t different = x ^ y;
+    uint64_t bit = (uint64_t)1 << 62;
+    int sx = (int)(x >> 63);
+
+    if ((different >> 63) != 0) {
+        return sx;
+    }
+    if (different == 0) {
+        return 0;
+    }
+    while ((different & bit) == 0) {
+        bit >>= 1;
+    }
+    return ((x & bit) == 0) ^ sx;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Spread differing bits downward, then isolate the highest differing bit.
+    // That bit determines unsigned order, reversed for matching negative signs.
+    // Separate sign and equality cases preserve signed-zero ordering and strictness.
+    uint64_t d = x ^ y;
+    uint64_t bit;
+    int sx = (int)(x >> 63);
+
+    if ((d >> 63) != 0) {
+        return sx;
+    }
+    if (d == 0) {
+        return 0;
+    }
+    d |= d >> 1;
+    d |= d >> 2;
+    d |= d >> 4;
+    d |= d >> 8;
+    d |= d >> 16;
+    d |= d >> 32;
+    bit = d ^ (d >> 1);
+
+    return ((x & bit) == 0) ^ sx;
+}
+
+static int fpr_lt(uint64_t x, uint64_t y) {
+    // Compare ordered keys lexicographically in eight-bit chunks, highest first.
+    // Complementing negatives reverses them; positive keys occupy the upper half.
+    // Shifts avoid byte-order dependence, and identical keys return false.
+    uint64_t high = (uint64_t)1 << 63;
+    uint64_t a = (x >> 63) ? ~x : (x ^ high);
+    uint64_t b = (y >> 63) ? ~y : (y ^ high);
+    int shift;
+
+    for (shift = 56; shift >= 0; shift -= 8) {
+        uint64_t ca = (a >> shift) & (uint64_t)255;
+        uint64_t cb = (b >> shift) & (uint64_t)255;
+
+        if (ca != cb) {
+            return ca < cb;
+        }
+    }
+    return 0;
+}

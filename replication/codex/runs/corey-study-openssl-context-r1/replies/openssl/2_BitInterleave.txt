@@ -1,0 +1,94 @@
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai ^ (uint64_t)0;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai | (uint64_t)0;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai & ~(uint64_t)0;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return (uint64_t)~(uint64_t)~Ai;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai + (uint64_t)0;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai >> 0;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    const uint64_t mask = (uint64_t)0x5555555555555555ULL;
+    uint64_t transformed = Ai ^ mask;
+    return transformed ^ mask;
+}
+```

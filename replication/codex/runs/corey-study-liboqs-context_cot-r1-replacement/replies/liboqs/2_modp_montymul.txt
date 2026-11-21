@@ -1,0 +1,126 @@
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Computes the reference's radix-2^31 Montgomery-style reduction.
+    // Only the low 31 bits of p0i affect the masked product.
+    // Unsigned wrapping and the high-bit-based correction remain unchanged.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t w = ((z * (p0i & (uint32_t)0x7FFFFFFF))
+        & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Truncating z before the masked multiplication preserves its low 31 bits.
+    // The full z is retained for the wrapping sum.
+    // The subtraction and correction match the reference for every input.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t m = ((uint64_t)(uint32_t)z * (uint64_t)p0i)
+        & (uint64_t)0x7FFFFFFF;
+    uint64_t w = m * (uint64_t)p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Two unsigned shifts extract the product's low 31 bits.
+    // Both shifts are within the 64-bit width, including at extreme inputs.
+    // The remaining wrapping arithmetic is identical to the reference.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t m = z * (uint64_t)p0i;
+    m = (m << 33) >> 33;
+    uint64_t w = m * (uint64_t)p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Splits a into two 16-bit limbs to compute the same full product.
+    // The partial products and their sum fit in uint64_t for all inputs.
+    // Subsequent unsigned wrapping and correction are unchanged.
+    uint64_t lo = (uint64_t)(a & (uint32_t)0xFFFF) * b;
+    uint64_t hi = (uint64_t)(a >> 16) * b;
+    uint64_t z = lo + (hi << 16);
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Splits p into two 16-bit limbs when computing the correction product.
+    // The masked multiplier has at most 31 bits, so both terms and w fit.
+    // The wrapping sum and final correction retain all reference edge cases.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t m = (z * p0i) & (uint64_t)0x7FFFFFFF;
+    uint64_t w = m * (p & (uint32_t)0xFFFF)
+        + ((m * (p >> 16)) << 16);
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Replaces the final mask with a branch on exactly the same high bit.
+    // This tests the wrapped subtraction, not a mathematical comparison.
+    // Adding p still wraps to uint32_t, preserving arbitrary-input behavior.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    if ((d >> 31) != 0) {
+        d += p;
+    }
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The high bit of d is either zero or one.
+    // Multiplying p by that bit selects exactly the reference's correction.
+    // A 64-bit addition followed by truncation preserves 32-bit wrapping.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    return (uint32_t)((uint64_t)d + (uint64_t)p * (d >> 31));
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Builds the correction mask by complementing high-bit-minus-one.
+    // Truncation makes the mask zero or UINT32_MAX exactly as required.
+    // The original wrapping sum and subtraction are preserved.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    uint32_t mask = (uint32_t)~(uint32_t)((d >> 31) - 1U);
+    d += p & mask;
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Implements subtraction using the 32-bit complement of p plus one.
+    // The 64-bit intermediate fits, and truncation gives subtraction modulo 2^32.
+    // The high-bit correction therefore also matches at wraparound boundaries.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint32_t q = (uint32_t)((z + w) >> 31);
+    uint32_t inverse = p ^ (uint32_t)0xFFFFFFFF;
+    uint32_t d = (uint32_t)((uint64_t)q + inverse + (uint64_t)1);
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Reconstructs the low 32 bits of the shifted sum from its two halves.
+    // Truncation discards bit 63 exactly as the reference's cast does.
+    // The sum wraps before extraction, preserving overflow edge cases.
+    uint64_t z = (uint64_t)a * (uint64_t)b;
+    uint64_t w = ((z * p0i) & (uint64_t)0x7FFFFFFF) * p;
+    uint64_t sum = z + w;
+    uint32_t high = (uint32_t)(sum >> 32);
+    uint32_t low = (uint32_t)sum;
+    uint32_t q = (uint32_t)((uint64_t)high << 1) | (low >> 31);
+    uint32_t d = q - p;
+    d += p & -(d >> 31);
+    return d;
+}

@@ -1,0 +1,108 @@
+static uint64_t fpr_half(uint64_t x) {
+    // The reference clears inputs with exponent zero and otherwise subtracts 2^52.
+    // After subtraction, exponent 0x7FF identifies an original zero exponent.
+    // This includes both signed zeros and all subnormal bit patterns.
+    // All other patterns, including infinities and NaNs, retain the subtraction.
+    uint64_t y = x - (UINT64_C(1) << 52);
+    if (((y >> 52) & UINT64_C(0x7FF)) == UINT64_C(0x7FF))
+        return 0;
+    return y;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Test the original exponent instead of detecting its wrapped decrement.
+    // A zero exponent produces zero regardless of the sign or fraction.
+    // Every other exponent, including 0x7FF, requires exactly one subtraction.
+    return (x & UINT64_C(0x7FF0000000000000))
+        ? x - (UINT64_C(1) << 52)
+        : UINT64_C(0);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Turn the reference's post-subtraction exponent test into a full-width mask.
+    // The mask is zero exactly when the original exponent was zero.
+    // Unsigned subtraction and masking also cover every sign and fraction.
+    uint64_t y = x - (UINT64_C(1) << 52);
+    uint64_t keep = (((y >> 52) & UINT64_C(0x7FF)) != UINT64_C(0x7FF));
+    return y & (UINT64_C(0) - keep);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Adding 2047 to an 11-bit exponent yields a carry exactly when it is nonzero.
+    // Expanding that carry masks the decremented word or clears it entirely.
+    // Zero exponents clear for either sign; all other bit patterns subtract 2^52.
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    uint64_t keep = (e + UINT64_C(2047)) >> 11;
+    return (x - (UINT64_C(1) << 52)) & (UINT64_C(0) - keep);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For this unsigned exponent, e OR its negation has its top bit set iff e is nonzero.
+    // Expanding that bit gives the reference's keep-or-clear mask.
+    // Unsigned wraparound is defined, including when the original exponent is zero.
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    uint64_t keep = (e | (UINT64_C(0) - e)) >> 63;
+    uint64_t y = x - (UINT64_C(1) << 52);
+    return y & (UINT64_C(0) - keep);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Separate the exponent from the unchanged sign and fraction.
+    // For a nonzero exponent, decrementing its field equals subtracting 2^52.
+    // Return zero first for zero exponents, including signed zeros and subnormals.
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    if (e == 0)
+        return 0;
+    return (x & UINT64_C(0x800FFFFFFFFFFFFF)) | ((e - 1) << 52);
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Adding the unsigned additive inverse of 2^52 performs the same subtraction.
+    // A switch on the original exponent handles the reference's clearing case.
+    // Sign and fraction never affect that case, even for non-finite encodings.
+    switch ((x >> 52) & UINT64_C(0x7FF)) {
+    case 0:
+        return 0;
+    default:
+        return x + UINT64_C(0xFFF0000000000000);
+    }
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Propagate any set exponent bit down to bit zero to obtain a nonzero flag.
+    // Its negation keeps the subtraction exactly for nonzero original exponents.
+    // Zero exponents clear both signs and every fraction, as in the reference.
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    e |= e >> 8;
+    e |= e >> 4;
+    e |= e >> 2;
+    e |= e >> 1;
+    return (x - (UINT64_C(1) << 52))
+        & (UINT64_C(0) - (e & UINT64_C(1)));
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // For a nonzero exponent, subtract 2^52 using a binary borrow chain.
+    // Toggle zero exponent bits until the first set bit absorbs the borrow.
+    // The initial zero-exponent check prevents borrowing into the sign bit.
+    // Thus all other sign and fraction bits, including NaN payloads, are preserved.
+    uint64_t bit = UINT64_C(1) << 52;
+    if ((x & UINT64_C(0x7FF0000000000000)) == 0)
+        return 0;
+    while ((x & bit) == 0) {
+        x ^= bit;
+        bit <<= 1;
+    }
+    return x ^ bit;
+}
+
+static uint64_t fpr_half(uint64_t x) {
+    // Decrement the exponent modulo 2048 while preserving sign and fraction.
+    // Multiply by the original exponent's nonzero flag to clear the wrapped case.
+    // For nonzero exponents this is exactly subtraction, even for infinity or NaN.
+    // For zero exponents the entire result becomes zero, regardless of its other bits.
+    uint64_t e = (x >> 52) & UINT64_C(0x7FF);
+    uint64_t decremented = (e + UINT64_C(2047)) & UINT64_C(0x7FF);
+    uint64_t y = (x & UINT64_C(0x800FFFFFFFFFFFFF)) | (decremented << 52);
+    return y * (uint64_t)(e != 0);
+}

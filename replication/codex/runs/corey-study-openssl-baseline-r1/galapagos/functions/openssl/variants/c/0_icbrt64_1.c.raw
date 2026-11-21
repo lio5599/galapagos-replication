@@ -1,0 +1,17 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t lo = 0;
+    uint64_t hi = 2642245;
+
+    while (lo < hi) {
+        uint64_t mid = lo + (hi - lo + 1) / 2;
+        uint64_t cube = mid * mid * mid;
+
+        if (cube <= x)
+            lo = mid;
+        else
+            hi = mid - 1;
+    }
+
+    return lo << 12;
+}

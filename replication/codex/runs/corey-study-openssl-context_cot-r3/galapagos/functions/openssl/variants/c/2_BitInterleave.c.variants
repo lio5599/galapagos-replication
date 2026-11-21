@@ -1,0 +1,76 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged because its conditional is always false.
+    // Directly returning Ai preserves every input, including zero and UINT64_MAX.
+    return Ai;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Copy the input without executing any interleaving operations.
+    // The copy preserves all 64 bits for every possible input.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR with zero leaves every bit unchanged.
+    // This matches the reference for all inputs, including both extremes.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // OR with zero leaves every bit unchanged.
+    // No input bits are added or removed, including for zero and UINT64_MAX.
+    return Ai | (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // AND with an all-ones 64-bit mask preserves the input.
+    // The mask covers every bit, so all inputs match the reference.
+    return Ai & (uint64_t)0xffffffffffffffffULL;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Complement every bit twice to restore the original value.
+    // Both zero and the all-ones value are restored exactly.
+    uint64_t inverted = (uint64_t)~Ai;
+    return (uint64_t)~inverted;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Unsigned subtraction from zero computes negation modulo 2 to the 64th.
+    // Applying it twice restores every input, including zero and the high bit alone.
+    uint64_t negated = (uint64_t)(0ULL - Ai);
+    return (uint64_t)(0ULL - negated);
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Separate the high and low 32-bit portions and recombine them unchanged.
+    // Both shifts are within range and every input bit retains its position.
+    uint64_t high = Ai >> 32;
+    uint64_t low = Ai & (uint64_t)0xffffffffULL;
+    return (high << 32) | low;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR with the same fixed mask twice cancels every toggled bit.
+    // This restores all inputs exactly, without arithmetic overflow.
+    uint64_t masked = Ai ^ (uint64_t)0xa5a5a5a5a5a5a5a5ULL;
+    return masked ^ (uint64_t)0xa5a5a5a5a5a5a5a5ULL;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Add one modulo 2 to the 64th, then subtract one with unsigned arithmetic.
+    // The operations cancel even when UINT64_MAX wraps to zero.
+    uint64_t incremented = (uint64_t)(Ai + 1ULL);
+    return (uint64_t)(incremented - 1ULL);
+}

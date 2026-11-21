@@ -1,0 +1,21 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int.h>
+
+static int fpr_lt(uint64_t x, uint64_t y)
+{
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    uint64_t magnitude_mask = ((uint64_t)1 << 63) - 1;
+    uint64_t ax = x & magnitude_mask;
+    uint64_t ay = y & magnitude_mask;
+
+    return (sx > sy)
+        || ((sx == sy) && (sx ? (ax > ay) : (ax < ay)));
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

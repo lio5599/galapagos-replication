@@ -1,0 +1,32 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Implement gating and the second absolute value using explicit conditional updates.
+    // This preserves the reference's sequence of magnitude, gate, distance, and reflection.
+    // Zero, both triangle boundaries, and nonpositive thresholds follow the same operations.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int r = v;
+
+    if (negative)
+        r = -r;
+    if (r >= 2 * t)
+        r = 0;
+
+    r -= t;
+    if (r < 0)
+        r = -r;
+
+    r = t - r;
+    if (negative)
+        r = -r;
+
+    return r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

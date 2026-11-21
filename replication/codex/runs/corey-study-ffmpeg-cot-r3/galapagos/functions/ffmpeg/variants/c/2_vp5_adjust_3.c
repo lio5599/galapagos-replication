@@ -1,0 +1,28 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Handle nonpositive thresholds first, then reject the triangle's outer region.
+    // Inside the triangle, reflect magnitudes above t around its peak.
+    // At a == t the peak is t, and at a == 2*t the response is zero.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+
+    if (t <= 0)
+        return negative ? -(2 * t) : 2 * t;
+
+    if (a >= 2 * t)
+        return 0;
+
+    if (a > t)
+        a = t - (a - t);
+
+    return negative ? -a : a;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

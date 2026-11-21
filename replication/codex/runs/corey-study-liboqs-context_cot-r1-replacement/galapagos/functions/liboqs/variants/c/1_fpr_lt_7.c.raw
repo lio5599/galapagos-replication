@@ -1,0 +1,12 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Compare magnitudes only after resolving differing signs.
+    // Positive magnitudes ascend and negative magnitudes descend.
+    // Equal magnitudes with equal signs return zero; signed zeros use sign.
+    uint64_t mask = ((uint64_t)1 << 63) - (uint64_t)1;
+    int sx = (int)(x >> 63);
+    int sy = (int)(y >> 63);
+    uint64_t ax = x & mask;
+    uint64_t ay = y & mask;
+
+    return (sx != sy) ? sx : (sx ? (ax > ay) : (ax < ay));
+}

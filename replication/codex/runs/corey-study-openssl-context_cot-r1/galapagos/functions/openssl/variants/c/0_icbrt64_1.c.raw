@@ -1,0 +1,20 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Uses an iteration counter to generate the same 22 shift positions.
+    // Each iteration performs exactly the reference digit and remainder update.
+    // Shifts range from 63 through 0, including for zero and UINT64_MAX.
+    uint64_t r = 0;
+    unsigned int i;
+
+    for (i = 0; i < 22; ++i) {
+        unsigned int s = 63 - 3 * i;
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}

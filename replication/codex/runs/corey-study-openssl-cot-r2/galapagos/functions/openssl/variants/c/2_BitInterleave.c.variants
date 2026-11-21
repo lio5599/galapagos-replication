@@ -1,0 +1,80 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference returns Ai unchanged because its if (0) body never executes.
+    // Directly returning Ai preserves every input, including zero and all ones.
+    return Ai;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Copy the input without modification, matching the reference's identity.
+    // The identical type preserves every bit for all inputs, including extremes.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Adding zero leaves the input unchanged, just like the reference.
+    // No value changes or overflows, including zero and the maximum value.
+    return Ai + (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR with zero preserves every bit, matching the reference's identity.
+    // This holds for all bit patterns, including zero and all ones.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // AND with a 64-bit all-ones mask preserves the reference's unchanged input.
+    // Conversion of minus one to uint64_t produces that mask for every input.
+    return Ai & (uint64_t)-1;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Complement twice to restore every original bit.
+    // The result matches the reference for all inputs, including both extremes.
+    return ~(~Ai);
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR twice with the same mask cancels every toggled bit.
+    // Thus every input is returned unchanged, including zero and all ones.
+    const uint64_t mask = 0xA5A5A5A5A5A5A5A5ULL;
+    Ai ^= mask;
+    return Ai ^ mask;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Split into two 32-bit halves and reassemble them in their original places.
+    // No bits are lost, so all inputs match the reference, including extremes.
+    uint64_t hi = Ai >> 32;
+    uint64_t lo = Ai & (uint64_t)0xFFFFFFFFULL;
+    return (hi << 32) | lo;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Swap the 32-bit halves twice to recover the unchanged reference result.
+    // Unsigned storage retains exactly 64 bits, preserving every input pattern.
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Reconstruct the input by copying each bit to its original position.
+    // All 64 positions are covered, including for zero and all-ones inputs.
+    // Every shift count is below 64, so no out-of-range shift occurs.
+    uint64_t result = 0;
+    for (unsigned int bit = 0; bit < 64; ++bit) {
+        result |= Ai & ((uint64_t)1 << bit);
+    }
+    return result;
+}

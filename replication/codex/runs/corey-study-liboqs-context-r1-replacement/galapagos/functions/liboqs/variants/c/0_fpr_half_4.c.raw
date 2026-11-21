@@ -1,0 +1,7 @@
+static uint64_t fpr_half(uint64_t x) {
+    uint64_t y = x + UINT64_C(0xFFF0000000000000);
+    uint64_t keep = (uint64_t)(
+        (y & UINT64_C(0x7FF0000000000000)) !=
+        UINT64_C(0x7FF0000000000000));
+    return y * keep;
+}

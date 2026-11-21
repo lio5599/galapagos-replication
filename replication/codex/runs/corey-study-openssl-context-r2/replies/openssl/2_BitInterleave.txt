@@ -1,0 +1,77 @@
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai ^ (uint64_t)0;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai | (uint64_t)0;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai & ~(uint64_t)0;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return (uint64_t)~(uint64_t)~Ai;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t hi = Ai >> 32;
+    uint64_t lo = Ai & (uint64_t)0xffffffffULL;
+    return (hi << 32) | lo;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t mask = (uint64_t)0x5555555555555555ULL;
+    return (Ai & mask) | (Ai & ~mask);
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t mask = (uint64_t)0xa5a5a5a5a5a5a5a5ULL;
+    uint64_t result = Ai ^ mask;
+    return result ^ mask;
+}
+```
+
+```c
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t even = Ai & (uint64_t)0x5555555555555555ULL;
+    uint64_t odd = Ai & (uint64_t)0xaaaaaaaaaaaaaaaaULL;
+    return even ^ odd;
+}
+```

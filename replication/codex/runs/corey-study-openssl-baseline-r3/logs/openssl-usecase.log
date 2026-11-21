@@ -1,0 +1,1309 @@
+Results will be in /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/out/openssl
+DEBUG:asyncio:Using selector: EpollSelector
+GALAPAGOS_PROGRESS {"project": "openssl", "function": null, "variant": null, "action": "build_reference_project"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/tests/../../use_cases/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/tests/../../use_cases/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+INFO:root:No change provided
+INFO:root:Calling configure
+INFO:root:Running ./Configure -no-asm
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Compiled in 87.75s
+INFO:root:Pipeline for variants of icbrt64 /home/javier/galapagos-clones/openssl/crypto/rsa/rsa_lib.c
+INFO:root:Pipeline for variants of BitDeinterleave /home/diogo/galapagos-clones/openssl/crypto/sha/keccak1600.c
+INFO:root:Pipeline for variants of BitInterleave /home/diogo/galapagos-clones/openssl/crypto/sha/keccak1600.c
+INFO:root:Variants to check 30
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c
+Compiled in 3.10s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c
+Compiled in 3.14s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/crypto/rsa/rsa_lib.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "7", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "7", "action": "equivalence_check"}
+DEBUG:root:Creating debug folder
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmp5fb7nefr and /tmp/tmpm04b3_57 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp_5aacm31
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpc7k14k0k
+INFO:root:Alive verifier for: /tmp/tmp5fb7nefr /tmp/tmpm04b3_57
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-7-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/FailedToProve/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "8", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmp0sm0pwd0 and /tmp/tmpkv5yey15 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmf_pvhcu
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp3e0m9ok9
+INFO:root:Alive verifier for: /tmp/tmp0sm0pwd0 /tmp/tmpkv5yey15
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-8-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/Ok/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "7", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "7", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "8", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "8", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c
+Compiled in 3.31s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c
+Compiled in 3.21s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/crypto/rsa/rsa_lib.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "9", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmpa1i4z215 and /tmp/tmpxn3tffp1 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpqhd_nta4
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpk05ppmq8
+INFO:root:Alive verifier for: /tmp/tmpa1i4z215 /tmp/tmpxn3tffp1
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-9-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/FailedToProve/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "6", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmp31ue71hi and /tmp/tmpjem11d0i to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpxloa_1f3
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp036thz83
+INFO:root:Alive verifier for: /tmp/tmp31ue71hi /tmp/tmpjem11d0i
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-6-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/Ok/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "9", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "9", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "6", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "6", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c
+Compiled in 3.28s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c
+Compiled in 3.19s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/crypto/rsa/rsa_lib.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "5", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmpv68r1zwz and /tmp/tmp8835nbs4 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpej9ed1n7
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpknqhlnix
+INFO:root:Alive verifier for: /tmp/tmpv68r1zwz /tmp/tmp8835nbs4
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-5-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/Ok/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "3", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmp6597v61n and /tmp/tmpdfp1aq1u to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpxb2fkoxi
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpfyq5x7q7
+INFO:root:Alive verifier for: /tmp/tmp6597v61n /tmp/tmpdfp1aq1u
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-3-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/FailedToProve/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "5", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "5", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "3", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "3", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c
+Compiled in 3.49s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c
+Compiled in 3.18s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/crypto/rsa/rsa_lib.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "4", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmpivpoun72 and /tmp/tmpsh9t6idd to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpadjehaw3
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpaa1ytnyd
+INFO:root:Alive verifier for: /tmp/tmpivpoun72 /tmp/tmpsh9t6idd
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-4-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/FailedToProve/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "2", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmpwetbb69j and /tmp/tmplwfk869v to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmps3vi52bu
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpctkhm9b8
+INFO:root:Alive verifier for: /tmp/tmpwetbb69j /tmp/tmplwfk869v
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-2-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 0 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 1 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 0, 'incorrect transformations': 0, 'failed-to-prove transformations': 1, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/FailedToProve/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "4", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "4", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "2", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "2", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c
+Compiled in 3.47s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/crypto/rsa/rsa_lib.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %x
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c
+Compiled in 3.19s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/crypto/rsa/rsa_lib.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/libcrypto-shlib-rsa_lib.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/crypto/rsa/libcrypto-shlib-rsa_lib.o
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/crypto/rsa/rsa_lib.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "1", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmptwt_hd_4 and /tmp/tmpn4kyei_6 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpmaq6fugg
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpk9blkbix
+INFO:root:Alive verifier for: /tmp/tmptwt_hd_4 /tmp/tmpn4kyei_6
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-1-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/Ok/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "0", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/crypto/rsa/rsa_lib.bc
+DEBUG:root:Copying /tmp/tmph0zmrxyr and /tmp/tmptv34i5pn to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpixydwrt3
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp1isfj3k5
+INFO:root:Alive verifier for: /tmp/tmph0zmrxyr /tmp/tmptv34i5pn
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/rsa/rsa_lib.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-0_icbrt64-0-c/crypto/rsa/rsa_lib.bc
+INFO:root:Alive flags ['--func=icbrt64', '--src-fn=icbrt64', '--tgt-fn=icbrt64', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/rsa_lib.bccmp/Ok/rsa_lib.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "1", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "1", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "0", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "icbrt64", "variant": "0", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c
+Compiled in 3.21s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c
+Compiled in 3.17s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "4", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpr6xdcnvh and /tmp/tmpnwengqi9 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp8eu7w9g7
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpj8cuhezx
+INFO:root:Alive verifier for: /tmp/tmpr6xdcnvh /tmp/tmpnwengqi9
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-4-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "5", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmptycu229q and /tmp/tmp95cuat2y to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp0mlknxqc
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpx_zh1jxx
+INFO:root:Alive verifier for: /tmp/tmptycu229q /tmp/tmp95cuat2y
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-5-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "4", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "4", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "5", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "5", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c
+Compiled in 3.21s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c
+Compiled in 3.18s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "3", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmp5zz0a9rn and /tmp/tmp6bkgg0dw to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpv6amnqnx
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpl6aoj44y
+INFO:root:Alive verifier for: /tmp/tmp5zz0a9rn /tmp/tmp6bkgg0dw
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-3-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "0", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpbv3fsnuy and /tmp/tmp75ouj_0w to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpbyft649i
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpqjoqtsd4
+INFO:root:Alive verifier for: /tmp/tmpbv3fsnuy /tmp/tmp75ouj_0w
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-0-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "3", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "3", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "0", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "0", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c
+Compiled in 3.22s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c
+Compiled in 3.16s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "7", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "7", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmp0rmak42l and /tmp/tmpijnfx8ec to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpaorn4xrr
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpuf7xpo2l
+INFO:root:Alive verifier for: /tmp/tmp0rmak42l /tmp/tmpijnfx8ec
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-7-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "9", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmp_4ke8z5r and /tmp/tmpenyfio10 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpacatl5ow
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpafin67wg
+INFO:root:Alive verifier for: /tmp/tmp_4ke8z5r /tmp/tmpenyfio10
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-9-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "7", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "7", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "9", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "9", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c
+Compiled in 3.12s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c
+Compiled in 3.17s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "8", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmp59n8cyk9 and /tmp/tmpx4jxfocj to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpnmg58nja
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp8ecnrlgt
+INFO:root:Alive verifier for: /tmp/tmp59n8cyk9 /tmp/tmpx4jxfocj
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-8-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "1", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpie8to4qi and /tmp/tmpmuaaumzs to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp5txwqjg2
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpzzhmnam7
+INFO:root:Alive verifier for: /tmp/tmpie8to4qi /tmp/tmpmuaaumzs
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-1-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "8", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "8", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "1", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "1", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c
+Compiled in 3.31s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c
+Compiled in 3.47s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "2", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmprl_3ik88 and /tmp/tmpocpgjt18 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpobou1u0z
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmppw8kwk79
+INFO:root:Alive verifier for: /tmp/tmprl_3ik88 /tmp/tmpocpgjt18
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-2-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "6", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpoo8irhab and /tmp/tmp925ka220 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpba84e6d_
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpjg6glmy1
+INFO:root:Alive verifier for: /tmp/tmpoo8irhab /tmp/tmp925ka220
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-1_BitDeinterleave-6-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitDeinterleave', '--src-fn=BitDeinterleave', '--tgt-fn=BitDeinterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "2", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "2", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "6", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitDeinterleave", "variant": "6", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "9", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c
+Compiled in 3.29s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "0", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c
+Compiled in 3.19s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "9", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "9", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpqu328o_o and /tmp/tmp2zjeg51q to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi4ricljv
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpuju5bmh7
+INFO:root:Alive verifier for: /tmp/tmpqu328o_o /tmp/tmp2zjeg51q
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-9-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "0", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "0", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpva1_nk5x and /tmp/tmpp9tfl9g5 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpazesyept
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp22vkstuc
+INFO:root:Alive verifier for: /tmp/tmpva1_nk5x /tmp/tmpp9tfl9g5
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-0-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "9", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "9", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "0", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "0", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "8", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c
+Compiled in 3.16s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "1", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c
+Compiled in 3.13s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "8", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "8", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpj6pwmdp6 and /tmp/tmpi543wq8h to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpqjzw_pea
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpucfcp34t
+INFO:root:Alive verifier for: /tmp/tmpj6pwmdp6 /tmp/tmpi543wq8h
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-8-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "1", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "1", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpbxzpc225 and /tmp/tmp8p0parzz to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpitmoab1i
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpbl9orqgp
+INFO:root:Alive verifier for: /tmp/tmpbxzpc225 /tmp/tmp8p0parzz
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-1-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "8", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "8", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "1", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "1", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "6", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c
+Compiled in 3.22s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "5", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c
+Compiled in 3.17s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "6", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "6", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmprp95ns43 and /tmp/tmpmoum59_a to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpefm1olbk
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmphrzf_coa
+INFO:root:Alive verifier for: /tmp/tmprp95ns43 /tmp/tmpmoum59_a
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-6-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "5", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "5", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpo3o0ai60 and /tmp/tmp9t6wf2vz to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpchyt_3go
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpxrucx0cw
+INFO:root:Alive verifier for: /tmp/tmpo3o0ai60 /tmp/tmp9t6wf2vz
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-5-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "6", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "6", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "5", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "5", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "4", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c
+Compiled in 3.18s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "3", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c
+Compiled in 3.30s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "4", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "4", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpoapnkx4v and /tmp/tmpzqrrfrl8 to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpri4x7pvi
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpaltgpd5a
+INFO:root:Alive verifier for: /tmp/tmpoapnkx4v /tmp/tmpzqrrfrl8
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-4-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "3", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "3", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmp8d8ef93l and /tmp/tmpnd8c3wth to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp78in4ym4
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp0xwjyfqd
+INFO:root:Alive verifier for: /tmp/tmp8d8ef93l /tmp/tmpnd8c3wth
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-3-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "4", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "4", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "3", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "3", "action": "variant_build_removed"}
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "2", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c
+Compiled in 3.30s
+Shadowing /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl
+Copying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "7", "action": "compile_in_project"}
+INFO:root:Compiling /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c
+Parsing original bitcode /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/crypto/sha/keccak1600.bc
+Parsing error original: 
+Parsing error variant: 
+i64 %0
+i64 %Ai
+INFO:root:Calling make
+INFO:root:Running ['make', '-j4']
+/home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c
+Compiled in 3.28s
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/crypto/sha/keccak1600.bc
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/libcrypto.so
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/libcrypto.so.3 /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/libcrypto.so.3
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/libcrypto-shlib-keccak1600.o /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/crypto/sha/libcrypto-shlib-keccak1600.o
+Mismatch /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/crypto/sha/keccak1600.bc
+INFO:root:Modified files 4
+INFO:root:Bitcodes 1
+INFO:root:Executables 2
+INFO:root:Doing tests
+INFO:root:Verifying /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/crypto/sha/keccak1600.bc
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "2", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "2", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmpiw171e0_ and /tmp/tmpfhf_wrlt to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpb0aggemr
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpw_0vb7x_
+INFO:root:Alive verifier for: /tmp/tmpiw171e0_ /tmp/tmpfhf_wrlt
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-2-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "7", "action": "test_suite"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "7", "action": "equivalence_check"}
+INFO:root:Creating temporary files for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/crypto/sha/keccak1600.bc
+DEBUG:root:Copying /tmp/tmp32bmceyu and /tmp/tmpw_ki8zuu to debug folder
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmpi4_4xna4
+WARNING:root:'utf-8' codec can't decode byte 0xc0 in position 2: invalid start byte
+Invalid file parsing. Trying to use llvm-dis to convert to text
+DEBUG:root:Extracting functions from /tmp/tmp8xdssp_3
+INFO:root:Alive verifier for: /tmp/tmp32bmceyu /tmp/tmpw_ki8zuu
+INFO:root:Calling alive for /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl/crypto/sha/keccak1600.bc and /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/build-copies/openssl-2_BitInterleave-7-c/crypto/sha/keccak1600.bc
+INFO:root:Alive flags ['--func=BitInterleave', '--src-fn=BitInterleave', '--tgt-fn=BitInterleave', '--src-unroll=2', '--tgt-unroll=2']
+INFO:root:Result matching 1 correct transformations
+INFO:root:Result matching 0 incorrect transformations
+INFO:root:Result matching 0 failed-to-prove transformations
+INFO:root:Result matching 0 Alive2 errors
+INFO:root:{'correct transformations': 1, 'incorrect transformations': 0, 'failed-to-prove transformations': 0, 'Alive2 errors': 0}
+DEBUG:root:Saving alive output to /home/cbhei/galapagos-corey-runs/corey-study-openssl-baseline-r3/scripts/verifier/debug/keccak1600.bccmp/Ok/keccak1600.bc.alive.txt
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "2", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "2", "action": "variant_build_removed"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "7", "action": "remove_variant_build"}
+GALAPAGOS_PROGRESS {"project": "openssl", "function": "BitInterleave", "variant": "7", "action": "variant_build_removed"}

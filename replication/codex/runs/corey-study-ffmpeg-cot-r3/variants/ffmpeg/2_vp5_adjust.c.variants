@@ -1,0 +1,204 @@
+static int vp5_adjust(int v, int t)
+{
+    // Computes sign(v) times a triangular response for positive t; otherwise sign(v) times 2*t.
+    // Here sign(v) is -1 for negative v and +1 otherwise.
+    // The triangle is a for a <= t, 2*t-a for t < a < 2*t, and zero beyond.
+    // Equivalence assumes 32-bit int, arithmetic right shifts, and defined reference arithmetic.
+    // In particular, the reference has signed overflow for INT_MIN input or overflowing 2*t.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (t <= 0)
+        r = 2 * t;
+    else if (a <= t)
+        r = a;
+    else if (a < 2 * t)
+        r = 2 * t - a;
+    else
+        r = 0;
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Keep the reference's magnitude gate, then express both absolute values conditionally.
+    // The gated magnitude b gives the response t - abs(b-t).
+    // Equality at 2*t gates to zero; nonpositive t gates every magnitude to zero.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int b = a * (a < 2 * t);
+    int d = b - t;
+    int r = t - (d < 0 ? -d : d);
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Gate the magnitude, then expand t - abs(b-t) into its two linear pieces.
+    // For b < t the result is b; otherwise it is 2*t-b.
+    // This includes t <= 0, where b is zero and the result is 2*t.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int b = a < 2 * t ? a : 0;
+    int r = b < t ? b : 2 * t - b;
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Handle nonpositive thresholds first, then reject the triangle's outer region.
+    // Inside the triangle, reflect magnitudes above t around its peak.
+    // At a == t the peak is t, and at a == 2*t the response is zero.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+
+    if (t <= 0)
+        return negative ? -(2 * t) : 2 * t;
+
+    if (a >= 2 * t)
+        return 0;
+
+    if (a > t)
+        a = t - (a - t);
+
+    return negative ? -a : a;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Replace the reference's Boolean multiplication with an all-zero or all-one mask.
+    // Retain its bitwise absolute values and use the equivalent XOR/subtract sign restore.
+    // The strict gate preserves the 2*t boundary and the behavior for nonpositive t.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int d;
+    int mask;
+    int r;
+
+    a &= -(a < 2 * t);
+    d = a - t;
+    mask = d >> 31;
+    r = t - ((d ^ mask) - mask);
+
+    return (r ^ sign) - sign;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Implement gating and the second absolute value using explicit conditional updates.
+    // This preserves the reference's sequence of magnitude, gate, distance, and reflection.
+    // Zero, both triangle boundaries, and nonpositive thresholds follow the same operations.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int r = v;
+
+    if (negative)
+        r = -r;
+    if (r >= 2 * t)
+        r = 0;
+
+    r -= t;
+    if (r < 0)
+        r = -r;
+
+    r = t - r;
+    if (negative)
+        r = -r;
+
+    return r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Work directly on signed input, using separate positive and negative triangle branches.
+    // Negative inputs reflect the positive triangle, avoiding a shared magnitude variable.
+    // Nonpositive thresholds retain the reference's signed 2*t response, including v == 0.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int twice = 2 * t;
+
+    if (t <= 0)
+        return v < 0 ? -twice : twice;
+
+    if (v >= 0) {
+        if (v >= twice)
+            return 0;
+        return v <= t ? v : twice - v;
+    }
+
+    if (v <= -twice)
+        return 0;
+    return v >= -t ? v : -twice - v;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // For positive t, classify the magnitude by how many triangle boundaries it crosses.
+    // Classes zero, one, and two select the rising segment, falling segment, and zero.
+    // Equality at t selects the peak; equality at 2*t selects zero.
+    // Nonpositive t is handled separately; defined-reference arithmetic is assumed.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int r;
+
+    if (t <= 0) {
+        r = 2 * t;
+    } else {
+        switch ((a > t) + (a >= 2 * t)) {
+        case 0:
+            r = a;
+            break;
+        case 1:
+            r = 2 * t - a;
+            break;
+        default:
+            r = 0;
+            break;
+        }
+    }
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // After gating, the response is the minimum of b and its reflection 2*t-b.
+    // This equals t - abs(b-t) on either side of the peak.
+    // For nonpositive t, b is zero and the minimum is 2*t; boundary values also agree.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int b = a < twice ? a : 0;
+    int reflected = twice - b;
+    int r = b < reflected ? b : reflected;
+
+    return negative ? -r : r;
+}
+
+static int vp5_adjust(int v, int t)
+{
+    // Store the two linear pieces of t - abs(b-t), then select by b > t.
+    // Gating first makes both stored expressions safe on the reference's defined domain.
+    // At the peak both pieces agree; nonpositive t selects 2*t, except zero where both agree.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int b = a < twice ? a : 0;
+    int pieces[2];
+    int r;
+
+    pieces[0] = b;
+    pieces[1] = twice - b;
+    r = pieces[b > t];
+
+    return negative ? -r : r;
+}

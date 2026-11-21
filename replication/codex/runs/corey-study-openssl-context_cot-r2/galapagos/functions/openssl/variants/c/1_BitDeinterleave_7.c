@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Unsigned increment followed by decrement restores the input.
+    // Wraparound at the maximum value is defined and also cancels.
+    uint64_t result = Ai;
+    result += (uint64_t)1;
+    result -= (uint64_t)1;
+    return result;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

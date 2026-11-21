@@ -3,7 +3,7 @@
 set -euo pipefail
 RUN=${1:?Pass a generated run name}
 [[ "$RUN" =~ ^[A-Za-z0-9_-]+$ ]] || { echo 'Invalid run name'; exit 1; }
-HERE=/mnt/c/COMS6650/FinalProject/replication/codex
+HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 source "$HOME/galapagos-env.sh"
 python3 "$HERE/verify_alignment.py"
 python3 "$HERE/prepare_pipeline.py" --base "$HOME/galapagos-replication" --run-dir "$HERE/runs/$RUN" --jobs 2 --execute

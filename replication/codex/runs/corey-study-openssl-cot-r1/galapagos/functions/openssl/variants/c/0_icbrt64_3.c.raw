@@ -1,0 +1,23 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Greedily add root bits while maintaining cube equal to r cubed.
+    // The polynomial delta is exactly the increase in the candidate cube.
+    // Rejecting candidates above 2642245 makes all products and sums fit.
+    // Comparing delta with x minus cube handles zero and UINT64_MAX safely.
+    uint64_t r = 0;
+    uint64_t cube = 0;
+    uint64_t bit;
+
+    for (bit = (uint64_t)1 << 21; bit != 0; bit >>= 1) {
+        uint64_t candidate = r + bit;
+        if (candidate <= 2642245) {
+            uint64_t delta =
+                3 * r * r * bit + 3 * r * bit * bit + bit * bit * bit;
+            if (delta <= x - cube) {
+                r = candidate;
+                cube += delta;
+            }
+        }
+    }
+    return r << 12;
+}

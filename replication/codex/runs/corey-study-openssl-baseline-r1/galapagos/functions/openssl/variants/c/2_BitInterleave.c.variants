@@ -1,0 +1,74 @@
+/* Substitute 1 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai;
+}
+
+/* Substitute 2 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+
+/* Substitute 3 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai ^ (uint64_t)0;
+}
+
+/* Substitute 4 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai | (uint64_t)0;
+}
+
+/* Substitute 5 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return Ai & ~(uint64_t)0;
+}
+
+/* Substitute 6 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    return ~~Ai;
+}
+
+/* Substitute 7 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+/* Substitute 8 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    const uint64_t mask = (uint64_t)0x5555555555555555ULL;
+    return (Ai & mask) | (Ai & ~mask);
+}
+
+/* Substitute 9 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = 0;
+    unsigned int i;
+    for (i = 0; i < 64; ++i) {
+        result |= ((Ai >> i) & (uint64_t)1) << i;
+    }
+    return result;
+}
+
+/* Substitute 10 */
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    uint64_t result = 0;
+    unsigned int i;
+    for (i = 0; i < 8; ++i) {
+        unsigned int shift = i * 8;
+        result |= ((Ai >> shift) & (uint64_t)0xff) << shift;
+    }
+    return result;
+}

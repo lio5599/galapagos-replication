@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Increment the root while subtracting consecutive cube differences.
+    // The residual always equals the original input minus r cubed.
+    // Failure to afford the next difference means r is the floor cube root.
+    // Differences fit uint64_t, and guarded subtraction handles both extremes.
+    uint64_t r = 0;
+
+    for (;;) {
+        uint64_t difference = 3 * r * (r + 1) + 1;
+        if (x < difference)
+            break;
+        x -= difference;
+        ++r;
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

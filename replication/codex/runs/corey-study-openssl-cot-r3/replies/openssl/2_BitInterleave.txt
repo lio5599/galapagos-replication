@@ -1,0 +1,92 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference returns Ai unchanged because its if (0) body never executes.
+    // Returning Ai directly preserves every input, including zero and all ones.
+    return Ai;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Copy the input without transformation, matching the unreachable branch.
+    // The identical type preserves every bit for every possible input.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR with zero preserves every bit, matching the reference's identity.
+    // This also preserves zero, all ones, and isolated set bits.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // OR with zero leaves every bit unchanged, as does the reference.
+    // No input value, including zero or all ones, requires special handling.
+    return Ai | (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // AND with a 64-bit all-ones mask preserves the entire input.
+    // Thus this matches the reference for zero and every other bit pattern.
+    uint64_t mask = ~(uint64_t)0;
+    return Ai & mask;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Complement every bit twice to recover the unchanged reference result.
+    // Both complements cover all 64 bits, including the highest and lowest.
+    uint64_t inverted = (uint64_t)~Ai;
+    return (uint64_t)~inverted;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Split into 32-bit halves and reassemble them in their original positions.
+    // The halves cover all bits without overlap, preserving every input.
+    // The left shift uses uint64_t, so the highest input bit is retained.
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    uint32_t lo = (uint32_t)Ai;
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Extract eight 8-bit groups and restore each to its original position.
+    // These disjoint groups cover all 64 bits, yielding the reference identity.
+    // Shifts range from zero to 56, safely handling every input bit pattern.
+    uint64_t result = 0;
+    unsigned int shift;
+    for (shift = 0; shift < 64; shift += 8) {
+        uint64_t group = (Ai >> shift) & (uint64_t)0xff;
+        result |= group << shift;
+    }
+    return result;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Copy each set bit into the same position in an initially zero result.
+    // Every position is visited, so the result equals the unchanged reference.
+    // Shifts stop at 63; zero, all ones, and the highest bit are preserved.
+    uint64_t result = 0;
+    unsigned int bit;
+    for (bit = 0; bit < 64; ++bit) {
+        uint64_t mask = (uint64_t)1 << bit;
+        if ((Ai & mask) != 0)
+            result |= mask;
+    }
+    return result;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Swap the two 32-bit halves twice, restoring their original positions.
+    // Each swap preserves every bit, so this matches the reference identity.
+    // Both shifts are by 32, valid even for zero and all-ones inputs.
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}

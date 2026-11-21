@@ -1,0 +1,181 @@
+static int mix(int c0, int c1)
+{
+    // Computes per-channel 2:1 weighted averages, truncating division by three.
+    // Extracting green before weighting is exact because its mask is aligned.
+    // Blue and green range from 0 to 31, including both endpoints.
+    // Signed red shifting and division retain the reference's behavior.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = 2 * ((c0 >> 5) & 31) + ((c1 >> 5) & 31);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Place blue and green in separate eight-bit lanes before weighting.
+    // Each weighted lane is at most 93, so no carry crosses lanes.
+    // Extraction therefore recovers the exact original channel numerators.
+    // Red retains the original signed operations, including negative inputs.
+    int a = (c0 & 31) | ((c0 & 0x03E0) << 3);
+    int b = (c1 & 31) | ((c1 & 0x03E0) << 3);
+    int packed = 2 * a + b;
+    int blue = packed & 255;
+    int green = packed >> 8;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}
+
+static int mix(int c0, int c1)
+{
+    // Store the two bounded channels in arrays and average them in a loop.
+    // Each numerator is between 0 and 93, so all intermediate values fit.
+    // The red calculation and final addition order match the reference.
+    // This also preserves signed-red truncation for negative inputs.
+    int a[2] = { c0 & 31, (c0 & 0x03E0) >> 5 };
+    int b[2] = { c1 & 31, (c1 & 0x03E0) >> 5 };
+    int average[2];
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int i;
+    for (i = 0; i < 2; ++i)
+        average[i] = (a[i] + a[i] + b[i]) / 3;
+    return red / 3 * 1024 + average[1] * 32 + average[0];
+}
+
+static int mix(int c0, int c1)
+{
+    // For bounded channels, floor of the weighted mean is a plus floor delta/3.
+    // Subtracting two for negative delta converts C truncation into floor.
+    // Deltas range from -31 to 31, so this correction is always safe.
+    // Red uses the reference expression, preserving its signed edge cases.
+    int blue0 = c0 & 31;
+    int green0 = (c0 & 0x03E0) >> 5;
+    int db = (c1 & 31) - blue0;
+    int dg = ((c1 & 0x03E0) >> 5) - green0;
+    int blue = blue0 + (db - (db < 0 ? 2 : 0)) / 3;
+    int green = green0 + (dg - (dg < 0 ? 2 : 0)) / 3;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // For every integer n from 0 through 93, floor n/3 equals (43*n) >> 7.
+    // The reciprocal approximation never crosses the next integer here.
+    // Its largest product is 3999, so even a 16-bit int can hold it.
+    // Only bounded channels use this shortcut; signed red remains unchanged.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = (blue * 43) >> 7;
+    green = (green * 43) >> 7;
+    return red / 3 * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // Count complete groups of three by repeated subtraction.
+    // Bounded numerators are nonnegative and at most 93, ensuring termination.
+    // Zero and exact multiples of three produce their exact quotients.
+    // Signed red and final packing use the reference operations.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5;
+    int qb = 0;
+    int qg = 0;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    while (blue >= 3) {
+        blue -= 3;
+        ++qb;
+    }
+    while (green >= 3) {
+        green -= 3;
+        ++qg;
+    }
+    return red / 3 * 1024 + qg * 32 + qb;
+}
+
+static int mix(int c0, int c1)
+{
+    // Greedily subtract three times descending powers of two.
+    // Numerators at most 93 need quotient bits only from 16 down to 1.
+    // The remaining value is below three, giving exact floor division.
+    // Red keeps signed division, including truncation toward zero.
+    int n[2] = {
+        2 * (c0 & 31) + (c1 & 31),
+        (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5
+    };
+    int q[2] = { 0, 0 };
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int i;
+    int bit;
+    for (i = 0; i < 2; ++i) {
+        for (bit = 16; bit != 0; bit >>= 1) {
+            if (n[i] >= 3 * bit) {
+                n[i] -= 3 * bit;
+                q[i] += bit;
+            }
+        }
+    }
+    return red / 3 * 1024 + q[1] * 32 + q[0];
+}
+
+static int mix(int c0, int c1)
+{
+    // Perform binary long division by three on the two bounded numerators.
+    // Seven input bits cover every value from 0 through 93.
+    // Each step leaves remainder below three, including at both endpoints.
+    // Red uses the original expression rather than unsigned long division.
+    int n[2] = {
+        2 * (c0 & 31) + (c1 & 31),
+        (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5
+    };
+    int q[2] = { 0, 0 };
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int i;
+    int bit;
+    for (i = 0; i < 2; ++i) {
+        int remainder = 0;
+        for (bit = 6; bit >= 0; --bit) {
+            remainder = 2 * remainder + ((n[i] >> bit) & 1);
+            q[i] *= 2;
+            if (remainder >= 3) {
+                remainder -= 3;
+                ++q[i];
+            }
+        }
+    }
+    return red / 3 * 1024 + q[1] * 32 + q[0];
+}
+
+static int mix(int c0, int c1)
+{
+    // Split each bounded input into its quotient and remainder modulo three.
+    // Weight the quotients, then add the carry from weighted remainders.
+    // Remainders are 0 through 2, so this is exact even at channel endpoints.
+    // Red is not decomposed, preserving its behavior for negative values.
+    int b0 = c0 & 31;
+    int b1 = c1 & 31;
+    int g0 = (c0 & 0x03E0) >> 5;
+    int g1 = (c1 & 0x03E0) >> 5;
+    int blue = 2 * (b0 / 3) + b1 / 3
+             + (2 * (b0 % 3) + b1 % 3) / 3;
+    int green = 2 * (g0 / 3) + g1 / 3
+              + (2 * (g0 % 3) + g1 % 3) / 3;
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green * 32 + blue;
+}
+
+static int mix(int c0, int c1)
+{
+    // Complement bounded channels around their maximum value of 31.
+    // The weighted complement is 93 minus the original numerator.
+    // Subtracting its ceiling quotient from 31 gives the original floor.
+    // Adding two implements that ceiling, including complements 0 and 93.
+    // Signed red and the final arithmetic remain as in the reference.
+    int blue = 2 * (31 - (c0 & 31)) + (31 - (c1 & 31));
+    int green = 2 * (31 - ((c0 & 0x03E0) >> 5))
+              + (31 - ((c1 & 0x03E0) >> 5));
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    blue = 31 - (blue + 2) / 3;
+    green = 31 - (green + 2) / 3;
+    return red / 3 * 1024 + green * 32 + blue;
+}

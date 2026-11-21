@@ -1,0 +1,85 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged because its if condition is zero.
+    // Returning Ai directly preserves every bit for all uint64_t inputs.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference's disabled branch leaves Ai unchanged.
+    // Copying the value preserves all inputs, including zero and the maximum.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference is the identity function.
+    // XOR with zero changes no bits, including for zero and all-one inputs.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns Ai unchanged.
+    // Adding zero preserves every unsigned value without overflow.
+    return Ai + (uint64_t)0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference is the identity function.
+    // Complementing twice restores every bit, including boundary inputs.
+    uint64_t inverted = (uint64_t)~Ai;
+    return (uint64_t)~inverted;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference leaves all input bits unchanged.
+    // Extracting and rejoining the two halves restores the original value.
+    // Both shifts are within the 64-bit width for every input.
+    uint64_t lo = Ai & (uint64_t)0xffffffffULL;
+    uint64_t hi = Ai >> 32;
+    return (hi << 32) | lo;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns the original input.
+    // Complementary masks partition all 64 bits without changing positions.
+    // Their union restores every input, including zero and all ones.
+    uint64_t even = Ai & (uint64_t)0x5555555555555555ULL;
+    uint64_t odd = Ai & (uint64_t)0xaaaaaaaaaaaaaaaaULL;
+    return even | odd;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference is the identity function.
+    // Swapping the two 32-bit halves twice restores every original bit.
+    // All shifts have valid counts, including for boundary input values.
+    uint64_t swapped = (Ai << 32) | (Ai >> 32);
+    return (swapped << 32) | (swapped >> 32);
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns Ai unchanged.
+    // XOR with the same mask twice cancels independently at every bit.
+    // This holds for all inputs, including zero and the maximum value.
+    uint64_t mask = (uint64_t)0x9e3779b97f4a7c15ULL;
+    uint64_t transformed = Ai ^ mask;
+    return transformed ^ mask;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Subtracting from the unsigned maximum twice restores the input.
+    // Neither subtraction underflows, even at either endpoint.
+    uint64_t maximum = (uint64_t)0xffffffffffffffffULL;
+    uint64_t reflected = maximum - Ai;
+    return maximum - reflected;
+}

@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference leaves Ai unchanged.
+    // Rotating by 32 bits twice restores the original 64-bit word.
+    // Unsigned shifts by 32 are defined for every input.
+    uint64_t rotated = (Ai << 32) | (Ai >> 32);
+    return (rotated << 32) | (rotated >> 32);
+}
+
+
+int main(){
+    BitInterleave(0);
+}

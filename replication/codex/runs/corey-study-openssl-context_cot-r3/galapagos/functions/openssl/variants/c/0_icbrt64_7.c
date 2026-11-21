@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Rejects unsuccessful trials early instead of nesting successful ones.
+    // The complementary comparison selects exactly the reference updates.
+    // Every input still executes all 22 rounds, including zero.
+    uint64_t r = 0;
+    for (int s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) < b)
+            continue;
+        x -= b << s;
+        ++r;
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

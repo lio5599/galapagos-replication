@@ -1,0 +1,84 @@
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t result = Ai;
+    return result;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai ^ (uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai | (uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return Ai & ~(uint64_t)0;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    return (uint64_t)~(uint64_t)~Ai;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint32_t lo = (uint32_t)Ai;
+    uint32_t hi = (uint32_t)(Ai >> 32);
+    return ((uint64_t)hi << 32) | (uint64_t)lo;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t result = 0;
+    for (unsigned int i = 0; i < 64; ++i)
+        result |= ((Ai >> i) & (uint64_t)1) << i;
+    return result;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t result = 0;
+    for (unsigned int i = 0; i < 8; ++i)
+        result |= ((Ai >> (8 * i)) & (uint64_t)0xff) << (8 * i);
+    return result;
+}
+
+
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    uint64_t result;
+    const unsigned char *src = (const unsigned char *)&Ai;
+    unsigned char *dst = (unsigned char *)&result;
+
+    for (unsigned int i = 0; i < sizeof result; ++i)
+        dst[i] = src[i];
+
+    return result;
+}

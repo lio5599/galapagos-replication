@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // OR with zero preserves every bit.
+    // This matches the reference even for zero and all-one inputs.
+    return Ai | (uint64_t)0;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

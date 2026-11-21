@@ -1,0 +1,208 @@
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (int s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    int s = 63;
+
+    while (s >= 0) {
+        r *= 2;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r += 1;
+        }
+        s -= 3;
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+    int s = 63;
+
+    do {
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+        s -= 3;
+    } while (s >= 0);
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (unsigned int i = 0; i < 22; ++i) {
+        unsigned int s = 63 - 3 * i;
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (unsigned int i = 22; i != 0; --i) {
+        unsigned int s = 3 * (i - 1);
+        r += r;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (int s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        uint64_t b = 3 * r * r + 3 * r + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (int s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        uint64_t t = r * (r + 1);
+        uint64_t b = t + t + t + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (int s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        if ((x >> s) < b)
+            continue;
+        x -= b << s;
+        ++r;
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (int s = 63; s >= 0; s -= 3) {
+        r <<= 1;
+        uint64_t b = 3 * r * (r + 1) + 1;
+        uint64_t take = (uint64_t)((x >> s) >= b);
+        uint64_t mask = (uint64_t)0 - take;
+        x -= (b << s) & mask;
+        r += take;
+    }
+
+    return r << 12;
+}
+```
+
+```c
+#include <stdint.h>
+
+static uint64_t icbrt64(uint64_t x)
+{
+    uint64_t r = 0;
+
+    for (int s = 63; s >= 0; s -= 3) {
+        uint64_t next = r << 1;
+        uint64_t b = 3 * next * (next + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r = next + 1;
+        } else {
+            r = next;
+        }
+    }
+
+    return r << 12;
+}
+```

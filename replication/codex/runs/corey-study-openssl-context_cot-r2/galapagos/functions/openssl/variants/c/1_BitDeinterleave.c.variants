@@ -1,0 +1,80 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged.
+    // Its if (0) body never executes, so this is identical for every input.
+    return Ai;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Copy the input without changing any bits.
+    // This matches the reference for all inputs, including zero and maximum.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // XOR with zero preserves every bit.
+    // The reference also preserves every bit for all inputs.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // OR with zero preserves every bit.
+    // This matches the reference even for zero and all-one inputs.
+    return Ai | (uint64_t)0;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // AND with a 64-bit all-one mask preserves every input bit.
+    // The result equals the reference for the entire input range.
+    return Ai & (uint64_t)0xffffffffffffffffULL;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Complementing twice restores every original bit.
+    // No input, including zero or all ones, is exceptional.
+    return (uint64_t)~((uint64_t)~Ai);
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Applying the same XOR mask twice cancels every bit change.
+    // Thus every input is returned unchanged, as in the reference.
+    uint64_t mask = (uint64_t)0xaaaaaaaaaaaaaaaaULL;
+    uint64_t result = Ai ^ mask;
+    return result ^ mask;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Unsigned increment followed by decrement restores the input.
+    // Wraparound at the maximum value is defined and also cancels.
+    uint64_t result = Ai;
+    result += (uint64_t)1;
+    result -= (uint64_t)1;
+    return result;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Separate the low and high 32-bit halves, then recombine them.
+    // Both shifts are within range and no original bits are lost.
+    // This returns every input unchanged, including both extreme values.
+    uint64_t low = Ai & (uint64_t)0xffffffffULL;
+    uint64_t high = Ai >> 32;
+    return (high << 32) | low;
+}
+
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Return zero explicitly for zero and preserve every nonzero input.
+    // Both paths equal the reference's unchanged input result.
+    if (Ai == (uint64_t)0)
+        return (uint64_t)0;
+    return Ai;
+}

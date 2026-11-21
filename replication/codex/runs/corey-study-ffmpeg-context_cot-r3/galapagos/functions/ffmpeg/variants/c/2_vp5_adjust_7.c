@@ -1,0 +1,23 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Split first at the reference's gate, then evaluate the remaining fold directly.
+    // A cleared gate yields zero for positive t and 2*t for nonpositive t.
+    // A retained magnitude implies positive t, making both triangular branches safe.
+    int sign = v >> 31;
+    int a = (v ^ sign) - sign;
+    int twice = t + t;
+    int r;
+    if (a < twice)
+        r = a < t ? a : twice - a;
+    else
+        r = t < 0 ? twice : 0;
+    return (r + sign) ^ sign;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

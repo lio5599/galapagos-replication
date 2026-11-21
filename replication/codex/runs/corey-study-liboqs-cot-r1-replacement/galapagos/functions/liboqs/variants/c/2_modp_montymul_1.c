@@ -1,0 +1,20 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Only the low 31 product bits determine the Montgomery multiplier.
+    // Truncating z before multiplying by p0i leaves those bits unchanged.
+    // Multiplying p by the subtraction's top bit reproduces the correction.
+    // All original unsigned wraparound and truncation cases are preserved.
+    uint64_t z = (uint64_t)a * b;
+    uint32_t m = (uint32_t)((uint64_t)(uint32_t)z * p0i)
+                 & UINT32_C(0x7FFFFFFF);
+    uint64_t s = z + (uint64_t)m * p;
+    uint32_t d = (uint32_t)(s >> 31) - p;
+    return (uint32_t)(d + (uint64_t)p * (d >> 31));
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

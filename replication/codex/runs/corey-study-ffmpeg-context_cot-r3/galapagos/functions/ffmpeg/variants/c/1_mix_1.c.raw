@@ -1,0 +1,10 @@
+static int mix(int c0, int c1)
+{
+    // Extract green before weighting instead of afterward.
+    // Masked green values are nonnegative multiples of 32, so this is exact.
+    // Red retains signed shifts and signed division, including negative inputs.
+    int blue = 2 * (c0 & 31) + (c1 & 31);
+    int green = 2 * ((c0 & 992) >> 5) + ((c1 & 992) >> 5);
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    return red / 3 * 1024 + green / 3 * 32 + blue / 3;
+}

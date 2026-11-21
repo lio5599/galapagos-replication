@@ -1,0 +1,80 @@
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // The reference returns its input unchanged because if ((0)) never executes.
+    // Directly returning Ai preserves every input, including zero and all ones.
+    return Ai;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Copy the input without modification, matching the reference's identity.
+    // The same unsigned type preserves all bits for every input.
+    uint64_t result = Ai;
+    return result;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR with zero preserves every bit, matching the reference's identity.
+    // This also preserves zero and the maximum uint64_t value.
+    return Ai ^ (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Adding zero leaves the input unchanged, as in the reference.
+    // No value changes or overflows, including at either endpoint.
+    return Ai + (uint64_t)0;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Complementing twice restores every original bit.
+    // The result matches the reference for all inputs, including endpoints.
+    return (uint64_t)~(uint64_t)~Ai;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // XOR with the same mask twice restores every original bit.
+    // This identity holds for all inputs, including zero and all ones.
+    uint64_t mask = 0xA5A5A5A5A5A5A5A5ULL;
+    uint64_t result = Ai ^ mask;
+    return result ^ mask;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Split the input into its low and high 32-bit portions, then recombine.
+    // The portions are disjoint and cover all bits, preserving every input.
+    uint64_t low = Ai & 0xFFFFFFFFULL;
+    uint64_t high = Ai >> 32;
+    return (high << 32) | low;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Separate even-positioned and odd-positioned bits, then recombine.
+    // The masks cover all 64 bits without overlap, including at endpoints.
+    uint64_t even = Ai & 0x5555555555555555ULL;
+    uint64_t odd = Ai & 0xAAAAAAAAAAAAAAAAULL;
+    return even | odd;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Separate the lowest bit from the remaining upper 63 bits.
+    // Restoring their positions loses no bits and matches every input.
+    uint64_t upper = Ai >> 1;
+    uint64_t lowest = Ai & (uint64_t)1;
+    return (upper << 1) | lowest;
+}
+
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    // Divide the input into two disjoint 32-bit portions and add them.
+    // Their sum equals Ai and cannot overflow, even for the maximum input.
+    uint64_t low = Ai & 0xFFFFFFFFULL;
+    uint64_t high = Ai & 0xFFFFFFFF00000000ULL;
+    return high + low;
+}

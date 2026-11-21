@@ -1,0 +1,22 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Consume three input bits at a time, retaining a cube remainder.
+    // After doubling the root, the next cube costs 3*r*(r+1)+1.
+    // Subtracting that cost when possible chooses the next exact root bit.
+    // All intermediate values fit uint64_t, including at the input extremes.
+    uint64_t r = 0;
+    uint64_t remainder = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t cost;
+        remainder = (remainder << 3) | ((x >> s) & 7);
+        r <<= 1;
+        cost = 3 * r * (r + 1) + 1;
+        if (remainder >= cost) {
+            remainder -= cost;
+            ++r;
+        }
+    }
+    return r << 12;
+}

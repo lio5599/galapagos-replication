@@ -1,0 +1,25 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Replace each mask-based absolute value with conditional negation.
+    // Keep the reference's comparison multiplication and final sign restoration.
+    // Unrepresentable absolute values already make the reference undefined.
+    int s1 = v >> 31;
+    if (v < 0)
+        v = -v;
+    v *= v < 2 * t;
+    v -= t;
+    if (v < 0)
+        v = -v;
+    v = t - v;
+    v += s1;
+    v ^= s1;
+    return v;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

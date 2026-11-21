@@ -1,0 +1,17 @@
+int fpr_lt(uint64_t x, uint64_t y) {
+    // Dispatch on the two sign bits before comparing the encodings.
+    // Only the both-negative case reverses order.
+    // Equal encodings return zero, while opposite signed zeros follow sign.
+    unsigned int signs = (unsigned int)((x >> 63) * 2 + (y >> 63));
+
+    switch (signs) {
+    case 0:
+        return x < y;
+    case 1:
+        return 0;
+    case 2:
+        return 1;
+    default:
+        return x > y;
+    }
+}

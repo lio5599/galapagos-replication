@@ -1,0 +1,21 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Builds the doubled root in a temporary before committing each digit.
+    // Both branches assign exactly the root produced by the reference step.
+    // The remainder changes only on acceptance, preserving all boundary cases.
+    // Multiplication by 4096 equals the reference final unsigned shift.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t next = r + r;
+        uint64_t b = 3 * next * (next + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r = next + 1;
+        } else {
+            r = next;
+        }
+    }
+    return r * 4096;
+}

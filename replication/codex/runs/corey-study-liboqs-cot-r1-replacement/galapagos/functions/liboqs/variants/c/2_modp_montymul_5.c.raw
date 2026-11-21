@@ -1,0 +1,15 @@
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Expand a*b into four 16-bit limb products using 64-bit arithmetic.
+    // Every intermediate fits, and their sum is the exact original product.
+    // Keeping the original reduction preserves wrapping sums and edge inputs.
+    uint64_t a0 = a & UINT32_C(0xFFFF);
+    uint64_t a1 = a >> 16;
+    uint64_t b0 = b & UINT32_C(0xFFFF);
+    uint64_t b1 = b >> 16;
+    uint64_t z = a0 * b0 + ((a0 * b1 + a1 * b0) << 16)
+                 + ((a1 * b1) << 32);
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}

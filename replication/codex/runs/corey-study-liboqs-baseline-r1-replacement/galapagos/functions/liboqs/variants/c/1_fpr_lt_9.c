@@ -1,0 +1,24 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+int fpr_lt(uint64_t x, uint64_t y) {
+    unsigned sx = (unsigned)(x >> 63);
+
+    if ((x ^ y) >> 63) {
+        return (int)sx;
+    }
+
+    for (unsigned bit = 63; bit != 0; ) {
+        uint64_t mask = (uint64_t)1 << --bit;
+
+        if ((x ^ y) & mask) {
+            return sx ? ((x & mask) != 0) : ((y & mask) != 0);
+        }
+    }
+    return 0;
+}
+
+
+int main(){
+    fpr_lt(0,0);
+}

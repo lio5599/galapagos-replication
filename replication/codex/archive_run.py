@@ -5,6 +5,29 @@ from pathlib import Path
 import shutil
 
 
+def clean_archived_builds(workspace, run, expected_records):
+    """Remove reference builds only after a complete archive passes hash checks."""
+    expected_workspace = Path.home().resolve() / 'galapagos-corey-runs' / run.name
+    if workspace != expected_workspace or workspace.resolve() != expected_workspace:
+        raise ValueError(f'Unexpected validation workspace: {workspace}')
+    builds = workspace / 'build-copies'
+    if builds.resolve() != builds or not builds.is_dir():
+        raise ValueError(f'Unexpected build-copy directory: {builds}')
+    manifest = json.loads((run / 'archive-manifest.json').read_text())
+    entries = manifest['files']
+    records = sum(name.endswith('.result.json') for name in entries)
+    if not manifest['validation_stages_completed'] or records != expected_records:
+        print('Build copies retained: archive has incomplete validation records.', flush=True)
+        return
+    archive_root = (run / 'galapagos').resolve()
+    for name, expected_hash in entries.items():
+        file = (archive_root / name).resolve()
+        if not file.is_relative_to(archive_root) or hashlib.sha256(file.read_bytes()).hexdigest() != expected_hash:
+            raise ValueError(f'Archive integrity check failed: {name}')
+    shutil.rmtree(builds)
+    print('Verified archive hashes; removed completed run build copies.', flush=True)
+
+
 def archive(workspace, run, projects, complete):
     archive_root = run / 'galapagos'
     for project in projects:

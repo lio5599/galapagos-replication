@@ -1,0 +1,147 @@
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The reference computes a radix-2^31 Montgomery product with one correction.
+    // Preserve its unsigned sum, truncation, and subtraction exactly.
+    // The conditional adds p precisely when the subtraction has its top bit set.
+    // This also preserves the reference's behavior for arbitrary input values.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    return (d >> 31) ? (uint32_t)(d + p) : d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Only the low 31 product bits determine the Montgomery multiplier.
+    // Truncating z before multiplying by p0i leaves those bits unchanged.
+    // Multiplying p by the subtraction's top bit reproduces the correction.
+    // All original unsigned wraparound and truncation cases are preserved.
+    uint64_t z = (uint64_t)a * b;
+    uint32_t m = (uint32_t)((uint64_t)(uint32_t)z * p0i)
+                 & UINT32_C(0x7FFFFFFF);
+    uint64_t s = z + (uint64_t)m * p;
+    uint32_t d = (uint32_t)(s >> 31) - p;
+    return (uint32_t)(d + (uint64_t)p * (d >> 31));
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Masking both factors to 31 bits preserves their product modulo 2^31.
+    // The remaining arithmetic follows the reference's unsigned operations.
+    // An explicit branch implements its top-bit correction, not a comparison.
+    // Thus even inputs outside normal Montgomery bounds behave identically.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t m = ((z & UINT64_C(0x7FFFFFFF))
+                  * (p0i & UINT32_C(0x7FFFFFFF)))
+                 & UINT64_C(0x7FFFFFFF);
+    uint64_t s = z + m * p;
+    uint32_t d = (uint32_t)(s >> 31) - p;
+    if (d & UINT32_C(0x80000000)) {
+        d = (uint32_t)(d + p);
+    }
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Split a into two 16-bit limbs to reconstruct the exact 64-bit product.
+    // Both partial products and their sum fit, including maximum inputs.
+    // The reduction retains the reference's 64-bit wrap and 32-bit correction.
+    uint64_t lo = (uint64_t)(a & UINT32_C(0xFFFF)) * b;
+    uint64_t hi = (uint64_t)(a >> 16) * b;
+    uint64_t z = lo + (hi << 16);
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Split b into its low 31 bits and its single high bit.
+    // The two terms reconstruct a*b exactly without intermediate overflow.
+    // The original reduction and correction preserve all boundary cases.
+    uint64_t z = (uint64_t)a * (b & UINT32_C(0x7FFFFFFF));
+    z += ((uint64_t)a * (b >> 31)) << 31;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Expand a*b into four 16-bit limb products using 64-bit arithmetic.
+    // Every intermediate fits, and their sum is the exact original product.
+    // Keeping the original reduction preserves wrapping sums and edge inputs.
+    uint64_t a0 = a & UINT32_C(0xFFFF);
+    uint64_t a1 = a >> 16;
+    uint64_t b0 = b & UINT32_C(0xFFFF);
+    uint64_t b1 = b >> 16;
+    uint64_t z = a0 * b0 + ((a0 * b1 + a1 * b0) << 16)
+                 + ((a1 * b1) << 32);
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Compute a*b by adding the shifted terms selected by b's bits.
+    // Shifts range from zero to 31, and every partial sum fits in 64 bits.
+    // This includes zero and maximal operands; reduction remains unchanged.
+    uint64_t z = 0;
+    uint64_t w;
+    uint32_t d;
+    unsigned int i;
+    for (i = 0; i < 32; ++i) {
+        if ((b >> i) & 1u) {
+            z += (uint64_t)a << i;
+        }
+    }
+    w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Split p into 16-bit limbs when forming the correction product.
+    // The multiplier has at most 31 bits, so both terms and their sum fit.
+    // The final sum still wraps in 64 bits exactly as in the reference.
+    // The unchanged top-bit correction also covers arbitrary input values.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t m = (z * p0i) & UINT64_C(0x7FFFFFFF);
+    uint64_t w = m * (p & UINT32_C(0xFFFF))
+                 + ((m * (p >> 16)) << 16);
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Add z and w as 32-bit limbs with an explicit carry.
+    // Truncating the high limb reproduces unsigned 64-bit sum overflow.
+    // Combining the limbs yields the low 32 bits of that sum shifted by 31.
+    // The original subtraction and correction therefore match at all edges.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint64_t low_sum = (uint64_t)(uint32_t)z + (uint32_t)w;
+    uint32_t low = (uint32_t)low_sum;
+    uint32_t high = (uint32_t)((z >> 32) + (w >> 32)
+                              + (low_sum >> 32));
+    uint32_t q = (uint32_t)((uint64_t)high << 1) | (low >> 31);
+    uint32_t d = q - p;
+    d += p & -(d >> 31);
+    return d;
+}
+
+static uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // Shift each addend separately and include the carry from their low bits.
+    // This computes the unwrapped sum divided by 2^31 without overflowing.
+    // A reference sum overflow changes this quotient by exactly 2^33.
+    // Casting to 32 bits discards that difference, including at overflow edges.
+    // The final subtraction and top-bit correction are unchanged.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint64_t carry = ((z & UINT64_C(0x7FFFFFFF))
+                      + (w & UINT64_C(0x7FFFFFFF))) >> 31;
+    uint32_t q = (uint32_t)((z >> 31) + (w >> 31) + carry);
+    uint32_t d = q - p;
+    d += p & -(d >> 31);
+    return d;
+}

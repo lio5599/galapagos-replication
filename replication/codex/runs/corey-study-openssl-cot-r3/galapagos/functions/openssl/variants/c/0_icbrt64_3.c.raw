@@ -1,0 +1,21 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Process the same radix-eight positions as the reference using a countdown.
+    // After doubling r, the trial is the difference between consecutive cubes.
+    // The comparison guarantees that the shifted subtraction fits and is valid.
+    // All 22 positions are processed, including leading zeros and maximum input.
+    uint64_t r = 0;
+    unsigned int remaining = 22;
+
+    while (remaining != 0) {
+        unsigned int shift = 3 * --remaining;
+        uint64_t trial;
+        r += r;
+        trial = 3 * r * r + 3 * r + 1;
+        if (trial <= (x >> shift)) {
+            x -= trial << shift;
+            ++r;
+        }
+    }
+    return r << 12;
+}

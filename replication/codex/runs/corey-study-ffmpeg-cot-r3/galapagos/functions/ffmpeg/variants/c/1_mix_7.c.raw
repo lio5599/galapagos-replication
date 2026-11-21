@@ -1,0 +1,27 @@
+static int mix(int c0, int c1)
+{
+    // Perform binary long division by three on the two bounded numerators.
+    // Seven input bits cover every value from 0 through 93.
+    // Each step leaves remainder below three, including at both endpoints.
+    // Red uses the original expression rather than unsigned long division.
+    int n[2] = {
+        2 * (c0 & 31) + (c1 & 31),
+        (2 * (c0 & 0x03E0) + (c1 & 0x03E0)) >> 5
+    };
+    int q[2] = { 0, 0 };
+    int red = 2 * (c0 >> 10) + (c1 >> 10);
+    int i;
+    int bit;
+    for (i = 0; i < 2; ++i) {
+        int remainder = 0;
+        for (bit = 6; bit >= 0; --bit) {
+            remainder = 2 * remainder + ((n[i] >> bit) & 1);
+            q[i] *= 2;
+            if (remainder >= 3) {
+                remainder -= 3;
+                ++q[i];
+            }
+        }
+    }
+    return red / 3 * 1024 + q[1] * 32 + q[0];
+}

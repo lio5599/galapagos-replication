@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // XOR twice with the same fixed pattern, canceling every bit toggle.
+    // This returns the original input for all patterns, as the reference does.
+    uint64_t mask = UINT64_C(0xA5A5A5A5A5A5A5A5);
+    uint64_t toggled = Ai ^ mask;
+    return toggled ^ mask;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

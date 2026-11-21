@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static int vp5_adjust(int v, int t)
+{
+    // Store the two linear pieces of t - abs(b-t), then select by b > t.
+    // Gating first makes both stored expressions safe on the reference's defined domain.
+    // At the peak both pieces agree; nonpositive t selects 2*t, except zero where both agree.
+    // Matches wherever the 32-bit arithmetic-shift reference has defined arithmetic.
+    int negative = v < 0;
+    int a = negative ? -v : v;
+    int twice = 2 * t;
+    int b = a < twice ? a : 0;
+    int pieces[2];
+    int r;
+
+    pieces[0] = b;
+    pieces[1] = twice - b;
+    r = pieces[b > t];
+
+    return negative ? -r : r;
+}
+
+
+int main(){
+    vp5_adjust(0,0);
+}

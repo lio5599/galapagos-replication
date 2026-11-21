@@ -1,0 +1,27 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t icbrt64(uint64_t x)
+{
+    // Enumerate consecutive cubes using their first and second differences.
+    // delta is the next cube increment, and step is its next increase.
+    // The subtraction test ensures cube never exceeds x or overflows.
+    // The first rejected increment identifies the floor root for every input.
+    uint64_t r = 0;
+    uint64_t cube = 0;
+    uint64_t delta = 1;
+    uint64_t step = 6;
+
+    while (delta <= x - cube) {
+        cube += delta;
+        ++r;
+        delta += step;
+        step += 6;
+    }
+    return r << 12;
+}
+
+
+int main(){
+    icbrt64(0);
+}

@@ -1,0 +1,16 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // Swap the two 32-bit halves twice.
+    // Each swap is performed in unsigned arithmetic and stored in 64 bits.
+    // Two swaps restore every bit, including bits at both ends of the word.
+    uint64_t swapped = (uint64_t)((Ai << 32) | (Ai >> 32));
+    return (uint64_t)((swapped << 32) | (swapped >> 32));
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}

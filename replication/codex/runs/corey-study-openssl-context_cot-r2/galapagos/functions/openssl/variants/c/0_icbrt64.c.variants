@@ -1,0 +1,215 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // Returns floor(cuberoot(x)) multiplied by 4096.
+    // Expanding the trial polynomial preserves every reference iteration.
+    // The same shifts and comparisons cover zero and UINT64_MAX.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * (r * r + r) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r++;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Index the same 22 iterations by their three-bit group number.
+    // Shift positions remain exactly 63, 60, through 0.
+    // All inputs therefore undergo the same updates and final scaling.
+    uint64_t r = 0;
+    int group;
+
+    for (group = 21; group >= 0; --group) {
+        uint64_t b;
+        int s = 3 * group;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // A do-while loop performs the same descending sequence of shifts.
+    // The final iteration uses shift zero before the loop terminates.
+    // Trial subtraction and scaling are unchanged for every input.
+    uint64_t r = 0;
+    int s = 63;
+
+    do {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+        s -= 3;
+    } while (s >= 0);
+
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Replace multiplication by three with three unsigned additions.
+    // Unsigned distributivity preserves the trial value exactly.
+    // The reference decisions, including endpoint cases, remain unchanged.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t t;
+        uint64_t b;
+        r += r;
+        t = r * (r + 1);
+        b = t + t + t + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r += 1;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Compute the trial polynomial before doubling the partial root.
+    // Substituting twice r gives 12*r*r + 6*r + 1.
+    // Unsigned arithmetic preserves this identity for all input cases.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b = 12 * r * r + 6 * r + 1;
+        r <<= 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Skip subtraction when the reference trial would fail.
+    // The complementary comparison preserves equality as a success.
+    // Thus zero, exact cubes, and the maximum input retain their results.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) < b)
+            continue;
+        x -= b << s;
+        ++r;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Convert each trial decision into an unsigned all-zero or all-one mask.
+    // The mask selects exactly the reference subtraction and increment.
+    // All shifts are within 0 through 63, even when the trial fails.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t b;
+        uint64_t take;
+        uint64_t mask;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        take = (x >> s) >= b;
+        mask = (uint64_t)0 - take;
+        x -= (b << s) & mask;
+        r += take;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Express the trial polynomial using the candidate next root.
+    // With candidate equal to doubled r plus one, the polynomial is identical.
+    // Selecting candidate only on success preserves all boundary inputs.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 0; s -= 3) {
+        uint64_t candidate = (r << 1) + 1;
+        uint64_t b = 3 * candidate * (candidate - 1) + 1;
+        r = candidate - 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            r = candidate;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Multiply the trial subtraction by its Boolean acceptance value.
+    // A rejected trial subtracts zero; an accepted trial matches the reference.
+    // Unsigned shifts and arithmetic remain defined for every input.
+    uint64_t r = 0;
+    unsigned int s = 63;
+
+    for (;;) {
+        uint64_t b;
+        uint64_t take;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        take = (x >> s) >= b;
+        x -= (b * take) << s;
+        r += take;
+        if (s == 0)
+            break;
+        s -= 3;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Unroll two consecutive reference iterations into each loop pass.
+    // Eleven passes process shifts 63, 60, through 3, 0 in order.
+    // Each update is unchanged, so all inputs receive identical results.
+    uint64_t r = 0;
+    int s;
+
+    for (s = 63; s >= 3; s -= 6) {
+        uint64_t b;
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> s) >= b) {
+            x -= b << s;
+            ++r;
+        }
+
+        r <<= 1;
+        b = 3 * r * (r + 1) + 1;
+        if ((x >> (s - 3)) >= b) {
+            x -= b << (s - 3);
+            ++r;
+        }
+    }
+    return r << 12;
+}

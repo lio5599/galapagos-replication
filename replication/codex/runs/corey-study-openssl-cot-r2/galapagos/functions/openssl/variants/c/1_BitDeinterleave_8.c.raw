@@ -1,0 +1,9 @@
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // XOR with the same mask twice cancels, reproducing the reference's input.
+    // Each selected bit is toggled twice and every other bit is untouched.
+    // This reasoning covers every pattern, including zero and all-one bits.
+    const uint64_t mask = (uint64_t)0x5555555555555555ULL;
+    uint64_t toggled = Ai ^ mask;
+    return toggled ^ mask;
+}

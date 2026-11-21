@@ -1,0 +1,221 @@
+static uint64_t icbrt64(uint64_t x)
+{
+    // The reference computes floor(cube_root(x)) multiplied by 4096.
+    // Binary search keeps the answer in the inclusive interval lo through hi.
+    // Division tests m cubed <= x without overflowing; m is always positive.
+    // 2642245 is the largest possible root, covering zero and UINT64_MAX.
+    uint64_t lo = 0;
+    uint64_t hi = 2642245;
+
+    while (lo < hi) {
+        uint64_t m = lo + (hi - lo + 1) / 2;
+        if (m <= x / m / m)
+            lo = m;
+        else
+            hi = m - 1;
+    }
+    return lo << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Build the floor cube root greedily, from its highest possible bit down.
+    // A bit is retained exactly when the candidate cubed does not exceed x.
+    // Division avoids cube overflow, and every candidate is positive.
+    // All roots fit in 22 bits, including the roots of zero and UINT64_MAX.
+    uint64_t r = 0;
+    uint64_t bit;
+
+    for (bit = (uint64_t)1 << 21; bit != 0; bit >>= 1) {
+        uint64_t candidate = r | bit;
+        if (candidate <= x / candidate / candidate)
+            r = candidate;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Integer Newton iteration starts strictly above every possible cube root.
+    // Each decreasing step stays at or above the floor cube root.
+    // Above that root the next step is smaller, so stopping yields it exactly.
+    // Zero is handled separately; all divisions and intermediate sums are safe.
+    uint64_t r = (uint64_t)1 << 22;
+
+    if (x == 0)
+        return 0;
+
+    for (;;) {
+        uint64_t next = (2 * r + x / r / r) / 3;
+        if (next >= r)
+            return r << 12;
+        r = next;
+    }
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Process the same radix-eight positions as the reference using a countdown.
+    // After doubling r, the trial is the difference between consecutive cubes.
+    // The comparison guarantees that the shifted subtraction fits and is valid.
+    // All 22 positions are processed, including leading zeros and maximum input.
+    uint64_t r = 0;
+    unsigned int remaining = 22;
+
+    while (remaining != 0) {
+        unsigned int shift = 3 * --remaining;
+        uint64_t trial;
+        r += r;
+        trial = 3 * r * r + 3 * r + 1;
+        if (trial <= (x >> shift)) {
+            x -= trial << shift;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Search directly with cubes restricted to the largest representable root.
+    // Every tested cube fits in uint64_t because candidates never exceed 2642245.
+    // The best accepted candidate is therefore exactly the floor cube root.
+    // Zero is the initial answer, and the upper bound includes UINT64_MAX's root.
+    uint64_t lo = 1;
+    uint64_t hi = 2642245;
+    uint64_t answer = 0;
+
+    while (lo <= hi) {
+        uint64_t m = lo + (hi - lo) / 2;
+        uint64_t cube = m * m * m;
+        if (cube <= x) {
+            answer = m;
+            lo = m + 1;
+        } else {
+            hi = m - 1;
+        }
+    }
+    return answer << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Enumerate consecutive cubes using their finite differences.
+    // cube equals r cubed, and delta equals the next cube minus this cube.
+    // Testing x minus cube avoids overflowing when considering the next cube.
+    // The root cap prevents an unrepresentable cube; zero needs no iteration.
+    uint64_t r = 0;
+    uint64_t cube = 0;
+    uint64_t delta = 1;
+
+    while (r < 2642245 && x - cube >= delta) {
+        cube += delta;
+        ++r;
+        delta += 6 * r;
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Ternary partitioning narrows an inclusive interval containing the root.
+    // Two cube comparisons discard regions that cannot contain the largest fit.
+    // Candidates never exceed 2642245, so their cubes cannot overflow.
+    // Each iteration shrinks the interval, including at zero and maximum input.
+    uint64_t lo = 0;
+    uint64_t hi = 2642245;
+
+    while (lo < hi) {
+        uint64_t third = (hi - lo) / 3;
+        uint64_t a = lo + third;
+        uint64_t b = hi - third;
+
+        if (b * b * b <= x) {
+            lo = b;
+        } else if (a * a * a <= x) {
+            lo = a;
+            hi = b - 1;
+        } else {
+            hi = a - 1;
+        }
+    }
+    return lo << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Input bit length supplies a strict power-of-two upper bound on the root.
+    // Binary search maintains a fitting lower bound and a nonfitting upper bound.
+    // Comparing m squared to x divided by m avoids overflowing a cube.
+    // Zero returns immediately; even for UINT64_MAX, m squared fits in uint64_t.
+    uint64_t t = x;
+    uint64_t lo = 0;
+    uint64_t hi;
+    unsigned int bits = 0;
+
+    if (x == 0)
+        return 0;
+
+    while (t != 0) {
+        ++bits;
+        t >>= 1;
+    }
+    hi = (uint64_t)1 << ((bits + 2) / 3);
+
+    while (hi - lo > 1) {
+        uint64_t m = lo + (hi - lo) / 2;
+        if (m * m <= x / m)
+            lo = m;
+        else
+            hi = m;
+    }
+    return lo << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Consume octal digits while retaining the remainder after subtracting r cubed.
+    // Appending a digit doubles the root; the trial adds its next possible bit.
+    // The consecutive-cube difference makes each accepted bit exact.
+    // Remainders and trials fit in uint64_t, including zero and maximum input.
+    uint64_t r = 0;
+    uint64_t remainder = 0;
+    int shift;
+
+    for (shift = 63; shift >= 0; shift -= 3) {
+        uint64_t trial;
+        remainder = (remainder << 3) | ((x >> shift) & 7);
+        r <<= 1;
+        trial = 3 * r * (r + 1) + 1;
+        if (remainder >= trial) {
+            remainder -= trial;
+            ++r;
+        }
+    }
+    return r << 12;
+}
+
+static uint64_t icbrt64(uint64_t x)
+{
+    // Greedily construct the root using exact split-word cube multiplication.
+    // high contains the cube above bit 31; values above 32 bits signal overflow.
+    // Only representable cubes not exceeding x are accepted.
+    // All partial products fit, and 22 candidate bits cover every uint64_t input.
+    uint64_t r = 0;
+    uint64_t bit;
+    const uint64_t mask = 0xffffffffULL;
+
+    for (bit = (uint64_t)1 << 21; bit != 0; bit >>= 1) {
+        uint64_t candidate = r | bit;
+        uint64_t square = candidate * candidate;
+        uint64_t low = (square & mask) * candidate;
+        uint64_t high = (square >> 32) * candidate + (low >> 32);
+
+        if (high <= mask) {
+            uint64_t cube = (high << 32) | (low & mask);
+            if (cube <= x)
+                r = candidate;
+        }
+    }
+    return r << 12;
+}

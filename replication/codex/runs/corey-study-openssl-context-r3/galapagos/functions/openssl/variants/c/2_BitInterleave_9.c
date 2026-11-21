@@ -1,0 +1,14 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitInterleave(uint64_t Ai)
+{
+    if (Ai == (uint64_t)0)
+        return (uint64_t)0;
+    return Ai;
+}
+
+
+int main(){
+    BitInterleave(0);
+}

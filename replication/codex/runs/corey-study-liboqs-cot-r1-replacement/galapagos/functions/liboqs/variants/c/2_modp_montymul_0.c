@@ -1,0 +1,18 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+uint32_t modp_montymul(uint32_t a, uint32_t b, uint32_t p, uint32_t p0i) {
+    // The reference computes a radix-2^31 Montgomery product with one correction.
+    // Preserve its unsigned sum, truncation, and subtraction exactly.
+    // The conditional adds p precisely when the subtraction has its top bit set.
+    // This also preserves the reference's behavior for arbitrary input values.
+    uint64_t z = (uint64_t)a * b;
+    uint64_t w = ((z * p0i) & UINT64_C(0x7FFFFFFF)) * p;
+    uint32_t d = (uint32_t)((z + w) >> 31) - p;
+    return (d >> 31) ? (uint32_t)(d + p) : d;
+}
+
+
+int main(){
+    modp_montymul(0,0,0,0);
+}

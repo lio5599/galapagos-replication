@@ -31,6 +31,12 @@ def stamp():
     return dt.datetime.now(dt.timezone.utc).isoformat()
 
 
+def tool_events(events):
+    # Transport diagnostics may accompany a later successful turn.
+    return [e for e in events if e.get("type") == "item.completed"
+            and e.get("item", {}).get("type") not in ("agent_message", "reasoning", "error")]
+
+
 def find_codex(lookup=None, environ=None, user_home=None):
     """Find the desktop-bundled CLI even in a normal terminal without app PATH entries."""
     lookup = lookup or shutil.which
@@ -167,8 +173,7 @@ def main():
                 except json.JSONDecodeError:
                     pass
             completed = [e for e in events if e.get("type") == "turn.completed"]
-            tool_items = [e for e in events if e.get("type") == "item.completed"
-                          and e.get("item", {}).get("type") not in ("agent_message", "reasoning")]
+            tool_items = tool_events(events)
             if proc.returncode or not completed or tool_items or not result_file.exists():
                 raise SystemExit(f"Generation failed or used tools: inspect {out}. No retry or validation performed.")
             raw = result_file.read_text(encoding="utf-8")

@@ -1,0 +1,17 @@
+#include <stdint.h>
+
+__attribute__((noinline))
+static uint64_t BitDeinterleave(uint64_t Ai)
+{
+    // The reference returns Ai unchanged.
+    // XOR with the same mask twice cancels independently at every bit.
+    // This holds for all inputs, including zero and the maximum value.
+    uint64_t mask = (uint64_t)0x9e3779b97f4a7c15ULL;
+    uint64_t transformed = Ai ^ mask;
+    return transformed ^ mask;
+}
+
+
+int main(){
+    BitDeinterleave(0);
+}
